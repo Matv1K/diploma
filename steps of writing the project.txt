@@ -1,0 +1,57 @@
+STEPS OF CREATING MY PROJECT:
+
+
+
+
+GENERATING THE PROJECT.
+
+
+1) Create next app with npx create-next-app appName
+
+2) Choose settings (app router, typescript, eslint)
+
+3) Create components folder (where all of reusable ui components will be stored)
+
+
+ADDING ABBILITY TO WRITE SCSS.
+
+By default the app that we have created uses css modules or tailwind css (based on the settings we chose we generated the project). However, in our application we want to use sass/scss alongside css modules, so we do following steps:
+
+
+1) npm install sass
+
+2) Change globals.css file name to globals.scss and put all of the global.scss configurations. Variable for colors, fonts and media queries. We create these variables in order to reuse them later in the code
+
+3) Change page.module.css file to page.module.scss and add some styles that will be used on our home page (page.tsx)
+
+4) We should import our globals.scss file inside all of our style files.
+
+5) Inside our home component (page.tsx) we import this styles file: 
+
+import styles from "./page.module.scss";
+
+
+
+
+ADD TOPICS:
+
+
+CONFIGURE BACKEND SERVER
+
+1) ...
+
+
+CREATE REUSABLE COMPONENTS
+
+1) ...
+
+
+CREATE GITHUB REPOSITORY
+
+1)
+
+
+CONFIGURE ROUTING SYSTEM
+
+1)
+
