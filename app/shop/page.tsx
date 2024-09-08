@@ -5,7 +5,7 @@ import styles from "./page.module.scss";
 const Shop: React.FC = () => {
   return (
     <main>
-      <h2 className={styles.heading}>SHOP</h2>
+      <h2 className={styles.heading}>Shop</h2>
     </main>
   );
 };

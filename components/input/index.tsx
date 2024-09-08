@@ -9,6 +9,7 @@ interface InputProps {
   name?: string;
   onChange?: () => void;
   type: "text" | "email" | "password";
+  title?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -18,6 +19,7 @@ const Input: React.FC<InputProps> = ({
   className,
   id,
   name,
+  title,
 }) => {
   return (
     <input
@@ -27,6 +29,7 @@ const Input: React.FC<InputProps> = ({
       onChange={onChange}
       placeholder={placeholder}
       type={type}
+      title={title}
     />
   );
 };

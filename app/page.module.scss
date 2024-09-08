@@ -26,7 +26,7 @@
   }
 }
 
-.top {
+.block {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -34,4 +34,17 @@
 
 .headingMain {
   font-size: 40px;
+}
+
+.eventsLink {
+  color: violet;
+}
+
+.buttonSupport {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  border-radius: 50%;
+  background-color: yellow;
 }

@@ -6,10 +6,10 @@ import { Input, Button } from "@/components";
 
 import Link from "next/link";
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
   return (
     <main>
-      <h2>Sign in</h2>
+      <h2>Sign up</h2>
 
       <form className={styles.form}>
         <Input
@@ -25,13 +25,20 @@ const SignIn: React.FC = () => {
           title="Password must have at least 8 characters"
         />
 
+        <Input
+          className={styles.input}
+          type="password"
+          placeholder="Confirm your password"
+          title="Password must have at least 8 characters"
+        />
+
         <div className={styles.formInfo}>
-          <Button>Sign in</Button>
+          <Button>Sign up</Button>
 
           <span>
-            Don't have an account?{" "}
-            <Link className={styles.signUpLink} href="/sign-up">
-              Sign up
+            Already have an account?{" "}
+            <Link className={styles.signInLink} href="/sign-in">
+              Sign in
             </Link>
           </span>
         </div>
@@ -40,4 +47,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "./index.module.scss";
 
-import { Input } from "../../components";
+import { Input, Button } from "../../components";
 
 const SupportModal: React.FC = () => {
   return (
     <div className={styles.supportModal}>
-      <h3>support modal</h3>
+      <form className={styles.form}>
+        <div className={styles.frame}>
+          <span className={styles.exit}>&#10006;</span>
+        </div>
 
-      <Input type="text" placeholder="Ask your question" />
+        <div className={styles.fieldset}>
+          <Input
+            className={styles.input}
+            type="text"
+            placeholder="Ask your question"
+          />
+
+          <Button className={styles.button} type="submit">
+            Send
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };

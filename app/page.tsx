@@ -1,12 +1,17 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 import styles from "./page.module.scss";
 
-import Piano from "../public/piano2.png";
+import Piano from "../public/piano-secondary.png";
+import Guitar from "../public/guitar.png";
+import Chat from "../public/chat-svgrepo-com.svg";
 
-import { Carousel, SupportModal } from "@/components";
+import { Carousel, SupportModal, Button } from "@/components";
 
 import Image from "next/image";
+import Link from "next/link";
 
 // THERE SHOULD BE 5 MOST POPULAR SECTIONS
 
@@ -29,12 +34,19 @@ const POPULAR_ITEMS = [
 ];
 
 const Home: React.FC = () => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+
+  const handleClick = () => {
+    console.log("clicked");
+  };
+
   return (
     <main>
-      <div className={styles.top}>
+      <div className={styles.block}>
         <h1 className={styles.headingMain}>
           Best platform for aspiring musicians
         </h1>
+
         <Image src={Piano} alt="piano" width={200} height={200} />
       </div>
 
@@ -55,9 +67,26 @@ const Home: React.FC = () => {
           <h2>Most popular items</h2>
           <Carousel items={POPULAR_ITEMS} />
         </div>
+
+        <div className={styles.block}>
+          <Image src={Guitar} alt="piano" width={200} height={200} />
+
+          <h1 className={styles.headingMain}>
+            Check out our{" "}
+            <Link className={styles.eventsLink} href="/events">
+              events
+            </Link>
+          </h1>
+        </div>
       </div>
 
-      <SupportModal />
+      {isModalOpened ? (
+        <SupportModal />
+      ) : (
+        <Button onClick={handleClick} className={styles.buttonSupport}>
+          <Image src={Chat} alt="Support" width={24} height={24} />
+        </Button>
+      )}
     </main>
   );
 };
