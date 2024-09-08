@@ -17,3 +17,4 @@
 20. Read about loading in next.js
 21. Read about authorization/authentication in next.js
 22. Add admin panel. Think about no-code solution
+23. You can run both Next.js and Express.js separately, or you can integrate them to run together using a proxy.

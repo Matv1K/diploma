@@ -17,3 +17,13 @@ export const POPULAR_ITEMS = [
   { name: "Takamine GY11ME Parlor", id: 4 },
   { name: "Taylor Academy 12e-N Nylon", id: 5 },
 ];
+
+// THERE SHOULD BE 5 MOST POPULAR BRANDS
+
+export const POPULAR_BRANDS = [
+  { name: "Taylor", id: 1 },
+  { name: "Fender", id: 2 },
+  { name: "Gibson", id: 5 },
+  { name: "Cort", id: 3 },
+  { name: "Flight", id: 4 },
+];

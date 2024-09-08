@@ -12,15 +12,7 @@ import { Carousel, SupportModal, Button } from "@/components";
 import Image from "next/image";
 import Link from "next/link";
 
-import { POPULAR_ITEMS, POPULAR_SECTIONS } from "@/constants";
-
-const POPULAR_BRANDS = [
-  { name: "Taylor", id: 1 },
-  { name: "Fender", id: 2 },
-  { name: "Gibson", id: 5 },
-  { name: "Cort", id: 3 },
-  { name: "Flight", id: 4 },
-];
+import { POPULAR_ITEMS, POPULAR_SECTIONS, POPULAR_BRANDS } from "@/constants";
 
 const Home: React.FC = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);

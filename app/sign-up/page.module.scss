@@ -17,4 +17,8 @@
 
 .signInLink {
   color: $secondary-color;
+
+  &:hover {
+    color: darken($color: $secondary-color, $amount: 5%);
+  }
 }
