@@ -1,0 +1,28 @@
+.header {
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: rgb(187, 231, 216);
+}
+
+.list {
+  display: flex;
+}
+
+.item {
+  text-decoration: none;
+  color: rgb(249, 249, 249);
+  transition: color 0.3s ease;
+  font-size: 18px;
+
+  &:hover {
+    color: violet;
+  }
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}
