@@ -5,3 +5,4 @@ export { default as Modal } from "./modal";
 export { default as Button } from "./button";
 export { default as Carousel } from "./carousel";
 export { default as InstrumentCard } from "./instrument-card";
+export { default as SupportModal } from "./support-modal";

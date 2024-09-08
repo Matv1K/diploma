@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
-import { Carousel } from "@/components";
+import { Carousel, SupportModal } from "@/components";
 
 // THERE SHOULD BE 5 MOST POPULAR SECTIONS
 
@@ -45,6 +45,8 @@ const Home: React.FC = () => {
           <Carousel items={POPULAR_ITEMS} />
         </div>
       </div>
+
+      <SupportModal />
     </main>
   );
 };
