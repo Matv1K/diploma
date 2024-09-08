@@ -2,7 +2,11 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
+import Piano from "../public/piano2.png";
+
 import { Carousel, SupportModal } from "@/components";
+
+import Image from "next/image";
 
 // THERE SHOULD BE 5 MOST POPULAR SECTIONS
 
@@ -27,6 +31,13 @@ const POPULAR_ITEMS = [
 const Home: React.FC = () => {
   return (
     <main>
+      <div className={styles.top}>
+        <h1 className={styles.headingMain}>
+          Best platform for aspiring musicians
+        </h1>
+        <Image src={Piano} alt="piano" width={200} height={200} />
+      </div>
+
       <div className={styles.sections}>
         <div>
           <h2>On Sale!</h2>

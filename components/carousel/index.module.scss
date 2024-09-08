@@ -17,6 +17,11 @@
   text-align: center;
   overflow: hidden;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($color: rgb(187, 231, 216), $amount: 5%);
+  }
 }
 
 .carouselItem img {
