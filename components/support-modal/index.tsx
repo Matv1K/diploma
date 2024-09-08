@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 
 import styles from "./index.module.scss";
 
 import { Input, Button } from "../../components";
 
-const SupportModal: React.FC = () => {
+import Image from "next/image";
+
+import { Close } from "@/public/icons";
+
+interface SupportModalProps {
+  setIsModalOpened: any;
+}
+
+const SupportModal: React.FC<SupportModalProps> = ({ setIsModalOpened }) => {
+  const handleCloseModal = () => {
+    setIsModalOpened(false);
+  };
+
   return (
     <div className={styles.supportModal}>
       <form className={styles.form}>
         <div className={styles.frame}>
-          <span className={styles.exit}>&#10006;</span>
+          <Image
+            onClick={handleCloseModal}
+            src={Close}
+            alt="close"
+            width={24}
+            height={24}
+            className={styles.close}
+          />
         </div>
 
         <div className={styles.fieldset}>

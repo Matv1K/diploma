@@ -16,7 +16,11 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
 }) => {
   return (
-    <button type={type} className={`${styles.button} ${className}`}>
+    <button
+      onClick={onClick}
+      type={type}
+      className={`${styles.button} ${className}`}
+    >
       {children}
     </button>
   );

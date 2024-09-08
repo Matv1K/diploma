@@ -5,7 +5,7 @@ import styles from "./index.module.scss";
 const Footer: React.FC = () => {
   return (
     <footer className={styles.footer}>
-      <h4>Footer</h4>
+      <h4 className={styles.heading}>Footer</h4>
     </footer>
   );
 };

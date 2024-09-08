@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 .sections {
   display: flex;
   flex-direction: column;
@@ -8,7 +10,7 @@
   margin-top: 10px;
   height: 150px;
   width: 100%;
-  background-color: violet;
+  background-color: $secondary-color;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -17,7 +19,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: darken($color: violet, $amount: 5%);
+    background-color: darken($color: $secondary-color, $amount: 5%);
   }
 
   span {
@@ -37,7 +39,7 @@
 }
 
 .eventsLink {
-  color: violet;
+  color: $secondary-color;
 }
 
 .buttonSupport {
@@ -47,4 +49,23 @@
   z-index: 9999;
   border-radius: 50%;
   background-color: yellow;
+}
+
+.brands {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.brandCard {
+  cursor: pointer;
+}
+
+.brandsSection {
+  margin-bottom: 20px;
+}
+
+.brandsHeading {
+  text-align: right;
 }

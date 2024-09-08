@@ -1,12 +1,14 @@
+@import "../../app/variables.scss";
+
 .button {
   padding: 6px 12px;
   background-color: rgb(249, 249, 249);
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.3s ease;
-  border: 1px solid violet;
+  border: 1px solid $secondary-color;
   font-size: 16px;
-  color: violet;
+  color: $secondary-color;
 
   &:hover {
     transform: scale(1.05);

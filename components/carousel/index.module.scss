@@ -1,3 +1,5 @@
+@import "../../app/variables.scss";
+
 .carouselContainer {
   width: 100%;
   padding: 20px;
@@ -12,7 +14,7 @@
   justify-content: center;
   align-items: center;
   height: 150px;
-  background-color: rgb(187, 231, 216);
+  background-color: $primary-color;
   border-radius: 8px;
   text-align: center;
   overflow: hidden;
@@ -20,7 +22,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: darken($color: rgb(187, 231, 216), $amount: 5%);
+    background-color: darken($color: $primary-color, $amount: 5%);
   }
 }
 
@@ -33,10 +35,10 @@
 .carouselItem h3 {
   font-size: 1.2rem;
   margin: 10px 0;
-  color: rgb(249, 249, 249);
+  color: $background-color;
 }
 
 .carouselItem p {
   font-size: 1rem;
-  color: rgb(249, 249, 249);
+  color: $background-color;
 }

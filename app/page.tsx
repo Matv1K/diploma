@@ -4,40 +4,29 @@ import React, { useState } from "react";
 
 import styles from "./page.module.scss";
 
-import Piano from "../public/piano-secondary.png";
-import Guitar from "../public/guitar.png";
-import Chat from "../public/chat-svgrepo-com.svg";
+import { Piano, Guitar } from "@/public/images";
+import { Chat } from "@/public/icons";
 
 import { Carousel, SupportModal, Button } from "@/components";
 
 import Image from "next/image";
 import Link from "next/link";
 
-// THERE SHOULD BE 5 MOST POPULAR SECTIONS
+import { POPULAR_ITEMS, POPULAR_SECTIONS } from "@/constants";
 
-const POPULAR_SECTIONS = [
-  { name: "Guitars", id: 1 },
-  { name: "Pianos", id: 2 },
-  { name: "Drums", id: 4 },
-  { name: "Cellos", id: 3 },
-  { name: "Harmonicas", id: 5 },
-];
-
-// THERE SHOULD BE 10 MOST POPULAR INSTRUMENTS
-
-const POPULAR_ITEMS = [
-  { name: "Fender CD60", id: 1 },
-  { name: "Taylor 350", id: 2 },
-  { name: "Martin OM-28", id: 3 },
-  { name: "Takamine GY11ME Parlor", id: 4 },
-  { name: "Taylor Academy 12e-N Nylon", id: 5 },
+const POPULAR_BRANDS = [
+  { name: "Taylor", id: 1 },
+  { name: "Fender", id: 2 },
+  { name: "Gibson", id: 5 },
+  { name: "Cort", id: 3 },
+  { name: "Flight", id: 4 },
 ];
 
 const Home: React.FC = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const handleClick = () => {
-    console.log("clicked");
+    setIsModalOpened(true);
   };
 
   return (
@@ -52,7 +41,7 @@ const Home: React.FC = () => {
 
       <div className={styles.sections}>
         <div>
-          <h2>On Sale!</h2>
+          <h2>Sales!</h2>
           <div className={styles.sectionSale}>
             <span>Top quality brands on sale up to 70%</span>
           </div>
@@ -61,6 +50,27 @@ const Home: React.FC = () => {
         <div>
           <h2>Most popular sections</h2>
           <Carousel items={POPULAR_SECTIONS} />
+        </div>
+
+        <div className={styles.brandsSection}>
+          <h2 className={styles.brandsHeading}>
+            We have the most popular brands
+          </h2>
+
+          <div className={styles.brands}>
+            {POPULAR_BRANDS.map(({ name, id }) => {
+              return (
+                <div className={styles.brandCard} key={id}>
+                  <Image
+                    src={`/images/${name.toLocaleLowerCase()}.png`}
+                    alt={name}
+                    width={200}
+                    height={100}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <div>
@@ -81,7 +91,7 @@ const Home: React.FC = () => {
       </div>
 
       {isModalOpened ? (
-        <SupportModal />
+        <SupportModal setIsModalOpened={setIsModalOpened} />
       ) : (
         <Button onClick={handleClick} className={styles.buttonSupport}>
           <Image src={Chat} alt="Support" width={24} height={24} />

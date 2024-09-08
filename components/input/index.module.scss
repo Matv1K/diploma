@@ -1,6 +1,8 @@
+@import "../../app/variables.scss";
+
 .input {
   padding: 8px 12px;
   width: 100%;
   border-radius: 8px;
-  border: 2px solid rgb(187, 231, 216);
+  border: 2px solid $primary-color;
 }

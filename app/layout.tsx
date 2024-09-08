@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 
 import "./globals.scss";
 
-import { Header } from "@/components";
+import { Footer, Header } from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning={true}>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

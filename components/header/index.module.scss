@@ -1,6 +1,8 @@
+@import "../../app/variables.scss";
+
 .header {
   padding: 20px;
-  background-color: rgb(187, 231, 216);
+  background-color: $primary-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,13 +14,13 @@
 
 .item {
   text-decoration: none;
-  color: rgb(249, 249, 249);
+  color: $background-color;
   transition: color 0.3s ease;
   font-size: 18px;
   font-weight: 500;
 
   &:hover {
-    color: violet;
+    color: $secondary-color;
   }
 
   &:not(:last-child) {

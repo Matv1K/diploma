@@ -9,6 +9,8 @@ import { Button } from "..";
 const Header: React.FC = () => {
   return (
     <header className={styles.header}>
+      <h5 color={styles.logo}>Music Zone</h5>
+
       <ul className={styles.list}>
         <Link className={styles.item} href="/">
           Home
