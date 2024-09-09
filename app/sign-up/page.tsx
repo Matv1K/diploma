@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import styles from "./page.module.scss";
@@ -7,6 +9,10 @@ import { Input, Button } from "@/components";
 import Link from "next/link";
 
 const SignUp: React.FC = () => {
+  const handleSignUp = () => {
+    console.log("sign up");
+  };
+
   return (
     <main>
       <h2>Sign up</h2>
@@ -33,7 +39,7 @@ const SignUp: React.FC = () => {
         />
 
         <div className={styles.formInfo}>
-          <Button>Sign up</Button>
+          <Button onClick={handleSignUp}>Sign up</Button>
 
           <span>
             Already have an account?{" "}

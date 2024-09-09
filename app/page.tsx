@@ -2,12 +2,20 @@
 
 import React, { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import styles from "./page.module.scss";
 
 import { Piano, Guitar } from "@/public/images";
 import { Chat } from "@/public/icons";
 
-import { Carousel, SupportModal, Button } from "@/components";
+import {
+  Carousel,
+  SupportModal,
+  Button,
+  Modal,
+  AnimatedText,
+} from "@/components";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -17,8 +25,14 @@ import { POPULAR_ITEMS, POPULAR_SECTIONS, POPULAR_BRANDS } from "@/constants";
 const Home: React.FC = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
+  const { push } = useRouter();
+
   const handleClick = () => {
     setIsModalOpened(true);
+  };
+
+  const handleSignInNavigation = () => {
+    push("/sign-in");
   };
 
   return (
@@ -30,7 +44,6 @@ const Home: React.FC = () => {
 
         <Image src={Piano} alt="piano" width={200} height={200} />
       </div>
-
       <div className={styles.sections}>
         <div>
           <h2>Sales!</h2>
@@ -45,9 +58,7 @@ const Home: React.FC = () => {
         </div>
 
         <div className={styles.brandsSection}>
-          <h2 className={styles.brandsHeading}>
-            We have the most popular brands
-          </h2>
+          <h2 className={styles.brandsHeading}>Most popular brands</h2>
 
           <div className={styles.brands}>
             {POPULAR_BRANDS.map(({ name, id }) => {
@@ -81,7 +92,6 @@ const Home: React.FC = () => {
           </h1>
         </div>
       </div>
-
       {isModalOpened ? (
         <SupportModal setIsModalOpened={setIsModalOpened} />
       ) : (
@@ -89,6 +99,17 @@ const Home: React.FC = () => {
           <Image src={Chat} alt="Support" width={24} height={24} />
         </Button>
       )}
+      {/* Show the modal if the user is not signed in */}
+      {/* <Modal
+        heading="My Modal"
+        buttonName="Sign in"
+        onButtonClick={handleSignInNavigation}
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
+        distinctio, architecto sequi hic, dolor doloribus sint quam delectus
+        consectetur fugiat molestiae nulla itaque voluptatibus. Consectetur,
+        culpa enim! Itaque, minus praesentium.
+      </Modal> */}
     </main>
   );
 };

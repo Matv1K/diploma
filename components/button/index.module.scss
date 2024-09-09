@@ -5,12 +5,12 @@
   background-color: rgb(249, 249, 249);
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: background-color 0.3s ease;
   border: 1px solid $secondary-color;
   font-size: 16px;
   color: $secondary-color;
 
   &:hover {
-    transform: scale(1.05);
+    background-color: darken($color: $background-color, $amount: 5%);
   }
 }

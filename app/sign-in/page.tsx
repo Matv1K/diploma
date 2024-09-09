@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import styles from "./page.module.scss";
@@ -7,6 +9,10 @@ import { Input, Button } from "@/components";
 import Link from "next/link";
 
 const SignIn: React.FC = () => {
+  const handleSignIn = () => {
+    console.log("sign in");
+  };
+
   return (
     <main>
       <h2>Sign in</h2>
@@ -26,7 +32,7 @@ const SignIn: React.FC = () => {
         />
 
         <div className={styles.formInfo}>
-          <Button>Sign in</Button>
+          <Button onClick={handleSignIn}>Sign in</Button>
 
           <span>
             Don't have an account?{" "}

@@ -27,3 +27,10 @@ export const POPULAR_BRANDS = [
   { name: "Cort", id: 3 },
   { name: "Flight", id: 4 },
 ];
+
+export const HEADER_LINKS = [
+  { href: "/", name: "Home" },
+  { href: "/shop", name: "Shop" },
+  { href: "/events", name: "Events" },
+  { href: "/about", name: "About" },
+];
