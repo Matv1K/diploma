@@ -34,3 +34,8 @@ export const HEADER_LINKS = [
   { href: "/events", name: "Events" },
   { href: "/about", name: "About" },
 ];
+
+export const TOAST_MESSAGES = {
+  SIGN_IN: "Successfully logged in",
+  SIGN_UP: "Successfully signed up",
+};

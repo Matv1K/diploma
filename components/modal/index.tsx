@@ -2,11 +2,15 @@ import React from "react";
 
 import styles from "./index.module.scss";
 
+import { useDispatch } from "react-redux";
+
+import Image from "next/image";
+
 import { Button } from "../../components";
 
 import { Close } from "@/public/icons";
 
-import Image from "next/image";
+import { closeModal } from "@/features/modal/modalSlice";
 
 interface ModalProps {
   heading?: string;
@@ -21,6 +25,12 @@ const Modal: React.FC<ModalProps> = ({
   buttonName,
   onButtonClick,
 }) => {
+  const dispatch = useDispatch();
+
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+  };
+
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -30,6 +40,7 @@ const Modal: React.FC<ModalProps> = ({
           alt="close"
           width={24}
           height={24}
+          onClick={handleCloseModal}
         />
 
         <h2 className={styles.modalHeading}>{heading}</h2>

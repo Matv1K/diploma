@@ -2,7 +2,11 @@
 
 import React, { useState } from "react";
 
+import { useSelector, useDispatch } from "react-redux";
+
 import { useRouter } from "next/navigation";
+
+import { showModal } from "@/features/modal/modalSlice";
 
 import styles from "./page.module.scss";
 
@@ -24,6 +28,11 @@ import { POPULAR_ITEMS, POPULAR_SECTIONS, POPULAR_BRANDS } from "@/constants";
 
 const Home: React.FC = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  const isSignInModalOpen = useSelector((state: any) => state.modal.isOpen);
+
+  const dispatch = useDispatch();
 
   const { push } = useRouter();
 
@@ -33,6 +42,10 @@ const Home: React.FC = () => {
 
   const handleSignInNavigation = () => {
     push("/sign-in");
+  };
+
+  const handleShowModal = () => {
+    dispatch(showModal());
   };
 
   return (
@@ -86,12 +99,19 @@ const Home: React.FC = () => {
 
           <h1 className={styles.headingMain}>
             Check out our{" "}
-            <Link className={styles.eventsLink} href="/events">
-              events
-            </Link>
+            {isUserLoggedIn ? (
+              <Link href="/events" className={styles.eventsLink}>
+                events
+              </Link>
+            ) : (
+              <span className={styles.eventsLink} onClick={handleShowModal}>
+                events
+              </span>
+            )}
           </h1>
         </div>
       </div>
+
       {isModalOpened ? (
         <SupportModal setIsModalOpened={setIsModalOpened} />
       ) : (
@@ -99,17 +119,19 @@ const Home: React.FC = () => {
           <Image src={Chat} alt="Support" width={24} height={24} />
         </Button>
       )}
-      {/* Show the modal if the user is not signed in */}
-      {/* <Modal
-        heading="My Modal"
-        buttonName="Sign in"
-        onButtonClick={handleSignInNavigation}
-      >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-        distinctio, architecto sequi hic, dolor doloribus sint quam delectus
-        consectetur fugiat molestiae nulla itaque voluptatibus. Consectetur,
-        culpa enim! Itaque, minus praesentium.
-      </Modal> */}
+
+      {isSignInModalOpen && (
+        <Modal
+          heading="My Modal"
+          buttonName="Sign in"
+          onButtonClick={handleSignInNavigation}
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
+          distinctio, architecto sequi hic, dolor doloribus sint quam delectus
+          consectetur fugiat molestiae nulla itaque voluptatibus. Consectetur,
+          culpa enim! Itaque, minus praesentium.
+        </Modal>
+      )}
     </main>
   );
 };

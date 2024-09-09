@@ -22,5 +22,7 @@
 25. Add day.js (or moment.js) to work with dates
 26. Add toasts feature
 28. Add error boundary component
-29. Add redux
 30. Add custom hooks
+31. CHANGE all any types
+32. ADD TOAST CONSTANTS
+33. FIX IMPORTS IN ALL OF THE APP

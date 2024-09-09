@@ -4,13 +4,23 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
-import { Input, Button } from "@/components";
+import "react-toastify/dist/ReactToastify.css";
 
 import Link from "next/link";
 
+import { ToastContainer, toast } from "react-toastify";
+
+import { Input, Button } from "@/components";
+
+import { TOAST_MESSAGES } from "@/constants";
+
+const notify = () => toast.success(TOAST_MESSAGES.SIGN_UP);
+
 const SignUp: React.FC = () => {
-  const handleSignUp = () => {
-    console.log("sign up");
+  const handleSignUp = (e: any) => {
+    e.preventDefault();
+
+    notify();
   };
 
   return (
@@ -49,6 +59,8 @@ const SignUp: React.FC = () => {
           </span>
         </div>
       </form>
+
+      <ToastContainer />
     </main>
   );
 };

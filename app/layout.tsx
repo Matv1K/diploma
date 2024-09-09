@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 
 import "./globals.scss";
 
+import ReduxProvider from "@/provider";
+
 import { Footer, Header } from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <Header />
-        {children}
-        <Footer />
+        <ReduxProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );
