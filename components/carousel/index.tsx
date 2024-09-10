@@ -10,6 +10,8 @@ import "react-multi-carousel/lib/styles.css";
 
 import ReactCarousel from "react-multi-carousel";
 
+import { trimInstrumentName } from "@/utils";
+
 interface CarouselProps {
   items: { name: string; id: number }[];
   isInstrumentsCarousel?: boolean;
@@ -21,12 +23,12 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
   const { push } = useRouter();
 
-  const handleItemNavigation = (name: string) => {
+  const handleItemNavigation = (section: string, name: string) => {
     if (isInstrumentsCarousel) {
-      push(`/shop/section/${name.toLocaleLowerCase()}`);
+      push(`/shop/${section}/${trimInstrumentName(name)}`);
+    } else {
+      push(`/shop/${name.toLocaleLowerCase()}`);
     }
-
-    push(`/shop/${name.toLocaleLowerCase()}`);
   };
 
   const responsive = {
@@ -65,7 +67,7 @@ const Carousel: React.FC<CarouselProps> = ({
     >
       {items.map(({ name, id }) => (
         <div
-          onClick={() => handleItemNavigation(name)}
+          onClick={() => handleItemNavigation("pianos", name)}
           key={id}
           className={styles.carouselItem}
         >

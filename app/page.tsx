@@ -10,7 +10,7 @@ import { showModal } from "@/features/modal/modalSlice";
 
 import styles from "./page.module.scss";
 
-import { Piano, Guitar } from "@/public/images";
+import { Piano } from "@/public/images";
 import { Chat } from "@/public/icons";
 
 import {
@@ -24,11 +24,16 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-import { POPULAR_ITEMS, POPULAR_SECTIONS, POPULAR_BRANDS } from "@/constants";
+import {
+  POPULAR_ITEMS,
+  POPULAR_SECTIONS,
+  POPULAR_BRANDS,
+  NEW_ITEMS,
+} from "@/constants";
 
 const Home: React.FC = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   const isSignInModalOpen = useSelector((state: any) => state.modal.isOpen);
 
@@ -61,7 +66,9 @@ const Home: React.FC = () => {
         <div>
           <h2>Sales!</h2>
           <div className={styles.sectionSale}>
-            <span>Top quality brands on sale up to 70%</span>
+            <Link href="/shop/sale">
+              <span>Top quality brands on sale up to 70%</span>
+            </Link>
           </div>
         </div>
 
@@ -91,11 +98,11 @@ const Home: React.FC = () => {
 
         <div>
           <h2>Most popular items</h2>
-          <Carousel items={POPULAR_ITEMS} />
+          <Carousel items={POPULAR_ITEMS} isInstrumentsCarousel />
         </div>
 
         <div className={styles.block}>
-          <Image src={Guitar} alt="piano" width={200} height={200} />
+          <Image src={Piano} alt="piano" width={200} height={180} />
 
           <h1 className={styles.headingMain}>
             Check out our{" "}
@@ -109,6 +116,12 @@ const Home: React.FC = () => {
               </span>
             )}
           </h1>
+        </div>
+
+        <div>
+          <h2>New items</h2>
+
+          <Carousel items={NEW_ITEMS} isInstrumentsCarousel />
         </div>
       </div>
 

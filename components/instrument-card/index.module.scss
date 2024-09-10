@@ -1,0 +1,44 @@
+@import "../../app/variables.scss";
+
+.instrument {
+  border: 1px solid $primary-color;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.instrumentName {
+  text-transform: capitalize;
+  text-align: left;
+}
+
+.instrumentImage {
+  margin-bottom: 20px;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.price {
+  font-weight: 500;
+  color: $secondary-color;
+  margin-bottom: 10px;
+}
+
+.instrumentType {
+  font-size: 14px;
+}

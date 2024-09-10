@@ -8,7 +8,7 @@ interface InputProps {
   id?: string;
   name?: string;
   onChange?: () => void;
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | "search";
   title?: string;
 }
 

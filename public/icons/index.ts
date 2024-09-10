@@ -14,3 +14,4 @@ export { default as Cart } from "./cart-svgrepo-com.svg";
 export { default as Eye } from "./eye-svgrepo-com.svg";
 export { default as Plus } from "./plus-svgrepo-com.svg";
 export { default as Menu } from "./menu-svgrepo-com.svg";
+export { default as Logo } from "./logo.svg";

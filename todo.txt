@@ -5,7 +5,7 @@
 6. ADD CI/CD PIPELINE
 7. ADD DOCKER
 8. ADD FAVICON
-9. ADD LOGO
+9. ADD LOGO (musify)
 11. ADD CUSTOM FONT
 12. MAKE ALL PX RELATIVE VALUES
 13. ADD LOADERS TO CAROUSELS
@@ -20,7 +20,6 @@
 23. You can run both Next.js and Express.js separately, or you can integrate them to run together using a proxy.
 24. Integrate digital ocean for staging and production
 25. Add day.js (or moment.js) to work with dates
-26. Add toasts feature
 28. Add error boundary component
 30. Add custom hooks
 31. CHANGE all any types
@@ -28,3 +27,12 @@
 33. FIX IMPORTS IN ALL OF THE APP
 34. process next tick
 35. add rtk query
+36. Add three.js library
+37. Indicate whether the instrument is new (by adding flag 'new')
+38. Add number that indicates the amount of element in the cart
+39. Add the list of postponed items
+40. Add catalog on the left side, when pressing the button
+41. Add icon to the search
+42. Style placeholder on input component
+43. Remove text decoration on sale button
+44. Add footer links

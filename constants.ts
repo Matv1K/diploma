@@ -29,13 +29,20 @@ export const POPULAR_BRANDS = [
 ];
 
 export const HEADER_LINKS = [
-  { href: "/", name: "Home" },
   { href: "/shop", name: "Shop" },
   { href: "/events", name: "Events" },
-  { href: "/about", name: "About" },
 ];
 
 export const TOAST_MESSAGES = {
   SIGN_IN: "Successfully logged in",
   SIGN_UP: "Successfully signed up",
+  ADD_TO_CART: "Item has been added to your cart",
 };
+
+export const NEW_ITEMS = [
+  { name: "Aria Pro STG", id: 1 },
+  { name: "Aria PRO 2", id: 2 },
+  { name: "Aria PRO 1", id: 3 },
+  { name: "Aria Bass KT-20", id: 4 },
+  { name: "Aria Bass KT-50", id: 3 },
+];
