@@ -15,9 +15,17 @@ const ResetPassword = () => {
     <main>
       <h2>Reset Password</h2>
 
-      <form>
-        <Input type="password" placeholder="Enter new password" />
-        <Input type="password" placeholder="Confirm new password" />
+      <form className={styles.form}>
+        <Input
+          className={styles.input}
+          type="password"
+          placeholder="Enter new password"
+        />
+        <Input
+          className={styles.input}
+          type="password"
+          placeholder="Confirm new password"
+        />
 
         <Button onClick={handleChangePassword}>Change password</Button>
       </form>

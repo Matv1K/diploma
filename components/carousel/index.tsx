@@ -4,15 +4,31 @@ import React from "react";
 
 import styles from "./index.module.scss";
 
-import ReactCarousel from "react-multi-carousel";
+import { useRouter } from "next/navigation";
 
 import "react-multi-carousel/lib/styles.css";
 
+import ReactCarousel from "react-multi-carousel";
+
 interface CarouselProps {
   items: { name: string; id: number }[];
+  isInstrumentsCarousel?: boolean;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ items }) => {
+const Carousel: React.FC<CarouselProps> = ({
+  items,
+  isInstrumentsCarousel,
+}) => {
+  const { push } = useRouter();
+
+  const handleItemNavigation = (name: string) => {
+    if (isInstrumentsCarousel) {
+      push(`/shop/section/${name.toLocaleLowerCase()}`);
+    }
+
+    push(`/shop/${name.toLocaleLowerCase()}`);
+  };
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -48,7 +64,11 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
       itemClass={styles.carouselItemPadding}
     >
       {items.map(({ name, id }) => (
-        <div key={id} className={styles.carouselItem}>
+        <div
+          onClick={() => handleItemNavigation(name)}
+          key={id}
+          className={styles.carouselItem}
+        >
           <h3>{name}</h3>
         </div>
       ))}

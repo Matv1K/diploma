@@ -1,18 +1,16 @@
-// index.module.scss
-
 .textWrapper {
-  display: flex; // Use flexbox for alignment
-  justify-content: center; // Center the text horizontally
-  align-items: center; // Center the text vertically
-  height: 100px; // Adjust based on your text height
-  width: 100%; // Ensure it takes the full width of the parent
-  overflow: hidden; // Hide any overflow to prevent flickering
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .animatedText {
-  position: relative; // Use relative positioning for proper layout
+  position: relative;
 }
 
 .text {
-  display: inline-block; // Keep text inline
+  display: inline-block;
 }

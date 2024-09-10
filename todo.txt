@@ -26,3 +26,5 @@
 31. CHANGE all any types
 32. ADD TOAST CONSTANTS
 33. FIX IMPORTS IN ALL OF THE APP
+34. process next tick
+35. add rtk query
