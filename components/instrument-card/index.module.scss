@@ -7,6 +7,7 @@
   background-color: #fff;
   transition: transform 0.3s ease;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     transform: scale(1.05);
@@ -41,4 +42,14 @@
 
 .instrumentType {
   font-size: 14px;
+}
+
+.newPin {
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid $secondary-color;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 12px;
 }

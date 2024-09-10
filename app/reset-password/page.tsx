@@ -21,6 +21,7 @@ const ResetPassword = () => {
           type="password"
           placeholder="Enter new password"
         />
+
         <Input
           className={styles.input}
           type="password"

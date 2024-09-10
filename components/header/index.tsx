@@ -11,12 +11,12 @@ import Image from "next/image";
 
 import { Button, Input } from "../../components";
 
-import { Cart, Logo } from "@/public/icons";
+import { Cart, Heart, Logo, Search } from "@/public/icons";
 
 import { HEADER_LINKS } from "@/constants";
 
 const Header: React.FC = () => {
-  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+  const [isUserSignedIn, setIsUserSignedIn] = useState(true);
 
   const pathname = usePathname();
 
@@ -45,28 +45,48 @@ const Header: React.FC = () => {
           className={styles.input}
           placeholder="Find on Musify"
           type="search"
+          withIcon
         />
 
-        {HEADER_LINKS.map(({ name, href }) => {
-          return (
-            <Link
-              key={name}
-              className={`${styles.item} ${
-                pathname === href && styles.itemActive
-              }`}
-              href={href}
-            >
-              {name}
-            </Link>
-          );
-        })}
+        <div className={styles.links}>
+          {HEADER_LINKS.map(({ name, href }) => {
+            return (
+              <Link
+                key={name}
+                className={`${styles.item} ${
+                  pathname === href && styles.itemActive
+                }`}
+                href={href}
+              >
+                {name}
+              </Link>
+            );
+          })}
+        </div>
       </ul>
 
       <div>
         {isUserSignedIn ? (
-          <Link href="/cart">
-            <Image src={Cart} alt="cart" width={24} height={24} />
-          </Link>
+          <div className={styles.storages}>
+            <div>
+              <Link href="/liked">
+                <Image src={Heart} alt="liked" width={24} height={24} />
+              </Link>
+            </div>
+
+            <div className={styles.linkContainer}>
+              <span className={styles.cartAmount}>0</span>
+              <Link href="/cart">
+                <Image
+                  className={styles.cartImage}
+                  src={Cart}
+                  alt="cart"
+                  width={24}
+                  height={24}
+                />
+              </Link>
+            </div>
+          </div>
         ) : (
           <Link href="/sign-in">
             <Button>Sign in</Button>

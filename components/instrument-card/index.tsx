@@ -16,7 +16,7 @@ import { ElectricGuitar } from "@/public/images";
 
 import { trimInstrumentName } from "@/utils";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { TOAST_MESSAGES } from "@/constants";
 
@@ -44,8 +44,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const handleAddToCart = (e: any) => {
     e.stopPropagation();
 
-    console.log("add to cart");
-
     notify();
   };
 
@@ -71,7 +69,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         Add to cart
       </Button>
 
-      <ToastContainer />
+      {withNewPin && <div className={styles.newPin}>New</div>}
     </div>
   );
 };

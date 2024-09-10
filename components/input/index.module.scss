@@ -1,5 +1,9 @@
 @import "../../app/variables.scss";
 
+.wrapper {
+  position: relative;
+}
+
 .input {
   padding: 10px 14px;
   width: 100%;
@@ -9,4 +13,10 @@
   &::placeholder {
     font-size: 16px;
   }
+}
+
+.search {
+  position: absolute;
+  right: 15px;
+  top: 7px;
 }

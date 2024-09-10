@@ -66,7 +66,7 @@ const Home: React.FC = () => {
         <div>
           <h2>Sales!</h2>
           <div className={styles.sectionSale}>
-            <Link href="/shop/sale">
+            <Link className={styles.sale} href="/shop/sale">
               <span>Top quality brands on sale up to 70%</span>
             </Link>
           </div>

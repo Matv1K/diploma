@@ -2,7 +2,11 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
+import { ToastContainer } from "react-toastify";
+
 import { InstrumentCard } from "@/components";
+
+import { INSTRUMENTS } from "@/constants";
 
 const Shop: React.FC = () => {
   return (
@@ -10,26 +14,19 @@ const Shop: React.FC = () => {
       <h2 className={styles.heading}>Shop</h2>
 
       <div className={styles.instruments}>
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
-        <InstrumentCard name="Cort f3" price="999$" instrumentType="guitar" />
+        {INSTRUMENTS.map(({ name, id, price, instrumentType }) => {
+          return (
+            <InstrumentCard
+              key={id}
+              price={price}
+              name={name}
+              instrumentType={instrumentType}
+              withNewPin
+            />
+          );
+        })}
+
+        <ToastContainer />
       </div>
     </main>
   );
