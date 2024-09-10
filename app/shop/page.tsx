@@ -1,33 +1,58 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 import styles from "./page.module.scss";
 
 import { ToastContainer } from "react-toastify";
+
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import { InstrumentCard } from "@/components";
 
 import { INSTRUMENTS } from "@/constants";
 
 const Shop: React.FC = () => {
+  const [items, setItems] = useState(INSTRUMENTS.slice(0, 20));
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const loadMoreData = () => {
+    if (items.length >= INSTRUMENTS.length) {
+      setHasMore(false);
+      return;
+    }
+
+    setTimeout(() => {
+      const newItems = INSTRUMENTS.slice(page * 20, (page + 1) * 20);
+      setItems((prevItems) => [...prevItems, ...newItems]);
+      setPage((prevPage) => prevPage + 1);
+    }, 1000); // Simulate an API call delay
+  };
+
   return (
     <main>
       <h2 className={styles.heading}>Shop</h2>
 
-      <div className={styles.instruments}>
-        {INSTRUMENTS.map(({ name, id, price, instrumentType }) => {
-          return (
-            <InstrumentCard
-              key={id}
-              price={price}
-              name={name}
-              instrumentType={instrumentType}
-              withNewPin
-            />
-          );
-        })}
+      <InfiniteScroll
+        dataLength={items.length}
+        next={loadMoreData}
+        hasMore={hasMore}
+        loader={<h4>Loading more items...</h4>}
+        className={styles.instruments}
+      >
+        {items.map(({ name, id, price, instrumentType }) => (
+          <InstrumentCard
+            key={id}
+            price={price}
+            name={name}
+            instrumentType={instrumentType}
+            withNewPin
+          />
+        ))}
+      </InfiniteScroll>
 
-        <ToastContainer />
-      </div>
+      <ToastContainer />
     </main>
   );
 };

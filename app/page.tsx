@@ -60,7 +60,13 @@ const Home: React.FC = () => {
           Best platform for aspiring musicians
         </h1>
 
-        <Image src={Piano} alt="piano" width={200} height={200} />
+        <Image
+          className={styles.image}
+          src={Piano}
+          alt="piano"
+          width={200}
+          height={200}
+        />
       </div>
       <div className={styles.sections}>
         <div>
@@ -102,7 +108,13 @@ const Home: React.FC = () => {
         </div>
 
         <div className={styles.block}>
-          <Image src={Piano} alt="piano" width={200} height={180} />
+          <Image
+            className={styles.image}
+            src={Piano}
+            alt="piano"
+            width={200}
+            height={180}
+          />
 
           <h1 className={styles.headingMain}>
             Check out our{" "}
