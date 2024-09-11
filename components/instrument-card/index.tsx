@@ -38,7 +38,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const { push } = useRouter();
 
   const handleInstrumentNavigation = () => {
-    push(`/shop/${trimInstrumentName(name)}`);
+    push(`/shop/pianos/${trimInstrumentName(name)}`);
   };
 
   const handleAddToCart = (e: any) => {

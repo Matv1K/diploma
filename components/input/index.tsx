@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 
 import Image from "next/image";
 
-import { Search } from "@/public/icons";
+import { Button } from "../../components";
 
 interface InputProps {
   placeholder?: string;
@@ -15,6 +15,9 @@ interface InputProps {
   type: "text" | "email" | "password" | "search";
   title?: string;
   icon?: any;
+  handleIconClick?: () => void;
+  buttonIcon?: any;
+  buttonText?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,6 +29,9 @@ const Input: React.FC<InputProps> = ({
   name,
   title,
   icon,
+  handleIconClick,
+  buttonIcon,
+  buttonText,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -46,7 +52,14 @@ const Input: React.FC<InputProps> = ({
           alt=""
           width={24}
           height={24}
+          onClick={handleIconClick}
         />
+      )}
+
+      {buttonIcon && (
+        <Button className={styles.buttonIcon} icon={buttonIcon}>
+          {buttonText}
+        </Button>
       )}
     </div>
   );

@@ -13,7 +13,7 @@ import Image from "next/image";
 
 import { Button, Catalog, Input } from "../../components";
 
-import { Cart, Heart, Logo, Search, Close } from "@/public/icons";
+import { Cart, Heart, Logo, Search, Close, Settings } from "@/public/icons";
 
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
 
@@ -92,7 +92,13 @@ const Header: React.FC = () => {
 
         <div>
           {isUserSignedIn ? (
-            <div className={styles.storages}>
+            <div className={styles.icons}>
+              <div>
+                <Link href="/profile">
+                  <Image src={Settings} alt="profile" width={24} height={24} />
+                </Link>
+              </div>
+
               <div>
                 <Link href="/liked">
                   <Image src={Heart} alt="liked" width={24} height={24} />

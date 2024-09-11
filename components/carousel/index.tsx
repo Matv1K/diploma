@@ -13,7 +13,7 @@ import ReactCarousel from "react-multi-carousel";
 import { trimInstrumentName } from "@/utils";
 
 interface CarouselProps {
-  items: { name: string; id: number }[];
+  items: { name: string; id: number; text?: string }[];
   isInstrumentsCarousel?: boolean;
 }
 
@@ -65,13 +65,14 @@ const Carousel: React.FC<CarouselProps> = ({
       removeArrowOnDeviceType={["tablet", "mobile"]}
       itemClass={styles.carouselItemPadding}
     >
-      {items.map(({ name, id }) => (
+      {items.map(({ name, id, text }) => (
         <div
           onClick={() => handleItemNavigation("pianos", name)}
           key={id}
           className={styles.carouselItem}
         >
           <h3>{name}</h3>
+          {/* {text && <p style={text && { display: "block" }}>{text}</p>} */}
         </div>
       ))}
     </ReactCarousel>

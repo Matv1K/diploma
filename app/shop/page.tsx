@@ -8,7 +8,11 @@ import { ToastContainer } from "react-toastify";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { InstrumentCard, Loader } from "@/components";
+import Image from "next/image";
+
+import { InstrumentCard, Loader, SupportModal, Button } from "@/components";
+
+import { Chat } from "@/public/icons";
 
 import { INSTRUMENTS } from "@/constants";
 
@@ -16,6 +20,12 @@ const Shop: React.FC = () => {
   const [items, setItems] = useState(INSTRUMENTS.slice(0, 20));
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+
+  const [isModalOpened, setIsModalOpened] = useState(false);
+
+  const handleClick = () => {
+    setIsModalOpened(true);
+  };
 
   const loadMoreData = () => {
     if (items.length >= INSTRUMENTS.length) {
@@ -57,6 +67,14 @@ const Shop: React.FC = () => {
           </div>
         ))}
       </InfiniteScroll>
+
+      {isModalOpened ? (
+        <SupportModal setIsModalOpened={setIsModalOpened} />
+      ) : (
+        <Button onClick={handleClick} className={styles.buttonSupport}>
+          <Image src={Chat} alt="Support" width={24} height={24} />
+        </Button>
+      )}
 
       <ToastContainer />
     </main>

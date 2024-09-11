@@ -13,7 +13,6 @@ const Footer: React.FC = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        {/* Footer Sections */}
         <div className={styles.section}>
           <h4 className={styles.heading}>About Us</h4>
           <p className={styles.description}>

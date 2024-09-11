@@ -27,9 +27,11 @@
 34. process next tick
 35. add rtk query
 36. Add three.js library
-37. Indicate whether the instrument is new (by adding flag 'new')
 38. Add number that indicates the amount of element in the cart
-39. Add the list of postponed items
-40. Add catalog on the left side, when pressing the button
 42. Style placeholder on input component
 45. Fix footer
+46. Add instruments table that will display all the items on the cart and on the liked pages
+47. Create different button options.
+48. Add ability to add icon to button
+49. Authorization with google
+49. Add my own account settings where you can set your location, change password. There u can also see your previous orders

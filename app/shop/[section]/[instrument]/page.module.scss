@@ -1,0 +1,88 @@
+@import "../../../variables.scss";
+
+.pageSections {
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.checkbox {
+  cursor: pointer;
+
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+}
+
+.checkboxButtons {
+  margin-bottom: 20px;
+}
+
+.instrumentInfo {
+  border: 1px solid $primary-color;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.review {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.instrumentImage {
+  flex: 50%;
+  background-color: $primary-color;
+  border-radius: 8px;
+  height: 500px;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 5%);
+  }
+}
+
+.brandName {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 18px;
+}
+
+.price {
+  color: #333;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.availability {
+  font-size: 12px;
+  color: $primary-color;
+}
+
+.instrumentMainData {
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.istrumentData {
+  flex: 30%;
+}
+
+.instrumentDescription {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.instrumentCharacteristicsList {
+  margin-left: 20px;
+  color: #333;
+}

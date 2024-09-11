@@ -4,9 +4,18 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   width: 100%;
-  overflow: hidden; /* Ensure no overflow in the grid */
+  overflow: hidden;
 }
 
 .instrumentCardWrapper {
-  overflow: hidden; /* Prevents the card from overflowing during hover */
+  overflow: hidden;
+}
+
+.buttonSupport {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  border-radius: 50%;
+  background-color: yellow;
 }

@@ -2,6 +2,8 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
+import { InstrumentsTable } from "@/components";
+
 const Cart: React.FC = () => {
   return (
     <main>

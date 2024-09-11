@@ -18,3 +18,4 @@ export { default as Logo } from "./logo.svg";
 export { default as Globe } from "./globe-svgrepo-com.svg";
 export { default as Heart } from "./heart-svgrepo-com.svg";
 export { default as Send } from "./send-svgrepo-com.svg";
+export { default as Settings } from "./settings-cog-svgrepo-com.svg";

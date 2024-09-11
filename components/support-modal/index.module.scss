@@ -2,7 +2,7 @@
 
 .supportModal {
   height: 300px;
-  width: 200px;
+  width: 300px;
   border: 1px solid $secondary-color;
   border-radius: 8px;
   overflow: hidden;
@@ -34,4 +34,11 @@
   color: $secondary-color;
   cursor: pointer;
   margin: 5px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 }

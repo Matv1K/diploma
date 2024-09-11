@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./index.module.scss";
 
-import { Input, Button } from "../../components";
+import { Input } from "../../components";
 
 import Image from "next/image";
 
@@ -15,6 +15,10 @@ interface SupportModalProps {
 const SupportModal: React.FC<SupportModalProps> = ({ setIsModalOpened }) => {
   const handleCloseModal = () => {
     setIsModalOpened(false);
+  };
+
+  const handleIconClick = () => {
+    console.log("message sent");
   };
 
   return (
@@ -36,12 +40,9 @@ const SupportModal: React.FC<SupportModalProps> = ({ setIsModalOpened }) => {
             className={styles.input}
             type="text"
             placeholder="Ask your question"
-            icon={Send}
+            handleIconClick={handleIconClick}
+            buttonIcon={Send}
           />
-
-          <Button className={styles.button} type="submit">
-            Send
-          </Button>
         </div>
       </form>
     </div>

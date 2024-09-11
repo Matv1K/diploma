@@ -2,6 +2,13 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
+import { InstrumentsTable } from "@/components";
+
+const POSTPONED_ITEMS = [
+  { name: "", id: 1 },
+  { name: "", id: 2 },
+];
+
 const Liked: React.FC = () => {
   return (
     <main>
