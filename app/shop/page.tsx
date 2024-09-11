@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { InstrumentCard } from "@/components";
+import { InstrumentCard, Loader } from "@/components";
 
 import { INSTRUMENTS } from "@/constants";
 
@@ -38,17 +38,23 @@ const Shop: React.FC = () => {
         dataLength={items.length}
         next={loadMoreData}
         hasMore={hasMore}
-        loader={<h4>Loading more items...</h4>}
+        loader={
+          <>
+            <br />
+            <Loader />
+          </>
+        }
         className={styles.instruments}
       >
         {items.map(({ name, id, price, instrumentType }) => (
-          <InstrumentCard
-            key={id}
-            price={price}
-            name={name}
-            instrumentType={instrumentType}
-            withNewPin
-          />
+          <div key={id} className={styles.instrumentCardWrapper}>
+            <InstrumentCard
+              price={price}
+              name={name}
+              instrumentType={instrumentType}
+              withNewPin
+            />
+          </div>
         ))}
       </InfiniteScroll>
 

@@ -4,4 +4,9 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   width: 100%;
+  overflow: hidden; /* Ensure no overflow in the grid */
+}
+
+.instrumentCardWrapper {
+  overflow: hidden; /* Prevents the card from overflowing during hover */
 }

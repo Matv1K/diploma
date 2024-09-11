@@ -14,7 +14,6 @@ interface InputProps {
   onChange?: () => void;
   type: "text" | "email" | "password" | "search";
   title?: string;
-  withIcon?: boolean;
   icon?: any;
 }
 
@@ -26,7 +25,6 @@ const Input: React.FC<InputProps> = ({
   id,
   name,
   title,
-  withIcon,
   icon,
 }) => {
   return (
@@ -41,7 +39,7 @@ const Input: React.FC<InputProps> = ({
         title={title}
       />
 
-      {withIcon && (
+      {icon && (
         <Image
           className={styles.search}
           src={icon}

@@ -79,3 +79,15 @@ export const INSTRUMENTS = [
   { name: "Aria Bass KT-20", id: 29, price: "999$", instrumentType: "guitar" },
   { name: "Aria Bass KT-50", id: 30, price: "999$", instrumentType: "guitar" },
 ];
+
+export const CATALOG_LINKS = [
+  { link: "Guitars", id: 1 },
+  { link: "Pianos", id: 2 },
+  { link: "Harmonicas", id: 3 },
+  { link: "Wind instruments", id: 9 },
+  { link: "Drums", id: 4 },
+  { link: "Cellos", id: 5 },
+  { link: "Ukuleles", id: 6 },
+  { link: "Studio Equipment", id: 7 },
+  { link: "Headphones", id: 8 },
+];

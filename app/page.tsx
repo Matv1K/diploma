@@ -71,11 +71,11 @@ const Home: React.FC = () => {
       <div className={styles.sections}>
         <div>
           <h2>Sales!</h2>
-          <div className={styles.sectionSale}>
-            <Link className={styles.sale} href="/shop/sale">
+          <Link className={styles.sale} href="/shop/sale">
+            <div className={styles.sectionSale}>
               <span>Top quality brands on sale up to 70%</span>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
 
         <div>
