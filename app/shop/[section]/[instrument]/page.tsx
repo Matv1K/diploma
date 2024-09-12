@@ -12,12 +12,17 @@ import { Button, Comments } from "@/components";
 
 import { getInstrument } from "@/services/instruments/instrumentService";
 
+import { removeSeparator } from "@/utils";
+
 import { TOAST_MESSAGES } from "@/constants";
 
 const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
 
+const checkboxData = ["red", "blue", "green", "yellow"];
+
 const Instrument: React.FC = () => {
   const [instrument, setInstrument] = useState<any>(null);
+  const [selectedColor, setSelectedColor] = useState<string>("");
 
   const { instrument: instrumentId } = useParams();
 
@@ -31,17 +36,19 @@ const Instrument: React.FC = () => {
     fetchInstrument();
   }, []);
 
-  console.log(instrument);
-
   const handleAddToCart = (e: any) => {
     e.stopPropagation();
 
     notify();
   };
 
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedColor(e.target.value);
+  };
+
   return (
     <main>
-      <h2>Guitar {instrument?.name}</h2>
+      <h2>{removeSeparator(instrument?.name)}</h2>
 
       <div className={styles.pageSections}>
         {/* <Image
@@ -66,11 +73,20 @@ const Instrument: React.FC = () => {
               </p>
             </div>
 
-            <div className={styles.checkboxButtons}>
-              <input className={styles.checkbox} type="radio" />
-              <input className={styles.checkbox} type="radio" />
-              <input className={styles.checkbox} type="radio" />
-              <input className={styles.checkbox} type="radio" />
+            <div className={styles.radioButtons}>
+              {checkboxData.map((color, index) => (
+                <label key={index} className={styles.label}>
+                  <input
+                    name="color"
+                    className={`${styles.radio} ${
+                      selectedColor === color ? styles[color] : ""
+                    }`}
+                    type="radio"
+                    value={color}
+                    onChange={handleRadioChange}
+                  />
+                </label>
+              ))}
             </div>
 
             <Button onClick={handleAddToCart}>Add to cart</Button>

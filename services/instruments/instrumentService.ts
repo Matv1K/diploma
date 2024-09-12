@@ -34,7 +34,37 @@ export const getInstrument = async (id: any) => {
 
 export const getInstrumentsOnSale = async () => {
   try {
-    const response = await instance.get(`/instruments/sale`);
+    const response = await instance.get("/instruments/sale");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching instruments", error);
+    throw error;
+  }
+};
+
+export const getPopularIstruments = async () => {
+  try {
+    const response = await instance.get("/instruments/popular");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching instruments", error);
+    throw error;
+  }
+};
+
+export const getNewInstruments = async () => {
+  try {
+    const response = await instance.get("/instruments/new");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching instruments", error);
+    throw error;
+  }
+};
+
+export const getInstrumentsBySection = async (section: any) => {
+  try {
+    const response = await instance.get(`/instruments/section/${section}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching instruments", error);

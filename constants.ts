@@ -8,6 +8,18 @@ export const POPULAR_SECTIONS = [
   { name: "Harmonicas", id: 5 },
 ];
 
+export const ALL_SECTIONS = [
+  { name: "Guitars" },
+  { name: "Pianos" },
+  { name: "Drums" },
+  { name: "Cellos" },
+  { name: "Harmonicas" },
+  { name: "Wind Instruments" },
+  { name: "Ukuleles" },
+  { name: "Studio Equipment" },
+  { name: "Headphones" },
+];
+
 // THERE SHOULD BE 10 MOST POPULAR INSTRUMENTS
 
 export const POPULAR_ITEMS = [

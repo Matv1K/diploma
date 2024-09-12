@@ -33,6 +33,7 @@
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     background-color: darken($color: $background-color, $amount: 5%);

@@ -46,3 +46,9 @@
 58. Add infinite scroll
 59. Add AI to generate responses (inside of the modal window)
 60. Dynamic routes next
+61. WebHooks add
+62. Create postman base url variable
+63. use res.json instead of res.send && investigate why it's better this way
+64. INVESTIGATE ROUTE PRECEDENCE
+65. Add field: instrument bought
+66. State of the order
