@@ -37,3 +37,12 @@
 49. Add my own account settings where you can set your location, change password. There u can also see your previous orders
 50. ADD ENUM TO SECTION FIELD on mongoose model
 51. CONFIGURE CORS ONLY FOR OUR CLIENT
+52. What is vercel
+53. Move Provider inside the app folder ???
+54. Move store.ts inside the config folder ???
+55. Move constants inside the app folder ???
+56. Create types folders (for each service)
+57. Create types folder (for constants)
+58. Add infinite scroll
+59. Add AI to generate responses (inside of the modal window)
+60. Dynamic routes next

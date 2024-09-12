@@ -26,8 +26,6 @@ const Header: React.FC = () => {
     (state: any) => state.catalog.isCatalogOpen
   );
 
-  console.log(isCatalogOpened);
-
   const dispatch = useDispatch();
   const pathname = usePathname();
 

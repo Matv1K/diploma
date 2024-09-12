@@ -13,13 +13,7 @@ import styles from "./page.module.scss";
 import { Piano } from "@/public/images";
 import { Chat } from "@/public/icons";
 
-import {
-  Carousel,
-  SupportModal,
-  Button,
-  Modal,
-  AnimatedText,
-} from "@/components";
+import { Carousel, SupportModal, Button, Modal } from "@/components";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -32,8 +26,10 @@ import {
 } from "@/constants";
 
 const Home: React.FC = () => {
+  // ADD TYPES TO THE STATES
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [instruments, setInstruments] = useState([]);
 
   const isSignInModalOpen = useSelector((state: any) => state.modal.isOpen);
 
