@@ -1,9 +1,10 @@
 import express, { Request, Response } from "express";
+
 import { validationResult } from "express-validator";
 
-import { instrumentValidator } from "../validators/instrumentValidator";
+import { instrumentValidator } from "../../validators/instrumentValidator";
 
-import Instrument from "../models/Instrument";
+import Instrument from "../../models/Instrument";
 
 const router = express.Router();
 

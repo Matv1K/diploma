@@ -40,7 +40,7 @@ const Header: React.FC = () => {
   return (
     <>
       <header className={styles.header}>
-        <Link href="/">
+        <Link href="/" onClick={handleCloseCatalog}>
           <Image src={Logo} alt="Logo" width={40} height={40} />
         </Link>
 

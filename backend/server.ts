@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import instrumentRoutes from "./routes/instrumentRoutes";
+import instrumentRoutes from "./routes/instruments/instrumentRoutes";
 
 dotenv.config();
 

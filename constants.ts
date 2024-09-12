@@ -40,10 +40,7 @@ export const POPULAR_BRANDS = [
   { name: "Flight", id: 4 },
 ];
 
-export const HEADER_LINKS = [
-  { href: "/shop", name: "Shop" },
-  { href: "/events", name: "Events" },
-];
+export const HEADER_LINKS = [{ href: "/shop", name: "Shop" }];
 
 export const TOAST_MESSAGES = {
   SIGN_IN: "Successfully logged in",

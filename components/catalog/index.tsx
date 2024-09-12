@@ -17,7 +17,7 @@ interface CatalogProps {
 const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
   const dispatch = useDispatch();
 
-  const handleLinkNavigation = () => {
+  const handleCloseCatalog = () => {
     dispatch(closeCatalog());
   };
 
@@ -31,20 +31,22 @@ const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
                 key={id}
                 href={`/shop/${trimInstrumentName(link)}`}
                 className={styles.link}
-                onClick={handleLinkNavigation}
+                onClick={handleCloseCatalog}
               >
                 {link}
               </Link>
             );
           })}
         </div>
-
-        <Link className={styles.linkSales} href="/shop/sale">
+        <Link
+          onClick={handleCloseCatalog}
+          className={styles.linkSales}
+          href="/shop/sale"
+        >
           Items on Sale!
         </Link>
       </div>
     </div>
   );
 };
-
 export default Catalog;
