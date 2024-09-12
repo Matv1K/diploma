@@ -1,29 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { useParams } from "next/navigation";
 
-import styles from "./page.module.scss";
+import { toast, ToastContainer } from "react-toastify";
 
-import Image from "next/image";
+import styles from "./page.module.scss";
 
 import { Button, Comments } from "@/components";
 
-import { toast, ToastContainer } from "react-toastify";
-
-import { ElectricGuitar } from "@/public/images";
-
-import { trimInstrumentName } from "@/utils";
+import { getInstrument } from "@/services/instruments/instrumentService";
 
 import { TOAST_MESSAGES } from "@/constants";
 
 const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
 
 const Instrument: React.FC = () => {
-  const { instrument } = useParams();
+  const [instrument, setInstrument] = useState<any>(null);
 
-  console.log(trimInstrumentName(instrument));
+  const { instrument: instrumentId } = useParams();
+
+  useEffect(() => {
+    const fetchInstrument = async () => {
+      const instrument = await getInstrument(instrumentId);
+
+      setInstrument(instrument);
+    };
+
+    fetchInstrument();
+  }, []);
+
+  console.log(instrument);
 
   const handleAddToCart = (e: any) => {
     e.stopPropagation();
@@ -33,7 +41,7 @@ const Instrument: React.FC = () => {
 
   return (
     <main>
-      <h2>Guitar {instrument}</h2>
+      <h2>Guitar {instrument?.name}</h2>
 
       <div className={styles.pageSections}>
         {/* <Image
@@ -50,8 +58,8 @@ const Instrument: React.FC = () => {
                 <a href="#">Write a review</a>
               </div>
 
-              <p className={styles.brandName}>Gibson</p>
-              <h3 className={styles.price}>999$</h3>
+              <p className={styles.brandName}>{instrument?.brandName}</p>
+              <h3 className={styles.price}>{instrument?.price}</h3>
 
               <p className={styles.availability}>
                 The instrument is available at our store
@@ -70,10 +78,7 @@ const Instrument: React.FC = () => {
 
           <div className={styles.instrumentCharacteristics}>
             <p className={styles.instrumentDescription}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. In,
-              itaque labore sequi, molestiae laborum excepturi aliquid tempora
-              cum, exercitationem illo cupiditate aspernatur modi commodi
-              provident! Doloremque fuga quasi blanditiis ducimus.
+              {instrument?.description}
             </p>
 
             <ul className={styles.instrumentCharacteristicsList}>

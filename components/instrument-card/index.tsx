@@ -23,22 +23,28 @@ import { TOAST_MESSAGES } from "@/constants";
 const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
 
 interface InstrumentCardProps {
-  withNewPin?: boolean;
+  isNew?: boolean;
   name: string;
   price: string;
   instrumentType: string; // add enum with all possible types
+  section: string;
+  image: string;
+  id: string;
 }
 
 const InstrumentCard: React.FC<InstrumentCardProps> = ({
-  withNewPin,
+  isNew,
   name,
   price,
+  section,
   instrumentType,
+  image,
+  id,
 }) => {
   const { push } = useRouter();
 
   const handleInstrumentNavigation = () => {
-    push(`/shop/pianos/${trimInstrumentName(name)}`);
+    push(`/shop/${section}/${id}`);
   };
 
   const handleAddToCart = (e: any) => {
@@ -69,7 +75,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         Add to cart
       </Button>
 
-      {withNewPin && <div className={styles.newPin}>New</div>}
+      {isNew && <div className={styles.newPin}>New</div>}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styles from "./page.module.scss";
 
@@ -16,35 +16,48 @@ import { Chat } from "@/public/icons";
 
 import { INSTRUMENTS } from "@/constants";
 
+import { getInstruments } from "@/services/instruments/instrumentService";
+
 const Shop: React.FC = () => {
-  const [items, setItems] = useState(INSTRUMENTS.slice(0, 20));
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
+  // const [items, setItems] = useState(INSTRUMENTS.slice(0, 20));
+  // const [hasMore, setHasMore] = useState(true);
+  // const [page, setPage] = useState(1);
+  const [instruments, setInstruments] = useState([]);
 
   const [isModalOpened, setIsModalOpened] = useState(false);
+
+  useEffect(() => {
+    const fetchInstruments = async () => {
+      const instruments = await getInstruments();
+
+      setInstruments(instruments);
+    };
+
+    fetchInstruments();
+  }, []);
 
   const handleClick = () => {
     setIsModalOpened(true);
   };
 
-  const loadMoreData = () => {
-    if (items.length >= INSTRUMENTS.length) {
-      setHasMore(false);
-      return;
-    }
+  // const loadMoreData = () => {
+  //   if (items.length >= INSTRUMENTS.length) {
+  //     setHasMore(false);
+  //     return;
+  //   }
 
-    setTimeout(() => {
-      const newItems = INSTRUMENTS.slice(page * 20, (page + 1) * 20);
-      setItems((prevItems) => [...prevItems, ...newItems]);
-      setPage((prevPage) => prevPage + 1);
-    }, 1000); // Simulate an API call delay
-  };
+  //   setTimeout(() => {
+  //     const newItems = INSTRUMENTS.slice(page * 20, (page + 1) * 20);
+  //     setItems((prevItems) => [...prevItems, ...newItems]);
+  //     setPage((prevPage) => prevPage + 1);
+  //   }, 1000); // Simulate an API call delay
+  // };
 
   return (
     <main>
       <h2 className={styles.heading}>Shop</h2>
 
-      <InfiniteScroll
+      {/* <InfiniteScroll
         dataLength={items.length}
         next={loadMoreData}
         hasMore={hasMore}
@@ -55,18 +68,24 @@ const Shop: React.FC = () => {
           </>
         }
         className={styles.instruments}
-      >
-        {items.map(({ name, id, price, instrumentType }) => (
-          <div key={id} className={styles.instrumentCardWrapper}>
-            <InstrumentCard
-              price={price}
-              name={name}
-              instrumentType={instrumentType}
-              withNewPin
-            />
-          </div>
+      > */}
+      <div className={styles.instruments}>
+        {instruments.map((instrument: any) => (
+          // <div key={id} className={styles.instrumentCardWrapper}>
+          <InstrumentCard
+            key={instrument._id}
+            id={instrument._id}
+            price={instrument.price}
+            name={instrument.name}
+            section={instrument.section}
+            instrumentType={instrument.instrumentType}
+            isNew={instrument.isNew}
+            image={instrument.image}
+          />
+          // </div>
         ))}
-      </InfiniteScroll>
+      </div>
+      {/* </InfiniteScroll> */}
 
       {isModalOpened ? (
         <SupportModal setIsModalOpened={setIsModalOpened} />

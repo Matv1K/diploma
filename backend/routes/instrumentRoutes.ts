@@ -41,7 +41,7 @@ router.post("/", instrumentValidator, async (req: Request, res: Response) => {
 
     res.status(201).send(savedInstrument);
   } catch (error) {
-    console.error("Error saving the instrument: ", error);
+    console.error("Error saving instrument: ", error);
     res.status(500).send(`Something went wrong: ${error}`);
   }
 });
@@ -54,7 +54,32 @@ router.get("/", async (req: Request, res: Response) => {
 
     res.status(200).send(instruments);
   } catch (error) {
-    console.error("Error geting the instruments: ", error);
+    console.error("Error fetching instruments: ", error);
+    res.status(500).send(`Something went wrong: ${error}`);
+  }
+});
+
+// ROUTE FOR GETTING ONE SPECIFIC INSTRUMENT BY ID
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const instrument = await Instrument.findById(id);
+
+    res.status(200).send(instrument);
+  } catch (error) {
+    console.error("Error fetching instruments");
+    res.status(500).send(`Something went wrong: ${error}`);
+  }
+});
+
+router.get("/sale", async (req: Request, res: Response) => {
+  try {
+    const instruments = await Instrument.find({ onSale: true });
+
+    res.status(200).send(instruments);
+  } catch (error) {
+    console.error("Error fetching instruments on sale");
     res.status(500).send(`Something went wrong: ${error}`);
   }
 });
