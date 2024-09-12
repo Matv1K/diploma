@@ -1,6 +1,9 @@
-#dependencies
+# dependencies
 /node_modules
 
 
 # local env files
 .env*
+
+# api
+requests.http

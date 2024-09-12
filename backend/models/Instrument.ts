@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 // ADD ENUM TO SECTION FIELD LATER
 
@@ -17,4 +17,4 @@ const instrumentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Instrument", instrumentSchema);
+export default mongoose.model("Instrument", instrumentSchema);

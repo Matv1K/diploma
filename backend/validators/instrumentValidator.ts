@@ -19,11 +19,7 @@ export const instrumentValidator = [
     .notEmpty()
     .withMessage("Price is required"),
 
-  body("image")
-    .isURL()
-    .withMessage("Image must be a valid URL")
-    .notEmpty()
-    .withMessage("Image is required"),
+  body("image").isString(),
 
   body("isNew").optional().isBoolean().withMessage("isNew must be a boolean"),
 

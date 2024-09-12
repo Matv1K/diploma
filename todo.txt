@@ -36,3 +36,4 @@
 49. Authorization with google
 49. Add my own account settings where you can set your location, change password. There u can also see your previous orders
 50. ADD ENUM TO SECTION FIELD on mongoose model
+51. CONFIGURE CORS ONLY FOR OUR CLIENT

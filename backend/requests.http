@@ -1,1 +1,22 @@
+// CREATE INSTRUMENT
+
 POST http://localhost:5000/instruments
+
+
+// mockup body of the request
+
+# {
+#     "name": "Gibson formula-3",
+#     "description": "good guitar of akwjwlke",
+#     "price": "1499$",
+#     "image": "image",
+#     "isNew": true,
+#     "section": "guitars",
+#     "brandName": "Gibson",
+#     "salePrice": "",
+#     "onSale": false
+# }
+
+// GET ALL INSTRUMENTS
+
+GET http://localhost:5000/instruments
