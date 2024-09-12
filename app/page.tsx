@@ -1,35 +1,50 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import { useRouter } from "next/navigation";
 
-import { showModal } from "@/features/modal/modalSlice";
-
 import styles from "./page.module.scss";
-
-import { Piano } from "@/public/images";
-import { Chat } from "@/public/icons";
 
 import { Carousel, SupportModal, Button, Modal } from "@/components";
 
 import Image from "next/image";
 import Link from "next/link";
 
+import { showModal } from "@/features/modal/modalSlice";
+
+import { Piano } from "@/public/images";
+import { Chat } from "@/public/icons";
+
 import {
-  POPULAR_ITEMS,
-  POPULAR_SECTIONS,
-  POPULAR_BRANDS,
-  NEW_ITEMS,
-} from "@/constants";
+  getPopularIstruments,
+  getNewInstruments,
+} from "@/services/instruments/instrumentService";
+
+import { ALL_SECTIONS, POPULAR_BRANDS } from "@/constants";
 
 const Home: React.FC = () => {
   // ADD TYPES TO THE STATES
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
-  const [instruments, setInstruments] = useState([]);
+  const [popularInstruments, setPopularInstruments] = useState<any>([]);
+  const [newInstruments, setNewInstruments] = useState<any>([]);
+
+  console.log(popularInstruments.length);
+
+  useEffect(() => {
+    const fetchInstruments = async () => {
+      const popularInstruments = await getPopularIstruments();
+      const newInstruments = await getNewInstruments();
+
+      setPopularInstruments(popularInstruments);
+      setNewInstruments(newInstruments);
+    };
+
+    fetchInstruments();
+  }, []);
 
   const isSignInModalOpen = useSelector((state: any) => state.modal.isOpen);
 
@@ -76,7 +91,7 @@ const Home: React.FC = () => {
 
         <div>
           <h2>Most popular sections</h2>
-          <Carousel items={POPULAR_SECTIONS} />
+          <Carousel items={ALL_SECTIONS} />
         </div>
 
         <div className={styles.brandsSection}>
@@ -100,7 +115,7 @@ const Home: React.FC = () => {
 
         <div>
           <h2>Most popular items</h2>
-          <Carousel items={POPULAR_ITEMS} isInstrumentsCarousel />
+          <Carousel items={popularInstruments} isInstrumentsCarousel />
         </div>
 
         <div className={styles.block}>
@@ -129,7 +144,7 @@ const Home: React.FC = () => {
         <div>
           <h2>New items</h2>
 
-          <Carousel items={NEW_ITEMS} isInstrumentsCarousel />
+          <Carousel items={newInstruments} isInstrumentsCarousel />
         </div>
       </div>
 

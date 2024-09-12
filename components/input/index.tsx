@@ -18,6 +18,7 @@ interface InputProps {
   handleIconClick?: () => void;
   buttonIcon?: any;
   buttonText?: string;
+  value?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -32,6 +33,7 @@ const Input: React.FC<InputProps> = ({
   handleIconClick,
   buttonIcon,
   buttonText,
+  value,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -43,6 +45,7 @@ const Input: React.FC<InputProps> = ({
         placeholder={placeholder}
         type={type}
         title={title}
+        value={value}
       />
 
       {icon && (

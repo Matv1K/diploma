@@ -70,20 +70,30 @@ const Shop: React.FC = () => {
         className={styles.instruments}
       > */}
       <div className={styles.instruments}>
-        {instruments.map((instrument: any) => (
-          // <div key={id} className={styles.instrumentCardWrapper}>
-          <InstrumentCard
-            key={instrument._id}
-            id={instrument._id}
-            price={instrument.price}
-            name={instrument.name}
-            section={instrument.section}
-            instrumentType={instrument.instrumentType}
-            isNew={instrument.isNew}
-            image={instrument.image}
-          />
-          // </div>
-        ))}
+        {instruments.map(
+          ({
+            _id,
+            price,
+            name,
+            section,
+            instrumentType,
+            isNew,
+            image,
+          }: any) => (
+            // <div key={id} className={styles.instrumentCardWrapper}>
+            <InstrumentCard
+              key={_id}
+              id={_id}
+              price={price}
+              name={name}
+              section={section}
+              instrumentType={instrumentType}
+              isNew={isNew}
+              image={image}
+            />
+            // </div>
+          )
+        )}
       </div>
       {/* </InfiniteScroll> */}
 

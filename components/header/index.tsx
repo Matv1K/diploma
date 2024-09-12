@@ -124,7 +124,7 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {isCatalogOpened && <Catalog />}
+      {isCatalogOpened && <Catalog closeCatalog={closeCatalog} />}
     </>
   );
 };

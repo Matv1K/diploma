@@ -13,7 +13,8 @@ import ReactCarousel from "react-multi-carousel";
 import { trimInstrumentName } from "@/utils";
 
 interface CarouselProps {
-  items: { name: string; id: number; text?: string }[];
+  // items: { name: string; id: number; text?: string }[];
+  items: any;
   isInstrumentsCarousel?: boolean;
 }
 
@@ -25,7 +26,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
   const handleItemNavigation = (section: string, name: string) => {
     if (isInstrumentsCarousel) {
-      push(`/shop/${section}/${trimInstrumentName(name)}`);
+      push(`/shop/${section}/${name}`);
     } else {
       push(`/shop/${name.toLocaleLowerCase()}`);
     }
@@ -57,7 +58,7 @@ const Carousel: React.FC<CarouselProps> = ({
       responsive={responsive}
       infinite={true}
       autoPlay={true}
-      autoPlaySpeed={5000}
+      autoPlaySpeed={10000}
       keyBoardControl={true}
       customTransition="all .5"
       transitionDuration={500}
@@ -65,10 +66,12 @@ const Carousel: React.FC<CarouselProps> = ({
       removeArrowOnDeviceType={["tablet", "mobile"]}
       itemClass={styles.carouselItemPadding}
     >
-      {items.map(({ name, id, text }) => (
+      {items.map(({ name, _id, text, section }: any) => (
         <div
-          onClick={() => handleItemNavigation("pianos", name)}
-          key={id}
+          onClick={() =>
+            handleItemNavigation(section, isInstrumentsCarousel ? _id : name)
+          }
+          key={name}
           className={styles.carouselItem}
         >
           <h3>{name}</h3>
