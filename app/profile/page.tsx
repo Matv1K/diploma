@@ -4,47 +4,63 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
-const ORDERS = [
-  {
-    id: "21ds255",
-    items: [
-      { id: 1, name: "Fender cd-60", price: 999, color: "yellow" },
-      { id: 2, name: "Martin 5d", price: 499, color: "brown" },
-    ],
-    state: "delivered",
-  },
-  {
-    id: "21ds256",
-    items: [{ id: 1, name: "Cort d350", price: 399, color: "yellow" }],
-    state: "delivered",
-  },
-];
+import { ORDERS } from "@/constants";
+
+import { calculateTotalPrice } from "@/utils";
 
 const Profile: React.FC = () => {
   return (
     <main>
-      <h2>My profile</h2>
+      <h2>My Profile</h2>
+
+      <p className={styles.discount}>Your personal discount is: {"5%"}</p>
 
       <div className={styles.orders}>
         {ORDERS.map(({ id, items, state }) => {
+          const totalPrice = calculateTotalPrice(items);
+
           return (
-            <>
+            <div key={id}>
               <h4 className={styles.headingOrder}>Order {id}</h4>
-              <table className={styles.order} key={id}>
-                {items.map(({ name, price, color, id }) => {
-                  return (
-                    <tbody>
-                      <tr key={id}>
-                        <th className={styles.tableCell}>{color}</th>
-                        <th className={styles.tableCell}>{name}</th>
-                        <th className={styles.tableCell}>{price}$</th>
-                        <th className={styles.tableCell}>{state}</th>
-                      </tr>
-                    </tbody>
-                  );
-                })}
+              <table className={styles.order}>
+                <thead>
+                  <tr>
+                    <th className={`${styles.tableCell} ${styles.tableHeader}`}>
+                      Color
+                    </th>
+                    <th className={`${styles.tableCell} ${styles.tableHeader}`}>
+                      Name
+                    </th>
+                    <th className={`${styles.tableCell} ${styles.tableHeader}`}>
+                      Price
+                    </th>
+                    <th className={`${styles.tableCell} ${styles.tableHeader}`}>
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map(({ name, price, color, id }) => (
+                    <tr key={id} className={styles.tableRow}>
+                      <td className={styles.tableCell}>{color}</td>
+                      <td className={styles.tableCell}>{name}</td>
+                      <td className={styles.tableCell}>{price}$</td>
+                      <td className={styles.tableCell}>{state}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td
+                      className={styles.tableCell}
+                      colSpan={3}
+                      style={{ fontWeight: "bold", textAlign: "right" }}
+                    >
+                      Total Price:
+                    </td>
+                    <td className={styles.tableCell}>{totalPrice}$</td>
+                  </tr>
+                </tbody>
               </table>
-            </>
+            </div>
           );
         })}
       </div>

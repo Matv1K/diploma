@@ -2,17 +2,29 @@
 
 import React, { useState, useEffect } from "react";
 
+import { useDispatch } from "react-redux";
+
 import styles from "./page.module.scss";
 
 import { ToastContainer } from "react-toastify";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import { Input } from "@/components";
+
 import Image from "next/image";
 
-import { InstrumentCard, Loader, SupportModal, Button } from "@/components";
+import {
+  InstrumentCard,
+  Loader,
+  SupportModal,
+  Button,
+  Modal,
+} from "@/components";
 
 import { Chat } from "@/public/icons";
+
+import { showModal } from "@/features/modal/modalSlice";
 
 import { INSTRUMENTS } from "@/constants";
 
@@ -26,6 +38,8 @@ const Shop: React.FC = () => {
 
   const [isModalOpened, setIsModalOpened] = useState(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchInstruments = async () => {
       const instruments = await getInstruments();
@@ -36,7 +50,8 @@ const Shop: React.FC = () => {
     fetchInstruments();
   }, []);
 
-  const handleClick = () => {
+  const handleOpenModal = () => {
+    dispatch(showModal());
     setIsModalOpened(true);
   };
 
@@ -98,9 +113,12 @@ const Shop: React.FC = () => {
       {/* </InfiniteScroll> */}
 
       {isModalOpened ? (
-        <SupportModal setIsModalOpened={setIsModalOpened} />
+        <Modal buttonName="Send" heading="Modal">
+          kasdjfkl ajsdlkfj askfdjlka sjflkjsdfk
+          <Input type="text" />
+        </Modal>
       ) : (
-        <Button onClick={handleClick} className={styles.buttonSupport}>
+        <Button onClick={handleOpenModal} className={styles.buttonSupport}>
           <Image src={Chat} alt="Support" width={24} height={24} />
         </Button>
       )}

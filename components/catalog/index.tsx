@@ -22,7 +22,7 @@ const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
   };
 
   return (
-    <div className={styles.overlay}>
+    <div className={styles.overlay} onClick={handleCloseCatalog}>
       <div className={styles.catalog}>
         <div className={styles.links}>
           {CATALOG_LINKS.map(({ link, id }): any => {

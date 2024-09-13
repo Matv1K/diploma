@@ -40,6 +40,62 @@ export const POPULAR_BRANDS = [
   { name: "Flight", id: 4 },
 ];
 
+export const ORDERS = [
+  {
+    id: "21ds255",
+    items: [
+      {
+        id: 1,
+        name: "Fender cd-60",
+        price: 999,
+        color: "yellow",
+        image: "../../public/images/electric-guitar.webp",
+      },
+      {
+        id: 2,
+        name: "Martin 5d",
+        price: 499,
+        color: "brown",
+        image: "../../public/images/electric-guitar.webp",
+      },
+    ],
+    state: "Delivered",
+  },
+  {
+    id: "21ds256",
+    items: [
+      {
+        id: 1,
+        name: "Cort d350",
+        price: 399,
+        color: "yellow",
+        image: "../../public/images/electric-guitar.webp",
+      },
+    ],
+    state: "Delivered",
+  },
+  {
+    id: "21ds257",
+    items: [
+      {
+        id: 1,
+        name: "Cort d350",
+        price: 399,
+        color: "yellow",
+        image: "../../public/images/electric-guitar.webp",
+      },
+      {
+        id: 1,
+        name: "Cort d350",
+        price: 399,
+        color: "yellow",
+        image: "../../public/images/electric-guitar.webp",
+      },
+    ],
+    state: "Delivered",
+  },
+];
+
 export const HEADER_LINKS = [{ href: "/shop", name: "Shop" }];
 
 export const TOAST_MESSAGES = {

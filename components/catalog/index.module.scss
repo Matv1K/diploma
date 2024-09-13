@@ -11,11 +11,11 @@
 .catalog {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 82px;
   background-color: $background-color;
   display: flex;
   flex-flow: column;
-  width: 35vw;
+  width: 30vw;
   height: calc(100vh - 82px);
   z-index: 9999;
   padding: 15px;
