@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import instrumentRoutes from "./routes/instruments/instrumentRoutes";
+import userRoutes from "./routes/users/userRoutes";
 
 dotenv.config();
 
@@ -19,7 +20,9 @@ mongoose
   .then(() => console.log("MongoDB is connected"))
   .catch(() => console.log("Could not set the connection with MongoDB"));
 
+// ROUTES
 server.use("/instruments", instrumentRoutes);
+server.use("/users", userRoutes);
 
 const port = process.env.PORT || 5000;
 
