@@ -15,12 +15,16 @@ import { Button, Catalog, Input } from "../../components";
 
 import { Cart, Heart, Logo, Search, Close, Settings } from "@/public/icons";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
+
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
 
 import { HEADER_LINKS } from "@/constants";
 
 const Header: React.FC = () => {
-  const [isUserSignedIn, setIsUserSignedIn] = useState(true);
+  const user = useCurrentUser();
+
+  console.log(user);
 
   const isCatalogOpened = useSelector(
     (state: any) => state.catalog.isCatalogOpen
@@ -89,7 +93,7 @@ const Header: React.FC = () => {
         </ul>
 
         <div>
-          {isUserSignedIn ? (
+          {user ? (
             <div className={styles.icons}>
               <div>
                 <Link href="/profile">

@@ -23,6 +23,8 @@ import {
   getNewInstruments,
 } from "@/services/instruments/instrumentService";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
+
 import { ALL_SECTIONS, POPULAR_BRANDS } from "@/constants";
 
 const Home: React.FC = () => {
@@ -31,8 +33,6 @@ const Home: React.FC = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   const [popularInstruments, setPopularInstruments] = useState<any>([]);
   const [newInstruments, setNewInstruments] = useState<any>([]);
-
-  console.log(popularInstruments.length);
 
   useEffect(() => {
     const fetchInstruments = async () => {

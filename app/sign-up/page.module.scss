@@ -2,6 +2,9 @@
 
 .form {
   margin-top: 20px;
+  display: flex;
+  flex-flow: column;
+  gap: 20px;
 }
 
 .input {
