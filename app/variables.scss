@@ -1,12 +1,18 @@
-// COLORS
+// colors
 
 $primary-color: rgb(187, 231, 216);
 $secondary-color: rgb(239, 137, 239);
 $background-color: rgb(249, 249, 249);
 $black-color: #000000;
 
-// FONTS
+// fonts
 
-$primary-font-size: 16px;
-$medium-font-size: 18px;
-$large-font-size: 20px;
+$font-size-base: 16px;
+$font-size-medium: 18px;
+$font-size-large: 20px;
+
+// media queries
+
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;

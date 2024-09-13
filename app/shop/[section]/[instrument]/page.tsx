@@ -14,7 +14,7 @@ import { getInstrument } from "@/services/instruments/instrumentService";
 
 import { removeSeparator } from "@/utils";
 
-import { TOAST_MESSAGES } from "@/constants";
+import { TOAST_MESSAGES } from "../../../constants";
 
 const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
 

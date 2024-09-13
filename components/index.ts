@@ -11,3 +11,4 @@ export { default as Loader } from "./loader";
 export { default as Catalog } from "./catalog";
 export { default as InstrumentsTable } from "./instruments-table";
 export { default as Comments } from "./comments";
+export { default as FilterCard } from "./filter-card";

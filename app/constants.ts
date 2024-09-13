@@ -40,6 +40,12 @@ export const POPULAR_BRANDS = [
   { name: "Flight", id: 4 },
 ];
 
+export const ORDER_STATES = {
+  REJECTED: "rejected",
+  DELIVERED: "delivered",
+  IN_PROGRESS: "in progress",
+};
+
 export const ORDERS = [
   {
     id: "21ds255",
@@ -59,7 +65,7 @@ export const ORDERS = [
         image: "../../public/images/electric-guitar.webp",
       },
     ],
-    state: "Delivered",
+    state: ORDER_STATES.DELIVERED,
   },
   {
     id: "21ds256",
@@ -72,7 +78,7 @@ export const ORDERS = [
         image: "../../public/images/electric-guitar.webp",
       },
     ],
-    state: "Delivered",
+    state: ORDER_STATES.IN_PROGRESS,
   },
   {
     id: "21ds257",
@@ -92,7 +98,7 @@ export const ORDERS = [
         image: "../../public/images/electric-guitar.webp",
       },
     ],
-    state: "Delivered",
+    state: ORDER_STATES.DELIVERED,
   },
 ];
 

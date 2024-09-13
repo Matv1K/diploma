@@ -11,7 +11,7 @@ interface InputProps {
   className?: string;
   id?: string;
   name?: string;
-  onChange?: () => void;
+  onChange?: any;
   type: "text" | "email" | "password" | "search";
   title?: string;
   icon?: any;
@@ -19,6 +19,8 @@ interface InputProps {
   buttonIcon?: any;
   buttonText?: string;
   value?: string;
+  required?: boolean;
+  autoComplete?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -34,6 +36,8 @@ const Input: React.FC<InputProps> = ({
   buttonIcon,
   buttonText,
   value,
+  required,
+  autoComplete,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -46,6 +50,8 @@ const Input: React.FC<InputProps> = ({
         type={type}
         title={title}
         value={value}
+        required={required}
+        autoComplete={autoComplete}
       />
 
       {icon && (

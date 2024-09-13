@@ -25,7 +25,7 @@ import {
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 
-import { ALL_SECTIONS, POPULAR_BRANDS } from "@/constants";
+import { ALL_SECTIONS, POPULAR_BRANDS } from "./constants";
 
 const Home: React.FC = () => {
   // ADD TYPES TO THE STATES

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Open_Sans, Montserrat } from "next/font/google";
 
 import "./globals.scss";
 
-import ReduxProvider from "@/provider";
+import ReduxProvider from "@/app/provider";
 
 import { Footer, Header } from "@/components";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"] });
+const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Diploma Project",
@@ -22,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body
+        className={`${montserrat.className} ${openSans.className}`}
+        suppressHydrationWarning={true}
+      >
         <ReduxProvider>
           <Header />
           {children}

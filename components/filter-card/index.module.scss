@@ -1,0 +1,18 @@
+.card {
+  border-radius: 8px;
+  border: 1px solid red;
+  padding: 20px;
+}
+
+.list {
+  display: flex;
+  flex-flow: column;
+
+  li {
+    list-style: none;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}

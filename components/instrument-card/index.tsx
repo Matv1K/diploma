@@ -18,7 +18,7 @@ import { trimInstrumentName } from "@/utils";
 
 import { toast } from "react-toastify";
 
-import { TOAST_MESSAGES } from "@/constants";
+import { TOAST_MESSAGES } from "@/app/constants";
 
 const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
 

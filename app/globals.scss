@@ -17,6 +17,19 @@ body {
 body {
   background-color: $background-color;
   color: $primary-color;
+  font-family: "Montserrat", sans-serif;
+  font-size: $font-size-base;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
 }
 
 main {
@@ -27,9 +40,40 @@ main {
 
 a {
   color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: underline;
+  }
+}
+
+button {
+  font-family: inherit;
+}
+
+li {
+  list-style: none;
 }
 
 h2 {
   color: $primary-color;
   text-transform: capitalize;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: $black-color;
+  opacity: 0.6;
+  font-family: inherit;
+}
+
+input,
+textarea {
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+  }
 }

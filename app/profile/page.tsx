@@ -4,7 +4,7 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
-import { ORDERS } from "@/constants";
+import { ORDERS } from "../constants";
 
 import { calculateTotalPrice } from "@/utils";
 

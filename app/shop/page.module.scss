@@ -1,9 +1,10 @@
 .instruments {
   margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   width: 100%;
+  flex: 70%;
   // overflow: hidden;
 }
 
@@ -18,4 +19,15 @@
   z-index: 9999;
   border-radius: 50%;
   background-color: yellow;
+}
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.filterCard {
+  margin-top: 20px;
+  flex: 20%;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,7 +11,7 @@ import styles from "./index.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 
-import { Button, Catalog, Input } from "../../components";
+import { Button, Catalog, Input, Loader } from "../../components";
 
 import { Cart, Heart, Logo, Search, Close, Settings } from "@/public/icons";
 
@@ -19,12 +19,10 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
 
-import { HEADER_LINKS } from "@/constants";
+import { HEADER_LINKS } from "@/app/constants";
 
 const Header: React.FC = () => {
-  const user = useCurrentUser();
-
-  console.log(user);
+  const { user, loading } = useCurrentUser();
 
   const isCatalogOpened = useSelector(
     (state: any) => state.catalog.isCatalogOpen
@@ -62,8 +60,6 @@ const Header: React.FC = () => {
                   <div className={styles.line}></div>
                   <div className={styles.line}></div>
                 </div>
-
-                {/* <span>Catalog</span> */}
               </>
             )}
           </Button>

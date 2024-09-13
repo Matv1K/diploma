@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { trimInstrumentName } from "@/utils";
 
-import { CATALOG_LINKS } from "@/constants";
+import { CATALOG_LINKS } from "@/app/constants";
 
 interface CatalogProps {
   closeCatalog: any;

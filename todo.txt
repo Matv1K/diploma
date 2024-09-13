@@ -1,22 +1,17 @@
-2. ADD GLOBAL STYLES
-3. ADD ROUTING
 4. ADD eslint
 5. ADD HUSKY
 6. ADD CI/CD PIPELINE
 7. ADD DOCKER
 8. ADD FAVICON
 9. Change LOGO (musify)
-11. ADD CUSTOM FONT
 12. MAKE ALL PX RELATIVE VALUES
 13. ADD LOADERS TO CAROUSELS
-14. ADD CUSTOM FONT TO THE BUTTON
 15. INVESTIGATE SERVER COMPONENTS 
 17. WHAT IS MICROFRONTENDS
 18. GIVE DISCOUNTS TO USERS BASED ON THEIR PURCHASES
 19. USE REACT HOOK FORM FOR HANDLING FORMS
 20. Read about loading in next.js
 21. Read about authorization/authentication in next.js
-22. Add admin panel. Think about no-code solution
 23. You can run both Next.js and Express.js separately, or you can integrate them to run together using a proxy.
 24. Integrate digital ocean for staging and production
 25. Add day.js (or moment.js) to work with dates
@@ -27,20 +22,15 @@
 34. process next tick
 35. add rtk query
 36. Add three.js library
-38. Add number that indicates the amount of element in the cart
 42. Style placeholder on input component
-45. Fix footer
 46. Add instruments table that will display all the items on the cart and on the liked pages
 47. Create different button options.
 48. Add ability to add icon to button
 49. Authorization with google
-49. Add my own account settings where you can set your location, change password. There u can also see your previous orders
+49. Add my own account settings where you can set your location, change password
 50. ADD ENUM TO SECTION FIELD on mongoose model
 51. CONFIGURE CORS ONLY FOR OUR CLIENT
 52. What is vercel
-53. Move Provider inside the app folder ???
-54. Move store.ts inside the config folder ???
-55. Move constants inside the app folder ???
 56. Create types folders (for each service)
 57. Create types folder (for constants)
 58. Add infinite scroll
@@ -50,6 +40,6 @@
 62. Create postman base url variable
 63. use res.json instead of res.send && investigate why it's better this way
 64. INVESTIGATE ROUTE PRECEDENCE
-65. Add field: instrument bought
 66. State of the order
 67. Add customization
+68. Retool admin dashboard

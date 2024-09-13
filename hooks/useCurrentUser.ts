@@ -4,18 +4,25 @@ import { getCurrentUser } from "@/services/users/userService";
 
 const useCurrentUser = () => {
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const user = await getCurrentUser();
+      try {
+        const user = await getCurrentUser();
 
-      setUser(user);
+        setUser(user);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchCurrentUser();
   }, []);
 
-  return user;
+  return { user, loading };
 };
 
 export default useCurrentUser;

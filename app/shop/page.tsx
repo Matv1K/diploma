@@ -10,7 +10,7 @@ import { ToastContainer } from "react-toastify";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Input } from "@/components";
+import { Input, FilterCard } from "@/components";
 
 import Image from "next/image";
 
@@ -26,7 +26,7 @@ import { Chat } from "@/public/icons";
 
 import { showModal } from "@/features/modal/modalSlice";
 
-import { INSTRUMENTS } from "@/constants";
+import { INSTRUMENTS } from "../constants";
 
 import { getInstruments } from "@/services/instruments/instrumentService";
 
@@ -84,6 +84,9 @@ const Shop: React.FC = () => {
         }
         className={styles.instruments}
       > */}
+      {/* <div className={styles.wrapper}> */}
+      {/* <FilterCard className={styles.filterCard} /> */}
+
       <div className={styles.instruments}>
         {instruments.map(
           ({
@@ -110,6 +113,7 @@ const Shop: React.FC = () => {
           )
         )}
       </div>
+      {/* </div> */}
       {/* </InfiniteScroll> */}
 
       {isModalOpened ? (
