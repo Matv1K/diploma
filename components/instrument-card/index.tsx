@@ -13,7 +13,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "../../components";
 
 import { ElectricGuitar } from "@/public/images";
-import { Heart } from "@/public/icons";
+
+import { FiHeart } from "react-icons/fi";
 
 import { trimInstrumentName } from "@/utils";
 
@@ -36,6 +37,7 @@ interface InstrumentCardProps {
   image: string;
   id: string;
   colors: any;
+  withLikeIcon?: boolean;
 }
 
 const InstrumentCard: React.FC<InstrumentCardProps> = ({
@@ -47,6 +49,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   image,
   id,
   colors,
+  withLikeIcon,
 }) => {
   const [selectedColor, setSelectedColor] = useState<string>("");
 
@@ -54,6 +57,12 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
   const handleInstrumentNavigation = () => {
     push(`/shop/${section}/${id}`);
+  };
+
+  const handleLikeInstrument = (e: any) => {
+    e.stopPropagation();
+
+    console.log("like");
   };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -110,10 +119,20 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           </label>
         ))}
       </div>
+
       <Button className={styles.button} onClick={handleAddToCart}>
         Add to cart
       </Button>
+
       {isNew && <div className={styles.newPin}>New</div>}
+
+      {withLikeIcon && (
+        <FiHeart
+          className={styles.likeButton}
+          size={24}
+          onClick={handleLikeInstrument}
+        />
+      )}
     </div>
   );
 };

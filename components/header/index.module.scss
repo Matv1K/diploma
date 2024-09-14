@@ -113,7 +113,7 @@
   left: 0;
   top: 120%;
   width: 100%;
-  border: 1px solid red;
+  border: 1px solid violet;
   background-color: #fff;
   border-radius: 8px;
   padding: 10px;
@@ -130,5 +130,15 @@
 
   &:not(:last-child) {
     margin-bottom: 8px;
+  }
+}
+
+.icon {
+  color: #fff;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ffbf00;
   }
 }

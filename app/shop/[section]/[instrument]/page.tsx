@@ -8,13 +8,17 @@ import { toast, ToastContainer } from "react-toastify";
 
 import styles from "./page.module.scss";
 
+import Image from "next/image";
+
 import { Button, Comments } from "@/components";
 
 import { getInstrument } from "@/services/instruments/instrumentService";
-
 import { addCartItem } from "@/services/cartService.ts/cartService";
+import { addLikedItem } from "@/services/likedServices/likedService";
 
 import { removeSeparator } from "@/utils";
+
+import { FiHeart } from "react-icons/fi";
 
 import { TOAST_MESSAGES } from "../../../constants";
 
@@ -58,6 +62,18 @@ const Instrument: React.FC = () => {
     setSelectedColor(e.target.value);
   };
 
+  const handleLikeItem = async () => {
+    await addLikedItem({
+      price: instrument?.price,
+      name: instrument?.name,
+      image: "///",
+      color: "red",
+      brandName: instrument?.brandName,
+      instrumentId: instrument?._id,
+      section: instrument?.section,
+    });
+  };
+
   return (
     <main>
       <h2>{removeSeparator(instrument?.name)}</h2>
@@ -70,7 +86,7 @@ const Instrument: React.FC = () => {
         /> */}
         <div className={styles.instrumentImage}>Instrument Image</div>
 
-        <div className={styles.istrumentData}>
+        <div className={styles.instrumentData}>
           <div className={styles.instrumentInfo}>
             <div className={styles.instrumentMainData}>
               <div className={styles.review}>
@@ -146,6 +162,12 @@ const Instrument: React.FC = () => {
               </ul>
             </div>
           </div>
+
+          <FiHeart
+            size={24}
+            onClick={handleLikeItem}
+            className={styles.likeIcon}
+          />
         </div>
       </div>
 

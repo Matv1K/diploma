@@ -38,7 +38,9 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       </th>
 
       <th className={styles.cell}>
-        <Link href={`/shop/${section}/${instrumentId}`}>{name}</Link>
+        <Link href={`/shop/${section}/${instrumentId}`}>
+          {name} / {color}
+        </Link>
       </th>
 
       <th className={styles.cell}>
@@ -50,8 +52,6 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
           +
         </Button>
       </th>
-
-      <th className={styles.cell}>{color}</th>
 
       <th className={styles.cell}>{price}</th>
     </tr>

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { FiShoppingCart, FiHeart, FiSettings } from "react-icons/fi";
+
 import { usePathname } from "next/navigation";
 
 import styles from "./index.module.scss";
@@ -11,7 +13,7 @@ import styles from "./index.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 
-import { Button, Catalog, Input, Loader } from "../../components";
+import { Button, Catalog, Input } from "../../components";
 
 import { Cart, Heart, Logo, Search, Close, Settings } from "@/public/icons";
 
@@ -54,10 +56,6 @@ const Header: React.FC = () => {
       fetchCartItems();
     }, 1500);
   }, []);
-
-  if (items) {
-    console.log(items.length);
-  }
 
   const isCatalogOpened = useSelector(
     (state: any) => state.catalog.isCatalogOpen
@@ -155,27 +153,21 @@ const Header: React.FC = () => {
           {user ? (
             <div className={styles.icons}>
               <div>
-                <Link href="/profile">
-                  <Image src={Settings} alt="profile" width={24} height={24} />
+                <Link href="/profile" className={styles.icon}>
+                  <FiSettings size={24} />
                 </Link>
               </div>
 
               <div>
-                <Link href="/liked">
-                  <Image src={Heart} alt="liked" width={24} height={24} />
+                <Link href="/liked" className={styles.icon}>
+                  <FiHeart size={24} />
                 </Link>
               </div>
 
               <div className={styles.linkContainer}>
                 <span className={styles.cartAmount}>{items.length}</span>
-                <Link href="/cart">
-                  <Image
-                    className={styles.cartImage}
-                    src={Cart}
-                    alt="cart"
-                    width={24}
-                    height={24}
-                  />
+                <Link href="/cart" className={styles.icon}>
+                  <FiShoppingCart size={24} />
                 </Link>
               </div>
             </div>

@@ -57,7 +57,6 @@ router.get("/amount", authMiddleware, async (req: Request, res: Response) => {
     const cartItems = await Cart_Item.find({ userId });
 
     const cartItemsAmount = cartItems.length;
-    console.log(cartItemsAmount);
 
     res.status(200).send(cartItemsAmount);
   } catch (error) {

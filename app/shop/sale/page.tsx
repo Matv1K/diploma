@@ -50,6 +50,7 @@ const Sale: React.FC = () => {
                 isNew={isNew}
                 image={image}
                 colors={colors}
+                withLikeIcon
               />
             );
           }

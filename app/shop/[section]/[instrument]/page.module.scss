@@ -104,7 +104,8 @@
   margin-bottom: 20px;
 }
 
-.istrumentData {
+.instrumentData {
+  position: relative;
   flex: 30%;
 }
 
@@ -145,5 +146,16 @@
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+.likeIcon {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: orangered;
   }
 }

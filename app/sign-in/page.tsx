@@ -34,8 +34,6 @@ const SignIn: React.FC = () => {
     });
   };
 
-  console.log(inputData);
-
   const handleSignIn = async (e: any) => {
     e.preventDefault();
 

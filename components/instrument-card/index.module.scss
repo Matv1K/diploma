@@ -110,3 +110,13 @@
   margin-top: 10px;
   // margin-top: 20px;
 }
+
+.likeButton {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+
+  &:hover {
+    color: orange;
+  }
+}

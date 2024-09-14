@@ -10,6 +10,7 @@ interface ButtonProps {
   className?: string;
   type?: "submit" | "reset";
   option?: "outline" | "filled" | "google";
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,6 +18,7 @@ const Button: React.FC<ButtonProps> = ({
   type,
   className,
   onClick,
+  disabled,
   option = "filled",
 }) => {
   const optionClass =
@@ -28,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       type={type}
       className={`${styles.button} ${optionClass} ${className}`}

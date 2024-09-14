@@ -105,6 +105,7 @@ const Shop: React.FC = () => {
               isNew={isNew}
               image={image}
               colors={colors}
+              withLikeIcon
             />
             // </div>
           )

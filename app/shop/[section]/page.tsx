@@ -54,6 +54,7 @@ const Section: React.FC = () => {
                 isNew={isNew}
                 colors={colors}
                 image={image}
+                withLikeIcon
               />
             );
           }

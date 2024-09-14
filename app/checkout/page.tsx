@@ -1,67 +1,49 @@
 "use client";
 
 import React, { useState } from "react";
+
 import { Elements } from "@stripe/react-stripe-js";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import stripePromise from "@/config/stripe";
+
+import {
+  CardElement,
+  useStripe,
+  useElements,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
+
+import stripePromise from "@/config/useStripeConfig";
+
 import styles from "./page.module.scss";
+
 import { Button } from "@/components";
+
+const convertToSubcurrency = (amount: number, factor = 100) => {
+  return Math.round(amount * factor);
+};
 
 const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!stripe || !elements) return;
-
-    const cardElement = elements.getElement(CardElement);
-    if (cardElement) {
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card: cardElement,
-      });
-
-      if (error) {
-        setErrorMessage(error.message || "Payment error");
-      } else {
-        console.log("Payment successful!", paymentMethod);
-        setErrorMessage(null);
-      }
-    }
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.checkoutForm}>
       <h2>Checkout</h2>
-      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
-      <div className={styles.cardDetails}>
-        <label htmlFor="card">Card Details</label>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                color: "#32325d",
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: "antialiased",
-                fontSize: "16px",
-                "::placeholder": {
-                  color: "#aab7c4",
-                },
-              },
-              invalid: {
-                color: "#fa755a",
-                iconColor: "#fa755a",
-              },
-            },
-          }}
-        />
-      </div>
-      <div className={styles.buttonContainer}>
-        <Button type="submit">Submit Payment</Button>
-      </div>
+
+      <PaymentElement />
+
+      <Button
+        disabled={!stripe}
+        className={styles.checkoutButton}
+        type="submit"
+      >
+        Pay 2000$
+      </Button>
     </form>
   );
 };
@@ -69,7 +51,14 @@ const CheckoutForm: React.FC = () => {
 const Checkout: React.FC = () => {
   return (
     <main>
-      <Elements stripe={stripePromise}>
+      <Elements
+        options={{
+          mode: "payment",
+          currency: "usd",
+          amount: convertToSubcurrency(49.9),
+        }}
+        stripe={stripePromise}
+      >
         <CheckoutForm />
       </Elements>
     </main>
