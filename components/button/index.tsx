@@ -9,7 +9,6 @@ interface ButtonProps {
   onClick?: any;
   className?: string;
   type?: "submit" | "reset";
-  icon?: any;
   option?: "outline" | "filled" | "google";
 }
 
@@ -18,7 +17,6 @@ const Button: React.FC<ButtonProps> = ({
   type,
   className,
   onClick,
-  icon,
   option = "filled",
 }) => {
   const optionClass =
@@ -34,7 +32,6 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       className={`${styles.button} ${optionClass} ${className}`}
     >
-      {icon && <Image width={24} height={24} src={icon} alt="icon" />}
       {children}
     </button>
   );

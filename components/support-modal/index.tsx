@@ -41,7 +41,7 @@ const SupportModal: React.FC<SupportModalProps> = ({ setIsModalOpened }) => {
             type="text"
             placeholder="Ask your question"
             handleIconClick={handleIconClick}
-            buttonIcon={Send}
+            icon={Send}
           />
         </div>
       </form>

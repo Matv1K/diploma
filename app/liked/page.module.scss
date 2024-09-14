@@ -1,4 +1,37 @@
+@import "../variables.scss";
+
 .empty {
   text-align: center;
   font-size: 16px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.row {
+  border: 1px solid $primary-color;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.cell {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: $primary-color;
 }

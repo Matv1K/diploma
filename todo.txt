@@ -5,7 +5,7 @@
 8. ADD FAVICON
 9. Change LOGO (musify)
 12. MAKE ALL PX RELATIVE VALUES
-13. ADD LOADERS TO CAROUSELS
+13. ADD LOADERS/SKELETONS TO CAROUSELS
 15. INVESTIGATE SERVER COMPONENTS 
 17. WHAT IS MICROFRONTENDS
 18. GIVE DISCOUNTS TO USERS BASED ON THEIR PURCHASES
@@ -16,15 +16,12 @@
 24. Integrate digital ocean for staging and production
 25. Add day.js (or moment.js) to work with dates
 28. Add error boundary component
-30. Add custom hooks
 31. CHANGE all any types
 33. FIX IMPORTS IN ALL OF THE APP
 34. process next tick
 35. add rtk query
 36. Add three.js library
 46. Add instruments table that will display all the items on the cart and on the liked pages
-47. Create different button options.
-48. Add ability to add icon to button
 49. Authorization with google
 49. Add my own account settings where you can set your location, change password
 50. ADD ENUM TO SECTION FIELD on mongoose model
@@ -37,9 +34,8 @@
 60. Dynamic routes next
 61. WebHooks add
 64. INVESTIGATE ROUTE PRECEDENCE
-66. State of the order
 67. Add customization
 68. Retool admin dashboard
 69. Accessibility
-70. Design system
 71. USE EMBEDDED DOCUMENTS FOR STORING CHARACTERISTICS OF THE INSTRUMENT
+72. ADD RATINGS TO INSTRUMENT CARDS

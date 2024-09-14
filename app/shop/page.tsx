@@ -122,7 +122,11 @@ const Shop: React.FC = () => {
           <Input type="text" />
         </Modal>
       ) : (
-        <Button onClick={handleOpenModal} className={styles.buttonSupport}>
+        <Button
+          option="outline"
+          onClick={handleOpenModal}
+          className={styles.buttonSupport}
+        >
           <Image src={Chat} alt="Support" width={24} height={24} />
         </Button>
       )}

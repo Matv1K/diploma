@@ -43,7 +43,13 @@ const Header: React.FC = () => {
     <>
       <header className={styles.header}>
         <Link href="/" onClick={handleCloseCatalog}>
-          <Image src={Logo} alt="Logo" width={40} height={40} />
+          <Image
+            className={styles.logo}
+            src={Logo}
+            alt="Logo"
+            width={40}
+            height={40}
+          />
         </Link>
 
         <ul className={styles.list}>

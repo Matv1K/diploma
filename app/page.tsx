@@ -151,7 +151,11 @@ const Home: React.FC = () => {
       {isModalOpened ? (
         <SupportModal setIsModalOpened={setIsModalOpened} />
       ) : (
-        <Button onClick={handleClick} className={styles.buttonSupport}>
+        <Button
+          option="outline"
+          onClick={handleClick}
+          className={styles.buttonSupport}
+        >
           <Image src={Chat} alt="Support" width={24} height={24} />
         </Button>
       )}

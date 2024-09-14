@@ -16,8 +16,6 @@ interface InputProps {
   title?: string;
   icon?: any;
   handleIconClick?: () => void;
-  buttonIcon?: any;
-  buttonText?: string;
   value?: string;
   required?: boolean;
   autoComplete?: string;
@@ -33,8 +31,6 @@ const Input: React.FC<InputProps> = ({
   title,
   icon,
   handleIconClick,
-  buttonIcon,
-  buttonText,
   value,
   required,
   autoComplete,
@@ -56,19 +52,13 @@ const Input: React.FC<InputProps> = ({
 
       {icon && (
         <Image
-          className={styles.search}
+          className={styles.icon}
           src={icon}
           alt=""
           width={24}
           height={24}
           onClick={handleIconClick}
         />
-      )}
-
-      {buttonIcon && (
-        <Button className={styles.buttonIcon} icon={buttonIcon}>
-          {buttonText}
-        </Button>
       )}
     </div>
   );

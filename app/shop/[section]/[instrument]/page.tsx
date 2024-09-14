@@ -97,12 +97,15 @@ const Instrument: React.FC = () => {
               {instrument?.description}
             </p>
 
-            <ul className={styles.instrumentCharacteristicsList}>
-              <li>sadfasdf </li>
-              <li>asdfasdf as fasdf</li>
-              <li>asdfwrqwr qqwr qwrqwr qwr</li>
-              <li>sdf qwr qwrqw rqwrqwrqwrqrw</li>
-            </ul>
+            <div>
+              <h4>Characteristics: </h4>
+              <ul className={styles.instrumentCharacteristicsList}>
+                <li>sadfasdf </li>
+                <li>asdfasdf as fasdf</li>
+                <li>asdfwrqwr qqwr qwrqwr qwr</li>
+                <li>sdf qwr qwrqw rqwrqwrqwrqrw</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

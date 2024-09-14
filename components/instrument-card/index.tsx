@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "../../components";
 
 import { ElectricGuitar } from "@/public/images";
+import { Heart } from "@/public/icons";
 
 import { trimInstrumentName } from "@/utils";
 
