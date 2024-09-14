@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,14 +15,49 @@ import { Button, Catalog, Input, Loader } from "../../components";
 
 import { Cart, Heart, Logo, Search, Close, Settings } from "@/public/icons";
 
+import { getCartItems } from "@/services/cartService.ts/cartService";
+
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
 
 import { HEADER_LINKS } from "@/app/constants";
 
+const INSTRUMENTS = [
+  { name: "Cort 1" },
+  { name: "we 2" },
+  { name: "qwe 3" },
+  { name: "asd 4" },
+  { name: "Cort 5" },
+  { name: "Cort 6" },
+  { name: "Cort 7" },
+];
+
 const Header: React.FC = () => {
+  const [items, setItems] = useState([]);
+  const [query, setQuery] = useState("");
+  const [filteredItems, setFilteredItems] = useState<any>([]);
+
+  if (query.length >= 2) {
+  }
+
   const { user, loading } = useCurrentUser();
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      const items = await getCartItems();
+
+      setItems(items);
+    };
+
+    setTimeout(() => {
+      fetchCartItems();
+    }, 1500);
+  }, []);
+
+  if (items) {
+    console.log(items.length);
+  }
 
   const isCatalogOpened = useSelector(
     (state: any) => state.catalog.isCatalogOpen
@@ -37,6 +72,16 @@ const Header: React.FC = () => {
 
   const handleCloseCatalog = () => {
     dispatch(closeCatalog());
+  };
+
+  const handleSearch = (e: any) => {
+    setQuery(e.target.value);
+
+    const filtered = INSTRUMENTS.filter((instrument) =>
+      instrument.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    setFilteredItems(filtered);
   };
 
   return (
@@ -70,12 +115,24 @@ const Header: React.FC = () => {
             )}
           </Button>
 
-          <Input
-            className={styles.input}
-            placeholder="Find on Musify"
-            type="search"
-            icon={Search}
-          />
+          <div className={styles.inputContainer}>
+            <Input
+              className={styles.input}
+              placeholder="Find on Musify"
+              type="search"
+              icon={Search}
+              onChange={handleSearch}
+            />
+            {query ? (
+              <div className={styles.helperList}>
+                {filteredItems.map(({ name }: any) => {
+                  return <div className={styles.helperListItem}>{name}</div>;
+                })}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
 
           <div className={styles.links}>
             {HEADER_LINKS.map(({ name, href }) => {
@@ -110,7 +167,7 @@ const Header: React.FC = () => {
               </div>
 
               <div className={styles.linkContainer}>
-                <span className={styles.cartAmount}>0</span>
+                <span className={styles.cartAmount}>{items.length}</span>
                 <Link href="/cart">
                   <Image
                     className={styles.cartImage}
@@ -124,7 +181,7 @@ const Header: React.FC = () => {
             </div>
           ) : (
             <Link href="/sign-in">
-              <Button>Sign in</Button>
+              <Button option="outline">Sign in</Button>
             </Link>
           )}
         </div>

@@ -58,3 +58,16 @@ CONFIGURE ROUTING SYSTEM
 
 
 // HIGHLIGHT THE ABILITY TO CHOOSE A GOOGLE FONT INSIDE NEXT.JS 
+
+
+
+
+Install Stripe Elements library
+
+// npm install @stripe/react-stripe-js @stripe/stripe-js
+
+add config stripe.ts file
+
+create an account on stripe website and create an api publishable key there
+
+

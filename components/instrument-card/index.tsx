@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "./index.module.scss";
 
@@ -17,11 +17,15 @@ import { Heart } from "@/public/icons";
 
 import { trimInstrumentName } from "@/utils";
 
+import { addCartItem } from "@/services/cartService.ts/cartService";
+
 import { toast } from "react-toastify";
 
 import { TOAST_MESSAGES } from "@/app/constants";
 
 const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
+
+const COLORS = ["yellow", "green"];
 
 interface InstrumentCardProps {
   isNew?: boolean;
@@ -31,6 +35,7 @@ interface InstrumentCardProps {
   section: string;
   image: string;
   id: string;
+  colors: any;
 }
 
 const InstrumentCard: React.FC<InstrumentCardProps> = ({
@@ -41,17 +46,36 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   instrumentType,
   image,
   id,
+  colors,
 }) => {
+  const [selectedColor, setSelectedColor] = useState<string>("");
+
   const { push } = useRouter();
 
   const handleInstrumentNavigation = () => {
     push(`/shop/${section}/${id}`);
   };
 
-  const handleAddToCart = (e: any) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    notify();
+    await addCartItem({
+      price,
+      name,
+      image,
+      color: "red",
+      brandName: "cort",
+      instrumentId: id,
+      section,
+    });
+
+    push("/");
+  };
+
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+
+    setSelectedColor(e.target.value);
   };
 
   return (
@@ -65,17 +89,30 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           height={150}
         />
       </div>
-
       <h3 className={styles.price}>{price}</h3>
-
       <h4 className={styles.instrumentName}>
         {name} <span className={styles.instrumentType}>/ {instrumentType}</span>
       </h4>
 
+      <div className={styles.radioButtons}>
+        {colors.map((color: string, index: number) => (
+          <label key={index} className={styles.label}>
+            <input
+              name="color"
+              className={`${styles.radio} ${
+                selectedColor === color ? styles.selected : ""
+              }`}
+              type="radio"
+              value={color}
+              onChange={handleRadioChange}
+              style={{ color }}
+            />
+          </label>
+        ))}
+      </div>
       <Button className={styles.button} onClick={handleAddToCart}>
         Add to cart
       </Button>
-
       {isNew && <div className={styles.newPin}>New</div>}
     </div>
   );

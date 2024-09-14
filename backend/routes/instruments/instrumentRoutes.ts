@@ -8,8 +8,6 @@ import Instrument from "../../models/Instrument";
 
 const router = express.Router();
 
-// USE EMBEDDED DOCUMENTS FOR STORING CHARACTERISTICS
-
 // ROUTE FOR CREATING NEW INSTRUMENT
 
 router.post("/", instrumentValidator, async (req: Request, res: Response) => {
@@ -26,6 +24,8 @@ router.post("/", instrumentValidator, async (req: Request, res: Response) => {
       onSale,
       brandName,
       image,
+      colors,
+      characteristics,
     } = req.body;
 
     const newInstrument = new Instrument({
@@ -39,6 +39,8 @@ router.post("/", instrumentValidator, async (req: Request, res: Response) => {
       image,
       isNew: true,
       bought: 0,
+      characteristics,
+      colors,
     });
 
     const savedInstrument = await newInstrument.save();

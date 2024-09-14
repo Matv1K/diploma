@@ -11,10 +11,10 @@
 .label {
   .radio {
     appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    border: 2px solid #000;
+    border: 2px solid currentColor;
     margin-right: 15px;
     position: relative;
     display: inline-block;
@@ -34,7 +34,7 @@
     }
 
     &:checked:before {
-      background-color: #000;
+      background-color: currentColor;
     }
   }
 
@@ -76,10 +76,14 @@
   }
 }
 
-.brandName {
+.name {
   margin-bottom: 10px;
   color: #333;
   font-size: 18px;
+}
+
+.brandName {
+  font-size: 14px;
 }
 
 .price {
@@ -113,4 +117,33 @@
   margin-left: 20px;
   color: #333;
   margin-top: 10px;
+}
+
+.headingData {
+  margin-bottom: 10px;
+}
+
+.listItem {
+  list-style: circle;
+  text-transform: capitalize;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.originalPrice {
+  position: relative;
+  margin-right: 10px;
+
+  &::after {
+    content: "";
+    width: 50px;
+    height: 2px;
+    background-color: red;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

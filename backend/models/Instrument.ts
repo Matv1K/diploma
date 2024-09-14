@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 // ADD ENUM TO SECTION FIELD LATER
-// USE EMBEDDED DOCUMENTS FOR STORING CHARACTERISTICS
 
 const instrumentSchema = new mongoose.Schema(
   {
@@ -15,6 +14,12 @@ const instrumentSchema = new mongoose.Schema(
     salePrice: { type: String, default: "" },
     onSale: { type: Boolean, default: false },
     bought: { type: Number, default: 0 },
+    colors: { type: Array, required: true },
+    characteristics: {
+      type: Object,
+      of: mongoose.Schema.Types.Mixed,
+      default: {},
+    },
   },
   { timestamps: true, suppressReservedKeysWarning: true }
 );

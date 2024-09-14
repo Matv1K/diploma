@@ -9,6 +9,6 @@ export { default as SupportModal } from "./support-modal";
 export { default as AnimatedText } from "./animated-text";
 export { default as Loader } from "./loader";
 export { default as Catalog } from "./catalog";
-export { default as InstrumentsTable } from "./instruments-table";
+export { default as InstrumentRow } from "./instruments-row";
 export { default as Comments } from "./comments";
 export { default as FilterCard } from "./filter-card";

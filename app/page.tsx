@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 import styles from "./page.module.scss";
 
-import { Carousel, SupportModal, Button, Modal } from "@/components";
+import { Carousel, SupportModal, Button, Modal, Input } from "@/components";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +16,7 @@ import Link from "next/link";
 import { showModal } from "@/features/modal/modalSlice";
 
 import { Piano } from "@/public/images";
-import { Chat } from "@/public/icons";
+import { Chat, Send } from "@/public/icons";
 
 import {
   getPopularIstruments,
@@ -46,9 +46,14 @@ const Home: React.FC = () => {
     fetchInstruments();
   }, []);
 
-  const isSignInModalOpen = useSelector((state: any) => state.modal.isOpen);
-
   const dispatch = useDispatch();
+
+  const handleOpenModal = () => {
+    dispatch(showModal());
+    setIsModalOpened(true);
+  };
+
+  const isSignInModalOpen = useSelector((state: any) => state.modal.isOpen);
 
   const { push } = useRouter();
 
@@ -149,28 +154,32 @@ const Home: React.FC = () => {
       </div>
 
       {isModalOpened ? (
-        <SupportModal setIsModalOpened={setIsModalOpened} />
+        <Modal
+          setIsModalOpened={setIsModalOpened}
+          buttonName="Send"
+          heading="Support"
+          className={styles.modal}
+        >
+          Ask your questions here.
+          <div className={styles.actionData}>
+            <Input
+              className={styles.messageInput}
+              type="text"
+              placeholder="Write your message"
+            />
+            <Button option="outline">
+              <Image src={Send} alt="Send" width={24} height={24} />
+            </Button>
+          </div>
+        </Modal>
       ) : (
         <Button
           option="outline"
-          onClick={handleClick}
+          onClick={handleOpenModal}
           className={styles.buttonSupport}
         >
           <Image src={Chat} alt="Support" width={24} height={24} />
         </Button>
-      )}
-
-      {isSignInModalOpen && (
-        <Modal
-          heading="My Modal"
-          buttonName="Sign in"
-          onButtonClick={handleSignInNavigation}
-        >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-          distinctio, architecto sequi hic, dolor doloribus sint quam delectus
-          consectetur fugiat molestiae nulla itaque voluptatibus. Consectetur,
-          culpa enim! Itaque, minus praesentium.
-        </Modal>
       )}
     </main>
   );

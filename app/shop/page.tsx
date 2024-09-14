@@ -14,21 +14,16 @@ import { Input, FilterCard } from "@/components";
 
 import Image from "next/image";
 
-import {
-  InstrumentCard,
-  Loader,
-  SupportModal,
-  Button,
-  Modal,
-} from "@/components";
+import { InstrumentCard, Loader, Button, Modal } from "@/components";
 
-import { Chat } from "@/public/icons";
+import { Chat, Send } from "@/public/icons";
 
 import { showModal } from "@/features/modal/modalSlice";
 
 import { INSTRUMENTS } from "../constants";
 
 import { getInstruments } from "@/services/instruments/instrumentService";
+import { Sen } from "next/font/google";
 
 const Shop: React.FC = () => {
   // const [items, setItems] = useState(INSTRUMENTS.slice(0, 20));
@@ -97,6 +92,7 @@ const Shop: React.FC = () => {
             instrumentType,
             isNew,
             image,
+            colors,
           }: any) => (
             // <div key={id} className={styles.instrumentCardWrapper}>
             <InstrumentCard
@@ -108,6 +104,7 @@ const Shop: React.FC = () => {
               instrumentType={instrumentType}
               isNew={isNew}
               image={image}
+              colors={colors}
             />
             // </div>
           )
@@ -117,9 +114,23 @@ const Shop: React.FC = () => {
       {/* </InfiniteScroll> */}
 
       {isModalOpened ? (
-        <Modal buttonName="Send" heading="Modal">
-          kasdjfkl ajsdlkfj askfdjlka sjflkjsdfk
-          <Input type="text" />
+        <Modal
+          setIsModalOpened={setIsModalOpened}
+          buttonName="Send"
+          heading="Support"
+          className={styles.modal}
+        >
+          Ask your questions here.
+          <div className={styles.actionData}>
+            <Input
+              className={styles.messageInput}
+              type="text"
+              placeholder="Write your message"
+            />
+            <Button option="outline">
+              <Image src={Send} alt="Send" width={24} height={24} />
+            </Button>
+          </div>
         </Modal>
       ) : (
         <Button

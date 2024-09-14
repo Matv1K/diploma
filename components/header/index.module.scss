@@ -68,8 +68,12 @@
   }
 }
 
+.inputContainer {
+  position: relative;
+}
+
 .input {
-  margin-right: 350px;
+  margin-right: 500px;
 }
 
 .links {
@@ -102,4 +106,29 @@
 
 .cartImage {
   z-index: 999;
+}
+
+.helperList {
+  position: absolute;
+  left: 0;
+  top: 120%;
+  width: 100%;
+  border: 1px solid red;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.helperListItem {
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken(#fff, 5%);
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
 }

@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import React from "react";
 
@@ -8,7 +8,13 @@ import { ORDERS } from "../constants";
 
 import { calculateTotalPrice } from "@/utils";
 
+import { Loader } from "@/components";
+
+import useCurrentUser from "@/hooks/useCurrentUser";
+
 const Profile: React.FC = () => {
+  const { user, loading } = useCurrentUser();
+
   return (
     <main>
       <h2>My Profile</h2>

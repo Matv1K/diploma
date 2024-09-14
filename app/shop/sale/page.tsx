@@ -37,6 +37,7 @@ const Sale: React.FC = () => {
             instrumentType,
             isNew,
             image,
+            colors,
           }: any) => {
             return (
               <InstrumentCard
@@ -48,6 +49,7 @@ const Sale: React.FC = () => {
                 instrumentType={instrumentType}
                 isNew={isNew}
                 image={image}
+                colors={colors}
               />
             );
           }

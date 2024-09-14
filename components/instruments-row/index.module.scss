@@ -1,20 +1,11 @@
-@import "../variables.scss";
-
-.empty {
-  text-align: center;
-  font-size: 16px;
-}
-
-.table {
-  width: 100%;
-  margin-top: 50px;
-}
+@import "../../app/variables.scss";
 
 .row {
   border: 1px solid $primary-color;
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-radius: 8px;
 
   &:not(:last-child) {
@@ -24,9 +15,11 @@
 
 .cell {
   padding: 10px;
-  display: flex;
+  display: table-cell;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  width: 20%;
 }
 
 .image {
@@ -36,11 +29,14 @@
   background-color: $primary-color;
 }
 
-.headRow {
-  display: flex;
-  justify-content: space-between;
-  border-radius: 8px;
-  margin-bottom: 10px;
+.operator {
+  cursor: pointer;
 
-  border: 1px solid purple;
+  &:first-child {
+    margin-right: 20px;
+  }
+
+  &:last-child {
+    margin-left: 20px;
+  }
 }

@@ -71,7 +71,7 @@ export const ORDERS = [
     id: "21ds256",
     items: [
       {
-        id: 1,
+        id: 3,
         name: "Cort d350",
         price: 399,
         color: "yellow",
@@ -84,14 +84,14 @@ export const ORDERS = [
     id: "21ds257",
     items: [
       {
-        id: 1,
+        id: 4,
         name: "Cort d350",
         price: 399,
         color: "yellow",
         image: "../../public/images/electric-guitar.webp",
       },
       {
-        id: 1,
+        id: 5,
         name: "Cort d350",
         price: 399,
         color: "yellow",

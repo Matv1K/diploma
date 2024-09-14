@@ -41,6 +41,7 @@ const Section: React.FC = () => {
             instrumentType,
             isNew,
             image,
+            colors,
           }: any) => {
             return (
               <InstrumentCard
@@ -51,6 +52,7 @@ const Section: React.FC = () => {
                 section={section}
                 instrumentType={instrumentType}
                 isNew={isNew}
+                colors={colors}
                 image={image}
               />
             );

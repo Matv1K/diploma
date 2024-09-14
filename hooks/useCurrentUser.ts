@@ -9,7 +9,7 @@ const useCurrentUser = () => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const user = await getCurrentUser();
+        const { user } = await getCurrentUser();
 
         setUser(user);
       } catch (error) {

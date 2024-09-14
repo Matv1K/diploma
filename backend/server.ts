@@ -5,6 +5,8 @@ import cors from "cors";
 
 import instrumentRoutes from "./routes/instruments/instrumentRoutes";
 import userRoutes from "./routes/users/userRoutes";
+import cartRoutes from "./routes/cart/cartRoutes";
+import likedRoutes from "./routes/liked/likedRoutes";
 
 dotenv.config();
 
@@ -23,6 +25,8 @@ mongoose
 // ROUTES
 server.use("/instruments", instrumentRoutes);
 server.use("/users", userRoutes);
+server.use("/cart", cartRoutes);
+server.use("/liked", likedRoutes);
 
 const port = process.env.PORT || 5000;
 

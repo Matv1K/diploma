@@ -16,6 +16,8 @@ interface ModalProps {
   heading?: string;
   buttonName?: string;
   onButtonClick?: () => void;
+  className?: string;
+  setIsModalOpened?: any;
   children: React.ReactNode;
 }
 
@@ -24,16 +26,19 @@ const Modal: React.FC<ModalProps> = ({
   children,
   buttonName,
   onButtonClick,
+  className,
+  setIsModalOpened,
 }) => {
   const dispatch = useDispatch();
 
   const handleCloseModal = () => {
     dispatch(closeModal());
+    setIsModalOpened(false);
   };
 
   return (
     <div className={styles.overlay}>
-      <div className={styles.modal}>
+      <div className={`${styles.modal} ${className}`}>
         <Image
           className={styles.close}
           src={Close}
@@ -46,12 +51,6 @@ const Modal: React.FC<ModalProps> = ({
         <h2 className={styles.modalHeading}>{heading}</h2>
 
         <div className={styles.modalContent}>{children}</div>
-
-        {buttonName && (
-          <Button className={styles.button} onClick={onButtonClick}>
-            {buttonName}
-          </Button>
-        )}
       </div>
     </div>
   );
