@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 // ADD ENUM TO SECTION FIELD LATER
+// USE EMBEDDED DOCUMENTS FOR STORING CHARACTERISTICS
 
 const instrumentSchema = new mongoose.Schema(
   {

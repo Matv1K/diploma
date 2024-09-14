@@ -10,7 +10,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      return res.status(401).send({ message: "Access denied." });
+      return res.status(401).json({ message: "Access denied." });
     }
 
     const decoded = jwt.verify(token, `${process.env.SECRET_KEY}`);
@@ -19,7 +19,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     next();
   } catch (error) {
-    return res.status(401).send({ message: "Invalid or expired token" });
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 

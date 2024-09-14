@@ -38,10 +38,10 @@ router.post("/register", async (req: Request, res: Response) => {
       { expiresIn: "30d" }
     );
 
-    res.status(201).send({ user: savedUser, token });
+    res.status(201).json({ user: savedUser, token });
   } catch (error) {
     console.error("Could not register", error);
-    res.status(500).send("Something went wrong");
+    res.status(500).json("Something went wrong");
   }
 });
 
@@ -54,13 +54,13 @@ router.post("/login", async (req: Request, res: Response) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).send({ message: "Invalid password" });
+      return res.status(401).json({ message: "Invalid password" });
     }
 
     const token = jwt.sign(
@@ -71,10 +71,10 @@ router.post("/login", async (req: Request, res: Response) => {
       }
     );
 
-    res.status(200).send({ user, token });
+    res.status(200).json({ user, token });
   } catch (error) {
     console.error("Could not login", error);
-    res.status(500).send("Something went wrong");
+    res.status(500).json("Something went wrong");
   }
 });
 
@@ -84,10 +84,10 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const users = await User.find();
 
-    res.status(200).send(users);
+    res.status(200).json(users);
   } catch (error) {
     console.error("Could not get users", error);
-    res.status(500).send("Something went wrong");
+    res.status(500).json("Something went wrong");
   }
 });
 
@@ -98,19 +98,19 @@ router.get("/my-user", authMiddleware, async (req: Request, res: Response) => {
     const userId = (req as AuthenticatedRequest).payload?.id;
 
     if (!userId) {
-      return res.status(404).send("User ID not found in token");
+      return res.status(404).json("User ID not found in token");
     }
 
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).json("User not found");
     }
 
-    res.status(200).send({ user });
+    res.status(200).json({ user });
   } catch (error) {
     console.error("Could not get user", error);
-    res.status(500).send("Something went wrong");
+    res.status(500).json("Something went wrong");
   }
 });
 

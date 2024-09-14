@@ -22,7 +22,6 @@
 34. process next tick
 35. add rtk query
 36. Add three.js library
-42. Style placeholder on input component
 46. Add instruments table that will display all the items on the cart and on the liked pages
 47. Create different button options.
 48. Add ability to add icon to button
@@ -37,9 +36,10 @@
 59. Add AI to generate responses (inside of the modal window)
 60. Dynamic routes next
 61. WebHooks add
-62. Create postman base url variable
-63. use res.json instead of res.send && investigate why it's better this way
 64. INVESTIGATE ROUTE PRECEDENCE
 66. State of the order
 67. Add customization
 68. Retool admin dashboard
+69. Accessibility
+70. Design system
+71. USE EMBEDDED DOCUMENTS FOR STORING CHARACTERISTICS OF THE INSTRUMENT

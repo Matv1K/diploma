@@ -1,5 +1,5 @@
-const removeSeparator = (string: any) => {
-  return string?.replaceAll("-", " ");
+const removeSeparator = (separator: string) => {
+  return separator?.replaceAll("-", " ");
 };
 
 export default removeSeparator;

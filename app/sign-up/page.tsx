@@ -104,7 +104,9 @@ const SignUp: React.FC = () => {
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
             <Button onClick={handleSignUp}>Sign up</Button>
-            <Button onClick={handleGoogleSignUp}>Sign up with Google</Button>
+            <Button option="google" onClick={handleGoogleSignUp}>
+              Sign up with Google
+            </Button>
           </div>
 
           <span>

@@ -10,6 +10,7 @@ interface ButtonProps {
   className?: string;
   type?: "submit" | "reset";
   icon?: any;
+  option?: "outline" | "filled" | "google";
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,12 +19,20 @@ const Button: React.FC<ButtonProps> = ({
   className,
   onClick,
   icon,
+  option = "filled",
 }) => {
+  const optionClass =
+    option === "outline"
+      ? styles.outline
+      : option === "google"
+      ? styles.google
+      : styles.filled;
+
   return (
     <button
       onClick={onClick}
       type={type}
-      className={`${styles.button} ${className}`}
+      className={`${styles.button} ${optionClass} ${className}`}
     >
       {icon && <Image width={24} height={24} src={icon} alt="icon" />}
       {children}

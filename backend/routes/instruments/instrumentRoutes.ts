@@ -8,6 +8,8 @@ import Instrument from "../../models/Instrument";
 
 const router = express.Router();
 
+// USE EMBEDDED DOCUMENTS FOR STORING CHARACTERISTICS
+
 // ROUTE FOR CREATING NEW INSTRUMENT
 
 router.post("/", instrumentValidator, async (req: Request, res: Response) => {
@@ -41,10 +43,10 @@ router.post("/", instrumentValidator, async (req: Request, res: Response) => {
 
     const savedInstrument = await newInstrument.save();
 
-    res.status(201).send(savedInstrument);
+    res.status(201).json(savedInstrument);
   } catch (error) {
     console.error("Error saving instrument: ", error);
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -54,10 +56,10 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const instruments = await Instrument.find();
 
-    res.status(200).send(instruments);
+    res.status(200).json(instruments);
   } catch (error) {
     console.error("Error fetching instruments: ", error);
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -70,10 +72,10 @@ router.get("/popular", async (req: Request, res: Response) => {
       { $limit: 10 },
     ]);
 
-    res.status(200).send(instruments);
+    res.status(200).json(instruments);
   } catch (error) {
     console.error("Error fetching instruments: ", error);
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -87,10 +89,10 @@ router.get("/new", async (req: Request, res: Response) => {
       { $limit: 20 },
     ]);
 
-    res.status(200).send(instruments);
+    res.status(200).json(instruments);
   } catch (error) {
     console.error("Error fetching instruments: ", error);
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -103,7 +105,7 @@ router.get("/amount", async (req: Request, res: Response) => {
     res.status(200).json({ amount });
   } catch (error) {
     console.error("Error fetching amount of instruments: ", error);
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -113,10 +115,10 @@ router.get("/sale", async (req: Request, res: Response) => {
   try {
     const instruments = await Instrument.find({ onSale: true });
 
-    res.status(200).send(instruments);
+    res.status(200).json(instruments);
   } catch (error) {
     console.error("Error fetching instruments on sale");
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -128,10 +130,10 @@ router.get("/section/:section", async (req: Request, res: Response) => {
 
     const instruments = await Instrument.find({ section });
 
-    res.status(200).send(instruments);
+    res.status(200).json(instruments);
   } catch (error) {
     console.error("Error fetching instruments");
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -143,10 +145,10 @@ router.get("/brands/:brand", async (req, res) => {
 
     const instruments = await Instrument.find({ brandName: brand });
 
-    res.status(200).send(instruments);
+    res.status(200).json(instruments);
   } catch (error) {
     console.error("Error fetching instruments");
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 
@@ -158,10 +160,10 @@ router.get("/:id", async (req: Request, res: Response) => {
 
     const instrument = await Instrument.findById(id);
 
-    res.status(200).send(instrument);
+    res.status(200).json(instrument);
   } catch (error) {
     console.error("Error fetching instruments");
-    res.status(500).send(`Something went wrong: ${error}`);
+    res.status(500).json(`Something went wrong: ${error}`);
   }
 });
 

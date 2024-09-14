@@ -14,7 +14,7 @@ const trimInstrumentName = (name: string) => {
 
   return name
     .split("")
-    .map((part: any) => part.trim().toLocaleLowerCase())
+    .map((part: string) => part.trim().toLocaleLowerCase())
     .join("");
 };
 
