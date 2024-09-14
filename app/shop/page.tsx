@@ -23,7 +23,6 @@ import { showModal } from "@/features/modal/modalSlice";
 import { INSTRUMENTS } from "../constants";
 
 import { getInstruments } from "@/services/instruments/instrumentService";
-import { Sen } from "next/font/google";
 
 const Shop: React.FC = () => {
   // const [items, setItems] = useState(INSTRUMENTS.slice(0, 20));
@@ -48,6 +47,17 @@ const Shop: React.FC = () => {
   const handleOpenModal = () => {
     dispatch(showModal());
     setIsModalOpened(true);
+  };
+
+  const handleFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    // const { name, value } = e.target;
+    // setFilters((prevFilters) => ({
+    //   ...prevFilters,
+    //   [name]: value,
+    // }));
+    console.log(e.target.value);
   };
 
   // const loadMoreData = () => {

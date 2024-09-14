@@ -82,6 +82,10 @@ const Header: React.FC = () => {
     setFilteredItems(filtered);
   };
 
+  const handleLogOut = () => {
+    console.log("log out");
+  };
+
   return (
     <>
       <header className={styles.header}>
@@ -152,10 +156,33 @@ const Header: React.FC = () => {
         <div>
           {user ? (
             <div className={styles.icons}>
-              <div>
+              <div className={styles.profile}>
                 <Link href="/profile" className={styles.icon}>
                   <FiSettings size={24} />
                 </Link>
+
+                <div className={styles.dropdownMenu}>
+                  <div className={styles.dropdownLinks}>
+                    <Link href="/orders" className={styles.dropdownItem}>
+                      Orders
+                    </Link>
+
+                    <Link href="/profile" className={styles.dropdownItem}>
+                      Profile
+                    </Link>
+
+                    <Link href="/settings" className={styles.dropdownItem}>
+                      Settings
+                    </Link>
+                  </div>
+
+                  <Button
+                    className={styles.buttonLogOut}
+                    onClick={handleLogOut}
+                  >
+                    Logout
+                  </Button>
+                </div>
               </div>
 
               <div>

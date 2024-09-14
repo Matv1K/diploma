@@ -42,5 +42,20 @@
   min-width: 550px;
 }
 
-.modal {
+.filterWrapper {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+
+  .filterItem {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 5px;
+    }
+    select,
+    input[type="range"] {
+      padding: 5px;
+    }
+  }
 }
