@@ -12,7 +12,7 @@
   position: absolute;
   left: 0;
   top: 82px;
-  width: 30vw;
+  width: 25vw;
   height: calc(100vh - 82px);
   padding: 15px;
   background-color: $background-color;
@@ -26,11 +26,13 @@
 
     .sectionLink {
       color: $text-color;
-      font-size: $font-size-small;
+      font-size: $font-size-medium;
       padding: 10px;
       border-radius: 8px;
       transition: background-color 0.3s ease-out;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
 
       &:hover {
         background-color: darken($background-color, 5%);
@@ -45,9 +47,11 @@
   .linkSales {
     padding: 10px;
     border-radius: 8px;
-    color: $primary-color;
+    color: $secondary-color;
+    font-weight: 500;
     margin-top: auto;
     transition: background-color 0.3s ease-out;
+    font-size: $font-size-medium;
 
     &:hover {
       background-color: darken($background-color, 5%);

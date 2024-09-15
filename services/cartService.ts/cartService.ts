@@ -30,9 +30,14 @@ export const getCartItemsAmount = async () => {
   }
 };
 
-export const removeCartItem = () => {
+export const removeCartItem = async (id: string) => {
   try {
-  } catch (error) {}
+    const response = await instance.delete(`/cart/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting cart item: ", error);
+    throw error;
+  }
 };
 
 export const removeCartItems = () => {};

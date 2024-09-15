@@ -9,3 +9,4 @@ export { default as Loader } from "./loader";
 export { default as Catalog } from "./catalog";
 export { default as InstrumentRow } from "./instruments-row";
 export { default as Dropdown } from "./dropdown";
+export { default as CheckoutForm } from "./checkout-form";

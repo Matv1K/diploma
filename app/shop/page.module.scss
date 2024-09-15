@@ -5,14 +5,9 @@
   gap: 20px;
   width: 100%;
   flex: 70%;
-  // overflow: hidden;
 }
 
-.instrumentCardWrapper {
-  overflow: hidden;
-}
-
-.buttonSupport {
+.buttonSupportModal {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -21,41 +16,12 @@
   background-color: yellow;
 }
 
-.wrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.filterCard {
-  margin-top: 20px;
-  flex: 20%;
-}
-
-.actionData {
+.modalData {
   display: flex;
   gap: 20px;
   margin-top: 300px;
-}
 
-.messageInput {
-  min-width: 550px;
-}
-
-.filterWrapper {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-
-  .filterItem {
-    display: flex;
-    flex-direction: column;
-    label {
-      margin-bottom: 5px;
-    }
-    select,
-    input[type="range"] {
-      padding: 5px;
-    }
+  .modalInput {
+    min-width: 550px;
   }
 }

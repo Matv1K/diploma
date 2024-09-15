@@ -1,13 +1,3 @@
-// THERE SHOULD BE 5 MOST POPULAR SECTIONS
-
-export const POPULAR_SECTIONS = [
-  { name: "Guitars", id: 1 },
-  { name: "Pianos", id: 2 },
-  { name: "Drums", id: 4 },
-  { name: "Cellos", id: 3 },
-  { name: "Harmonicas", id: 5 },
-];
-
 export const ALL_SECTIONS = [
   { name: "Guitars" },
   { name: "Pianos" },
@@ -18,16 +8,6 @@ export const ALL_SECTIONS = [
   { name: "Ukuleles" },
   { name: "Studio Equipment" },
   { name: "Headphones" },
-];
-
-// THERE SHOULD BE 10 MOST POPULAR INSTRUMENTS
-
-export const POPULAR_ITEMS = [
-  { name: "Fender CD60", id: 1 },
-  { name: "Taylor 350", id: 2 },
-  { name: "Martin OM-28", id: 3 },
-  { name: "Takamine GY11ME Parlor", id: 4 },
-  { name: "Taylor Academy 12e-N Nylon", id: 5 },
 ];
 
 // THERE SHOULD BE 5 MOST POPULAR BRANDS
@@ -103,18 +83,13 @@ export const ORDERS = [
 ];
 
 export const TOAST_MESSAGES = {
-  SIGN_IN: "Successfully logged in",
-  SIGN_UP: "Successfully signed up",
-  ADD_TO_CART: "Item has been added to your cart",
+  SIGN_IN_SUCCESS: "Successfully logged in",
+  SIGN_IN_ERROR: "",
+  SIGN_UP_SUCCESS: "Successfully signed up",
+  SIGN_UP_ERROR: "",
+  ADD_TO_CART_SUCCESS: "Item has been added to your cart",
+  ADD_TO_CART_ERROR: "",
 };
-
-export const NEW_ITEMS = [
-  { name: "Aria Pro STG", id: 1 },
-  { name: "Aria PRO 2", id: 2 },
-  { name: "Aria PRO 1", id: 3 },
-  { name: "Aria Bass KT-20", id: 4 },
-  { name: "Aria Bass KT-50", id: 3 },
-];
 
 export const INSTRUMENTS = [
   { name: "Aria Pro STG", id: 1, price: "999$", instrumentType: "guitar" },

@@ -1,40 +1,46 @@
 @import "../variables.scss";
 
-.empty {
-  text-align: center;
-  font-size: 16px;
-}
-
-.table {
-  flex: 55%;
-  width: 100%;
-  margin-bottom: 20px;
-  table-layout: fixed;
-}
-
-.headRow {
-  display: flex;
-  justify-content: space-between;
-  border-radius: 8px;
-  margin-bottom: 10px;
-
-  border: 1px solid purple;
-}
-
 .cartLayout {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
   margin-top: 20px;
-}
 
-.checkoutCard {
-  padding: 20px;
-  color: #333;
-  border: 1px solid $primary-color;
-  flex: 25%;
-  border-radius: 8px;
+  .table {
+    flex: 60%;
+    width: 100%;
+    margin-bottom: 20px;
+    table-layout: fixed;
+  }
+
+  .checkoutCard {
+    padding: 20px;
+    color: $text-color;
+    border: 1px solid $primary-color;
+    flex: 25%;
+    border-radius: 8px;
+
+    .checkoutInfo {
+      margin-bottom: 20px;
+
+      .checkoutCardField {
+        display: flex;
+        justify-content: space-between;
+
+        .total {
+          color: $black-color;
+          font-size: 32px;
+          font-weight: 700;
+          font-family: "Montserrat", sans-serif;
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
 }
 
 .containerEmpty {
@@ -43,28 +49,4 @@
   flex-flow: column;
   justify-content: center;
   gap: 20px;
-}
-
-.headingEmpty {
-  text-transform: lowercase;
-}
-
-.checkoutCardField {
-  display: flex;
-  justify-content: space-between;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.total {
-  color: #000;
-  font-size: 32px;
-  font-weight: 700;
-  font-family: "Montserrat", sans-serif;
-}
-
-.checkoutInfo {
-  margin-bottom: 20px;
 }

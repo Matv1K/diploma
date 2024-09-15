@@ -1,11 +1,10 @@
 import React from "react";
+
 import { useDispatch } from "react-redux";
 
 import styles from "./index.module.scss";
 
-import Image from "next/image";
-
-import { Close } from "@/public/icons";
+import { FiX } from "react-icons/fi";
 
 import { closeModal } from "@/features/modal/modalSlice";
 
@@ -37,13 +36,10 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <div className={styles.overlay}>
       <div className={`${styles.modal} ${className}`}>
-        <Image
-          className={styles.modalClose}
-          src={Close}
-          alt="close"
-          width={24}
-          height={24}
+        <FiX
+          size={24}
           onClick={handleCloseModal}
+          className={styles.modalClose}
         />
 
         <h2 className={styles.modalHeading}>{heading}</h2>

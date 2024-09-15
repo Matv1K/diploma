@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./index.module.scss";
 
 import Image from "next/image";
-
 import { Button } from "../../components";
 
 import { FiHeart } from "react-icons/fi";

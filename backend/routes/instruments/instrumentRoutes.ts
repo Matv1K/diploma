@@ -8,8 +8,6 @@ import Instrument from "../../models/Instrument";
 
 const router = express.Router();
 
-// ROUTE FOR CREATING NEW INSTRUMENT
-
 router.post("/", instrumentValidator, async (req: Request, res: Response) => {
   try {
     // const { errors } = validationResult;

@@ -1,12 +1,12 @@
 .form {
-  margin-top: 20px;
   display: flex;
   flex-flow: column;
   gap: 20px;
-}
+  margin-top: 20px;
 
-.input {
-  &:not(:last-child) {
-    margin-bottom: 10px;
+  .input {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
   }
 }

@@ -10,6 +10,8 @@ import { InstrumentRow, Button } from "@/components";
 
 import { getCartItems } from "@/services/cartService.ts/cartService";
 
+import { CartItemI } from "@/types";
+
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
 
@@ -26,7 +28,7 @@ const Cart: React.FC = () => {
   if (!cartItems.length) {
     return (
       <main className={styles.containerEmpty}>
-        <h2 className={styles.headingEmpty}>Your cart is empty</h2>
+        <h2>Your cart is empty</h2>
 
         <Link href="/shop">
           <Button>Go back to shopping</Button>
@@ -52,9 +54,10 @@ const Cart: React.FC = () => {
                 amount,
                 instrumentId,
                 section,
-              }: any) => {
+              }: CartItemI) => {
                 return (
                   <InstrumentRow
+                    cartItemId={_id}
                     key={_id}
                     color={color}
                     price={price}
@@ -62,6 +65,7 @@ const Cart: React.FC = () => {
                     amount={amount}
                     section={section}
                     instrumentId={instrumentId}
+                    image={image}
                   />
                 );
               }

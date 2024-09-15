@@ -34,8 +34,9 @@ h6 {
 
 main {
   padding: 20px;
-  min-height: calc(100vh - 135px);
   padding-top: 115px;
+  padding-bottom: 50px;
+  min-height: calc(100vh - 238px);
 }
 
 a {
@@ -57,7 +58,6 @@ li {
 
 h2 {
   color: $primary-color;
-  text-transform: capitalize;
 }
 
 input::placeholder,

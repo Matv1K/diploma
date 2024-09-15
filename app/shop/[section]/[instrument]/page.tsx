@@ -1,28 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
 import { useParams, useRouter } from "next/navigation";
-
-import { toast, ToastContainer } from "react-toastify";
 
 import styles from "./page.module.scss";
 
-import Image from "next/image";
-
+import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 import { Button } from "@/components";
+
+import { FiHeart } from "react-icons/fi";
+
+import { removeSeparator } from "@/utils";
 
 import { getInstrument } from "@/services/instruments/instrumentService";
 import { addCartItem } from "@/services/cartService.ts/cartService";
 import { addLikedItem } from "@/services/likedServices/likedService";
-
-import { removeSeparator } from "@/utils";
-
-import { FiHeart } from "react-icons/fi";
-
-import { TOAST_MESSAGES } from "../../../constants";
-
-const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
 
 const Instrument: React.FC = () => {
   const [instrument, setInstrument] = useState<any>(null);
@@ -78,44 +71,38 @@ const Instrument: React.FC = () => {
     <main>
       <h2>{removeSeparator(instrument?.name)}</h2>
 
-      <div className={styles.pageSections}>
-        {/* <Image
-          className={styles.instrumentImage}
-          src={ElectricGuitar}
-          alt="instrument"
-        /> */}
+      <div className={styles.instrumentPageContainer}>
         <div className={styles.instrumentImage}>Instrument Image</div>
 
         <div className={styles.instrumentData}>
           <div className={styles.instrumentInfo}>
-            <div className={styles.instrumentMainData}>
-              <div className={styles.review}>
-                <a href="#">Write a review</a>
-              </div>
+            <div className={styles.instrumentMainInfo}>
+              <Link className={styles.infoReview} href="#">
+                Write a review
+              </Link>
 
-              <p className={styles.name}>
+              <p className={styles.infoName}>
                 {instrument?.name} /{" "}
-                <span className={styles.brandName}>
+                <span className={styles.infoBrandName}>
                   {instrument?.brandName}
                 </span>
               </p>
-              <h3 className={styles.price}>
+
+              <h3 className={styles.infoPrice}>
                 {instrument?.onSale ? (
                   <>
-                    <span className={styles.originalPrice}>
+                    <span className={styles.priceOriginal}>
                       {instrument.price}
-                    </span>{" "}
-                    <span className={styles.salePrice}>
-                      {" "}
-                      {instrument.salePrice}
                     </span>
+
+                    <span>{instrument.salePrice}</span>
                   </>
                 ) : (
                   instrument?.price
                 )}
               </h3>
 
-              <p className={styles.availability}>
+              <p className={styles.infoAvailable}>
                 The instrument is available at our store
               </p>
             </div>
@@ -140,20 +127,21 @@ const Instrument: React.FC = () => {
             <Button onClick={handleAddToCart}>Add to cart</Button>
           </div>
 
-          <div className={styles.instrumentCharacteristics}>
-            <h4 className={styles.headingData}>Description: </h4>
+          <div>
+            <h4>Description: </h4>
+
             <p className={styles.instrumentDescription}>
               {instrument?.description}
             </p>
 
             <div>
-              <h4 className={styles.headingData}>Characteristics: </h4>
-              <ul className={styles.instrumentCharacteristicsList}>
+              <h4>Characteristics: </h4>
+              <ul className={styles.instumentSpecs}>
                 {instrument &&
                   Object.entries(instrument.characteristics).map(
                     ([key, value]: any) => {
                       return (
-                        <li className={styles.listItem} key={key}>
+                        <li className={styles.instrumentSpec} key={key}>
                           {key}: {value}
                         </li>
                       );

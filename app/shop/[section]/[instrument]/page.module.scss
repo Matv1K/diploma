@@ -1,161 +1,161 @@
 @import "../../../variables.scss";
 
-.pageSections {
-  margin-top: 20px;
+.instrumentPageContainer {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  margin-top: 20px;
   gap: 20px;
-}
 
-.label {
-  .radio {
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid currentColor;
-    margin-right: 15px;
+  .instrumentImage {
+    height: 500px;
+    background-color: $primary-color;
+    border-radius: 8px;
+    flex: 50%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($primary-color, 5%);
+    }
+  }
+
+  .instrumentData {
     position: relative;
-    display: inline-block;
+    flex: 30%;
+
+    .instrumentInfo {
+      border: 1px solid $primary-color;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+
+      .instrumentMainInfo {
+        border-bottom: 1px solid $text-color;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+
+        .infoReview {
+          color: $primary-color;
+          font-size: $font-size-small;
+
+          &:hover {
+            color: $secondary-color;
+          }
+        }
+
+        .infoName {
+          margin-top: 20px;
+          color: $text-color;
+          font-size: $font-size-medium;
+
+          .infoBrandName {
+            font-size: $font-size-small;
+          }
+        }
+
+        .infoAvailable {
+          font-size: $font-size-small;
+          color: $primary-color;
+        }
+
+        .infoPrice {
+          color: $text-color;
+          font-size: $font-size-large;
+          font-weight: 700;
+          margin-bottom: 10px;
+
+          .priceOriginal {
+            position: relative;
+            margin-right: 10px;
+
+            &::after {
+              content: "";
+              width: 50px;
+              height: 2px;
+              background-color: $red-color;
+              position: absolute;
+              top: 60%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .instrumentDescription {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: $text-color;
+  }
+
+  .instumentSpecs {
+    margin-top: 10px;
+    margin-left: 20px;
+    color: $text-color;
+
+    .instrumentSpec {
+      list-style: circle;
+      text-transform: capitalize;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .likeIcon {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    transition: color 0.3s ease-out;
     cursor: pointer;
 
-    &:before {
-      content: "";
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: transparent;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: background-color 0.3s ease;
-    }
-
-    &:checked:before {
-      background-color: currentColor;
+    &:hover {
+      color: $secondary-color;
     }
   }
 
-  &:not(:last-child) {
-    margin-right: 5px;
-  }
-}
+  .radioButtons {
+    margin-bottom: 20px;
 
-.radioButtons {
-  margin-bottom: 20px;
-}
+    .label {
+      .radio {
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid currentColor;
+        margin-right: 15px;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
 
-.instrumentInfo {
-  border: 1px solid $primary-color;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
+        &:before {
+          content: "";
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: transparent;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          transition: background-color 0.3s ease;
+        }
 
-.review {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
+        &:checked:before {
+          background-color: currentColor;
+        }
+      }
 
-.instrumentImage {
-  flex: 50%;
-  background-color: $primary-color;
-  border-radius: 8px;
-  height: 500px;
-
-  display: flex;
-  align-content: center;
-  justify-content: center;
-
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($primary-color, 5%);
-  }
-}
-
-.name {
-  margin-bottom: 10px;
-  color: #333;
-  font-size: 18px;
-}
-
-.brandName {
-  font-size: 14px;
-}
-
-.price {
-  color: #333;
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.availability {
-  font-size: 14px;
-  color: $primary-color;
-}
-
-.instrumentMainData {
-  border-bottom: 1px solid #333;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-}
-
-.instrumentData {
-  position: relative;
-  flex: 30%;
-}
-
-.instrumentDescription {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.instrumentCharacteristicsList {
-  margin-left: 20px;
-  color: #333;
-  margin-top: 10px;
-}
-
-.headingData {
-  margin-bottom: 10px;
-}
-
-.listItem {
-  list-style: circle;
-  text-transform: capitalize;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.originalPrice {
-  position: relative;
-  margin-right: 10px;
-
-  &::after {
-    content: "";
-    width: 50px;
-    height: 2px;
-    background-color: red;
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.likeIcon {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  cursor: pointer;
-
-  &:hover {
-    color: orangered;
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
   }
 }

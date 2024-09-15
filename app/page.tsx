@@ -1,42 +1,35 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
-import { useSelector, useDispatch } from "react-redux";
-
-import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 import styles from "./page.module.scss";
 
-import { Carousel, Button, Modal, Input } from "@/components";
-
 import Image from "next/image";
 import Link from "next/link";
-
-import { showModal } from "@/features/modal/modalSlice";
+import { Carousel, Button, Modal, Input } from "@/components";
 
 import { Piano } from "@/public/images";
-import { Chat, Send } from "@/public/icons";
+import { FiSend, FiMessageCircle } from "react-icons/fi";
 
-import { InputTypes } from "@/types";
+import { showModal } from "@/features/modal/modalSlice";
 
 import {
   getPopularIstruments,
   getNewInstruments,
 } from "@/services/instruments/instrumentService";
 
-import useCurrentUser from "@/hooks/useCurrentUser";
-
 import { ALL_SECTIONS, POPULAR_BRANDS } from "./constants";
 
-import { ButtonOptions } from "@/types";
+import { InputTypes, ButtonOptions } from "@/types";
 
 const Home: React.FC = () => {
-  // ADD TYPES TO THE STATES
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(true);
   const [popularInstruments, setPopularInstruments] = useState<any>([]);
   const [newInstruments, setNewInstruments] = useState<any>([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchInstruments = async () => {
@@ -50,23 +43,9 @@ const Home: React.FC = () => {
     fetchInstruments();
   }, []);
 
-  const dispatch = useDispatch();
-
   const handleOpenModal = () => {
     dispatch(showModal());
     setIsModalOpened(true);
-  };
-
-  const isSignInModalOpen = useSelector((state: any) => state.modal.isOpen);
-
-  const { push } = useRouter();
-
-  const handleClick = () => {
-    setIsModalOpened(true);
-  };
-
-  const handleSignInNavigation = () => {
-    push("/sign-in");
   };
 
   const handleShowModal = () => {
@@ -75,23 +54,25 @@ const Home: React.FC = () => {
 
   return (
     <main>
-      <div className={styles.block}>
-        <h1 className={styles.headingMain}>
+      <div className={styles.homeBlock}>
+        <h1 className={styles.headinghome}>
           Best platform for aspiring musicians
         </h1>
 
         <Image
-          className={styles.image}
+          className={styles.homeImage}
           src={Piano}
           alt="piano"
           width={200}
           height={200}
         />
       </div>
-      <div className={styles.sections}>
+
+      <div className={styles.homeSections}>
         <div>
           <h2>Sales!</h2>
-          <Link className={styles.sale} href="/shop/sale">
+
+          <Link className={styles.linkSale} href="/shop/sale">
             <div className={styles.sectionSale}>
               <span>Top quality brands on sale up to 70%</span>
             </div>
@@ -103,10 +84,10 @@ const Home: React.FC = () => {
           <Carousel items={ALL_SECTIONS} />
         </div>
 
-        <div className={styles.brandsSection}>
-          <h2 className={styles.brandsHeading}>Most popular brands</h2>
+        <div className={styles.sectionBrands}>
+          <h2 className={styles.headingBrands}>Most popular brands</h2>
 
-          <div className={styles.brands}>
+          <div className={styles.listBrands}>
             {POPULAR_BRANDS.map(({ name, id }) => {
               return (
                 <div className={styles.brandCard} key={id}>
@@ -127,26 +108,20 @@ const Home: React.FC = () => {
           <Carousel items={popularInstruments} isInstrumentsCarousel />
         </div>
 
-        <div className={styles.block}>
+        <div className={styles.homeBlock}>
           <Image
-            className={styles.image}
+            className={styles.homeImage}
             src={Piano}
             alt="piano"
             width={200}
             height={180}
           />
 
-          <h1 className={styles.headingMain}>
+          <h1 className={styles.headinghome}>
             Check out our{" "}
-            {isUserLoggedIn ? (
-              <Link href="/events" className={styles.eventsLink}>
-                events
-              </Link>
-            ) : (
-              <span className={styles.eventsLink} onClick={handleShowModal}>
-                events
-              </span>
-            )}
+            <Link href="/events" className={styles.eventsLink}>
+              events
+            </Link>
           </h1>
         </div>
 
@@ -172,7 +147,7 @@ const Home: React.FC = () => {
               placeholder="Write your message"
             />
             <Button option={ButtonOptions.OUTILINE}>
-              <Image src={Send} alt="Send" width={24} height={24} />
+              <FiSend size={20} />
             </Button>
           </div>
         </Modal>
@@ -182,7 +157,7 @@ const Home: React.FC = () => {
           onClick={handleOpenModal}
           className={styles.buttonSupport}
         >
-          <Image src={Chat} alt="Support" width={24} height={24} />
+          <FiMessageCircle size={24} />
         </Button>
       )}
     </main>

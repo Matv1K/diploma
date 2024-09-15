@@ -6,6 +6,8 @@ import styles from "./index.module.scss";
 
 import Link from "next/link";
 
+import { FiChevronRight } from "react-icons/fi";
+
 import { trimInstrumentName } from "@/utils";
 
 import { CATALOG_LINKS } from "@/app/constants";
@@ -33,7 +35,8 @@ const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
                 className={styles.sectionLink}
                 onClick={handleCloseCatalog}
               >
-                {link}
+                <span>{link}</span>
+                <FiChevronRight size={24} />
               </Link>
             );
           })}

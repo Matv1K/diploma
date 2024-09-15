@@ -26,7 +26,7 @@ const Liked: React.FC = () => {
   if (!likedItems.length) {
     return (
       <main className={styles.containerEmpty}>
-        <h2 className={styles.headingEmpty}>You did not like anything yet</h2>
+        <h2>You did not like anything yet</h2>
 
         <Link href="/shop">
           <Button>Go back to shopping</Button>

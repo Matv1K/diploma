@@ -1,27 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { useRouter } from "next/navigation";
-
-import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import styles from "./page.module.scss";
 
 import Link from "next/link";
-
+import { ToastContainer } from "react-toastify";
 import { Button, Input } from "@/components";
-
-import { TOAST_MESSAGES } from "../constants";
 
 import { loginUser } from "@/services/users/userService";
 
 import { InputTypes } from "@/types";
-
-const notifySuccess = () => toast.success(TOAST_MESSAGES.SIGN_IN);
-const notifyError = () => toast.error(TOAST_MESSAGES.ADD_TO_CART);
 
 const SignIn: React.FC = () => {
   const [inputData, setInputData] = useState<any>(null);
@@ -45,12 +37,11 @@ const SignIn: React.FC = () => {
       push("/");
     } catch (error) {
       console.error(error);
-      notifyError();
     }
   };
 
   return (
-    <main className={styles.signIn}>
+    <main>
       <h2>Sign in</h2>
 
       <form className={styles.form}>
@@ -75,7 +66,7 @@ const SignIn: React.FC = () => {
           <Button onClick={handleSignIn}>Sign in</Button>
 
           <span>
-            Don't have an account?{" "}
+            Don't have an account?
             <Link className={styles.signUpLink} href="/sign-up">
               Sign up
             </Link>

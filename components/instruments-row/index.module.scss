@@ -2,7 +2,7 @@
 
 .row {
   border: 1px solid $primary-color;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,40 +13,60 @@
   }
 
   .cell {
-    padding: 10px;
+    padding: 0;
     display: table-cell;
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 20%;
     color: $text-color;
+    width: 25%;
 
-    .link {
-      color: $text-color;
-      text-decoration: underline;
-      transition: color 0.3s ease;
+    .iconTrash {
+      cursor: pointer;
+      transition: color 0.3s ease-in-out;
 
       &:hover {
-        color: $primary-color;
+        color: $secondary-color;
       }
     }
 
-    .image {
-      width: 50px;
-      height: 50px;
-      border-radius: 8px;
-      background-color: $primary-color;
+    .cellContainer {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .link {
+        color: $text-color;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+        font-size: $font-size-small;
+
+        .color {
+          font-size: 12px;
+        }
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+
+      .image {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        background-color: $primary-color;
+      }
     }
 
     .operator {
       cursor: pointer;
 
       &:first-child {
-        margin-right: 20px;
+        margin-right: 10px;
       }
 
       &:last-child {
-        margin-left: 20px;
+        margin-left: 10px;
       }
     }
   }

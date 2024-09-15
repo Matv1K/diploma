@@ -1,10 +1,10 @@
-.container {
+.mainNotFound {
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   align-items: center;
   justify-content: center;
-}
 
-.text {
-  margin-top: 20px;
+  .textNotFound {
+    margin-top: 20px;
+  }
 }

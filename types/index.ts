@@ -14,7 +14,27 @@ export interface InstrumentI {
   characteristics?: Record<string, any>;
 }
 
-// ENUMS
+export interface InstrumentCardI {
+  _id: string;
+  name: string;
+  section: string;
+  price: string;
+  instrumentType: string;
+  isNew: boolean;
+  image: string;
+  colors: string[];
+}
+
+export interface CartItemI {
+  _id: string;
+  color: string;
+  image: string;
+  price: string;
+  name: string;
+  amount: number;
+  instrumentId: string;
+  section: string;
+}
 
 export enum ButtonOptions {
   OUTILINE = "outline",

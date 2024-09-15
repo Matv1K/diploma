@@ -1,50 +1,10 @@
 @import "../variables.scss";
 
-.empty {
-  text-align: center;
-  font-size: 16px;
-}
-
 .table {
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-}
-
-.row {
-  border: 1px solid $primary-color;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 8px;
-
-  &:not(:last-child) {
-    margin-bottom: 20px;
-  }
-}
-
-.cell {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background-color: $primary-color;
-}
-
-.headRow {
-  display: flex;
-  justify-content: space-between;
-  border-radius: 8px;
-  margin-bottom: 10px;
-
-  border: 1px solid purple;
 }
 
 .containerEmpty {
@@ -53,8 +13,4 @@
   flex-flow: column;
   justify-content: center;
   gap: 20px;
-}
-
-.headingEmpty {
-  text-transform: lowercase;
 }

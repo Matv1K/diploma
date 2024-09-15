@@ -1,21 +1,26 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
 import { useParams } from "next/navigation";
 
 import styles from "./page.module.scss";
 
 import { InstrumentCard } from "@/components";
 
+import { removeSeparator } from "@/utils";
+
 import { getInstrumentsBySection } from "@/services/instruments/instrumentService";
 
-import { removeSeparator } from "@/utils";
+import { InstrumentCardI, InstrumentI } from "@/types";
 
 const Section: React.FC = () => {
   const [instruments, setInstruments] = useState<any>([]);
 
   const { section: instrumentsSection } = useParams();
+
+  const sectionName = Array.isArray(instrumentsSection)
+    ? instrumentsSection[0]
+    : instrumentsSection;
 
   useEffect(() => {
     const fetchInstrumentsBySection = async () => {
@@ -25,11 +30,11 @@ const Section: React.FC = () => {
     };
 
     fetchInstrumentsBySection();
-  }, []);
+  }, [sectionName]);
 
   return (
     <main>
-      <h2>{removeSeparator(instrumentsSection)}</h2>
+      <h2 className={styles.headingSection}>{removeSeparator(sectionName)}</h2>
 
       <div className={styles.instruments}>
         {instruments.map(
@@ -42,7 +47,7 @@ const Section: React.FC = () => {
             isNew,
             image,
             colors,
-          }: any) => {
+          }: InstrumentCardI) => {
             return (
               <InstrumentCard
                 key={_id}

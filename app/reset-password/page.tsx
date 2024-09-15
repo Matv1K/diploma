@@ -30,7 +30,9 @@ const ResetPassword = () => {
           placeholder="Confirm new password"
         />
 
-        <Button onClick={handleChangePassword}>Change password</Button>
+        <div>
+          <Button onClick={handleChangePassword}>Change password</Button>
+        </div>
       </form>
     </main>
   );

@@ -32,9 +32,9 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
 
     const newLikedItem = likedItem.save();
 
-    res.status(201).send(newLikedItem);
+    res.status(201).json(newLikedItem);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 });
 
@@ -44,9 +44,9 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
 
     const likedItems = await Liked_Item.find({ userId });
 
-    res.status(200).send(likedItems);
+    res.status(200).json(likedItems);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 });
 

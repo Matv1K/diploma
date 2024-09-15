@@ -1,37 +1,25 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
 import { useDispatch } from "react-redux";
 
 import styles from "./page.module.scss";
 
 import { ToastContainer } from "react-toastify";
+import { InstrumentCard, Button, Modal, Input } from "@/components";
 
-import InfiniteScroll from "react-infinite-scroll-component";
+import { FiSend, FiMessageCircle } from "react-icons/fi";
 
-import { Input } from "@/components";
-
-import Image from "next/image";
-
-import { InstrumentCard, Loader, Button, Modal } from "@/components";
-
-import { Chat, Send } from "@/public/icons";
+import { ButtonOptions, InputTypes } from "@/types";
 
 import { showModal } from "@/features/modal/modalSlice";
 
-import { ButtonOptions } from "@/types";
-
-import { InputTypes } from "@/types";
-
 import { getInstruments } from "@/services/instruments/instrumentService";
 
-const Shop: React.FC = () => {
-  // const [items, setItems] = useState(INSTRUMENTS.slice(0, 20));
-  // const [hasMore, setHasMore] = useState(true);
-  // const [page, setPage] = useState(1);
-  const [instruments, setInstruments] = useState([]);
+import { InstrumentCardI } from "@/types";
 
+const Shop: React.FC = () => {
+  const [instruments, setInstruments] = useState([]);
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const dispatch = useDispatch();
@@ -51,47 +39,9 @@ const Shop: React.FC = () => {
     setIsModalOpened(true);
   };
 
-  const handleFilterChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    // const { name, value } = e.target;
-    // setFilters((prevFilters) => ({
-    //   ...prevFilters,
-    //   [name]: value,
-    // }));
-    console.log(e.target.value);
-  };
-
-  // const loadMoreData = () => {
-  //   if (items.length >= INSTRUMENTS.length) {
-  //     setHasMore(false);
-  //     return;
-  //   }
-
-  //   setTimeout(() => {
-  //     const newItems = INSTRUMENTS.slice(page * 20, (page + 1) * 20);
-  //     setItems((prevItems) => [...prevItems, ...newItems]);
-  //     setPage((prevPage) => prevPage + 1);
-  //   }, 1000); // Simulate an API call delay
-  // };
-
   return (
     <main>
-      <h2 className={styles.heading}>Shop</h2>
-
-      {/* <InfiniteScroll
-        dataLength={items.length}
-        next={loadMoreData}
-        hasMore={hasMore}
-        loader={
-          <>
-            <br />
-            <Loader />
-          </>
-        }
-        className={styles.instruments}
-      > */}
-      {/* <div className={styles.wrapper}> */}
+      <h2>Shop</h2>
 
       <div className={styles.instruments}>
         {instruments.map(
@@ -104,8 +54,7 @@ const Shop: React.FC = () => {
             isNew,
             image,
             colors,
-          }: any) => (
-            // <div key={id} className={styles.instrumentCardWrapper}>
+          }: InstrumentCardI) => (
             <InstrumentCard
               key={_id}
               id={_id}
@@ -118,29 +67,27 @@ const Shop: React.FC = () => {
               colors={colors}
               withLikeIcon
             />
-            // </div>
           )
         )}
       </div>
-      {/* </div> */}
-      {/* </InfiniteScroll> */}
 
       {isModalOpened ? (
         <Modal
           setIsModalOpened={setIsModalOpened}
           buttonName="Send"
           heading="Support"
-          className={styles.modal}
         >
-          Ask your questions here.
-          <div className={styles.actionData}>
+          <div>Ask your questions here.</div>
+
+          <div className={styles.modalData}>
             <Input
-              className={styles.messageInput}
+              className={styles.modalInput}
               type={InputTypes.TEXT}
               placeholder="Write your message"
             />
+
             <Button option={ButtonOptions.OUTILINE}>
-              <Image src={Send} alt="Send" width={24} height={24} />
+              <FiSend size={24} />
             </Button>
           </div>
         </Modal>
@@ -148,9 +95,9 @@ const Shop: React.FC = () => {
         <Button
           option={ButtonOptions.OUTILINE}
           onClick={handleOpenModal}
-          className={styles.buttonSupport}
+          className={styles.buttonSupportModal}
         >
-          <Image src={Chat} alt="Support" width={24} height={24} />
+          <FiMessageCircle size={24} />
         </Button>
       )}
 

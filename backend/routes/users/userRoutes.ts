@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -14,6 +13,8 @@ interface AuthenticatedRequest extends Request {
 }
 
 // TODO: DO NOT SEND PASSWORDS BACK TO THE CLIENT
+// TODO: ADD DISCOUNT FIELD TO USERS
+// TODO: ADD USER ROLES
 
 const router = express.Router();
 

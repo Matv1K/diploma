@@ -1,54 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-
-import { Elements } from "@stripe/react-stripe-js";
-
-import {
-  CardElement,
-  useStripe,
-  useElements,
-  PaymentElement,
-} from "@stripe/react-stripe-js";
+import React from "react";
 
 import stripePromise from "@/config/useStripeConfig";
 
-import styles from "./page.module.scss";
+import { Elements } from "@stripe/react-stripe-js";
 
-import { Button } from "@/components";
+import { CheckoutForm } from "@/components";
 
-import { ButtonTypes } from "@/types";
-
-const convertToSubcurrency = (amount: number, factor = 100) => {
-  return Math.round(amount * factor);
-};
-
-const CheckoutForm: React.FC = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) return;
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className={styles.checkoutForm}>
-      <h2>Checkout</h2>
-
-      <PaymentElement />
-
-      <Button
-        disabled={!stripe}
-        className={styles.checkoutButton}
-        type={ButtonTypes.SUBMIT}
-      >
-        Pay 2000$
-      </Button>
-    </form>
-  );
-};
+import { convertToSubcurrency } from "@/utils";
 
 const Checkout: React.FC = () => {
   return (

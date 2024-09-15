@@ -2,10 +2,6 @@ import React from "react";
 
 import styles from "./index.module.scss";
 
-import Image from "next/image";
-
-import { StaticImageData } from "next/image";
-
 import { InputTypes } from "@/types";
 
 interface InputProps {
@@ -16,7 +12,7 @@ interface InputProps {
   onChange?: any;
   type: InputTypes;
   title?: string;
-  icon?: StaticImageData;
+  icon?: React.ReactNode;
   handleIconClick?: () => void;
   value?: string;
   required?: boolean;
@@ -53,14 +49,9 @@ const Input: React.FC<InputProps> = ({
       />
 
       {icon && (
-        <Image
-          className={styles.icon}
-          src={icon}
-          alt=""
-          width={24}
-          height={24}
-          onClick={handleIconClick}
-        />
+        <span className={styles.icon} onClick={handleIconClick}>
+          {icon}
+        </span>
       )}
     </div>
   );

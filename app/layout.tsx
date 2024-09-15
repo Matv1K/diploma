@@ -13,7 +13,7 @@ const openSans = Open_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Diploma Project",
   description:
-    "Music instrument website implemented by Matsvei Balakhonau 58216 as a Diploma Project",
+    "Music instrument website implemented by Matsvei Balakhonau 58216 as a Diploma Project for Vistula University",
 };
 
 export default function RootLayout({

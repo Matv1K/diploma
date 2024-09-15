@@ -3,25 +3,32 @@ import React from "react";
 import styles from "./index.module.scss";
 
 import Link from "next/link";
-
 import { Button } from "../../components";
+
+import { FiTrash2 } from "react-icons/fi";
+
+import { removeCartItem } from "@/services/cartService.ts/cartService";
 
 interface InstrumentRowProps {
   instrumentId: string;
+  cartItemId: string;
   section: string;
   amount: number;
   color: string;
   price: string;
   name: string;
+  image: string;
 }
 
 const InstrumentRow: React.FC<InstrumentRowProps> = ({
   section,
+  cartItemId,
   instrumentId,
   name,
   color,
   price,
   amount,
+  image,
 }) => {
   const handleIncreaseCount = () => {
     console.log("increase");
@@ -31,16 +38,23 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
     console.log("decrease");
   };
 
+  const handleRemoveItem = async () => {
+    await removeCartItem(cartItemId);
+  };
+
   return (
     <tr className={styles.row}>
       <th className={`${styles.cell}`}>
-        <div className={styles.image}></div>
-      </th>
+        <div className={styles.cellContainer}>
+          <div className={styles.image}></div>
 
-      <th className={styles.cell}>
-        <Link className={styles.link} href={`/shop/${section}/${instrumentId}`}>
-          {name} / {color}
-        </Link>
+          <Link
+            className={styles.link}
+            href={`/shop/${section}/${instrumentId}`}
+          >
+            {name} / <span className={styles.color}>{color}</span>
+          </Link>
+        </div>
       </th>
 
       <th className={styles.cell}>
@@ -53,7 +67,11 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
         </Button>
       </th>
 
-      <th className={styles.cell}>{price}</th>
+      <th className={styles.cell}>{price} </th>
+
+      <th className={styles.cell} onClick={handleRemoveItem}>
+        <FiTrash2 className={styles.iconTrash} size={24} />
+      </th>
     </tr>
   );
 };

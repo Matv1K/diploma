@@ -32,9 +32,9 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
 
     const newCartItem = cartItem.save();
 
-    res.status(201).send(newCartItem);
+    res.status(201).json(newCartItem);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 });
 
@@ -44,9 +44,9 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
 
     const cartItems = await Cart_Item.find({ userId });
 
-    res.status(200).send(cartItems);
+    res.status(200).json(cartItems);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 });
 
@@ -58,9 +58,21 @@ router.get("/amount", authMiddleware, async (req: Request, res: Response) => {
 
     const cartItemsAmount = cartItems.length;
 
-    res.status(200).send(cartItemsAmount);
+    res.status(200).json(cartItemsAmount);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
+  }
+});
+
+router.delete("/:id", authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const deletedItem = await Cart_Item.deleteOne({ _id: id });
+
+    res.status(200).json(deletedItem);
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 

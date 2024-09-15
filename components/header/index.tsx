@@ -8,11 +8,16 @@ import styles from "./index.module.scss";
 
 import Link from "next/link";
 import Image from "next/image";
-
 import { Button, Catalog, Input, Dropdown } from "../../components";
 
-import { Logo, Search, Close } from "@/public/icons";
-import { FiShoppingCart, FiHeart, FiSettings } from "react-icons/fi";
+import { Logo } from "@/public/icons";
+import {
+  FiShoppingCart,
+  FiHeart,
+  FiSettings,
+  FiSearch,
+  FiX,
+} from "react-icons/fi";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 
@@ -58,6 +63,14 @@ const Header: React.FC = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
 
+  const getActiveIcon = (href: string) => {
+    if (pathname === href) {
+      return styles.active;
+    }
+
+    return;
+  };
+
   const handleOpenCatalog = () => {
     dispatch(openCatalog());
   };
@@ -95,7 +108,7 @@ const Header: React.FC = () => {
             onClick={isCatalogOpened ? handleCloseCatalog : handleOpenCatalog}
           >
             {isCatalogOpened ? (
-              <Image src={Close} alt="Close" width={24} height={24} />
+              <FiX size={24} />
             ) : (
               <div>
                 <div className={styles.menuLine}></div>
@@ -110,7 +123,7 @@ const Header: React.FC = () => {
               className={styles.search}
               placeholder="Find on Musify"
               type={InputTypes.TEXT}
-              icon={Search}
+              icon={<FiSearch size={24} />}
               onChange={handleSearch}
             />
 
@@ -132,7 +145,10 @@ const Header: React.FC = () => {
           {user ? (
             <div className={styles.icons}>
               <div className={styles.profileContainer}>
-                <Link href="/profile" className={styles.icon}>
+                <Link
+                  href="/profile"
+                  className={`${styles.icon} ${getActiveIcon("/profile")}`}
+                >
                   <FiSettings size={24} />
                 </Link>
 
@@ -140,7 +156,10 @@ const Header: React.FC = () => {
               </div>
 
               <div>
-                <Link href="/liked" className={styles.icon}>
+                <Link
+                  href="/liked"
+                  className={`${styles.icon} ${getActiveIcon("/liked")}`}
+                >
                   <FiHeart size={24} />
                 </Link>
               </div>
@@ -148,7 +167,10 @@ const Header: React.FC = () => {
               <div className={styles.cartContainer}>
                 <span className={styles.cartAmount}>{items.length}</span>
 
-                <Link href="/cart" className={styles.icon}>
+                <Link
+                  href="/cart"
+                  className={`${styles.icon} ${getActiveIcon("/cart")}`}
+                >
                   <FiShoppingCart size={24} />
                 </Link>
               </div>

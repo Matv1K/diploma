@@ -1,33 +1,28 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
-import styles from "./page.module.scss";
 
 import "react-toastify/dist/ReactToastify.css";
 
+import styles from "./page.module.scss";
+
 import Link from "next/link";
-
-import { ToastContainer, toast } from "react-toastify";
-
+import { ToastContainer } from "react-toastify";
 import { Input, Button } from "@/components";
-
-import { TOAST_MESSAGES } from "../constants";
 
 import { registerUser } from "@/services/users/userService";
 
 import { ButtonOptions, InputTypes } from "@/types";
-
-const notify = () => toast.success(TOAST_MESSAGES.SIGN_UP);
 
 const SignUp: React.FC = () => {
   const [inputData, setInputData] = useState<any>(null);
 
   const { push } = useRouter();
 
-  const handleSignUp = async (e: any) => {
+  const handleSignUp = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
     try {
@@ -39,9 +34,9 @@ const SignUp: React.FC = () => {
       });
 
       push("/");
-
-      // notify();
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleGoogleSignUp = () => {
@@ -60,10 +55,10 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <main className={styles.signUp}>
+    <main>
       <h2>Sign up</h2>
 
-      <form className={styles.form} autoComplete="off">
+      <form className={styles.form}>
         <Input
           className={styles.input}
           type={InputTypes.TEXT}
@@ -105,7 +100,7 @@ const SignUp: React.FC = () => {
 
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
-            <Button onClick={handleSignUp}>Sign up</Button>
+            <Button onClick={(e) => handleSignUp}>Sign up</Button>
             <Button option={ButtonOptions.GOOGLE} onClick={handleGoogleSignUp}>
               Sign up with Google
             </Button>

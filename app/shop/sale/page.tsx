@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 
-import { ToastContainer } from "react-toastify";
-
 import styles from "./page.module.scss";
 
+import { ToastContainer } from "react-toastify";
 import { InstrumentCard } from "@/components";
 
 import { getInstrumentsOnSale } from "@/services/instruments/instrumentService";
+
+import { InstrumentCardI } from "@/types";
 
 const Sale: React.FC = () => {
   const [instruments, setInstruments] = useState<any>([]);
@@ -30,15 +31,15 @@ const Sale: React.FC = () => {
       <div className={styles.instruments}>
         {instruments.map(
           ({
+            _id,
             name,
             section,
-            _id,
             price,
             instrumentType,
             isNew,
             image,
             colors,
-          }: any) => {
+          }: InstrumentCardI) => {
             return (
               <InstrumentCard
                 key={_id}
