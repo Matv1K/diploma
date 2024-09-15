@@ -102,8 +102,6 @@ export const ORDERS = [
   },
 ];
 
-export const HEADER_LINKS = [{ href: "/shop", name: "Shop" }];
-
 export const TOAST_MESSAGES = {
   SIGN_IN: "Successfully logged in",
   SIGN_UP: "Successfully signed up",

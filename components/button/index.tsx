@@ -2,25 +2,18 @@ import React from "react";
 
 import styles from "./index.module.scss";
 
-import Image from "next/image";
+import { ButtonOptions, ButtonTypes } from "@/types";
 
 interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: any;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
-  type?: "submit" | "reset";
-  option?: "outline" | "filled" | "google";
+  type?: ButtonTypes;
   disabled?: boolean;
+  option?: ButtonOptions;
+  children: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  type,
-  className,
-  onClick,
-  disabled,
-  option = "filled",
-}) => {
+const getButtonOptionClass = (option: string) => {
   const optionClass =
     option === "outline"
       ? styles.outline
@@ -28,12 +21,25 @@ const Button: React.FC<ButtonProps> = ({
       ? styles.google
       : styles.filled;
 
+  return optionClass;
+};
+
+const Button: React.FC<ButtonProps> = ({
+  children,
+  type,
+  className,
+  onClick,
+  disabled,
+  option = ButtonOptions.Filled,
+}) => {
   return (
     <button
       disabled={disabled}
       onClick={onClick}
       type={type}
-      className={`${styles.button} ${optionClass} ${className}`}
+      className={`${styles.button} ${getButtonOptionClass(
+        option
+      )} ${className}`}
     >
       {children}
     </button>

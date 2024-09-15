@@ -23,11 +23,11 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   price,
   amount,
 }) => {
-  const increaseCount = () => {
+  const handleIncreaseCount = () => {
     console.log("increase");
   };
 
-  const decreaseCount = () => {
+  const handleDecreaseCount = () => {
     console.log("decrease");
   };
 
@@ -38,17 +38,17 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       </th>
 
       <th className={styles.cell}>
-        <Link href={`/shop/${section}/${instrumentId}`}>
+        <Link className={styles.link} href={`/shop/${section}/${instrumentId}`}>
           {name} / {color}
         </Link>
       </th>
 
       <th className={styles.cell}>
-        <Button className={styles.operator} onClick={decreaseCount}>
+        <Button className={styles.operator} onClick={handleDecreaseCount}>
           -
         </Button>
         {amount}
-        <Button className={styles.operator} onClick={increaseCount}>
+        <Button className={styles.operator} onClick={handleIncreaseCount}>
           +
         </Button>
       </th>

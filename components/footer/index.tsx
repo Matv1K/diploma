@@ -2,6 +2,8 @@ import React from "react";
 
 import styles from "./index.module.scss";
 
+import Link from "next/link";
+
 import {
   FaFacebookF,
   FaTwitter,
@@ -12,9 +14,10 @@ import {
 const Footer: React.FC = () => {
   return (
     <footer className={styles.footer}>
-      <div className={styles.container}>
+      <div className={styles.footerContainer}>
         <div className={styles.section}>
           <h4 className={styles.heading}>About Us</h4>
+
           <p className={styles.description}>
             We are a music store offering the best instruments from renowned
             brands. Our mission is to provide musicians with high-quality
@@ -24,44 +27,42 @@ const Footer: React.FC = () => {
 
         <div className={styles.section}>
           <h4 className={styles.heading}>Contact Us</h4>
-          <p className={styles.contactInfo}>Email: info@musicstore.com</p>
-          <p className={styles.contactInfo}>Phone: +123 456 7890</p>
-          <p className={styles.contactInfo}>
-            Address: 123 Music Avenue, Suite 100
-          </p>
+
+          <p>Email: info@musicstore.com</p>
+          <p>Phone: +123 456 7890</p>
+          <p>Address: 123 Music Avenue, Suite 100</p>
         </div>
 
         <div className={styles.section}>
           <h4 className={styles.heading}>Follow Us</h4>
+
           <div className={styles.socialLinks}>
-            <a
+            <Link
+              className={styles.link}
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaFacebookF />
-            </a>
-            <a
+            </Link>
+
+            <Link
+              className={styles.link}
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaTwitter />
-            </a>
-            <a
+            </Link>
+
+            <Link
+              className={styles.link}
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaInstagram />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaLinkedinIn />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

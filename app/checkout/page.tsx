@@ -17,6 +17,8 @@ import styles from "./page.module.scss";
 
 import { Button } from "@/components";
 
+import { ButtonTypes } from "@/types";
+
 const convertToSubcurrency = (amount: number, factor = 100) => {
   return Math.round(amount * factor);
 };
@@ -40,7 +42,7 @@ const CheckoutForm: React.FC = () => {
       <Button
         disabled={!stripe}
         className={styles.checkoutButton}
-        type="submit"
+        type={ButtonTypes.SUBMIT}
       >
         Pay 2000$
       </Button>

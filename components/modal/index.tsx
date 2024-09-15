@@ -1,12 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import styles from "./index.module.scss";
 
-import { useDispatch } from "react-redux";
-
 import Image from "next/image";
-
-import { Button } from "../../components";
 
 import { Close } from "@/public/icons";
 
@@ -17,15 +14,13 @@ interface ModalProps {
   buttonName?: string;
   onButtonClick?: () => void;
   className?: string;
-  setIsModalOpened?: any;
+  setIsModalOpened?: (isOpen: boolean) => void;
   children: React.ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({
   heading,
   children,
-  buttonName,
-  onButtonClick,
   className,
   setIsModalOpened,
 }) => {
@@ -33,14 +28,17 @@ const Modal: React.FC<ModalProps> = ({
 
   const handleCloseModal = () => {
     dispatch(closeModal());
-    setIsModalOpened(false);
+
+    if (setIsModalOpened) {
+      setIsModalOpened(false);
+    }
   };
 
   return (
     <div className={styles.overlay}>
       <div className={`${styles.modal} ${className}`}>
         <Image
-          className={styles.close}
+          className={styles.modalClose}
           src={Close}
           alt="close"
           width={24}

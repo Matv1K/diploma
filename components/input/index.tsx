@@ -4,7 +4,9 @@ import styles from "./index.module.scss";
 
 import Image from "next/image";
 
-import { Button } from "../../components";
+import { StaticImageData } from "next/image";
+
+import { InputTypes } from "@/types";
 
 interface InputProps {
   placeholder?: string;
@@ -12,9 +14,9 @@ interface InputProps {
   id?: string;
   name?: string;
   onChange?: any;
-  type: "text" | "email" | "password" | "search";
+  type: InputTypes;
   title?: string;
-  icon?: any;
+  icon?: StaticImageData;
   handleIconClick?: () => void;
   value?: string;
   required?: boolean;
@@ -36,7 +38,7 @@ const Input: React.FC<InputProps> = ({
   autoComplete,
 }) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.inputWrapper}>
       <input
         className={`${styles.input} ${className}`}
         name={name}

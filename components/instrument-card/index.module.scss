@@ -4,119 +4,100 @@
   border: 1px solid $primary-color;
   border-radius: 8px;
   padding: 10px;
-  background-color: #fff;
+  background-color: $white-color;
   transition: transform 0.3s ease;
+  position: relative;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-  position: relative;
 
   &:hover {
-    transform: scale(1.02); /* Slight scale */
+    transform: scale(1.05);
   }
-}
 
-.instrumentName {
-  text-transform: capitalize;
-  text-align: left;
-}
+  .imageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.instrumentImage {
-  margin-bottom: 20px;
-}
+    .instrumentImage {
+      margin-bottom: 20px;
+    }
+  }
 
-.imageContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .instrumentPrice {
+    color: $secondary-color;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
 
-.button {
-  width: 100%;
-  margin-top: 20px;
-}
+  .instrumentName {
+    text-transform: capitalize;
 
-.price {
-  font-weight: 500;
-  color: $secondary-color;
-  margin-bottom: 10px;
-}
+    .instrumentType {
+      font-size: $font-size-small;
+    }
+  }
 
-.instrumentType {
-  font-size: 14px;
-}
+  .radioButtons {
+    margin-top: 10px;
 
-.newPin {
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid $secondary-color;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  font-size: 12px;
-}
+    .label {
+      .radio {
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 15px;
+        position: relative;
+        display: inline-block;
+        border: 2px solid currentColor;
+        cursor: pointer;
 
-.originalPrice {
-  position: relative;
-  margin-right: 10px;
+        &:before {
+          content: "";
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: transparent;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          transition: background-color 0.3s ease;
+        }
 
-  &::after {
-    content: "";
-    width: 50px;
-    height: 2px;
-    background-color: red;
+        &:checked:before {
+          background-color: currentColor;
+        }
+      }
+
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .buttonAddToCart {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .newPin {
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid $secondary-color;
     position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 5px;
+    left: 5px;
+    font-size: 12px;
   }
-}
 
-.label {
-  .radio {
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid currentColor;
-    margin-right: 15px;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+  .likeButton {
+    position: absolute;
+    right: 5px;
+    top: 5px;
 
-    &:before {
-      content: "";
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: transparent;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: background-color 0.3s ease;
+    &:hover {
+      color: $secondary-color;
     }
-
-    &:checked:before {
-      background-color: currentColor;
-    }
-  }
-
-  &:not(:last-child) {
-    margin-right: 5px;
-  }
-}
-
-.radioButtons {
-  margin-top: 10px;
-  // margin-top: 20px;
-}
-
-.likeButton {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-
-  &:hover {
-    color: orange;
   }
 }

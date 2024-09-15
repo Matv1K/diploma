@@ -18,6 +18,8 @@ import { TOAST_MESSAGES } from "../constants";
 
 import { loginUser } from "@/services/users/userService";
 
+import { InputTypes } from "@/types";
+
 const notifySuccess = () => toast.success(TOAST_MESSAGES.SIGN_IN);
 const notifyError = () => toast.error(TOAST_MESSAGES.ADD_TO_CART);
 
@@ -54,7 +56,7 @@ const SignIn: React.FC = () => {
       <form className={styles.form}>
         <Input
           className={styles.input}
-          type="email"
+          type={InputTypes.EMAIL}
           placeholder="Enter your email"
           onChange={handleInputChange}
           name="email"
@@ -62,7 +64,7 @@ const SignIn: React.FC = () => {
 
         <Input
           className={styles.input}
-          type="password"
+          type={InputTypes.PASSWORD}
           placeholder="Enter your password"
           title="Password must have at least 8 characters"
           onChange={handleInputChange}

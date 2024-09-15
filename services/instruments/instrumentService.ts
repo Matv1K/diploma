@@ -22,7 +22,7 @@ export const getInstruments = async () => {
   }
 };
 
-export const getInstrument = async (id: any) => {
+export const getInstrument = async (id: string | string[]) => {
   try {
     const response = await instance.get(`/instruments/${id}`);
     return response.data;

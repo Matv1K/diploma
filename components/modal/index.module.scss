@@ -1,43 +1,39 @@
 @import "../../app/variables.scss";
 
 .overlay {
-  background-color: rgba(00, 00, 00, 0.8);
+  background-color: $overlay-color;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 10000;
   width: 100vw;
   height: 100vh;
-}
 
-.modal {
-  border: 1px solid $secondary-color;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: $background-color;
-}
+  .modal {
+    border: 1px solid $secondary-color;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: $background-color;
 
-.close {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  cursor: pointer;
-}
+    .modalClose {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      cursor: pointer;
+    }
 
-.modalHeading {
-  text-align: center;
-  color: $primary-color;
-}
+    .modalHeading {
+      text-align: center;
+      color: $primary-color;
+    }
 
-.modalContent {
-  margin-top: 20px;
-}
-
-.button {
-  margin-top: 20px;
+    .modalContent {
+      margin-top: 20px;
+    }
+  }
 }
