@@ -10,7 +10,7 @@ import styles from "./page.module.scss";
 
 import Image from "next/image";
 
-import { Button, Comments } from "@/components";
+import { Button } from "@/components";
 
 import { getInstrument } from "@/services/instruments/instrumentService";
 import { addCartItem } from "@/services/cartService.ts/cartService";
@@ -170,8 +170,6 @@ const Instrument: React.FC = () => {
           />
         </div>
       </div>
-
-      <Comments />
 
       <ToastContainer />
     </main>

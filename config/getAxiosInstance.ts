@@ -5,8 +5,6 @@ const instance = axios.create({
   timeout: Number(process.env.NEXT_PUBLIC_TIMEOUT),
 });
 
-// Set token property each time in request headers to get it on the backend
-
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 

@@ -18,6 +18,8 @@ import { TOAST_MESSAGES } from "../constants";
 
 import { registerUser } from "@/services/users/userService";
 
+import { ButtonOptions, InputTypes } from "@/types";
+
 const notify = () => toast.success(TOAST_MESSAGES.SIGN_UP);
 
 const SignUp: React.FC = () => {
@@ -64,7 +66,7 @@ const SignUp: React.FC = () => {
       <form className={styles.form} autoComplete="off">
         <Input
           className={styles.input}
-          type="text"
+          type={InputTypes.TEXT}
           placeholder="Enter your name"
           onChange={handleInputChange}
           name="name"
@@ -73,7 +75,7 @@ const SignUp: React.FC = () => {
 
         <Input
           className={styles.input}
-          type="text"
+          type={InputTypes.TEXT}
           placeholder="Enter your last name"
           onChange={handleInputChange}
           name="lastName"
@@ -82,7 +84,7 @@ const SignUp: React.FC = () => {
 
         <Input
           className={styles.input}
-          type="email"
+          type={InputTypes.EMAIL}
           placeholder="Enter your email"
           onChange={handleInputChange}
           name="email"
@@ -92,7 +94,7 @@ const SignUp: React.FC = () => {
 
         <Input
           className={styles.input}
-          type="password"
+          type={InputTypes.PASSWORD}
           placeholder="Enter your password"
           title="Password must have at least 8 characters"
           onChange={handleInputChange}
@@ -104,7 +106,7 @@ const SignUp: React.FC = () => {
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
             <Button onClick={handleSignUp}>Sign up</Button>
-            <Button option="google" onClick={handleGoogleSignUp}>
+            <Button option={ButtonOptions.GOOGLE} onClick={handleGoogleSignUp}>
               Sign up with Google
             </Button>
           </div>

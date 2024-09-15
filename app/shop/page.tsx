@@ -10,7 +10,7 @@ import { ToastContainer } from "react-toastify";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Input, FilterCard } from "@/components";
+import { Input } from "@/components";
 
 import Image from "next/image";
 
@@ -20,7 +20,9 @@ import { Chat, Send } from "@/public/icons";
 
 import { showModal } from "@/features/modal/modalSlice";
 
-import { INSTRUMENTS } from "../constants";
+import { ButtonOptions } from "@/types";
+
+import { InputTypes } from "@/types";
 
 import { getInstruments } from "@/services/instruments/instrumentService";
 
@@ -90,7 +92,6 @@ const Shop: React.FC = () => {
         className={styles.instruments}
       > */}
       {/* <div className={styles.wrapper}> */}
-      {/* <FilterCard className={styles.filterCard} /> */}
 
       <div className={styles.instruments}>
         {instruments.map(
@@ -135,17 +136,17 @@ const Shop: React.FC = () => {
           <div className={styles.actionData}>
             <Input
               className={styles.messageInput}
-              type="text"
+              type={InputTypes.TEXT}
               placeholder="Write your message"
             />
-            <Button option="outline">
+            <Button option={ButtonOptions.OUTILINE}>
               <Image src={Send} alt="Send" width={24} height={24} />
             </Button>
           </div>
         </Modal>
       ) : (
         <Button
-          option="outline"
+          option={ButtonOptions.OUTILINE}
           onClick={handleOpenModal}
           className={styles.buttonSupport}
         >

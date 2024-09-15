@@ -1,57 +1,56 @@
 @import "../../app/variables.scss";
 
 .overlay {
+  position: fixed;
+  background-color: $overlay-color;
   width: 100vw;
   height: 100vh;
-  position: fixed;
   z-index: 9998;
-  background-color: rgba(00, 00, 00, 0.8);
 }
 
 .catalog {
   position: absolute;
   left: 0;
   top: 82px;
+  width: 30vw;
+  height: calc(100vh - 82px);
+  padding: 15px;
   background-color: $background-color;
   display: flex;
   flex-flow: column;
-  width: 30vw;
-  height: calc(100vh - 82px);
   z-index: 9999;
-  padding: 15px;
-}
 
-.links {
-  display: flex;
-  flex-flow: column;
-}
+  .sectionLinks {
+    display: flex;
+    flex-flow: column;
 
-.link {
-  color: #333;
-  font-size: 14px;
-  transition: background-color 0.3s ease-out;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
+    .sectionLink {
+      color: $text-color;
+      font-size: $font-size-small;
+      padding: 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease-out;
+      cursor: pointer;
 
-  &:hover {
-    background-color: darken($color: $background-color, $amount: 5%);
+      &:hover {
+        background-color: darken($background-color, 5%);
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
   }
 
-  &:not(:last-child) {
-    margin-bottom: 15px;
-  }
-}
+  .linkSales {
+    padding: 10px;
+    border-radius: 8px;
+    color: $primary-color;
+    margin-top: auto;
+    transition: background-color 0.3s ease-out;
 
-.linkSales {
-  padding: 10px;
-  color: $primary-color;
-  margin-top: auto;
-  border-radius: 8px;
-  transition: background-color 0.3s ease-out;
-
-  &:hover {
-    background-color: darken($color: $background-color, $amount: 5%);
+    &:hover {
+      background-color: darken($background-color, 5%);
+    }
   }
 }

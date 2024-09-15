@@ -6,6 +6,8 @@ import styles from "./page.module.scss";
 
 import { Input, Button } from "@/components";
 
+import { InputTypes } from "@/types";
+
 const ResetPassword = () => {
   const handleChangePassword = () => {
     console.log("password has been changed");
@@ -18,13 +20,13 @@ const ResetPassword = () => {
       <form className={styles.form}>
         <Input
           className={styles.input}
-          type="password"
+          type={InputTypes.PASSWORD}
           placeholder="Enter new password"
         />
 
         <Input
           className={styles.input}
-          type="password"
+          type={InputTypes.PASSWORD}
           placeholder="Confirm new password"
         />
 

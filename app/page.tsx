@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 import styles from "./page.module.scss";
 
-import { Carousel, SupportModal, Button, Modal, Input } from "@/components";
+import { Carousel, Button, Modal, Input } from "@/components";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -18,6 +18,8 @@ import { showModal } from "@/features/modal/modalSlice";
 import { Piano } from "@/public/images";
 import { Chat, Send } from "@/public/icons";
 
+import { InputTypes } from "@/types";
+
 import {
   getPopularIstruments,
   getNewInstruments,
@@ -26,6 +28,8 @@ import {
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 import { ALL_SECTIONS, POPULAR_BRANDS } from "./constants";
+
+import { ButtonOptions } from "@/types";
 
 const Home: React.FC = () => {
   // ADD TYPES TO THE STATES
@@ -164,17 +168,17 @@ const Home: React.FC = () => {
           <div className={styles.actionData}>
             <Input
               className={styles.messageInput}
-              type="text"
+              type={InputTypes.TEXT}
               placeholder="Write your message"
             />
-            <Button option="outline">
+            <Button option={ButtonOptions.OUTILINE}>
               <Image src={Send} alt="Send" width={24} height={24} />
             </Button>
           </div>
         </Modal>
       ) : (
         <Button
-          option="outline"
+          option={ButtonOptions.OUTILINE}
           onClick={handleOpenModal}
           className={styles.buttonSupport}
         >

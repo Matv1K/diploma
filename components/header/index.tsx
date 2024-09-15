@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-
-import { FiShoppingCart, FiHeart, FiSettings } from "react-icons/fi";
-
 import { usePathname } from "next/navigation";
 
 import styles from "./index.module.scss";
@@ -13,17 +9,18 @@ import styles from "./index.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 
-import { Button, Catalog, Input } from "../../components";
+import { Button, Catalog, Input, Dropdown } from "../../components";
 
-import { Cart, Heart, Logo, Search, Close, Settings } from "@/public/icons";
-
-import { getCartItems } from "@/services/cartService.ts/cartService";
+import { Logo, Search, Close } from "@/public/icons";
+import { FiShoppingCart, FiHeart, FiSettings } from "react-icons/fi";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 
+import { getCartItems } from "@/services/cartService.ts/cartService";
+
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
 
-import { HEADER_LINKS } from "@/app/constants";
+import { ButtonOptions, InputTypes } from "@/types";
 
 const INSTRUMENTS = [
   { name: "Cort 1" },
@@ -36,12 +33,9 @@ const INSTRUMENTS = [
 ];
 
 const Header: React.FC = () => {
-  const [items, setItems] = useState([]);
   const [query, setQuery] = useState("");
+  const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState<any>([]);
-
-  if (query.length >= 2) {
-  }
 
   const { user, loading } = useCurrentUser();
 
@@ -82,10 +76,6 @@ const Header: React.FC = () => {
     setFilteredItems(filtered);
   };
 
-  const handleLogOut = () => {
-    console.log("log out");
-  };
-
   return (
     <>
       <header className={styles.header}>
@@ -93,13 +83,13 @@ const Header: React.FC = () => {
           <Image
             className={styles.logo}
             src={Logo}
-            alt="Logo"
+            alt="Musify"
             width={40}
             height={40}
           />
         </Link>
 
-        <ul className={styles.list}>
+        <ul className={styles.headerActionData}>
           <Button
             className={styles.buttonCatalog}
             onClick={isCatalogOpened ? handleCloseCatalog : handleOpenCatalog}
@@ -107,82 +97,46 @@ const Header: React.FC = () => {
             {isCatalogOpened ? (
               <Image src={Close} alt="Close" width={24} height={24} />
             ) : (
-              <>
-                <div className={styles.lines}>
-                  <div className={styles.line}></div>
-                  <div className={styles.line}></div>
-                  <div className={styles.line}></div>
-                </div>
-              </>
+              <div>
+                <div className={styles.menuLine}></div>
+                <div className={styles.menuLine}></div>
+                <div className={styles.menuLine}></div>
+              </div>
             )}
           </Button>
 
-          <div className={styles.inputContainer}>
+          <div className={styles.searchContainer}>
             <Input
-              className={styles.input}
+              className={styles.search}
               placeholder="Find on Musify"
-              type="search"
+              type={InputTypes.TEXT}
               icon={Search}
               onChange={handleSearch}
             />
-            {query ? (
-              <div className={styles.helperList}>
+
+            {query && (
+              <div className={styles.searchList}>
                 {filteredItems.map(({ name }: any) => {
-                  return <div className={styles.helperListItem}>{name}</div>;
+                  return <div className={styles.searchListItem}>{name}</div>;
                 })}
               </div>
-            ) : (
-              ""
             )}
           </div>
 
-          <div className={styles.links}>
-            {HEADER_LINKS.map(({ name, href }) => {
-              return (
-                <Link
-                  key={name}
-                  className={`${styles.item} ${
-                    pathname === href && styles.itemActive
-                  }`}
-                  href={href}
-                >
-                  {name}
-                </Link>
-              );
-            })}
-          </div>
+          <Link href="/shop" className={styles.linkShop}>
+            Shop
+          </Link>
         </ul>
 
         <div>
           {user ? (
             <div className={styles.icons}>
-              <div className={styles.profile}>
+              <div className={styles.profileContainer}>
                 <Link href="/profile" className={styles.icon}>
                   <FiSettings size={24} />
                 </Link>
 
-                <div className={styles.dropdownMenu}>
-                  <div className={styles.dropdownLinks}>
-                    <Link href="/orders" className={styles.dropdownItem}>
-                      Orders
-                    </Link>
-
-                    <Link href="/profile" className={styles.dropdownItem}>
-                      Profile
-                    </Link>
-
-                    <Link href="/settings" className={styles.dropdownItem}>
-                      Settings
-                    </Link>
-                  </div>
-
-                  <Button
-                    className={styles.buttonLogOut}
-                    onClick={handleLogOut}
-                  >
-                    Logout
-                  </Button>
-                </div>
+                <Dropdown className={styles.dropdown} />
               </div>
 
               <div>
@@ -191,8 +145,9 @@ const Header: React.FC = () => {
                 </Link>
               </div>
 
-              <div className={styles.linkContainer}>
+              <div className={styles.cartContainer}>
                 <span className={styles.cartAmount}>{items.length}</span>
+
                 <Link href="/cart" className={styles.icon}>
                   <FiShoppingCart size={24} />
                 </Link>
@@ -200,7 +155,7 @@ const Header: React.FC = () => {
             </div>
           ) : (
             <Link href="/sign-in">
-              <Button option="outline">Sign in</Button>
+              <Button option={ButtonOptions.OUTILINE}>Sign in</Button>
             </Link>
           )}
         </div>

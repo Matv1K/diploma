@@ -7,7 +7,12 @@ export const registerUser = async ({
   lastName,
   email,
   password,
-}: any) => {
+}: {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+}) => {
   try {
     const response = await instance.post("/users/register", {
       name,
@@ -25,7 +30,13 @@ export const registerUser = async ({
   }
 };
 
-export const loginUser = async ({ email, password }: any) => {
+export const loginUser = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   try {
     const response = await instance.post("/users/login", { email, password });
 

@@ -1,38 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
-
-import styles from "./index.module.scss";
+import { useRouter } from "next/navigation";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import Image from "next/image";
+import styles from "./index.module.scss";
 
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { Button } from "../../components";
 
+import { FiHeart } from "react-icons/fi";
 import { ElectricGuitar } from "@/public/images";
 
-import { FiHeart } from "react-icons/fi";
-
-import { trimInstrumentName } from "@/utils";
-
 import { addCartItem } from "@/services/cartService.ts/cartService";
-
-import { toast } from "react-toastify";
-
-import { TOAST_MESSAGES } from "@/app/constants";
-
-const notify = () => toast.success(TOAST_MESSAGES.ADD_TO_CART);
-
-const COLORS = ["yellow", "green"];
 
 interface InstrumentCardProps {
   isNew?: boolean;
   name: string;
   price: string;
-  instrumentType: string; // add enum with all possible types
+  instrumentType: string;
   section: string;
   image: string;
   id: string;
@@ -98,7 +86,9 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           height={150}
         />
       </div>
-      <h3 className={styles.price}>{price}</h3>
+
+      <h3 className={styles.instrumentPrice}>{price}</h3>
+
       <h4 className={styles.instrumentName}>
         {name} <span className={styles.instrumentType}>/ {instrumentType}</span>
       </h4>
@@ -120,7 +110,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         ))}
       </div>
 
-      <Button className={styles.button} onClick={handleAddToCart}>
+      <Button className={styles.buttonAddToCart} onClick={handleAddToCart}>
         Add to cart
       </Button>
 

@@ -21,9 +21,7 @@
 34. process next tick
 35. add rtk query
 36. Add three.js library
-46. Add instruments table that will display all the items on the cart and on the liked pages
 49. Authorization with google
-49. Add my own account settings where you can set your location, change password
 50. ADD ENUM TO SECTION FIELD on mongoose model
 51. CONFIGURE CORS ONLY FOR OUR CLIENT
 52. What is vercel
@@ -39,6 +37,7 @@
 69. Accessibility
 72. ADD RATINGS TO INSTRUMENT CARDS
 73. CHANGE ALL ICONS TO REACT_ICONS/FI
+74. rel="noopener noreferrer" WHAT DOES IT MEAN?
 
 
 FUNCTIONALITY
@@ -55,3 +54,4 @@ FUNCTIONALITY
 12. ADD ABILITY TO LEAVE COMMENTS
 13. CHANGE AMOUNT OF ITEMS IN THE CART
 15. ADD TYPES TO INSTRUMENT SECTIONS
+16. Make icon active

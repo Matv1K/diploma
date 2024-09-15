@@ -18,27 +18,16 @@
   border-radius: 8px;
   text-align: center;
   overflow: hidden;
-  cursor: pointer;
   transition: background-color 0.3s ease;
+  cursor: pointer;
+
+  h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: $background-color;
+  }
 
   &:hover {
-    background-color: darken($color: $primary-color, $amount: 5%);
+    background-color: darken($primary-color, 5%);
   }
-}
-
-.carouselItem img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-}
-
-.carouselItem h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
-  color: $background-color;
-}
-
-.carouselItem p {
-  font-size: 1rem;
-  color: $background-color;
 }
