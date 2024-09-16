@@ -7,7 +7,11 @@ import { Button } from "../../components";
 
 import { FiTrash2 } from "react-icons/fi";
 
-import { removeCartItem } from "@/services/cartService.ts/cartService";
+import { removeCartItem } from "@/services/cartService/cartService";
+import {
+  increaseAmount,
+  decreaseAmount,
+} from "@/services/cartService/cartService";
 
 interface InstrumentRowProps {
   instrumentId: string;
@@ -30,12 +34,12 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   amount,
   image,
 }) => {
-  const handleIncreaseCount = () => {
-    console.log("increase");
+  const handleIncreaseCount = async () => {
+    await increaseAmount(cartItemId);
   };
 
-  const handleDecreaseCount = () => {
-    console.log("decrease");
+  const handleDecreaseCount = async () => {
+    await decreaseAmount(cartItemId);
   };
 
   const handleRemoveItem = async () => {

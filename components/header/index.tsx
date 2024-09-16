@@ -21,20 +21,20 @@ import {
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 
-import { getCartItems } from "@/services/cartService.ts/cartService";
+import { getCartItems } from "@/services/cartService/cartService";
 
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
 
 import { ButtonOptions, InputTypes } from "@/types";
 
 const INSTRUMENTS = [
-  { name: "Cort 1" },
-  { name: "we 2" },
-  { name: "qwe 3" },
-  { name: "asd 4" },
-  { name: "Cort 5" },
-  { name: "Cort 6" },
-  { name: "Cort 7" },
+  { name: "Cort 1", id: 1 },
+  { name: "we 2", id: 2 },
+  { name: "qwe 3", id: 3 },
+  { name: "asd 4", id: 4 },
+  { name: "Cort 5", id: 5 },
+  { name: "Cort 6", id: 6 },
+  { name: "Cort 7", id: 7 },
 ];
 
 const Header: React.FC = () => {
@@ -46,14 +46,17 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      const items = await getCartItems();
-
-      setItems(items);
+      try {
+        const items = await getCartItems();
+        setItems(items);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     setTimeout(() => {
       fetchCartItems();
-    }, 1500);
+    }, 1000);
   }, []);
 
   const isCatalogOpened = useSelector(

@@ -5,10 +5,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./page.module.scss";
 
 import Link from "next/link";
-
 import { Button, InstrumentCard } from "@/components";
 
-import { getLikedItems } from "@/services/likedServices/likedService";
+import { getLikedItems } from "@/services/likedService/likedService";
+
+import { InstrumentCardI } from "@/types";
 
 const Liked: React.FC = () => {
   const [likedItems, setLikedItems] = useState<any>([]);
@@ -40,20 +41,35 @@ const Liked: React.FC = () => {
       <h2>Liked Items</h2>
 
       <div className={styles.table}>
-        {likedItems.map(() => {
-          return (
-            <InstrumentCard
-              key={3 * Math.random()}
-              name="name"
-              instrumentType=""
-              section="guitars"
-              price="333$"
-              colors={["red", "blue"]}
-              image="dd"
-              id={"id"}
-            />
-          );
-        })}
+        {likedItems.map(
+          ({
+            _id,
+            price,
+            name,
+            section,
+            instrumentId,
+            isNew = false,
+            image,
+            colors,
+            brandName,
+          }: InstrumentCardI) => {
+            return (
+              <InstrumentCard
+                key={_id}
+                name={name}
+                instrumentType=""
+                section={section}
+                price={price}
+                colors={colors}
+                image={image}
+                id={instrumentId}
+                brandName={brandName}
+                isNew={isNew}
+                withLikeIcon
+              />
+            );
+          }
+        )}
       </div>
     </main>
   );

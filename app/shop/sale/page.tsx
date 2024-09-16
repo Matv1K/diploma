@@ -39,6 +39,7 @@ const Sale: React.FC = () => {
             isNew,
             image,
             colors,
+            brandName,
           }: InstrumentCardI) => {
             return (
               <InstrumentCard
@@ -51,6 +52,7 @@ const Sale: React.FC = () => {
                 isNew={isNew}
                 image={image}
                 colors={colors}
+                brandName={brandName}
                 withLikeIcon
               />
             );

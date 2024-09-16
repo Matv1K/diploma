@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +13,12 @@ import { Button } from "../../components";
 import { FiHeart } from "react-icons/fi";
 import { ElectricGuitar } from "@/public/images";
 
-import { addCartItem } from "@/services/cartService.ts/cartService";
+import { addCartItem } from "@/services/cartService/cartService";
+import {
+  addLikedItem,
+  getLikedItem,
+  deleteLikedItem,
+} from "@/services/likedService/likedService";
 
 interface InstrumentCardProps {
   isNew?: boolean;
@@ -25,6 +30,8 @@ interface InstrumentCardProps {
   id: string;
   colors: any;
   withLikeIcon?: boolean;
+  liked?: boolean;
+  brandName?: string;
 }
 
 const InstrumentCard: React.FC<InstrumentCardProps> = ({
@@ -37,8 +44,22 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   id,
   colors,
   withLikeIcon,
+  brandName,
 }) => {
   const [selectedColor, setSelectedColor] = useState<string>("");
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    const checkLiked = async () => {
+      const likedItem = await getLikedItem(id);
+
+      if (likedItem) {
+        setIsLiked(true);
+      }
+    };
+
+    checkLiked();
+  }, [id]);
 
   const { push } = useRouter();
 
@@ -46,10 +67,29 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
     push(`/shop/${section}/${id}`);
   };
 
-  const handleLikeInstrument = (e: any) => {
+  const handleLikeItem = async (
+    e: React.MouseEvent<SVGElement, MouseEvent>
+  ) => {
     e.stopPropagation();
 
-    console.log("like");
+    if (isLiked) {
+      if (isLiked) {
+        await deleteLikedItem(id);
+        setIsLiked(false);
+        return;
+      }
+      return;
+    }
+
+    await addLikedItem({
+      price,
+      name,
+      image: "///",
+      colors,
+      brandName,
+      instrumentId: id,
+      section,
+    });
   };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -59,7 +99,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       price,
       name,
       image,
-      color: "red",
+      color: selectedColor,
       brandName: "cort",
       instrumentId: id,
       section,
@@ -68,9 +108,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
     push("/");
   };
 
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.stopPropagation();
-
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedColor(e.target.value);
   };
 
@@ -89,10 +127,15 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       <h3 className={styles.instrumentPrice}>{price}</h3>
 
       <h4 className={styles.instrumentName}>
-        {name} <span className={styles.instrumentType}>/ {instrumentType}</span>
+        {name} <span className={styles.instrumentType}>/ {brandName}</span>
       </h4>
 
-      <div className={styles.radioButtons}>
+      <div
+        className={styles.radioButtons}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         {colors.map((color: string, index: number) => (
           <label key={index} className={styles.label}>
             <input
@@ -102,7 +145,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
               }`}
               type="radio"
               value={color}
-              onChange={handleRadioChange}
+              onChange={handleColorChange}
               style={{ color }}
             />
           </label>
@@ -117,9 +160,11 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
       {withLikeIcon && (
         <FiHeart
-          className={styles.likeButton}
           size={24}
-          onClick={handleLikeInstrument}
+          onClick={handleLikeItem}
+          className={`${styles.likeIcon} ${
+            isLiked ? styles.likeIconFilled : ""
+          }`}
         />
       )}
     </div>

@@ -54,6 +54,7 @@ const Shop: React.FC = () => {
             isNew,
             image,
             colors,
+            brandName,
           }: InstrumentCardI) => (
             <InstrumentCard
               key={_id}
@@ -65,6 +66,7 @@ const Shop: React.FC = () => {
               isNew={isNew}
               image={image}
               colors={colors}
+              brandName={brandName}
               withLikeIcon
             />
           )

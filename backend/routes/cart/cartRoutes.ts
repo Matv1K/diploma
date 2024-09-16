@@ -5,6 +5,8 @@ import authMiddleware from "../../middlewares/authMiddleware";
 
 import Cart_Item from "../../models/Cart-Item";
 
+import getTotalPrice from "../../utils/getTotalPrice";
+
 const router = express.Router();
 
 interface AuthenticatedRequest extends Request {
@@ -15,6 +17,15 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
   try {
     const { name, image, brandName, price, color, section, instrumentId } =
       req.body;
+
+    const existingItem = await Cart_Item.findOne({
+      instrumentId,
+      userId: (req as any).payload?.id,
+    });
+
+    if (existingItem && existingItem.color === color) {
+      return res.status(200).send("Instrument is already in the cart");
+    }
 
     const userId = (req as AuthenticatedRequest).payload?.id;
 
@@ -44,7 +55,9 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
 
     const cartItems = await Cart_Item.find({ userId });
 
-    res.status(200).json(cartItems);
+    const totalPrice = getTotalPrice(cartItems);
+
+    res.status(200).json({ cartItems, length: cartItems.length, totalPrice });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -75,5 +88,37 @@ router.delete("/:id", authMiddleware, async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
+router.post(
+  "/increase/:id",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      await Cart_Item.updateOne({ _id: id }, { $inc: { amount: 1 } });
+
+      res.status(200).json("Amount updated successfully");
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+);
+
+router.post(
+  "/decrease/:id",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      await Cart_Item.updateOne({ _id: id }, { $inc: { amount: -1 } });
+
+      res.status(200).json("Amount updated successfully");
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+);
 
 export default router;

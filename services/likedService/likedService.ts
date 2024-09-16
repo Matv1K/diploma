@@ -19,3 +19,23 @@ export const getLikedItems = async () => {
     throw error;
   }
 };
+
+export const getLikedItem = async (id: any) => {
+  try {
+    const response = await instance.get(`/liked/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching items: ", error);
+    throw error;
+  }
+};
+
+export const deleteLikedItem = async (id: any) => {
+  try {
+    const response = await instance.delete(`/liked/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting item: ", error);
+    throw error;
+  }
+};

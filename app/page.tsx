@@ -117,7 +117,7 @@ const Home: React.FC = () => {
             height={180}
           />
 
-          <h1 className={styles.headinghome}>
+          <h1 className={styles.headingHome}>
             Check out our{" "}
             <Link href="/events" className={styles.eventsLink}>
               events

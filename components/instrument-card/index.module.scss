@@ -91,7 +91,7 @@
     font-size: 12px;
   }
 
-  .likeButton {
+  .likeIcon {
     position: absolute;
     right: 5px;
     top: 5px;
@@ -99,5 +99,9 @@
     &:hover {
       color: $secondary-color;
     }
+  }
+
+  .likeIconFilled {
+    color: $secondary-color;
   }
 }

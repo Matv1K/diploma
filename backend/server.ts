@@ -7,6 +7,7 @@ import instrumentRoutes from "./routes/instruments/instrumentRoutes";
 import userRoutes from "./routes/users/userRoutes";
 import cartRoutes from "./routes/cart/cartRoutes";
 import likedRoutes from "./routes/liked/likedRoutes";
+import ordersRoutes from "./routes/orders/ordersRoutes";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ server.use("/instruments", instrumentRoutes);
 server.use("/users", userRoutes);
 server.use("/cart", cartRoutes);
 server.use("/liked", likedRoutes);
+server.use("/orders", ordersRoutes);
 
 const port = process.env.PORT || 5000;
 

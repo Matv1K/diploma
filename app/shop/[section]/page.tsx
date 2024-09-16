@@ -11,7 +11,7 @@ import { removeSeparator } from "@/utils";
 
 import { getInstrumentsBySection } from "@/services/instruments/instrumentService";
 
-import { InstrumentCardI, InstrumentI } from "@/types";
+import { InstrumentCardI } from "@/types";
 
 const Section: React.FC = () => {
   const [instruments, setInstruments] = useState<any>([]);
@@ -47,6 +47,7 @@ const Section: React.FC = () => {
             isNew,
             image,
             colors,
+            brandName,
           }: InstrumentCardI) => {
             return (
               <InstrumentCard
@@ -59,6 +60,7 @@ const Section: React.FC = () => {
                 isNew={isNew}
                 colors={colors}
                 image={image}
+                brandName={brandName}
                 withLikeIcon
               />
             );

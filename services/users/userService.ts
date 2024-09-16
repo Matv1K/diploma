@@ -58,3 +58,14 @@ export const getCurrentUser = async () => {
     throw error;
   }
 };
+
+export const logOut = async () => {
+  try {
+    const response = await instance.delete("/users/logout");
+    localStorage.removeItem("token");
+    return response.data;
+  } catch (error) {
+    console.error("Something went wrong: ", error);
+    throw error;
+  }
+};

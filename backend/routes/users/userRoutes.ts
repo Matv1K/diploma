@@ -113,4 +113,17 @@ router.get("/my-user", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
+router.delete(
+  "/logout",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      res.status(200).json("Successfully logged out");
+    } catch (error) {
+      console.error("Could not sign out", error);
+      res.status(500).json("Something went wrong");
+    }
+  }
+);
+
 export default router;

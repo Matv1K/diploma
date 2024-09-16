@@ -14,12 +14,17 @@ import { FiHeart } from "react-icons/fi";
 import { removeSeparator } from "@/utils";
 
 import { getInstrument } from "@/services/instruments/instrumentService";
-import { addCartItem } from "@/services/cartService.ts/cartService";
-import { addLikedItem } from "@/services/likedServices/likedService";
+import { addCartItem } from "@/services/cartService/cartService";
+import {
+  addLikedItem,
+  getLikedItem,
+  deleteLikedItem,
+} from "@/services/likedService/likedService";
 
 const Instrument: React.FC = () => {
   const [instrument, setInstrument] = useState<any>(null);
   const [selectedColor, setSelectedColor] = useState<string>("");
+  const [isLiked, setIsLiked] = useState(false);
 
   const { instrument: instrumentId } = useParams();
 
@@ -30,10 +35,16 @@ const Instrument: React.FC = () => {
       const instrument = await getInstrument(instrumentId);
 
       setInstrument(instrument);
+
+      const isLiked = await getLikedItem(instrumentId);
+
+      if (isLiked) {
+        setIsLiked(true);
+      }
     };
 
     fetchInstrument();
-  }, []);
+  }, [instrumentId]);
 
   const handleAddToCart = async (e: React.FormEvent) => {
     e.stopPropagation();
@@ -42,7 +53,7 @@ const Instrument: React.FC = () => {
       price: instrument?.price,
       name: instrument?.name,
       image: "///",
-      color: "red",
+      color: selectedColor,
       brandName: instrument?.brandName,
       instrumentId: instrument?._id,
       section: instrument?.section,
@@ -56,11 +67,17 @@ const Instrument: React.FC = () => {
   };
 
   const handleLikeItem = async () => {
+    if (isLiked) {
+      await deleteLikedItem(instrumentId);
+      setIsLiked(false);
+      return;
+    }
+
     await addLikedItem({
       price: instrument?.price,
       name: instrument?.name,
       image: "///",
-      color: "red",
+      colors: instrument?.colors,
       brandName: instrument?.brandName,
       instrumentId: instrument?._id,
       section: instrument?.section,
@@ -154,7 +171,9 @@ const Instrument: React.FC = () => {
           <FiHeart
             size={24}
             onClick={handleLikeItem}
-            className={styles.likeIcon}
+            className={`${styles.likeIcon} ${
+              isLiked ? styles.likeIconFilled : ""
+            }`}
           />
         </div>
       </div>

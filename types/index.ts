@@ -22,7 +22,9 @@ export interface InstrumentCardI {
   instrumentType: string;
   isNew: boolean;
   image: string;
+  brandName: string;
   colors: string[];
+  instrumentId: string;
 }
 
 export interface CartItemI {
