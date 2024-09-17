@@ -42,6 +42,13 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = (req as AuthenticatedRequest).payload?.id;
 
+    const orders = await Order.aggregate([
+      { $match: { userId } },
+      { $sort: { createdAt: 1 } },
+    ]);
+
+    console.log(orders);
+
     const myOrders = await Order.find({ userId });
 
     res.status(201).json(myOrders);

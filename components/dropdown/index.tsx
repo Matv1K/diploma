@@ -10,6 +10,8 @@ import Link from "next/link";
 
 import { Button } from "../../components";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
+
 import { logOut } from "@/services/users/userService";
 
 interface DropdownProps {
@@ -17,6 +19,8 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ className }) => {
+  const { user } = useCurrentUser();
+
   const { push } = useRouter();
 
   const handleLogOut = async () => {
@@ -25,15 +29,19 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
 
       push("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   return (
     <div className={`${styles.dropdownMenu} ${className}`}>
       <div className={styles.dropdownHeader}>
-        <h4>Matthew bello</h4>
-        <p className={styles.dropdownNumber}>+375 29 877 18 20</p>
+        <h4>
+          {user?.name} {user?.lastName}
+        </h4>
+        <p className={styles.dropdownNumber}>
+          {user?.phoneNumber !== 0 && user?.phoneNumber}
+        </p>
       </div>
 
       <div className={styles.dropdownLinks}>

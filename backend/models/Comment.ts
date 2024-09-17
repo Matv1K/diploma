@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
 
-// ADD INSTRUMENT ID HERE
-
 const commentSchema = new mongoose.Schema(
   {
-    // instrumentId: { type: String, required: true },
+    instrumentId: { type: String, required: true },
     userName: { type: String, required: true },
     description: { type: String, required: true },
     rating: { type: Number, required: true },

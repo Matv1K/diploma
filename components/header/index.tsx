@@ -21,9 +21,10 @@ import {
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 
-import { getCartItems } from "@/services/cartService/cartService";
-
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
+
+import { getCartItems } from "@/services/cartService/cartService";
+import { searchInstruments } from "@/services/instruments/instrumentService";
 
 import { ButtonOptions, InputTypes } from "@/types";
 
@@ -43,6 +44,8 @@ const Header: React.FC = () => {
   const [filteredItems, setFilteredItems] = useState<any>([]);
 
   const { user, loading } = useCurrentUser();
+
+  console.log(filteredItems);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -82,14 +85,20 @@ const Header: React.FC = () => {
     dispatch(closeCatalog());
   };
 
-  const handleSearch = (e: any) => {
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
 
-    const filtered = INSTRUMENTS.filter((instrument) =>
-      instrument.name.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+    if (!e.target.value) {
+      setFilteredItems([]);
+      return;
+    }
 
-    setFilteredItems(filtered);
+    try {
+      const result = await searchInstruments(e.target.value);
+      setFilteredItems(result);
+    } catch (error) {
+      console.error("Search failed", error);
+    }
   };
 
   return (
@@ -132,8 +141,17 @@ const Header: React.FC = () => {
 
             {query && (
               <div className={styles.searchList}>
-                {filteredItems.map(({ name }: any) => {
-                  return <div className={styles.searchListItem}>{name}</div>;
+                {filteredItems.map(({ name, section, _id }: any) => {
+                  return (
+                    <div key={_id} className={styles.searchListItem}>
+                      <Link
+                        className={styles.searchItemLink}
+                        href={`/shop/${section}/${_id}`}
+                      >
+                        {name}
+                      </Link>
+                    </div>
+                  );
                 })}
               </div>
             )}

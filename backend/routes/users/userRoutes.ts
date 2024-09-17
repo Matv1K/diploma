@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 
 import authMiddleware from "../../middlewares/authMiddleware";
+import roleMiddleware from "../../middlewares/roleMiddleware";
 
 import User from "../../models/User";
 
@@ -13,7 +14,6 @@ interface AuthenticatedRequest extends Request {
 }
 
 // TODO: DO NOT SEND PASSWORDS BACK TO THE CLIENT
-// TODO: ADD DISCOUNT FIELD TO USERS
 // TODO: ADD USER ROLES
 
 const router = express.Router();
@@ -27,12 +27,18 @@ router.post("/register", async (req: Request, res: Response) => {
     const salt = await bcrypt.genSalt(6);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = new User({ name, email, password: hashedPassword, lastName });
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      lastName,
+      role: "user",
+    });
 
     const savedUser = await user.save();
 
     const token = jwt.sign(
-      { id: savedUser._id, email: savedUser.email },
+      { id: savedUser._id, email: savedUser.email, role: savedUser.role },
       `${process.env.SECRET_KEY}`,
       { expiresIn: "30d" }
     );
@@ -63,7 +69,7 @@ router.post("/login", async (req: Request, res: Response) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { id: user._id, email: user.email, role: user.role },
       `${process.env.SECRET_KEY}`,
       {
         expiresIn: "30d",
@@ -113,6 +119,27 @@ router.get("/my-user", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
+router.patch(
+  "/my-user",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      const { phoneNumber, name, lastName, email, address } = req.body;
+      const userId = (req as AuthenticatedRequest).payload?.id;
+
+      const user = await User.updateOne(
+        { _id: userId },
+        { phoneNumber, name, lastName, email, address }
+      );
+
+      res.status(200).json(user);
+    } catch (error) {
+      console.error("Could not update user", error);
+      res.status(500).json("Something went wrong");
+    }
+  }
+);
+
 router.delete(
   "/logout",
   authMiddleware,
@@ -123,6 +150,14 @@ router.delete(
       console.error("Could not sign out", error);
       res.status(500).json("Something went wrong");
     }
+  }
+);
+
+router.get(
+  "/admin",
+  roleMiddleware("admin"),
+  async (req: Request, res: Response) => {
+    res.status(200).json("Welcome Admin");
   }
 );
 

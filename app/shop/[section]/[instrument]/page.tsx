@@ -66,7 +66,7 @@ const Instrument: React.FC = () => {
     };
 
     const fetchComments = async () => {
-      const comments = await getComments();
+      const comments = await getComments(instrumentId);
       setComments(comments);
     };
 
@@ -113,12 +113,10 @@ const Instrument: React.FC = () => {
     });
   };
 
-  // Handle comment text input change
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCommentText(e.target.value);
   };
 
-  // Handle rating change
   const handleRatingChange = (newRating: number) => {
     setRating(newRating);
   };
@@ -126,7 +124,7 @@ const Instrument: React.FC = () => {
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await createComment({ rating: 3, description: "LORORORO" });
+    await createComment({ rating, description: commentText, instrumentId });
   };
 
   return (

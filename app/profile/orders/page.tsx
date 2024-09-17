@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 
 import styles from "./page.module.scss";
 
+import Link from "next/link";
+import { Button } from "@/components";
+
 import { getOrders } from "@/services/ordersService/ordersService";
 
 import { OrderI } from "@/types";
@@ -21,6 +24,18 @@ const Orders: React.FC = () => {
     fetchOrders();
   }, []);
 
+  if (!orders.length) {
+    return (
+      <main className={styles.containerEmpty}>
+        <h2>You do not have any orders yet</h2>
+
+        <Link href="/shop">
+          <Button>Go back to shopping</Button>
+        </Link>
+      </main>
+    );
+  }
+
   return (
     <main>
       <h2>Orders</h2>
@@ -29,8 +44,6 @@ const Orders: React.FC = () => {
         {orders.map(({ _id, items, status, totalPrice }) => {
           return (
             <div key={_id}>
-              <h4 className={styles.headingOrder}>Order {_id}</h4>
-
               <table className={styles.order}>
                 <thead>
                   <tr className={styles.tableRow}>
@@ -43,20 +56,24 @@ const Orders: React.FC = () => {
                     <th className={`${styles.tableCell} ${styles.tableHeader}`}>
                       Price
                     </th>
+                    <th className={`${styles.tableCell} ${styles.tableHeader}`}>
+                      Amount
+                    </th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {items.map(({ name, price, color, _id }) => (
+                  {items.map(({ name, price, color, amount, _id }) => (
                     <tr key={_id} className={styles.tableRow}>
                       <td className={styles.tableCell}>{name}</td>
                       <td className={styles.tableCell}>{color}</td>
                       <td className={styles.tableCell}>{price}</td>
+                      <td className={styles.tableCell}>{amount}</td>
                     </tr>
                   ))}
 
                   <tr className={styles.tableRow}>
-                    <td className={styles.tableCell} colSpan={2}>
+                    <td className={styles.tableCell} colSpan={3}>
                       Total Price:
                     </td>
 
@@ -64,7 +81,7 @@ const Orders: React.FC = () => {
                   </tr>
 
                   <tr className={styles.tableRow}>
-                    <td className={styles.tableCell} colSpan={2}>
+                    <td className={styles.tableCell} colSpan={3}>
                       Status:
                     </td>
 

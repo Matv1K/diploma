@@ -12,10 +12,10 @@ interface AuthenticatedRequest extends Request {
   payload?: jwt.JwtPayload;
 }
 
-router.post("/", authMiddleware, async (req: Request, res: Response) => {
+router.post("/:id", authMiddleware, async (req: Request, res: Response) => {
   try {
     const { description, rating } = req.body;
-    // const { id: instrumentId } = req.params;
+    const { id: instrumentId } = req.params;
 
     const userId = (req as AuthenticatedRequest).payload?.id;
 
@@ -26,6 +26,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
     }
 
     const newComment = new Comment({
+      instrumentId,
       description,
       rating,
       userName: user.name,
@@ -40,9 +41,11 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/:id", async (req: Request, res: Response) => {
   try {
-    const comments = await Comment.find();
+    const { id: instrumentId } = req.params;
+
+    const comments = await Comment.find({ instrumentId });
     res.status(200).json(comments);
   } catch (error) {
     console.error("Something went wrong", error);

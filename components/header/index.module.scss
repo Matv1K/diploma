@@ -61,6 +61,12 @@
           padding: 10px;
           border-radius: 8px;
           cursor: pointer;
+          width: 100%;
+
+          .searchItemLink {
+            display: block;
+            width: 100%;
+          }
 
           &:hover {
             background-color: darken($white-color, 5%);

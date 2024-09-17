@@ -73,3 +73,13 @@ export const getInstrumentsBySection = async (section: string | string[]) => {
     throw error;
   }
 };
+
+export const searchInstruments = async (query: string) => {
+  try {
+    const response = await instance.get(`/instruments/search/query?q=${query}`);
+    return response.data;
+  } catch (error) {
+    console.error("Search failed", error);
+    throw error;
+  }
+};

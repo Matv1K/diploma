@@ -59,6 +59,38 @@ export const getCurrentUser = async () => {
   }
 };
 
+export const updateCurrentUser = async ({
+  name,
+  lastName,
+  phoneNumber,
+  email,
+  address,
+}: {
+  name: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  address: {
+    country: string;
+    city: string;
+    address: string;
+  };
+}) => {
+  try {
+    const response = await instance.patch("/users/my-user", {
+      name,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Something went wrong: ", error);
+    throw error;
+  }
+};
+
 export const logOut = async () => {
   try {
     const response = await instance.delete("/users/logout");

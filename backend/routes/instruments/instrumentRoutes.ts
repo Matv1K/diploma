@@ -167,4 +167,23 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/search/query", async (req: Request, res: Response) => {
+  try {
+    const { q } = req.query;
+
+    if (!q) {
+      return res.status(400).json({ message: "Query parameter is required" });
+    }
+
+    const instruments = await Instrument.find({
+      name: { $regex: q, $options: "i" },
+    });
+
+    res.status(200).json(instruments);
+  } catch (error) {
+    console.error("Search failed", error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+});
+
 export default router;

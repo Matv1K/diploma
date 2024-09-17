@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .profileHeader {
   text-align: center;
   margin-bottom: 30px;
@@ -9,10 +11,10 @@
 }
 
 .profileDetails {
-  margin-top: 20px;
+  margin-top: 50px;
 
   .field {
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 
     span {
       display: block;
@@ -44,7 +46,6 @@
 }
 
 .links {
-  text-align: center;
   margin-top: 20px;
 
   a {
@@ -59,4 +60,23 @@
       color: #0056b3;
     }
   }
+}
+
+.input {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.headingSecondary {
+  color: $text-color;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.change {
+  margin-top: 20px;
 }
