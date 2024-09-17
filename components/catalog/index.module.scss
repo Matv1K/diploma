@@ -24,22 +24,58 @@
     display: flex;
     flex-flow: column;
 
-    .sectionLink {
-      color: $text-color;
-      font-size: $font-size-medium;
-      padding: 10px;
-      border-radius: 8px;
-      transition: background-color 0.3s ease-out;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
+    .sectionLinkContainer {
+      position: relative;
 
-      &:hover {
-        background-color: darken($background-color, 5%);
+      .sectionLink {
+        color: $text-color;
+        font-size: $font-size-medium;
+        padding: 10px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease-out;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:hover {
+          background-color: darken($background-color, 5%);
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 15px;
+        }
       }
 
-      &:not(:last-child) {
-        margin-bottom: 15px;
+      // Styles for the subtypes menu on hover
+      .subtypesMenu {
+        position: absolute;
+        top: 0;
+        left: 100%; // Moves the subtypes menu to the right of the parent
+        background-color: $background-color;
+        padding: 10px;
+        width: 20vw;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+
+        .subtypeLink {
+          padding: 8px;
+          font-size: $font-size-small;
+          color: $text-color;
+          transition: background-color 0.3s ease-out;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: darken($background-color, 5%);
+          }
+
+          &:not(:last-child) {
+            margin-bottom: 10px;
+          }
+        }
       }
     }
   }

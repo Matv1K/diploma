@@ -42,9 +42,15 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
   const { push } = useRouter();
 
-  const handleItemNavigation = (section: string, name: string) => {
+  console.log(items);
+
+  const handleItemNavigation = (
+    section: string,
+    name: string,
+    instrumentType: string
+  ) => {
     if (isInstrumentsCarousel) {
-      push(`/shop/${section}/${name}`);
+      push(`/shop/${section}/${instrumentType}/${name}`);
     } else {
       push(`/shop/${name.toLocaleLowerCase()}`);
     }
@@ -65,27 +71,21 @@ const Carousel: React.FC<CarouselProps> = ({
       removeArrowOnDeviceType={["tablet", "mobile"]}
       itemClass={styles.carouselItemPadding}
     >
-      {items.map(
-        ({
-          name,
-          _id,
-          section,
-        }: {
-          name: string;
-          _id: string;
-          section: string;
-        }) => (
-          <div
-            onClick={() =>
-              handleItemNavigation(section, isInstrumentsCarousel ? _id : name)
-            }
-            key={name}
-            className={styles.carouselItem}
-          >
-            <h3>{name}</h3>
-          </div>
-        )
-      )}
+      {items.map(({ name, _id, section, instrumentType }) => (
+        <div
+          onClick={() =>
+            handleItemNavigation(
+              section,
+              isInstrumentsCarousel ? _id : name,
+              instrumentType
+            )
+          }
+          key={name}
+          className={styles.carouselItem}
+        >
+          <h3>{name}</h3>
+        </div>
+      ))}
     </ReactCarousel>
   );
 };

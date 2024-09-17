@@ -83,3 +83,15 @@ export const searchInstruments = async (query: string) => {
     throw error;
   }
 };
+
+export const getInstrumentBySubtype = async (subtype: string | string[]) => {
+  try {
+    const response = await instance.get(
+      `/instruments/section/subtype/${subtype}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching instruments", error);
+    throw error;
+  }
+};

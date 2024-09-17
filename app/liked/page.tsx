@@ -52,12 +52,13 @@ const Liked: React.FC = () => {
             image,
             colors,
             brandName,
+            instrumentType,
           }: InstrumentCardI) => {
             return (
               <InstrumentCard
                 key={_id}
                 name={name}
-                instrumentType=""
+                instrumentType={instrumentType}
                 section={section}
                 price={price}
                 colors={colors}

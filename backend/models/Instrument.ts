@@ -15,6 +15,7 @@ const instrumentSchema = new mongoose.Schema(
     onSale: { type: Boolean, default: false },
     bought: { type: Number, default: 0 },
     colors: { type: Array, required: true },
+    instrumentType: { type: String, required: true },
     characteristics: {
       type: Object,
       of: mongoose.Schema.Types.Mixed,

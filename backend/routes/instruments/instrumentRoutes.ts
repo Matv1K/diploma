@@ -24,6 +24,7 @@ router.post("/", instrumentValidator, async (req: Request, res: Response) => {
       image,
       colors,
       characteristics,
+      instrumentType,
     } = req.body;
 
     const newInstrument = new Instrument({
@@ -39,6 +40,7 @@ router.post("/", instrumentValidator, async (req: Request, res: Response) => {
       bought: 0,
       characteristics,
       colors,
+      instrumentType,
     });
 
     const savedInstrument = await newInstrument.save();
@@ -129,6 +131,19 @@ router.get("/section/:section", async (req: Request, res: Response) => {
     const { section } = req.params;
 
     const instruments = await Instrument.find({ section });
+
+    res.status(200).json(instruments);
+  } catch (error) {
+    console.error("Error fetching instruments");
+    res.status(500).json(`Something went wrong: ${error}`);
+  }
+});
+
+router.get("/section/subtype/:subtype", async (req: Request, res: Response) => {
+  try {
+    const { subtype } = req.params;
+
+    const instruments = await Instrument.find({ instrumentType: subtype });
 
     res.status(200).json(instruments);
   } catch (error) {

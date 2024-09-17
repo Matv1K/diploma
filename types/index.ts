@@ -12,6 +12,7 @@ export interface InstrumentI {
   bought?: number;
   colors: string[];
   characteristics?: Record<string, any>;
+  instrumentType: string;
 }
 
 export interface InstrumentCardI {

@@ -125,18 +125,31 @@ export const INSTRUMENTS = [
 ];
 
 export const CATALOG_LINKS = [
-  { link: "Guitars", id: 1 },
-  { link: "Pianos", id: 2 },
-  { link: "Harmonicas", id: 3 },
-  { link: "Wind instruments", id: 9 },
-  { link: "Drums", id: 4 },
-  { link: "Cellos", id: 5 },
-  { link: "Studio Equipment", id: 7 },
-  { link: "Headphones", id: 8 },
-];
-
-export const GUITAR_TYPES = [
-  { link: "Acoustic guitars", id: 1 },
-  { link: "Electric guitars", id: 2 },
-  { link: "Ukuleles", id: 3 },
+  {
+    id: 1,
+    link: "Guitars",
+    subtypes: [
+      { name: "Electric Guitars", slug: "electric-guitars" },
+      { name: "Acoustic Guitars", slug: "acoustic-guitars" },
+      { name: "Ukuleles", slug: "ukuleles" },
+    ],
+  },
+  {
+    id: 2,
+    link: "Wind Instruments",
+    subtypes: [
+      { name: "Saxophones", slug: "saxophones" },
+      { name: "Flutes", slug: "flutes" },
+    ],
+  },
+  {
+    id: 3,
+    link: "Drums",
+  },
+  {
+    id: 4,
+    link: "Keyboards",
+  },
+  { id: 5, link: "Studio Equipment" },
+  { id: 6, link: "bowed" },
 ];

@@ -64,7 +64,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const { push } = useRouter();
 
   const handleInstrumentNavigation = () => {
-    push(`/shop/${section}/${id}`);
+    push(`/shop/${section}/${instrumentType}/${id}`);
   };
 
   const handleLikeItem = async (

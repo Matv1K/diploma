@@ -146,7 +146,7 @@ const Header: React.FC = () => {
                     <div key={_id} className={styles.searchListItem}>
                       <Link
                         className={styles.searchItemLink}
-                        href={`/shop/${section}/${_id}`}
+                        href={`/shop/${section}/acoustic-guitars/${_id}`}
                       >
                         {name}
                       </Link>
