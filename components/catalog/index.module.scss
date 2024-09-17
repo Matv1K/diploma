@@ -21,8 +21,12 @@
   z-index: 9999;
 
   .sectionLinks {
-    display: flex;
-    flex-flow: column;
+    display: grid;
+    grid-template-rows: repeat(
+      auto-fill,
+      minmax(50px, 1fr)
+    ); // Evenly distributes the items
+    grid-gap: 15px; // Adds spacing between the items
 
     .sectionLinkContainer {
       position: relative;
@@ -33,25 +37,24 @@
         padding: 10px;
         border-radius: 8px;
         transition: background-color 0.3s ease-out;
-        cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
 
         &:hover {
           background-color: darken($background-color, 5%);
         }
 
         &:not(:last-child) {
-          margin-bottom: 15px;
+          margin-bottom: 20px;
         }
       }
 
-      // Styles for the subtypes menu on hover
       .subtypesMenu {
         position: absolute;
         top: 0;
-        left: 100%; // Moves the subtypes menu to the right of the parent
+        left: 100%;
         background-color: $background-color;
         padding: 10px;
         width: 20vw;

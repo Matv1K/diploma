@@ -45,7 +45,11 @@ router.get("/:id", async (req: Request, res: Response) => {
   try {
     const { id: instrumentId } = req.params;
 
-    const comments = await Comment.find({ instrumentId });
+    const comments = await Comment.aggregate([
+      { $match: { instrumentId } },
+      { $sort: { createdAt: -1 } },
+    ]);
+
     res.status(200).json(comments);
   } catch (error) {
     console.error("Something went wrong", error);

@@ -44,14 +44,10 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
 
     const orders = await Order.aggregate([
       { $match: { userId } },
-      { $sort: { createdAt: 1 } },
+      { $sort: { createdAt: -1 } },
     ]);
 
-    console.log(orders);
-
-    const myOrders = await Order.find({ userId });
-
-    res.status(201).json(myOrders);
+    res.status(201).json(orders);
   } catch (error) {
     console.error(error);
     res.status(500).json("Something went wrong");
