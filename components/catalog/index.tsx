@@ -19,9 +19,7 @@ interface CatalogProps {
 const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
   const dispatch = useDispatch();
 
-  const handleCloseCatalog = () => {
-    dispatch(closeCatalog());
-  };
+  const handleCloseCatalog = () => dispatch(closeCatalog());
 
   return (
     <div className={styles.overlay} onClick={handleCloseCatalog}>

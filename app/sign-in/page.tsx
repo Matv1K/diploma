@@ -13,22 +13,25 @@ import { Button, Input } from "@/components";
 
 import { loginUser } from "@/services/users/userService";
 
-import { InputTypes } from "@/types";
+import { InputTypes, SignInDataI } from "@/types";
 
 const SignIn: React.FC = () => {
-  const [inputData, setInputData] = useState<any>(null);
+  const [inputData, setInputData] = useState<SignInDataI>({
+    email: "",
+    password: "",
+  });
 
   const { push } = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setInputData((prev: any) => {
+    setInputData((prev: SignInDataI) => {
       return { ...prev, [name]: value };
     });
   };
 
-  const handleSignIn = async (e: any) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -44,7 +47,7 @@ const SignIn: React.FC = () => {
     <main>
       <h2>Sign in</h2>
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSignIn}>
         <Input
           className={styles.input}
           type={InputTypes.EMAIL}
@@ -63,7 +66,7 @@ const SignIn: React.FC = () => {
         />
 
         <div className={styles.formInfo}>
-          <Button onClick={handleSignIn}>Sign in</Button>
+          <Button>Sign in</Button>
 
           <span>
             Don't have an account?

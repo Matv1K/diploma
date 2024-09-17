@@ -6,23 +6,7 @@ import styles from "./page.module.scss";
 
 import { getOrders } from "@/services/ordersService/ordersService";
 
-import { ORDERS } from "@/app/constants";
-
-interface OrderItem {
-  name: string;
-  price: string;
-  color: string;
-  amount: number;
-  _id: string;
-  instumentId: string;
-}
-
-interface OrderI {
-  _id: string;
-  items: OrderItem[];
-  status: string;
-  totalPrice: number;
-}
+import { OrderI } from "@/types";
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<OrderI[]>([]);

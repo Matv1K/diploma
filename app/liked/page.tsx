@@ -12,7 +12,7 @@ import { getLikedItems } from "@/services/likedService/likedService";
 import { InstrumentCardI } from "@/types";
 
 const Liked: React.FC = () => {
-  const [likedItems, setLikedItems] = useState<any>([]);
+  const [likedItems, setLikedItems] = useState<InstrumentCardI[]>([]);
 
   useEffect(() => {
     const fetchLikedItems = async () => {

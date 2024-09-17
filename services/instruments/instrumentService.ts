@@ -1,10 +1,12 @@
 import instance from "@/config/getAxiosInstance";
 
+import { InstrumentI } from "@/types";
+
 // CREATE types FOLDER THAT INCLUDES ALL THE TYPES TO USE AS DATA INTERFACES HERE
 
-export const createInstrument = async (instrumentData: any) => {
+export const createInstrument = async (instrument: InstrumentI) => {
   try {
-    const response = await instance.post("/instruments", instrumentData);
+    const response = await instance.post("/instruments", instrument);
     return response.data;
   } catch (error) {
     console.error("Error creating instrument: ", error);
@@ -62,7 +64,7 @@ export const getNewInstruments = async () => {
   }
 };
 
-export const getInstrumentsBySection = async (section: any) => {
+export const getInstrumentsBySection = async (section: string | string[]) => {
   try {
     const response = await instance.get(`/instruments/section/${section}`);
     return response.data;

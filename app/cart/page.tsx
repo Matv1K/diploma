@@ -10,7 +10,7 @@ import { InstrumentRow, Button } from "@/components";
 
 import { getCartItems } from "@/services/cartService/cartService";
 
-import { CartItemI } from "@/types";
+import { CartItemIdI } from "@/types";
 
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -58,7 +58,7 @@ const Cart: React.FC = () => {
                 amount,
                 instrumentId,
                 section,
-              }: CartItemI) => {
+              }: CartItemIdI) => {
                 return (
                   <InstrumentRow
                     cartItemId={_id}

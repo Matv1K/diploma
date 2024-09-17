@@ -12,7 +12,7 @@ import { getInstrumentsOnSale } from "@/services/instruments/instrumentService";
 import { InstrumentCardI } from "@/types";
 
 const Sale: React.FC = () => {
-  const [instruments, setInstruments] = useState<any>([]);
+  const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
 
   useEffect(() => {
     const fetchInstruments = async () => {

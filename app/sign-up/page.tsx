@@ -13,10 +13,15 @@ import { Input, Button } from "@/components";
 
 import { registerUser } from "@/services/users/userService";
 
-import { ButtonOptions, InputTypes } from "@/types";
+import { ButtonOptions, InputTypes, SignUpDataI } from "@/types";
 
 const SignUp: React.FC = () => {
-  const [inputData, setInputData] = useState<any>(null);
+  const [inputData, setInputData] = useState<SignUpDataI>({
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
   const { push } = useRouter();
 
@@ -46,7 +51,7 @@ const SignUp: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setInputData((prev: any) => {
+    setInputData((prev: SignUpDataI) => {
       return {
         ...prev,
         [name]: value,
@@ -100,7 +105,7 @@ const SignUp: React.FC = () => {
 
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
-            <Button onClick={(e) => handleSignUp}>Sign up</Button>
+            <Button onClick={handleSignUp}>Sign up</Button>
             <Button option={ButtonOptions.GOOGLE} onClick={handleGoogleSignUp}>
               Sign up with Google
             </Button>

@@ -53,9 +53,14 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = (req as AuthenticatedRequest).payload?.id;
 
-    const cartItems = await Cart_Item.find({ userId });
+    const cartItems = await Cart_Item.find({ userId }).lean();
 
-    const totalPrice = getTotalPrice(cartItems);
+    const formattedCartItems = cartItems.map((item) => ({
+      ...item,
+      _id: item._id.toString(),
+    }));
+
+    const totalPrice = getTotalPrice(formattedCartItems);
 
     res.status(200).json({ cartItems, length: cartItems.length, totalPrice });
   } catch (error) {

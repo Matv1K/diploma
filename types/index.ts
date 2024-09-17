@@ -28,6 +28,17 @@ export interface InstrumentCardI {
 }
 
 export interface CartItemI {
+  color: string;
+  image: string;
+  price: string;
+  name: string;
+  amount: number;
+  instrumentId: string;
+  section: string;
+  brandName: string;
+}
+
+export interface CartItemIdI {
   _id: string;
   color: string;
   image: string;
@@ -36,6 +47,49 @@ export interface CartItemI {
   amount: number;
   instrumentId: string;
   section: string;
+  brandName: string;
+}
+
+export interface LikedItemI {
+  _id?: string;
+  name: string;
+  image: string;
+  brandName: string | undefined;
+  colors: string[];
+  userId?: string;
+  instrumentId: string;
+  section: string;
+  amount?: number;
+  price: string;
+}
+
+export interface OrderItemI {
+  name: string;
+  price: string;
+  color: string;
+  amount: number;
+  _id: string;
+  instumentId: string;
+}
+
+export interface OrderI {
+  _id: string;
+  userId: string;
+  items: OrderItemI[];
+  status: string;
+  totalPrice: number;
+}
+
+export interface SignUpDataI {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+export interface SignInDataI {
+  email: string;
+  password: string;
 }
 
 export enum ButtonOptions {

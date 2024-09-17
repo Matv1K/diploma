@@ -31,13 +31,18 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
 
   return (
     <div className={`${styles.dropdownMenu} ${className}`}>
+      <div className={styles.dropdownHeader}>
+        <h4>Matthew bello</h4>
+        <p className={styles.dropdownNumber}>+375 29 877 18 20</p>
+      </div>
+
       <div className={styles.dropdownLinks}>
-        <Link href="/profile/orders" className={styles.dropdownLink}>
-          Orders
+        <Link href="/profile" className={styles.dropdownLink}>
+          My profile
         </Link>
 
-        <Link href="/profile/settings" className={styles.dropdownLink}>
-          Settings
+        <Link href="/profile/orders" className={styles.dropdownLink}>
+          Order history
         </Link>
       </div>
 

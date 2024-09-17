@@ -7,7 +7,7 @@ import styles from "./page.module.scss";
 
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
-import { Button } from "@/components";
+import { Button, Comment } from "@/components";
 
 import { FiHeart } from "react-icons/fi";
 
@@ -20,11 +20,33 @@ import {
   getLikedItem,
   deleteLikedItem,
 } from "@/services/likedService/likedService";
+import {
+  createComment,
+  getComments,
+} from "@/services/comments/commentsService";
+
+import { ButtonTypes, InstrumentI } from "@/types";
 
 const Instrument: React.FC = () => {
-  const [instrument, setInstrument] = useState<any>(null);
+  const [instrument, setInstrument] = useState<InstrumentI>({
+    name: "",
+    isNew: false,
+    brandName: "",
+    bought: 0,
+    section: "",
+    salePrice: "",
+    _id: "",
+    description: "",
+    characteristics: [],
+    price: "",
+    image: "",
+    colors: [],
+  });
   const [selectedColor, setSelectedColor] = useState<string>("");
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [commentText, setCommentText] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
+  const [comments, setComments] = useState([]);
 
   const { instrument: instrumentId } = useParams();
 
@@ -43,10 +65,16 @@ const Instrument: React.FC = () => {
       }
     };
 
+    const fetchComments = async () => {
+      const comments = await getComments();
+      setComments(comments);
+    };
+
     fetchInstrument();
+    fetchComments();
   }, [instrumentId]);
 
-  const handleAddToCart = async (e: React.FormEvent) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     await addCartItem({
@@ -57,6 +85,7 @@ const Instrument: React.FC = () => {
       brandName: instrument?.brandName,
       instrumentId: instrument?._id,
       section: instrument?.section,
+      amount: 1,
     });
 
     push("/");
@@ -82,6 +111,22 @@ const Instrument: React.FC = () => {
       instrumentId: instrument?._id,
       section: instrument?.section,
     });
+  };
+
+  // Handle comment text input change
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentText(e.target.value);
+  };
+
+  // Handle rating change
+  const handleRatingChange = (newRating: number) => {
+    setRating(newRating);
+  };
+
+  const handleCommentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await createComment({ rating: 3, description: "LORORORO" });
   };
 
   return (
@@ -151,12 +196,13 @@ const Instrument: React.FC = () => {
               {instrument?.description}
             </p>
 
-            <div>
-              <h4>Characteristics: </h4>
-              <ul className={styles.instumentSpecs}>
-                {instrument &&
-                  Object.entries(instrument.characteristics).map(
-                    ([key, value]: any) => {
+            {instrument && instrument.characteristics && (
+              <div>
+                <h4>Characteristics: </h4>
+
+                <ul className={styles.instrumentSpecs}>
+                  {Object.entries(instrument.characteristics || {}).map(
+                    ([key, value]: [string, string]) => {
                       return (
                         <li className={styles.instrumentSpec} key={key}>
                           {key}: {value}
@@ -164,8 +210,9 @@ const Instrument: React.FC = () => {
                       );
                     }
                   )}
-              </ul>
-            </div>
+                </ul>
+              </div>
+            )}
           </div>
 
           <FiHeart
@@ -177,6 +224,51 @@ const Instrument: React.FC = () => {
           />
         </div>
       </div>
+
+      <section className={styles.commentsSection}>
+        <h2>Comments</h2>
+
+        <form className={styles.commentForm} onSubmit={handleCommentSubmit}>
+          <textarea
+            placeholder="Write a comment..."
+            className={styles.commentInput}
+            value={commentText}
+            onChange={handleCommentChange}
+          />
+
+          <div className={styles.ratingInput}>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                className={`${styles.star} ${
+                  rating >= star ? styles.filled : ""
+                }`}
+                onClick={() => handleRatingChange(star)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
+          <div>
+            <Button type={ButtonTypes.SUBMIT}>Submit</Button>
+          </div>
+        </form>
+
+        <div className={styles.commentsList}>
+          {comments.map(({ _id, createdAt, description, userName, rating }) => {
+            return (
+              <Comment
+                key={_id}
+                description={description}
+                userName={userName}
+                rating={rating}
+                createdAt={createdAt}
+              />
+            );
+          })}
+        </div>
+      </section>
 
       <ToastContainer />
     </main>

@@ -28,7 +28,7 @@ interface InstrumentCardProps {
   section: string;
   image: string;
   id: string;
-  colors: any;
+  colors: string[];
   withLikeIcon?: boolean;
   liked?: boolean;
   brandName?: string;
@@ -103,6 +103,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       brandName: "cort",
       instrumentId: id,
       section,
+      amount: 1,
     });
 
     push("/");

@@ -1,6 +1,62 @@
-@import "../variables.scss";
+.profileHeader {
+  text-align: center;
+  margin-bottom: 30px;
 
-.discount {
+  h2 {
+    font-size: 24px;
+    color: #333;
+  }
+}
+
+.profileDetails {
   margin-top: 20px;
-  color: $text-color;
+
+  .field {
+    margin-bottom: 15px;
+
+    span {
+      display: block;
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .info {
+      font-size: 16px;
+      color: #666;
+    }
+  }
+
+  .editButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+
+.links {
+  text-align: center;
+  margin-top: 20px;
+
+  a {
+    display: block;
+    color: #007bff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-bottom: 10px;
+
+    &:hover {
+      color: #0056b3;
+    }
+  }
 }

@@ -1,8 +1,11 @@
 import instance from "@/config/getAxiosInstance";
 
-export const addLikedItem = async (likedItemData: any) => {
+import { LikedItemI } from "@/types";
+
+export const addLikedItem = async (likedItem: LikedItemI) => {
   try {
-    const response = await instance.post("/liked", likedItemData);
+    const response = await instance.post("/liked", likedItem);
+
     return response.data;
   } catch (error) {
     console.error("Error creating liked item: ", error);
@@ -20,7 +23,7 @@ export const getLikedItems = async () => {
   }
 };
 
-export const getLikedItem = async (id: any) => {
+export const getLikedItem = async (id: string | string[]) => {
   try {
     const response = await instance.get(`/liked/${id}`);
     return response.data;
@@ -30,7 +33,7 @@ export const getLikedItem = async (id: any) => {
   }
 };
 
-export const deleteLikedItem = async (id: any) => {
+export const deleteLikedItem = async (id: string | string[]) => {
   try {
     const response = await instance.delete(`/liked/${id}`);
     return response.data;

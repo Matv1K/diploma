@@ -12,6 +12,17 @@
   width: 200px;
   border-radius: 8px;
 
+  .dropdownHeader {
+    border-bottom: 1px solid $black-color;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    color: $text-color;
+
+    .dropdownNumber {
+      margin-top: 5px;
+    }
+  }
+
   .dropdownLinks {
     margin-bottom: 20px;
 

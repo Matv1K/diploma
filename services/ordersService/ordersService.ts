@@ -1,6 +1,8 @@
 import instance from "@/config/getAxiosInstance";
 
-export const createOrder = async (items: any) => {
+import { OrderItemI } from "../../types";
+
+export const createOrder = async (items: OrderItemI[]) => {
   try {
     const response = await instance.post("/orders", items);
     return response.data;

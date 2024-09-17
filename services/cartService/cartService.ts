@@ -1,8 +1,10 @@
 import instance from "@/config/getAxiosInstance";
 
-export const addCartItem = async (cartItemData: any) => {
+import { CartItemI } from "@/types";
+
+export const addCartItem = async (cartItem: CartItemI) => {
   try {
-    const response = await instance.post("/cart", cartItemData);
+    const response = await instance.post("/cart", cartItem);
     return response.data;
   } catch (error) {
     console.error("Error creating cart item: ", error);
@@ -40,7 +42,7 @@ export const removeCartItem = async (id: string) => {
   }
 };
 
-export const increaseAmount = async (id: any) => {
+export const increaseAmount = async (id: string) => {
   try {
     const response = await instance.post(`/cart/increase/${id}`);
     return response.data;
@@ -50,7 +52,7 @@ export const increaseAmount = async (id: any) => {
   }
 };
 
-export const decreaseAmount = async (id: any) => {
+export const decreaseAmount = async (id: string) => {
   try {
     const response = await instance.post(`/cart/decrease/${id}`);
     return response.data;

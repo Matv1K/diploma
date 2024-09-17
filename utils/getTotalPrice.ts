@@ -1,5 +1,7 @@
-const getTotalPrice = (items: any) => {
-  const totalPrice = items.reduce((total: number, item: any) => {
+import { CartItemI } from "@/types";
+
+const getTotalPrice = (items: CartItemI[]) => {
+  const totalPrice = items.reduce((total: number, item: CartItemI) => {
     const price = parseFloat(item.price.replace("$", ""));
 
     return total + price * item.amount;
