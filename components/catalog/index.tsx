@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
 
 import styles from "./index.module.scss";
@@ -50,6 +49,7 @@ const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
                 onClick={handleCloseCatalog}
               >
                 <span>{link}</span>
+
                 <FiChevronRight size={24} />
               </Link>
 

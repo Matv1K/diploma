@@ -1,11 +1,9 @@
 "use client";
 
 import React from "react";
-
 import { useRouter } from "next/navigation";
 
 import "react-multi-carousel/lib/styles.css";
-
 import styles from "./index.module.scss";
 
 import ReactCarousel from "react-multi-carousel";

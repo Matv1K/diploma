@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 
 import styles from "./index.module.scss";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button, Catalog, Input, Dropdown, Loader } from "../../components";
@@ -25,7 +26,6 @@ import { fetchCartItems } from "@/features/instruments/instrumentsSlice";
 import { searchInstruments } from "@/services/instruments/instrumentService";
 
 import { ButtonOptions, InputTypes } from "@/types";
-
 import { RootState, AppDispatch } from "@/app/store";
 
 const Header: React.FC = () => {
@@ -46,8 +46,10 @@ const Header: React.FC = () => {
   );
 
   useEffect(() => {
+    if (!user) return;
+
     dispatch(fetchCartItems());
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   const isCatalogOpened = useSelector(
     (state: RootState) => state.catalog.isCatalogOpen
@@ -101,7 +103,11 @@ const Header: React.FC = () => {
             {isCatalogOpened ? (
               <FiX size={24} />
             ) : (
-              <div className={styles.menuIcon} />
+              <>
+                <div className={styles.menuLine} />
+                <div className={styles.menuLine} />
+                <div className={styles.menuLine} />
+              </>
             )}
           </Button>
 

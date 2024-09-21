@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { getCurrentUser } from "@/services/users/userService";
 
 const useCurrentUser = () => {
@@ -10,7 +9,6 @@ const useCurrentUser = () => {
     const fetchCurrentUser = async () => {
       try {
         const { user } = await getCurrentUser();
-
         setUser(user);
       } catch (error) {
         console.log(error);
@@ -19,7 +17,12 @@ const useCurrentUser = () => {
       }
     };
 
-    fetchCurrentUser();
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchCurrentUser();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   return { user, loading };

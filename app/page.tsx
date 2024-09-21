@@ -25,7 +25,6 @@ import { InputTypes, ButtonOptions } from "@/types";
 
 const Home: React.FC = () => {
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(true);
   const [popularInstruments, setPopularInstruments] = useState<any>([]);
   const [newInstruments, setNewInstruments] = useState<any>([]);
 
@@ -48,14 +47,10 @@ const Home: React.FC = () => {
     setIsModalOpened(true);
   };
 
-  const handleShowModal = () => {
-    dispatch(showModal());
-  };
-
   return (
     <main>
       <div className={styles.homeBlock}>
-        <h1 className={styles.headinghome}>
+        <h1 className={styles.headingHome}>
           Best platform for aspiring musicians
         </h1>
 
@@ -84,25 +79,6 @@ const Home: React.FC = () => {
           <Carousel items={ALL_SECTIONS} />
         </div>
 
-        <div className={styles.sectionBrands}>
-          <h2 className={styles.headingBrands}>Most popular brands</h2>
-
-          <div className={styles.listBrands}>
-            {POPULAR_BRANDS.map(({ name, id }) => {
-              return (
-                <div className={styles.brandCard} key={id}>
-                  <Image
-                    src={`/images/${name.toLocaleLowerCase()}.png`}
-                    alt={name}
-                    width={200}
-                    height={100}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
         <div>
           <h2>Most popular items</h2>
           <Carousel items={popularInstruments} isInstrumentsCarousel />
@@ -117,12 +93,12 @@ const Home: React.FC = () => {
             height={180}
           />
 
-          <h1 className={styles.headingHome}>
+          <h2 className={styles.headingHome}>
             Check out our{" "}
             <Link href="/events" className={styles.eventsLink}>
               events
             </Link>
-          </h1>
+          </h2>
         </div>
 
         <div>

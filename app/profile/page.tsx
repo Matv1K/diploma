@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "react-phone-input-2/lib/style.css";
 import styles from "./page.module.scss";
 
 import Link from "next/link";
 import { Input, Button, Select, Loader } from "@/components";
-
 import PhoneInput from "react-phone-input-2";
 
 import { getNames } from "country-list";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
+
+import { setUser, updateUser } from "@/features/user/userSlice";
 
 import { updateCurrentUser } from "@/services/users/userService";
 
@@ -32,25 +34,16 @@ const Profile: React.FC = () => {
     },
   });
 
-  const countries = getNames();
+  const dispatch = useDispatch();
 
-  console.log(countries);
+  const countries = getNames();
 
   useEffect(() => {
     if (currentUser) {
-      setUpdatedUserData({
-        name: currentUser.name || "",
-        lastName: currentUser.lastName || "",
-        email: currentUser.email || "",
-        phoneNumber: currentUser?.phoneNumber || "",
-        address: {
-          country: currentUser.address?.country || "",
-          city: currentUser.address?.city || "",
-          address: currentUser.address?.address || "",
-        },
-      });
+      setUpdatedUserData(currentUser);
+      dispatch(setUser(currentUser));
     }
-  }, [currentUser]);
+  }, [currentUser, dispatch]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -78,24 +71,20 @@ const Profile: React.FC = () => {
   };
 
   const handlePhoneChange = (
-    value: string, // The raw phone number
-    country: any, // Country object
-    e: React.ChangeEvent, // Event object
-    formattedPhone: string // Formatted phone number
+    value: string,
+    country: any,
+    e: React.ChangeEvent,
+    formattedPhone: string
   ) => {
     setUpdatedUserData((prev) => ({
       ...prev,
-      phoneNumber: formattedPhone, // Use the formatted phone number
+      phoneNumber: formattedPhone,
     }));
   };
 
   const handleUpdateUser = async () => {
-    const dataToSend = {
-      ...updatedUserData,
-      phoneNumber: updatedUserData.phoneNumber,
-    };
-
-    await updateCurrentUser(dataToSend);
+    await updateCurrentUser(updatedUserData);
+    dispatch(updateUser(updatedUserData));
   };
 
   if (loading) {
@@ -113,6 +102,7 @@ const Profile: React.FC = () => {
       <div className={styles.profileDetails}>
         <div className={styles.field}>
           <h3 className={styles.headingSecondary}>Account Information</h3>
+
           <Input
             className={styles.input}
             type={InputTypes.EMAIL}

@@ -28,6 +28,10 @@
 27. ADD FILTERING LOGIC
 28. ADD RESET PASSWORD LOGIC
 29. Provide users with toasts
+30. If the item is already in the cart show the toast informing the user about that
+31. Immediately get value when log in and register
+32. Add modal before deleting the item from the cart
+33. Add modal before checkout
 
 //INVESTIGATE
 
@@ -44,3 +48,5 @@
 11. WebHooks 
 12. INVESTIGATE ROUTE PRECEDENCE
 13. rel="noopener noreferrer" WHAT DOES IT MEAN?
+14. What is async thunk
+15. extraReducers

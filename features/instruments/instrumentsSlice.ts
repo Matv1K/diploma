@@ -1,58 +1,51 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { getCartItems } from "@/services/cartService/cartService";
-import {
-  addLikedItem,
-  deleteLikedItem,
-} from "@/services/likedService/likedService";
+import { getCartItems } from "@/services/cart/cartService";
+import { addLikedItem, deleteLikedItem } from "@/services/liked/likedService";
 
-// Define the shape of your state
 interface InstrumentState {
   cartItems: any[];
-  likedItems: any[]; // Added to track liked items
+  likedItems: any[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: InstrumentState = {
   cartItems: [],
-  likedItems: [], // Initialize liked items
+  likedItems: [],
   loading: false,
   error: null,
 };
 
-// Async thunk for fetching cart items
 export const fetchCartItems = createAsyncThunk(
   "instruments/fetchCartItems",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await getCartItems(); // Assuming this returns the cart items
-      return Array.isArray(response.cartItems) ? response.cartItems : []; // Validate here
+      const response = await getCartItems();
+      return Array.isArray(response.cartItems) ? response.cartItems : [];
     } catch (error) {
       return rejectWithValue("Error fetching cart items");
     }
   }
 );
 
-// Async thunk for liking an item
 export const likeItem = createAsyncThunk(
   "instruments/likeItem",
   async (likedItem: any, { rejectWithValue }) => {
     try {
       const response = await addLikedItem(likedItem);
-      return response; // Assuming response contains the liked item data
+      return response;
     } catch (error) {
       return rejectWithValue("Error liking item");
     }
   }
 );
 
-// Async thunk for unliking an item
 export const unlikeItem = createAsyncThunk(
   "instruments/unlikeItem",
   async (id: string | string[], { rejectWithValue }) => {
     try {
       await deleteLikedItem(id);
-      return id; // Return the id of the item to be removed
+      return id;
     } catch (error) {
       return rejectWithValue("Error unliking item");
     }
@@ -126,7 +119,7 @@ const instrumentsSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(likeItem.fulfilled, (state, action) => {
-        state.likedItems.push(action.payload); // Add liked item to state
+        state.likedItems.push(action.payload);
       })
       .addCase(unlikeItem.fulfilled, (state, action) => {
         state.likedItems = state.likedItems.filter(

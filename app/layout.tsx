@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Open_Sans, Montserrat } from "next/font/google";
 
 import "./globals.scss";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ToastContainer } from "react-toastify";
 
 import ReduxProvider from "@/app/provider";
 
@@ -31,6 +34,8 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+
+          <ToastContainer />
         </ReduxProvider>
       </body>
     </html>

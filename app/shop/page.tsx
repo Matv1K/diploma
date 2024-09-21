@@ -5,18 +5,15 @@ import { useDispatch } from "react-redux";
 
 import styles from "./page.module.scss";
 
-import { ToastContainer } from "react-toastify";
 import { InstrumentCard, Button, Modal, Input, Loader } from "@/components";
 
 import { FiSend, FiMessageCircle } from "react-icons/fi";
-
-import { ButtonOptions, InputTypes } from "@/types";
 
 import { showModal } from "@/features/modal/modalSlice";
 
 import { getInstruments } from "@/services/instruments/instrumentService";
 
-import { InstrumentCardI } from "@/types";
+import { InstrumentCardI, ButtonOptions, InputTypes } from "@/types";
 
 const brands = ["Yamaha", "Gibson", "Fender", "Roland"];
 const priceRanges = [
@@ -166,8 +163,6 @@ const Shop: React.FC = () => {
           <FiMessageCircle size={24} />
         </Button>
       )}
-
-      <ToastContainer />
     </main>
   );
 };

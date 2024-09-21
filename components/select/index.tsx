@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+
 import styles from "./index.module.scss";
 
 interface SelectProps {
@@ -23,7 +24,6 @@ const Select: React.FC<SelectProps> = ({
     setSearchTerm(value || "");
   }, [value]);
 
-  // Filter options based on the search term
   const filteredOptions = options.filter((option) =>
     option.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -35,7 +35,7 @@ const Select: React.FC<SelectProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    setIsOpen(true); // Automatically open the dropdown when typing
+    setIsOpen(true);
   };
 
   return (
@@ -45,8 +45,8 @@ const Select: React.FC<SelectProps> = ({
         type="text"
         placeholder={placeholder || "Select an option"}
         value={searchTerm}
-        onClick={() => setIsOpen(!isOpen)} // Toggle the dropdown
-        onChange={handleInputChange} // Search while typing
+        onClick={() => setIsOpen(!isOpen)}
+        onChange={handleInputChange}
       />
 
       {isOpen && (

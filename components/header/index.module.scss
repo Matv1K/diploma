@@ -12,6 +12,10 @@
   justify-content: space-between;
   z-index: 9999;
 
+  @media screen and (max-width: 1024px) {
+    padding: 15px;
+  }
+
   .logo {
     transition: transform 0.3s ease;
 
@@ -26,6 +30,10 @@
 
     .buttonCatalog {
       margin-right: 20px;
+
+      @media screen and (max-width: 1200px) {
+        margin-right: 10px;
+      }
 
       .menuLine {
         display: block;
@@ -45,6 +53,14 @@
 
       .search {
         margin-right: 500px;
+
+        @media screen and (max-width: 1200px) {
+          margin-right: 400px;
+        }
+
+        @media screen and (max-width: 1024px) {
+          margin-right: 200px;
+        }
       }
 
       .searchList {
@@ -87,6 +103,10 @@
       font-size: $font-size-medium;
       font-weight: 500;
 
+      @media screen and (max-width: 1200px) {
+        margin-left: 10px;
+      }
+
       &:hover {
         color: $secondary-color;
       }
@@ -100,6 +120,10 @@
   .icons {
     display: flex;
     gap: 30px;
+
+    @media screen and (max-width: 1200px) {
+      gap: 20px;
+    }
 
     .profileContainer {
       position: relative;

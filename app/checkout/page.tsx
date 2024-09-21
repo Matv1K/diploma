@@ -5,7 +5,6 @@ import React from "react";
 import stripePromise from "@/config/useStripeConfig";
 
 import { Elements } from "@stripe/react-stripe-js";
-
 import { CheckoutForm } from "@/components";
 
 import { convertToSubcurrency } from "@/utils";

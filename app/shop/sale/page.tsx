@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 
 import styles from "./page.module.scss";
 
-import { ToastContainer } from "react-toastify";
 import { InstrumentCard } from "@/components";
 
 import { getInstrumentsOnSale } from "@/services/instruments/instrumentService";
@@ -107,8 +106,6 @@ const Sale: React.FC = () => {
           }
         )}
       </div>
-
-      <ToastContainer />
     </main>
   );
 };

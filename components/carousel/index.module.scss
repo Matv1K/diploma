@@ -3,6 +3,10 @@
 .carouselContainer {
   width: 100%;
   padding: 20px;
+
+  @media screen and (max-width: 1200px) {
+    padding: 10px;
+  }
 }
 
 .carouselItemPadding {
@@ -20,6 +24,10 @@
   overflow: hidden;
   transition: background-color 0.3s ease;
   cursor: pointer;
+
+  @media screen and (max-width: 1024px) {
+    height: 130px;
+  }
 
   h3 {
     font-size: 1.2rem;

@@ -15,8 +15,8 @@ import { Button } from "@/components";
 
 import { getTotalPrice } from "@/utils";
 
-import { getCartItems } from "@/services/cartService/cartService";
-import { createOrder } from "@/services/ordersService/ordersService";
+import { getCartItems } from "@/services/cart/cartService";
+import { createOrder } from "@/services/orders/ordersService";
 
 import { ButtonTypes } from "@/types";
 
@@ -44,8 +44,6 @@ const CheckoutForm: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // if (!stripe || !elements) return;
 
     const totalPrice = getTotalPrice(cartItems);
 

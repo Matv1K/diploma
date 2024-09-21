@@ -6,8 +6,9 @@ import { useParams, useRouter } from "next/navigation";
 
 import styles from "./page.module.scss";
 
+import { toast } from "react-toastify";
+
 import Link from "next/link";
-import { ToastContainer } from "react-toastify";
 import { Button, Comment, Loader } from "@/components";
 
 import { FiHeart } from "react-icons/fi";
@@ -23,12 +24,12 @@ import {
 import { addComment, setComments } from "@/features/comments/commentsSlice";
 
 import { getInstrument } from "@/services/instruments/instrumentService";
-import { addCartItem } from "@/services/cartService/cartService";
+import { addCartItem } from "@/services/cart/cartService";
 import {
   addLikedItem,
   getLikedItem,
   deleteLikedItem,
-} from "@/services/likedService/likedService";
+} from "@/services/liked/likedService";
 import {
   createComment,
   getComments,
@@ -36,7 +37,7 @@ import {
 
 import { ButtonTypes, InstrumentI } from "@/types";
 
-import { RootState, AppDispatch } from "@/app/store";
+import { RootState } from "@/app/store";
 
 const Instrument: React.FC = () => {
   const [instrument, setInstrument] = useState<InstrumentI>({
@@ -88,19 +89,24 @@ const Instrument: React.FC = () => {
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    const newItem = await addCartItem({
-      price: instrument?.price,
-      name: instrument?.name,
-      image: instrument?.image,
-      color: selectedColor,
-      brandName: instrument?.brandName,
-      instrumentId: instrument?._id,
-      section: instrument?.section,
-      amount: 1,
-    });
+    try {
+      const newItem = await addCartItem({
+        price: instrument?.price,
+        name: instrument?.name,
+        image: instrument?.image,
+        color: selectedColor,
+        brandName: instrument?.brandName,
+        instrumentId: instrument?._id,
+        section: instrument?.section,
+        amount: 1,
+      });
 
-    dispatch(addItemToCart(newItem));
-    push("/");
+      dispatch(addItemToCart(newItem));
+      toast.success(`${instrument.name} has been added to the cart!`);
+      push("/");
+    } catch (error) {
+      toast.error(`Failed to add ${instrument.name} to the cart.`);
+    }
   };
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,23 +114,29 @@ const Instrument: React.FC = () => {
   };
 
   const handleLikeItem = async () => {
-    if (isLiked) {
-      await deleteLikedItem(instrumentId);
-      dispatch(removeLikedItemFromState(instrumentId));
-      setIsLiked(false);
-    } else {
-      const likedData = {
-        price: instrument?.price,
-        name: instrument?.name,
-        image: instrument?.image,
-        colors: instrument?.colors,
-        brandName: instrument?.brandName,
-        instrumentId: instrument?._id,
-        section: instrument?.section,
-      };
-      await addLikedItem(likedData);
-      dispatch(addLikedItemToState(likedData));
-      setIsLiked(true);
+    try {
+      if (isLiked) {
+        await deleteLikedItem(instrumentId);
+        dispatch(removeLikedItemFromState(instrumentId));
+        setIsLiked(false);
+        toast.success(`${instrument.name} has been unliked.`);
+      } else {
+        const likedData = {
+          price: instrument?.price,
+          name: instrument?.name,
+          image: instrument?.image,
+          colors: instrument?.colors,
+          brandName: instrument?.brandName,
+          instrumentId: instrument?._id,
+          section: instrument?.section,
+        };
+        await addLikedItem(likedData);
+        dispatch(addLikedItemToState(likedData));
+        setIsLiked(true);
+        toast.success(`${instrument.name} has been liked!`);
+      }
+    } catch (error) {
+      toast.error(`Failed to update like status for ${instrument.name}.`);
     }
   };
 
@@ -303,8 +315,6 @@ const Instrument: React.FC = () => {
           )}
         </div>
       </section>
-
-      <ToastContainer />
     </main>
   );
 };

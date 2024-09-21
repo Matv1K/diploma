@@ -20,13 +20,19 @@
   flex-flow: column;
   z-index: 9999;
 
+  @media screen and (max-width: 1200px) {
+    width: 50vw;
+  }
+
+  @media screen and (max-width: 1024px) {
+    top: 72px;
+    height: calc(100vh - 72px);
+  }
+
   .sectionLinks {
     display: grid;
-    grid-template-rows: repeat(
-      auto-fill,
-      minmax(50px, 1fr)
-    ); // Evenly distributes the items
-    grid-gap: 15px; // Adds spacing between the items
+    grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
+    grid-gap: 15px;
 
     .sectionLinkContainer {
       position: relative;

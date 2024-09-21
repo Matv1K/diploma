@@ -12,7 +12,7 @@ import {
   removeCartItem,
   increaseAmount,
   decreaseAmount,
-} from "@/services/cartService/cartService";
+} from "@/services/cart/cartService";
 
 import {
   removeItem,

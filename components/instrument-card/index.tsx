@@ -5,8 +5,9 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
 import "react-toastify/dist/ReactToastify.css";
-
 import styles from "./index.module.scss";
+
+import { toast } from "react-toastify";
 
 import Image from "next/image";
 import { Button } from "../../components";
@@ -17,12 +18,8 @@ import { ElectricGuitar } from "@/public/images";
 import { addItemToCart } from "@/features/instruments/instrumentsSlice";
 import { likeItem, unlikeItem } from "@/features/instruments/instrumentsSlice";
 
-import { addCartItem } from "@/services/cartService/cartService";
-import {
-  addLikedItem,
-  getLikedItem,
-  deleteLikedItem,
-} from "@/services/likedService/likedService";
+import { addCartItem } from "@/services/cart/cartService";
+import { getLikedItem } from "@/services/liked/likedService";
 
 import { AppDispatch } from "@/app/store";
 
@@ -77,42 +74,52 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   ) => {
     e.stopPropagation();
 
-    if (isLiked) {
-      await dispatch(unlikeItem(id));
-      setIsLiked(false);
-    } else {
-      await dispatch(
-        likeItem({
-          price,
-          name,
-          image: "///",
-          colors,
-          brandName,
-          instrumentId: id,
-          section,
-        })
-      );
-      setIsLiked(true);
+    try {
+      if (isLiked) {
+        await dispatch(unlikeItem(id));
+        toast.success("You do not like the item anymore");
+        setIsLiked(false);
+      } else {
+        await dispatch(
+          likeItem({
+            price,
+            name,
+            image: "///",
+            colors,
+            brandName,
+            instrumentId: id,
+            section,
+          })
+        );
+        toast.success("You like the item");
+        setIsLiked(true);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
     }
   };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    const newItem = await addCartItem({
-      price,
-      name,
-      image,
-      color: selectedColor,
-      brandName: "cort",
-      instrumentId: id,
-      section,
-      amount: 1,
-    });
+    try {
+      const newItem = await addCartItem({
+        price,
+        name,
+        image,
+        color: selectedColor,
+        brandName: "cort",
+        instrumentId: id,
+        section,
+        amount: 1,
+      });
 
-    dispatch(addItemToCart(newItem));
-
-    push("/");
+      dispatch(addItemToCart(newItem));
+      toast.success(`${name} has been added to the cart!`);
+      push("/");
+    } catch (error) {
+      toast.error(`Failed to add ${name} to the cart.`);
+    }
   };
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {

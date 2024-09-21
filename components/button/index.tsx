@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   onClick,
   disabled,
-  option = ButtonOptions.Filled,
+  option = ButtonOptions.FILLED,
 }) => {
   return (
     <button

@@ -7,11 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import styles from "./page.module.scss";
 
+import { toast } from "react-toastify";
+
 import Link from "next/link";
-import { ToastContainer } from "react-toastify";
 import { Input, Button } from "@/components";
 
 import { registerUser } from "@/services/users/userService";
+
+import { TOAST_MESSAGES } from "../constants";
 
 import { ButtonOptions, InputTypes, SignUpDataI } from "@/types";
 
@@ -38,8 +41,10 @@ const SignUp: React.FC = () => {
         email: inputData.email,
       });
 
+      toast.success(TOAST_MESSAGES.SIGN_UP_SUCCESS);
       push("/");
     } catch (error) {
+      toast.error(TOAST_MESSAGES.SIGN_UP_ERROR);
       console.error(error);
     }
   };
@@ -119,8 +124,6 @@ const SignUp: React.FC = () => {
           </span>
         </div>
       </form>
-
-      <ToastContainer />
     </main>
   );
 };

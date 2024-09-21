@@ -2,8 +2,6 @@ import instance from "@/config/getAxiosInstance";
 
 import { InstrumentI } from "@/types";
 
-// CREATE types FOLDER THAT INCLUDES ALL THE TYPES TO USE AS DATA INTERFACES HERE
-
 export const createInstrument = async (instrument: InstrumentI) => {
   try {
     const response = await instance.post("/instruments", instrument);

@@ -1,18 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./page.module.scss";
 
 import Link from "next/link";
-
 import { InstrumentRow, Button } from "@/components";
 
 import { fetchCartItems } from "@/features/instruments/instrumentsSlice";
 
 import { CartItemIdI } from "@/types";
-
 import { RootState, AppDispatch } from "@/app/store";
 
 const Cart: React.FC = () => {

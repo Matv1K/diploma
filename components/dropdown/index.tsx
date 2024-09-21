@@ -1,13 +1,11 @@
 "use client";
 
 import React from "react";
-
 import { useRouter } from "next/navigation";
 
 import styles from "./index.module.scss";
 
 import Link from "next/link";
-
 import { Button } from "../../components";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -39,6 +37,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
         <h4>
           {user?.name} {user?.lastName}
         </h4>
+
         <p className={styles.dropdownNumber}>
           {user?.phoneNumber !== 0 && user?.phoneNumber}
         </p>

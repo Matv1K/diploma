@@ -1,5 +1,4 @@
 import React from "react";
-
 import dayjs from "dayjs";
 
 import styles from "./index.module.scss";
@@ -27,6 +26,7 @@ const Comment: React.FC<CommentProps> = ({
         <span>{userName}</span>
         {formattedDate}
       </span>
+
       <p className={styles.description}>{description}</p>
 
       <div className={styles.commentRating}>{getRatingString(rating)}</div>

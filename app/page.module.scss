@@ -4,9 +4,24 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  margin-bottom: 30px;
+
+  @media screen and (max-width: 868px) {
+    margin-top: 20px;
+  }
+
+  &:nth-child(2n) {
+    @media screen and (max-width: 868px) {
+      margin-bottom: 10px;
+    }
+  }
 
   .headingHome {
     font-size: 36px;
+
+    @media screen and (max-width: 868px) {
+      font-size: 28px;
+    }
 
     .eventsLink {
       color: $secondary-color;
@@ -15,6 +30,10 @@
 
   .homeImage {
     transition: transform 0.2s ease-in;
+
+    @media screen and (max-width: 868px) {
+      display: none;
+    }
 
     &:hover {
       transform: scale(1.05);
@@ -62,6 +81,10 @@
       justify-content: center;
       cursor: pointer;
       transition: background-color 0.3s ease;
+
+      @media screen and (max-width: 1024px) {
+        height: 130px;
+      }
 
       &:hover {
         background-color: darken($color: $secondary-color, $amount: 5%);

@@ -1,7 +1,5 @@
 import instance from "@/config/getAxiosInstance";
 
-// ADD REGISTER DATA INTERFACE TYPE
-
 export const registerUser = async ({
   name,
   lastName,
@@ -30,13 +28,7 @@ export const registerUser = async ({
   }
 };
 
-export const loginUser = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
+export const loginUser = async ({ email, password }: any) => {
   try {
     const response = await instance.post("/users/login", { email, password });
 

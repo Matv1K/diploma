@@ -1,25 +1,30 @@
 "use client";
 
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-
-import "react-toastify/dist/ReactToastify.css";
 
 import styles from "./page.module.scss";
 
+import { toast } from "react-toastify";
+
 import Link from "next/link";
-import { ToastContainer } from "react-toastify";
 import { Button, Input } from "@/components";
 
 import { loginUser } from "@/services/users/userService";
 
+import { TOAST_MESSAGES } from "../constants";
+
 import { InputTypes, SignInDataI } from "@/types";
+import { AppDispatch, RootState } from "@/app/store";
 
 const SignIn: React.FC = () => {
   const [inputData, setInputData] = useState<SignInDataI>({
     email: "",
     password: "",
   });
+
+  const dispatch: AppDispatch = useDispatch();
 
   const { push } = useRouter();
 
@@ -37,8 +42,10 @@ const SignIn: React.FC = () => {
     try {
       await loginUser({ email: inputData.email, password: inputData.password });
 
+      toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
       push("/");
     } catch (error) {
+      toast.error(TOAST_MESSAGES.SIGN_IN_ERROR);
       console.error(error);
     }
   };
@@ -76,8 +83,6 @@ const SignIn: React.FC = () => {
           </span>
         </div>
       </form>
-
-      <ToastContainer />
     </main>
   );
 };
