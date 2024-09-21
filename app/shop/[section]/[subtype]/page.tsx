@@ -21,8 +21,6 @@ const Subtype = () => {
   const [instruments, setInstruments] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(instruments);
-
   const { subtype } = useParams();
 
   const convertedSubtype = Array.isArray(subtype) ? subtype[0] : subtype;
@@ -43,6 +41,14 @@ const Subtype = () => {
       fetchInstruments();
     }
   }, [convertedSubtype]);
+
+  if (!instruments.length) {
+    return (
+      <main className={styles.containerEmpty}>
+        <h2>Currently, there are no items in this category</h2>
+      </main>
+    );
+  }
 
   return (
     <main>

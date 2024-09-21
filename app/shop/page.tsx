@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import styles from "./page.module.scss";
 
 import { ToastContainer } from "react-toastify";
-import { InstrumentCard, Button, Modal, Input } from "@/components";
+import { InstrumentCard, Button, Modal, Input, Loader } from "@/components";
 
 import { FiSend, FiMessageCircle } from "react-icons/fi";
 
@@ -24,27 +24,43 @@ const priceRanges = [
   { label: "$500 - $1000", min: 500, max: 1000 },
   { label: "Above $1000", min: 1000, max: Infinity },
 ];
+const filters = [
+  { label: "By popularity" },
+  { label: "By rating" },
+  { label: "The most expensive" },
+  { label: "The cheapest" },
+];
 
 const Shop: React.FC = () => {
   const [instruments, setInstruments] = useState([]);
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchInstruments = async () => {
       const instruments = await getInstruments();
-
       setInstruments(instruments);
+
+      setIsLoading(false);
     };
 
     fetchInstruments();
-  }, []);
+  }, [instruments]);
 
   const handleOpenModal = () => {
     dispatch(showModal());
     setIsModalOpened(true);
   };
+
+  if (isLoading) {
+    return (
+      <main>
+        <Loader />
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -77,7 +93,7 @@ const Shop: React.FC = () => {
         <div className={styles.filterItem}>
           <label htmlFor="price">Filter By:</label>
           <select id="price">
-            {priceRanges.map((range) => (
+            {filters.map((range) => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./page.module.scss";
 
 import Link from "next/link";
-import { Button } from "@/components";
+import { Button, Loader } from "@/components";
 
 import { getOrders } from "@/services/ordersService/ordersService";
 
@@ -13,16 +13,26 @@ import { OrderI } from "@/types";
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<OrderI[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchOrders = async () => {
       const orders = await getOrders();
 
       setOrders(orders);
+      setIsLoading(false);
     };
 
     fetchOrders();
   }, []);
+
+  if (isLoading) {
+    return (
+      <main>
+        <Loader />
+      </main>
+    );
+  }
 
   if (!orders.length) {
     return (

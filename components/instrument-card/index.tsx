@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -13,12 +14,17 @@ import { Button } from "../../components";
 import { FiHeart } from "react-icons/fi";
 import { ElectricGuitar } from "@/public/images";
 
+import { addItemToCart } from "@/features/instruments/instrumentsSlice";
+import { likeItem, unlikeItem } from "@/features/instruments/instrumentsSlice";
+
 import { addCartItem } from "@/services/cartService/cartService";
 import {
   addLikedItem,
   getLikedItem,
   deleteLikedItem,
 } from "@/services/likedService/likedService";
+
+import { AppDispatch } from "@/app/store";
 
 interface InstrumentCardProps {
   isNew?: boolean;
@@ -49,13 +55,12 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [isLiked, setIsLiked] = useState(false);
 
+  const dispatch: AppDispatch = useDispatch();
+
   useEffect(() => {
     const checkLiked = async () => {
       const likedItem = await getLikedItem(id);
-
-      if (likedItem) {
-        setIsLiked(true);
-      }
+      setIsLiked(!!likedItem);
     };
 
     checkLiked();
@@ -73,29 +78,28 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
     e.stopPropagation();
 
     if (isLiked) {
-      if (isLiked) {
-        await deleteLikedItem(id);
-        setIsLiked(false);
-        return;
-      }
-      return;
+      await dispatch(unlikeItem(id));
+      setIsLiked(false);
+    } else {
+      await dispatch(
+        likeItem({
+          price,
+          name,
+          image: "///",
+          colors,
+          brandName,
+          instrumentId: id,
+          section,
+        })
+      );
+      setIsLiked(true);
     }
-
-    await addLikedItem({
-      price,
-      name,
-      image: "///",
-      colors,
-      brandName,
-      instrumentId: id,
-      section,
-    });
   };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    await addCartItem({
+    const newItem = await addCartItem({
       price,
       name,
       image,
@@ -105,6 +109,8 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       section,
       amount: 1,
     });
+
+    dispatch(addItemToCart(newItem));
 
     push("/");
   };

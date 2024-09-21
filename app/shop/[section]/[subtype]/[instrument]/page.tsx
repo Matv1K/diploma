@@ -1,17 +1,26 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useRouter } from "next/navigation";
 
 import styles from "./page.module.scss";
 
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
-import { Button, Comment } from "@/components";
+import { Button, Comment, Loader } from "@/components";
 
 import { FiHeart } from "react-icons/fi";
 
 import { removeSeparator } from "@/utils";
+
+import {
+  addItemToCart,
+  addLikedItemToState,
+  removeLikedItemFromState,
+} from "@/features/instruments/instrumentsSlice";
+
+import { addComment, setComments } from "@/features/comments/commentsSlice";
 
 import { getInstrument } from "@/services/instruments/instrumentService";
 import { addCartItem } from "@/services/cartService/cartService";
@@ -27,6 +36,8 @@ import {
 
 import { ButtonTypes, InstrumentI } from "@/types";
 
+import { RootState, AppDispatch } from "@/app/store";
+
 const Instrument: React.FC = () => {
   const [instrument, setInstrument] = useState<InstrumentI>({
     name: "",
@@ -38,6 +49,7 @@ const Instrument: React.FC = () => {
     _id: "",
     description: "",
     characteristics: [],
+    instrumentType: "",
     price: "",
     image: "",
     colors: [],
@@ -46,28 +58,27 @@ const Instrument: React.FC = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [commentText, setCommentText] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
-  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const { instrument: instrumentId } = useParams();
-
   const { push } = useRouter();
+  const dispatch = useDispatch();
+
+  const comments = useSelector((state: RootState) => state.comments.comments);
 
   useEffect(() => {
     const fetchInstrument = async () => {
       const instrument = await getInstrument(instrumentId);
-
       setInstrument(instrument);
 
-      const isLiked = await getLikedItem(instrumentId);
-
-      if (isLiked) {
-        setIsLiked(true);
-      }
+      const likedItem = await getLikedItem(instrumentId);
+      setIsLiked(!!likedItem);
+      setIsLoading(false);
     };
 
     const fetchComments = async () => {
-      const comments = await getComments(instrumentId);
-      setComments(comments);
+      const fetchedComments = await getComments(instrumentId);
+      dispatch(setComments(fetchedComments));
     };
 
     fetchInstrument();
@@ -77,10 +88,10 @@ const Instrument: React.FC = () => {
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    await addCartItem({
+    const newItem = await addCartItem({
       price: instrument?.price,
       name: instrument?.name,
-      image: "///",
+      image: instrument?.image,
       color: selectedColor,
       brandName: instrument?.brandName,
       instrumentId: instrument?._id,
@@ -88,6 +99,7 @@ const Instrument: React.FC = () => {
       amount: 1,
     });
 
+    dispatch(addItemToCart(newItem));
     push("/");
   };
 
@@ -98,19 +110,22 @@ const Instrument: React.FC = () => {
   const handleLikeItem = async () => {
     if (isLiked) {
       await deleteLikedItem(instrumentId);
+      dispatch(removeLikedItemFromState(instrumentId));
       setIsLiked(false);
-      return;
+    } else {
+      const likedData = {
+        price: instrument?.price,
+        name: instrument?.name,
+        image: instrument?.image,
+        colors: instrument?.colors,
+        brandName: instrument?.brandName,
+        instrumentId: instrument?._id,
+        section: instrument?.section,
+      };
+      await addLikedItem(likedData);
+      dispatch(addLikedItemToState(likedData));
+      setIsLiked(true);
     }
-
-    await addLikedItem({
-      price: instrument?.price,
-      name: instrument?.name,
-      image: "///",
-      colors: instrument?.colors,
-      brandName: instrument?.brandName,
-      instrumentId: instrument?._id,
-      section: instrument?.section,
-    });
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -124,8 +139,34 @@ const Instrument: React.FC = () => {
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await createComment({ rating, description: commentText, instrumentId });
+    if (!commentText || rating === 0) {
+      alert("Please provide a comment and a rating.");
+      return;
+    }
+
+    try {
+      const newComment = await createComment({
+        rating,
+        description: commentText,
+        instrumentId,
+      });
+
+      dispatch(addComment(newComment));
+
+      setCommentText("");
+      setRating(0);
+    } catch (error) {
+      console.error("Error submitting comment:", error);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <main>
+        <Loader />
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -154,7 +195,6 @@ const Instrument: React.FC = () => {
                     <span className={styles.priceOriginal}>
                       {instrument.price}
                     </span>
-
                     <span>{instrument.salePrice}</span>
                   </>
                 ) : (
@@ -189,24 +229,20 @@ const Instrument: React.FC = () => {
 
           <div>
             <h4>Description: </h4>
-
             <p className={styles.instrumentDescription}>
               {instrument?.description}
             </p>
 
-            {instrument && instrument.characteristics && (
+            {instrument.characteristics && (
               <div>
                 <h4>Characteristics: </h4>
-
                 <ul className={styles.instrumentSpecs}>
                   {Object.entries(instrument.characteristics || {}).map(
-                    ([key, value]: [string, string]) => {
-                      return (
-                        <li className={styles.instrumentSpec} key={key}>
-                          {key}: {value}
-                        </li>
-                      );
-                    }
+                    ([key, value]: [string, string]) => (
+                      <li className={styles.instrumentSpec} key={key}>
+                        {key}: {value}
+                      </li>
+                    )
                   )}
                 </ul>
               </div>
@@ -254,8 +290,8 @@ const Instrument: React.FC = () => {
         </form>
 
         <div className={styles.commentsList}>
-          {comments.map(({ _id, createdAt, description, userName, rating }) => {
-            return (
+          {comments.map(
+            ({ _id, createdAt, description, userName, rating }: any) => (
               <Comment
                 key={_id}
                 description={description}
@@ -263,8 +299,8 @@ const Instrument: React.FC = () => {
                 rating={rating}
                 createdAt={createdAt}
               />
-            );
-          })}
+            )
+          )}
         </div>
       </section>
 

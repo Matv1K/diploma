@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./page.module.scss";
 
@@ -8,26 +9,29 @@ import Link from "next/link";
 
 import { InstrumentRow, Button } from "@/components";
 
-import { getCartItems } from "@/services/cartService/cartService";
+import { fetchCartItems } from "@/features/instruments/instrumentsSlice";
 
 import { CartItemIdI } from "@/types";
 
+import { RootState, AppDispatch } from "@/app/store";
+
 const Cart: React.FC = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [totalItems, setTotalItems] = useState<number>(0);
+  const dispatch: AppDispatch = useDispatch();
+  const cartItems =
+    useSelector((state: RootState) => state.instruments.cartItems) || [];
+
+  const totalPrice = Array.isArray(cartItems)
+    ? cartItems.reduce(
+        (total, item) => total + Number(item.price.slice(0, -1)) * item.amount,
+        0
+      )
+    : 0;
+
+  const totalItems = Array.isArray(cartItems) ? cartItems.length : 0;
 
   useEffect(() => {
-    const fetchCartItems = async () => {
-      const { cartItems: items, length, totalPrice } = await getCartItems();
-
-      setCartItems(items);
-      setTotalPrice(totalPrice);
-      setTotalItems(length);
-    };
-
-    fetchCartItems();
-  }, []);
+    dispatch(fetchCartItems());
+  }, [dispatch]);
 
   if (cartItems?.length === 0) {
     return (

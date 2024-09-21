@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 
 import styles from "./index.module.scss";
-
 import Link from "next/link";
 import Image from "next/image";
-import { Button, Catalog, Input, Dropdown } from "../../components";
+import { Button, Catalog, Input, Dropdown, Loader } from "../../components";
 
 import { Logo } from "@/public/icons";
 import {
@@ -22,60 +21,40 @@ import {
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
-
-import { getCartItems } from "@/services/cartService/cartService";
+import { fetchCartItems } from "@/features/instruments/instrumentsSlice";
 import { searchInstruments } from "@/services/instruments/instrumentService";
 
 import { ButtonOptions, InputTypes } from "@/types";
 
-const INSTRUMENTS = [
-  { name: "Cort 1", id: 1 },
-  { name: "we 2", id: 2 },
-  { name: "qwe 3", id: 3 },
-  { name: "asd 4", id: 4 },
-  { name: "Cort 5", id: 5 },
-  { name: "Cort 6", id: 6 },
-  { name: "Cort 7", id: 7 },
-];
+import { RootState, AppDispatch } from "@/app/store";
 
 const Header: React.FC = () => {
-  const [query, setQuery] = useState("");
-  const [items, setItems] = useState([]);
-  const [filteredItems, setFilteredItems] = useState<any>([]);
+  const [query, setQuery] = React.useState("");
+  const [filteredItems, setFilteredItems] = React.useState<any[]>([]);
 
   const { user, loading } = useCurrentUser();
 
-  console.log(filteredItems);
-
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const items = await getCartItems();
-        setItems(items);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    setTimeout(() => {
-      fetchCartItems();
-    }, 1000);
-  }, []);
-
-  const isCatalogOpened = useSelector(
-    (state: any) => state.catalog.isCatalogOpen
-  );
-
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const pathname = usePathname();
 
-  const getActiveIcon = (href: string) => {
-    if (pathname === href) {
-      return styles.active;
-    }
+  const cartItems = useSelector(
+    (state: RootState) => state.instruments.cartItems
+  );
 
-    return;
-  };
+  const cartLoading = useSelector(
+    (state: RootState) => state.instruments.loading
+  );
+
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
+
+  const isCatalogOpened = useSelector(
+    (state: RootState) => state.catalog.isCatalogOpen
+  );
+
+  const getActiveIcon = (href: string) =>
+    pathname === href ? styles.active : "";
 
   const handleOpenCatalog = () => {
     dispatch(openCatalog());
@@ -122,11 +101,7 @@ const Header: React.FC = () => {
             {isCatalogOpened ? (
               <FiX size={24} />
             ) : (
-              <div>
-                <div className={styles.menuLine}></div>
-                <div className={styles.menuLine}></div>
-                <div className={styles.menuLine}></div>
-              </div>
+              <div className={styles.menuIcon} />
             )}
           </Button>
 
@@ -141,18 +116,22 @@ const Header: React.FC = () => {
 
             {query && (
               <div className={styles.searchList}>
-                {filteredItems.map(({ name, section, _id }: any) => {
-                  return (
-                    <div key={_id} className={styles.searchListItem}>
-                      <Link
-                        className={styles.searchItemLink}
-                        href={`/shop/${section}/acoustic-guitars/${_id}`}
-                      >
-                        {name}
-                      </Link>
-                    </div>
-                  );
-                })}
+                {filteredItems.length ? (
+                  filteredItems.map(
+                    ({ name, section, instrumentType, _id }) => (
+                      <div key={_id} className={styles.searchListItem}>
+                        <Link
+                          className={styles.searchItemLink}
+                          href={`/shop/${section}/${instrumentType}/${_id}`}
+                        >
+                          {name}
+                        </Link>
+                      </div>
+                    )
+                  )
+                ) : (
+                  <div className={styles.searchListItem}>No items found</div>
+                )}
               </div>
             )}
           </div>
@@ -163,7 +142,7 @@ const Header: React.FC = () => {
         </ul>
 
         <div>
-          {user ? (
+          {user && (
             <div className={styles.icons}>
               <div className={styles.profileContainer}>
                 <Link
@@ -186,7 +165,9 @@ const Header: React.FC = () => {
               </div>
 
               <div className={styles.cartContainer}>
-                <span className={styles.cartAmount}>{items.length}</span>
+                <span className={styles.cartAmount}>
+                  {cartLoading ? "..." : cartItems.length}
+                </span>
 
                 <Link
                   href="/cart"
@@ -196,11 +177,15 @@ const Header: React.FC = () => {
                 </Link>
               </div>
             </div>
-          ) : (
+          )}
+
+          {!user && !loading && (
             <Link href="/sign-in">
               <Button option={ButtonOptions.OUTILINE}>Sign in</Button>
             </Link>
           )}
+
+          {loading && <Loader />}
         </div>
       </header>
 

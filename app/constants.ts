@@ -31,6 +31,14 @@ export const TOAST_MESSAGES = {
   SIGN_UP_ERROR: "",
   ADD_TO_CART_SUCCESS: "Item has been added to your cart",
   ADD_TO_CART_ERROR: "",
+  LIKE_ITEM_SUCCES: "",
+  LIKE_ITEM_ERROR: "",
+  UNLIKE_ITEM_SUCCESS: "",
+  UNLIKE_ITEM_ERROR: "",
+  LEAVE_COMMENT_SUCCESS: "",
+  LEAVE_COMMENT_ERROR: "",
+  CHECKOUT_ITEMS_SUCCESS: "",
+  CHECKOUT_ITEMS_ERROR: "",
 };
 
 export const CATALOG_LINKS = [

@@ -42,8 +42,6 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
   const { push } = useRouter();
 
-  console.log(items);
-
   const handleItemNavigation = (
     section: string,
     name: string,

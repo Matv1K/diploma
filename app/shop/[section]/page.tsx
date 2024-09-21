@@ -39,6 +39,14 @@ const Section: React.FC = () => {
     fetchInstrumentsBySection();
   }, [sectionName]);
 
+  if (!instruments.length) {
+    return (
+      <main className={styles.containerEmpty}>
+        <h2>Currently, there are no items in this category</h2>
+      </main>
+    );
+  }
+
   return (
     <main>
       <h2 className={styles.headingSection}>{removeSeparator(sectionName)}</h2>

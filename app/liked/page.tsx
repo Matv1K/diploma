@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./page.module.scss";
 
 import Link from "next/link";
-import { Button, InstrumentCard } from "@/components";
+import { Button, InstrumentCard, Loader } from "@/components";
 
 import { getLikedItems } from "@/services/likedService/likedService";
 
@@ -13,16 +13,26 @@ import { InstrumentCardI } from "@/types";
 
 const Liked: React.FC = () => {
   const [likedItems, setLikedItems] = useState<InstrumentCardI[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchLikedItems = async () => {
       const items = await getLikedItems();
 
       setLikedItems(items);
+      setIsLoading(false);
     };
 
     fetchLikedItems();
-  }, []);
+  }, [likedItems]);
+
+  if (isLoading) {
+    return (
+      <main>
+        <Loader />
+      </main>
+    );
+  }
 
   if (!likedItems.length) {
     return (

@@ -30,7 +30,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
       instrumentId,
     });
 
-    const newLikedItem = likedItem.save();
+    const newLikedItem = await likedItem.save();
 
     res.status(201).json(newLikedItem);
   } catch (error) {

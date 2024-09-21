@@ -21,8 +21,6 @@ const roleMiddleware = (requiredRole: string) => {
         process.env.SECRET_KEY || ""
       ) as jwt.JwtPayload;
 
-      console.log(payload.role);
-
       if (payload.role !== requiredRole) {
         return res.status(403).json("Access denied, insufficient p ermissions");
       }

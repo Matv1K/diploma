@@ -65,17 +65,7 @@ export const updateCurrentUser = async ({
   phoneNumber,
   email,
   address,
-}: {
-  name: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  address: {
-    country: string;
-    city: string;
-    address: string;
-  };
-}) => {
+}: any) => {
   try {
     const response = await instance.patch("/users/my-user", {
       name,

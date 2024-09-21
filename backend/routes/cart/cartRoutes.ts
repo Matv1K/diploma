@@ -41,7 +41,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
       instrumentId,
     });
 
-    const newCartItem = cartItem.save();
+    const newCartItem = await cartItem.save();
 
     res.status(201).json(newCartItem);
   } catch (error) {

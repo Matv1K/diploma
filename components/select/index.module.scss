@@ -1,0 +1,55 @@
+@import "../../app/variables.scss";
+
+.selectContainer {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.selectInput {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  color: $text-color;
+  border: 2px solid $primary-color;
+}
+
+.optionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.optionsList::-webkit-scrollbar {
+  display: none;
+}
+
+.option {
+  padding: 10px;
+  cursor: pointer;
+  color: $text-color;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+.selected {
+  background-color: #e0e0e0;
+}
+
+.noOptions {
+  padding: 10px;
+  color: #999;
+}

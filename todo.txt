@@ -1,44 +1,46 @@
+//TODO
+
 1. ADD eslint
 2. ADD HUSKY
 3. ADD CI/CD PIPELINE
 4. ADD DOCKER
 5. ADD FAVICON
 6. Change LOGO (musify)
-7. MAKE ALL PX RELATIVE VALUES
 8. ADD LOADERS/SKELETONS TO CAROUSELS
-9. INVESTIGATE SERVER COMPONENTS 
-10. WHAT IS MICROFRONTENDS
-11. USE REACT HOOK FORM FOR HANDLING FORMS
-12. Read about loading in next.js
-13. Read about authorization/authentication in next.js
-14. You can run both Next.js and Express.js separately, or you can integrate them to run together using a proxy.
-15. Integrate digital ocean for staging and production
-16. Add error boundary component
-17. process next tick
-18. add rtk query
-19. Add three.js library
-20. Authorization with google
-21. ADD ENUM TO SECTION FIELD on mongoose model
-22. CONFIGURE CORS ONLY FOR OUR CLIENT
-23. What is vercel
-24. Create types folders (for each service)
-25. Add infinite scroll
-26. Add AI to generate responses (inside of the modal window)
-27. Dynamic routes next
-28. WebHooks add
-29. INVESTIGATE ROUTE PRECEDENCE
-30. Add customization
-31. Retool admin dashboard
-32. Accessibility
-33. rel="noopener noreferrer" WHAT DOES IT MEAN?
-34. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-35. FIX PROFILE ADDRESS INPUTS (MAKE COUNTRY AND CITY SELECTABLE)
-36. MAKE PRIVAT ROUTES
-37. Optimize everything
+9. Integrate digital ocean for staging and production
+10. Add error boundary component
+11. Store images inside cloud storage
+12. Authorization with Google
+13. Add three.js library
+14. ADD ENUM TO SECTION FIELD on mongoose model
+15. Add infinite scroll
+16. Add customize page
+17. Remove events page
+18. Retool admin dashboard
+19. Add accessibility
+20. Add mobile version
+21. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
+22. MAKE PRIVAT ROUTES
+23. Optimize everything
+24. Refactor codebase
+25. Add input errors
+26. Add strong password
+27. ADD FILTERING LOGIC
+28. ADD RESET PASSWORD LOGIC
+29. Provide users with toasts
 
+//INVESTIGATE
 
-1. IMMEDIATELY GET USER DATA AFTER REGISTRATION/SIGN UP
-3. STORE IMAGES ON BACKEND
-4. ADD FILTERING LOGIC
-5. ADD RESET PASSWORD LOGIC
-8. WHEN SOMETHING IS WRONG PROVIDE THE USER WITH TOASTS
+1. INVESTIGATE SERVER COMPONENTS 
+2. WHAT IS MICROFRONTENDS
+3. Read about loading in next.js
+4. Read about authorization/authentication in next.js
+5. You can run both Next.js and Express.js separately, or you can integrate them to run together using a proxy.
+6. process next tick
+7. rtk query
+8. What is vercel
+9. How do I add AI to generate responses (inside of the modal window)
+10. Dynamic routes next
+11. WebHooks 
+12. INVESTIGATE ROUTE PRECEDENCE
+13. rel="noopener noreferrer" WHAT DOES IT MEAN?

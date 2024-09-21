@@ -2,10 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 
+import "react-phone-input-2/lib/style.css";
 import styles from "./page.module.scss";
 
 import Link from "next/link";
-import { Input, Button, Loader } from "@/components";
+import { Input, Button, Select, Loader } from "@/components";
+
+import PhoneInput from "react-phone-input-2";
+
+import { getNames } from "country-list";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 
@@ -27,7 +32,9 @@ const Profile: React.FC = () => {
     },
   });
 
-  console.log(updatedUserData);
+  const countries = getNames();
+
+  console.log(countries);
 
   useEffect(() => {
     if (currentUser) {
@@ -35,7 +42,7 @@ const Profile: React.FC = () => {
         name: currentUser.name || "",
         lastName: currentUser.lastName || "",
         email: currentUser.email || "",
-        phoneNumber: currentUser.phoneNumber || "",
+        phoneNumber: currentUser?.phoneNumber || "",
         address: {
           country: currentUser.address?.country || "",
           city: currentUser.address?.city || "",
@@ -45,7 +52,9 @@ const Profile: React.FC = () => {
     }
   }, [currentUser]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     if (["country", "city", "address"].includes(name)) {
@@ -61,12 +70,40 @@ const Profile: React.FC = () => {
     }
   };
 
+  const handleSelectChange = (value: string) => {
+    setUpdatedUserData((prev) => ({
+      ...prev,
+      address: { ...prev.address, country: value },
+    }));
+  };
+
+  const handlePhoneChange = (
+    value: string, // The raw phone number
+    country: any, // Country object
+    e: React.ChangeEvent, // Event object
+    formattedPhone: string // Formatted phone number
+  ) => {
+    setUpdatedUserData((prev) => ({
+      ...prev,
+      phoneNumber: formattedPhone, // Use the formatted phone number
+    }));
+  };
+
   const handleUpdateUser = async () => {
-    await updateCurrentUser(updatedUserData);
+    const dataToSend = {
+      ...updatedUserData,
+      phoneNumber: updatedUserData.phoneNumber,
+    };
+
+    await updateCurrentUser(dataToSend);
   };
 
   if (loading) {
-    return <Loader />;
+    return (
+      <main>
+        <Loader />
+      </main>
+    );
   }
 
   return (
@@ -114,26 +151,29 @@ const Profile: React.FC = () => {
             />
           </div>
 
-          <Input
-            type={InputTypes.TEXT}
-            className={styles.input}
-            value={updatedUserData.phoneNumber}
-            placeholder="Enter your phone number"
-            onChange={handleInputChange}
-            name="phoneNumber"
-          />
+          <div className={styles.input}>
+            <PhoneInput
+              country={"us"}
+              value={updatedUserData.phoneNumber}
+              onChange={handlePhoneChange}
+              placeholder="Enter your phone number"
+              preserveOrder={["+", "(", ")", "-", " "]}
+              inputProps={{
+                name: "phoneNumber",
+                required: true,
+              }}
+            />
+          </div>
         </div>
 
         <div className={styles.field}>
           <h3 className={styles.headingSecondary}>Delivery address:</h3>
 
-          <Input
-            className={styles.input}
-            type={InputTypes.TEXT}
+          <Select
+            options={countries}
             value={updatedUserData.address.country}
+            onChange={handleSelectChange}
             placeholder="Choose your country"
-            name="country"
-            onChange={handleInputChange}
           />
 
           <Input
