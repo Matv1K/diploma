@@ -21,7 +21,7 @@
 21. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
 22. MAKE PRIVAT ROUTES
 23. Optimize everything
-24. Refactor codebase
+24. Refactor codebas
 25. Add input errors
 26. Add strong password
 27. ADD FILTERING LOGIC
