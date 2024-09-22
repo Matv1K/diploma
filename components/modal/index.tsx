@@ -1,11 +1,11 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import { FiX } from "react-icons/fi";
+import { FiX } from 'react-icons/fi';
 
-import { closeModal } from "@/features/modal/modalSlice";
+import { closeModal } from '@/features/modal/modalSlice';
 
 interface ModalProps {
   heading?: string;
@@ -35,11 +35,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <div className={styles.overlay}>
       <div className={`${styles.modal} ${className}`}>
-        <FiX
-          size={24}
-          onClick={handleCloseModal}
-          className={styles.modalClose}
-        />
+        <FiX size={24} onClick={handleCloseModal} className={styles.modalClose} />
 
         <h2 className={styles.modalHeading}>{heading}</h2>
 

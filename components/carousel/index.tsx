@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
-import "react-multi-carousel/lib/styles.css";
-import styles from "./index.module.scss";
+import 'react-multi-carousel/lib/styles.css';
+import styles from './index.module.scss';
 
-import ReactCarousel from "react-multi-carousel";
+import ReactCarousel from 'react-multi-carousel';
 
-import { InstrumentI } from "@/types";
+import { InstrumentI } from '@/types';
 
 interface CarouselProps {
   items: InstrumentI[];
@@ -43,7 +43,7 @@ const Carousel: React.FC<CarouselProps> = ({
   const handleItemNavigation = (
     section: string,
     name: string,
-    instrumentType: string
+    instrumentType: string,
   ) => {
     if (isInstrumentsCarousel) {
       push(`/shop/${section}/${instrumentType}/${name}`);
@@ -57,25 +57,19 @@ const Carousel: React.FC<CarouselProps> = ({
       swipeable={false}
       draggable={false}
       responsive={responsive}
-      infinite={true}
-      autoPlay={true}
+      infinite
+      autoPlay
       autoPlaySpeed={10000}
-      keyBoardControl={true}
-      customTransition="all .5"
+      keyBoardControl
+      customTransition='all .5'
       transitionDuration={500}
       containerClass={styles.carouselContainer}
-      removeArrowOnDeviceType={["tablet", "mobile"]}
+      removeArrowOnDeviceType={['tablet', 'mobile']}
       itemClass={styles.carouselItemPadding}
     >
       {items.map(({ name, _id, section, instrumentType }) => (
         <div
-          onClick={() =>
-            handleItemNavigation(
-              section,
-              isInstrumentsCarousel ? _id : name,
-              instrumentType
-            )
-          }
+          onClick={() => handleItemNavigation(section,isInstrumentsCarousel ? _id : name, instrumentType)}
           key={name}
           className={styles.carouselItem}
         >

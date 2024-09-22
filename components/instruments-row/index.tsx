@@ -1,24 +1,16 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import Link from "next/link";
-import { Button } from "../../components";
+import Link from 'next/link';
+import { Button } from '../../components';
 
-import { FiTrash2 } from "react-icons/fi";
+import { FiTrash2 } from 'react-icons/fi';
 
-import {
-  removeCartItem,
-  increaseAmount,
-  decreaseAmount,
-} from "@/services/cart/cartService";
+import {removeCartItem, increaseAmount, decreaseAmount} from '@/services/cart/cartService';
 
-import {
-  removeItem,
-  increaseItemAmount,
-  decreaseItemAmount,
-} from "@/features/instruments/instrumentsSlice";
+import {removeItem, increaseItemAmount, decreaseItemAmount} from '@/features/instruments/instrumentsSlice';
 
 interface InstrumentRowProps {
   instrumentId: string;
@@ -48,7 +40,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       await increaseAmount(cartItemId);
       dispatch(increaseItemAmount(cartItemId));
     } catch (error) {
-      console.error("Failed to increase item amount:", error);
+      console.error('Failed to increase item amount:', error);
     }
   };
 
@@ -57,7 +49,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       await decreaseAmount(cartItemId);
       dispatch(decreaseItemAmount(cartItemId));
     } catch (error) {
-      console.error("Failed to decrease item amount:", error);
+      console.error('Failed to decrease item amount:', error);
     }
   };
 
@@ -66,7 +58,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       await removeCartItem(cartItemId);
       dispatch(removeItem(cartItemId));
     } catch (error) {
-      console.error("Failed to remove cart item:", error);
+      console.error('Failed to remove cart item:', error);
     }
   };
 
@@ -74,25 +66,18 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
     <tr className={styles.row}>
       <th className={`${styles.cell}`}>
         <div className={styles.cellContainer}>
-          <div className={styles.image}></div>
+          <div className={styles.image} />
 
-          <Link
-            className={styles.link}
-            href={`/shop/${section}/${instrumentId}`}
-          >
+          <Link className={styles.link} href={`/shop/${section}/${instrumentId}`}>
             {name} / <span className={styles.color}>{color}</span>
           </Link>
         </div>
       </th>
 
       <th className={styles.cell}>
-        <Button className={styles.operator} onClick={handleDecreaseCount}>
-          -
-        </Button>
+        <Button className={styles.operator} onClick={handleDecreaseCount}>-</Button>
         {amount}
-        <Button className={styles.operator} onClick={handleIncreaseCount}>
-          +
-        </Button>
+        <Button className={styles.operator} onClick={handleIncreaseCount}>+</Button>
       </th>
 
       <th className={styles.cell}>{price} </th>

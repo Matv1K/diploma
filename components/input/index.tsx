@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import { InputTypes } from "@/types";
+import { InputTypes } from '@/types';
 
 interface InputProps {
   placeholder?: string;
@@ -32,29 +32,27 @@ const Input: React.FC<InputProps> = ({
   value,
   required,
   autoComplete,
-}) => {
-  return (
-    <div className={styles.inputWrapper}>
-      <input
-        className={`${styles.input} ${className}`}
-        name={name}
-        id={id}
-        onChange={onChange}
-        placeholder={placeholder}
-        type={type}
-        title={title}
-        value={value}
-        required={required}
-        autoComplete={autoComplete}
-      />
+}) => (
+  <div className={styles.inputWrapper}>
+    <input
+      className={`${styles.input} ${className}`}
+      name={name}
+      id={id}
+      onChange={onChange}
+      placeholder={placeholder}
+      type={type}
+      title={title}
+      value={value}
+      required={required}
+      autoComplete={autoComplete}
+    />
 
-      {icon && (
-        <span className={styles.icon} onClick={handleIconClick}>
-          {icon}
-        </span>
-      )}
-    </div>
-  );
-};
+    {icon && (
+      <span className={styles.icon} onClick={handleIconClick}>
+        {icon}
+      </span>
+    )}
+  </div>
+);
 
 export default Input;

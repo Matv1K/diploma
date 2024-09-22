@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import { FiChevronRight } from "react-icons/fi";
+import { FiChevronRight } from 'react-icons/fi';
 
-import { trimInstrumentName } from "@/utils";
+import { trimInstrumentName } from '@/utils';
 
-import { CATALOG_LINKS } from "@/app/constants";
+import { CATALOG_LINKS } from '@/app/constants';
 
 interface CatalogProps {
   closeCatalog: any;
@@ -55,12 +55,10 @@ const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
 
               {hoveredSection === link && subtypes && (
                 <div className={styles.subtypesMenu}>
-                  {subtypes.map((subtype) => (
+                  {subtypes.map(subtype => (
                     <Link
                       key={subtype.slug}
-                      href={`/shop/${trimInstrumentName(link)}/${
-                        subtype?.slug
-                      }`}
+                      href={`/shop/${trimInstrumentName(link)}/${subtype?.slug}`}
                       className={styles.subtypeLink}
                       onClick={handleCloseCatalog}
                     >
@@ -73,11 +71,7 @@ const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
           ))}
         </div>
 
-        <Link
-          onClick={handleCloseCatalog}
-          className={styles.linkSales}
-          href="/shop/sale"
-        >
+        <Link onClick={handleCloseCatalog} className={styles.linkSales} href='/shop/sale'>
           Items on Sale!
         </Link>
       </div>

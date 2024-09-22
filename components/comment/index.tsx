@@ -1,9 +1,9 @@
-import React from "react";
-import dayjs from "dayjs";
+import React from 'react';
+import dayjs from 'dayjs';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import { getRatingString } from "@/utils";
+import { getRatingString } from '@/utils';
 
 interface CommentProps {
   userName: string;
@@ -18,7 +18,7 @@ const Comment: React.FC<CommentProps> = ({
   description,
   rating,
 }) => {
-  const formattedDate = dayjs(createdAt).format("MMMM D, YYYY");
+  const formattedDate = dayjs(createdAt).format('MMMM D, YYYY');
 
   return (
     <div className={styles.comment}>

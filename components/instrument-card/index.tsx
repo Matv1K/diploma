@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
-import "react-toastify/dist/ReactToastify.css";
-import styles from "./index.module.scss";
+import 'react-toastify/dist/ReactToastify.css';
+import styles from './index.module.scss';
 
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
-import Image from "next/image";
-import { Button } from "../../components";
+import Image from 'next/image';
+import { Button } from '../../components';
 
-import { FiHeart } from "react-icons/fi";
-import { ElectricGuitar } from "@/public/images";
+import { FiHeart } from 'react-icons/fi';
+import { ElectricGuitar } from '@/public/images';
 
-import { addItemToCart } from "@/features/instruments/instrumentsSlice";
-import { likeItem, unlikeItem } from "@/features/instruments/instrumentsSlice";
+import { addItemToCart } from '@/features/instruments/instrumentsSlice';
+import { likeItem, unlikeItem } from '@/features/instruments/instrumentsSlice';
 
-import { addCartItem } from "@/services/cart/cartService";
-import { getLikedItem } from "@/services/liked/likedService";
+import { addCartItem } from '@/services/cart/cartService';
+import { getLikedItem } from '@/services/liked/likedService';
 
-import { AppDispatch } from "@/app/store";
+import { AppDispatch } from '@/app/store';
 
 interface InstrumentCardProps {
   isNew?: boolean;
@@ -49,7 +49,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   withLikeIcon,
   brandName,
 }) => {
-  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<string>('');
   const [isLiked, setIsLiked] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -69,33 +69,31 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
     push(`/shop/${section}/${instrumentType}/${id}`);
   };
 
-  const handleLikeItem = async (
-    e: React.MouseEvent<SVGElement, MouseEvent>
-  ) => {
+  const handleLikeItem = async (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.stopPropagation();
 
     try {
       if (isLiked) {
         await dispatch(unlikeItem(id));
-        toast.success("You do not like the item anymore");
+        toast.success('You do not like the item anymore');
         setIsLiked(false);
       } else {
         await dispatch(
           likeItem({
             price,
             name,
-            image: "///",
+            image: '///',
             colors,
             brandName,
             instrumentId: id,
             section,
-          })
+          }),
         );
-        toast.success("You like the item");
+        toast.success('You like the item');
         setIsLiked(true);
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
     }
   };
 
@@ -108,7 +106,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         name,
         image,
         color: selectedColor,
-        brandName: "cort",
+        brandName: 'cort',
         instrumentId: id,
         section,
         amount: 1,
@@ -116,7 +114,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
       dispatch(addItemToCart(newItem));
       toast.success(`${name} has been added to the cart!`);
-      push("/");
+      push('/');
     } catch (error) {
       toast.error(`Failed to add ${name} to the cart.`);
     }
@@ -132,7 +130,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         <Image
           className={styles.instrumentImage}
           src={ElectricGuitar}
-          alt="guitar"
+          alt='guitar'
           width={150}
           height={150}
         />
@@ -144,20 +142,13 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         {name} <span className={styles.instrumentType}>/ {brandName}</span>
       </h4>
 
-      <div
-        className={styles.radioButtons}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
+      <div className={styles.radioButtons} onClick={e => { e.stopPropagation();}}>
         {colors.map((color: string, index: number) => (
           <label key={index} className={styles.label}>
             <input
-              name="color"
-              className={`${styles.radio} ${
-                selectedColor === color ? styles.selected : ""
-              }`}
-              type="radio"
+              name='color'
+              className={`${styles.radio} ${selectedColor === color ? styles.selected : ''}`}
+              type='radio'
               value={color}
               onChange={handleColorChange}
               style={{ color }}
@@ -176,9 +167,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         <FiHeart
           size={24}
           onClick={handleLikeItem}
-          className={`${styles.likeIcon} ${
-            isLiked ? styles.likeIconFilled : ""
-          }`}
+          className={`${styles.likeIcon} ${isLiked ? styles.likeIconFilled : ''}`}
         />
       )}
     </div>

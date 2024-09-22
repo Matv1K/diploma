@@ -1,24 +1,20 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-import {
-  useStripe,
-  useElements,
-  PaymentElement,
-} from "@stripe/react-stripe-js";
+import {useStripe, PaymentElement} from '@stripe/react-stripe-js';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import { Button } from "@/components";
+import { Button } from '@/components';
 
-import { getTotalPrice } from "@/utils";
+import { getTotalPrice } from '@/utils';
 
-import { getCartItems } from "@/services/cart/cartService";
-import { createOrder } from "@/services/orders/ordersService";
+import { getCartItems } from '@/services/cart/cartService';
+import { createOrder } from '@/services/orders/ordersService';
 
-import { ButtonTypes } from "@/types";
+import { ButtonTypes } from '@/types';
 
 const CheckoutForm: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -40,7 +36,6 @@ const CheckoutForm: React.FC = () => {
   }, []);
 
   const stripe = useStripe();
-  const elements = useElements();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,7 +53,7 @@ const CheckoutForm: React.FC = () => {
       totalPrice,
     });
 
-    push("/");
+    push('/');
   };
 
   return (
@@ -67,11 +62,7 @@ const CheckoutForm: React.FC = () => {
 
       <PaymentElement />
 
-      <Button
-        disabled={!stripe}
-        className={styles.checkoutButton}
-        type={ButtonTypes.SUBMIT}
-      >
+      <Button disabled={!stripe} className={styles.checkoutButton} type={ButtonTypes.SUBMIT}>
         Pay {totalPrice}$
       </Button>
     </form>

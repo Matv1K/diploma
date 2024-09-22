@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import { ButtonOptions, ButtonTypes } from "@/types";
+import { ButtonOptions, ButtonTypes } from '@/types';
 
 interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -14,14 +14,15 @@ interface ButtonProps {
 }
 
 const getButtonOptionClass = (option: string) => {
-  const optionClass =
-    option === "outline"
-      ? styles.outline
-      : option === "google"
-      ? styles.google
-      : styles.filled;
+  if (option === 'outline') {
+    return styles.outline;
+  }
 
-  return optionClass;
+  if (option === 'google') {
+    return styles.google;
+  }
+
+  return styles.filled;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -31,19 +32,15 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   disabled,
   option = ButtonOptions.FILLED,
-}) => {
-  return (
-    <button
-      disabled={disabled}
-      onClick={onClick}
-      type={type}
-      className={`${styles.button} ${getButtonOptionClass(
-        option
-      )} ${className}`}
-    >
-      {children}
-    </button>
-  );
-};
+}) => (
+  <button
+    disabled={disabled}
+    onClick={onClick}
+    type={type}
+    className={`${styles.button} ${getButtonOptionClass(option)} ${className}`}
+  >
+    {children}
+  </button>
+);
 
 export default Button;

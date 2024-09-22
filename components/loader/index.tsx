@@ -1,13 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-const Loader: React.FC = () => {
-  return (
-    <div className={styles.loader}>
-      <div className={styles.spinner}></div>
-    </div>
-  );
-};
+const Loader: React.FC = () => (
+  <div className={styles.loader}>
+    <div className={styles.spinner} />
+  </div>
+);
 
 export default Loader;

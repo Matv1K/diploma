@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import Link from "next/link";
-import { Button } from "../../components";
+import Link from 'next/link';
+import { Button } from '../../components';
 
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentUser from '@/hooks/useCurrentUser';
 
-import { logOut } from "@/services/users/userService";
+import { logOut } from '@/services/users/userService';
 
 interface DropdownProps {
   className?: string;
@@ -18,14 +18,13 @@ interface DropdownProps {
 
 const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   const { user } = useCurrentUser();
-
   const { push } = useRouter();
 
   const handleLogOut = async () => {
     try {
       await logOut();
 
-      push("/");
+      push('/');
     } catch (error) {
       console.error(error);
     }
@@ -44,11 +43,11 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
       </div>
 
       <div className={styles.dropdownLinks}>
-        <Link href="/profile" className={styles.dropdownLink}>
+        <Link href='/profile' className={styles.dropdownLink}>
           My profile
         </Link>
 
-        <Link href="/profile/orders" className={styles.dropdownLink}>
+        <Link href='/profile/orders' className={styles.dropdownLink}>
           Order history
         </Link>
       </div>

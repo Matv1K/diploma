@@ -3,6 +3,7 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
+import prettier from 'eslint-plugin-prettier';
 
 export default [
   {
@@ -19,17 +20,18 @@ export default [
   {
     plugins: {
       'react-hooks': pluginReactHooks,
+      prettier: prettier,
     },
     rules: {
-      'indent': ['error', 2],
-      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_', 'varsIgnorePattern': '^_' }],
-      'eqeqeq': ['error', 'always'],
-      'semi': ['error', 'always'],
+      indent: ['error', 2],
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      eqeqeq: ['error', 'always'],
+      semi: ['error', 'always'],
       'prefer-const': ['error'],
       'no-console': 'warn',
       'no-debugger': 'error',
       'no-var': 'error',
-      'no-multiple-empty-lines': ['error', { 'max': 1 }],
+      'no-multiple-empty-lines': ['error', { max: 1 }],
 
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
@@ -38,23 +40,23 @@ export default [
       'react/self-closing-comp': 'error',
       'react/prop-types': 'off',
       'react/jsx-no-target-blank': 'error',
-      'react/jsx-curly-spacing': ['error', { 'when': 'never', 'children': true }],
+      'react/jsx-curly-spacing': ['error', { when: 'never', children: true }],
       'react/jsx-boolean-value': ['error', 'never'],
       'react/jsx-key': 'error',
 
-      'no-param-reassign': ['error', { 'props': true }],
+      'no-param-reassign': ['error', { props: true }],
       'arrow-body-style': ['error', 'as-needed'],
       'prefer-template': 'error',
       'no-nested-ternary': 'error',
-      'no-else-return': ['error', { 'allowElseIf': false }],
-      'no-use-before-define': ['error', { 'functions': false, 'classes': true }],
+      'no-else-return': ['error', { allowElseIf: false }],
+      'no-use-before-define': ['error', { functions: false, classes: true }],
 
-      'quotes': ['error', 'single', { 'avoidEscape': true }],
+      quotes: ['error', 'single', { avoidEscape: true }],
       'jsx-quotes': ['error', 'prefer-single'],
-      'max-len': ['error', { 'code': 100 }],
+      'max-len': ['error', { code: 120 }],
       'comma-dangle': ['error', 'always-multiline'],
       'function-paren-newline': ['error', 'consistent'],
-      'object-curly-newline': ['error', { 'consistent': true }],
+      'object-curly-newline': ['error', { consistent: true }],
       'eol-last': ['error', 'always'],
       'arrow-parens': ['error', 'as-needed'],
     },

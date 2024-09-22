@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { Button, Catalog, Input, Dropdown, Loader } from '../../components';
 
 import { Logo } from '@/public/icons';
-import { FiShoppingCart, FiHeart, FiSettings, FiSearch,FiX } from 'react-icons/fi';
+import { FiShoppingCart, FiHeart, FiSettings, FiSearch, FiX } from 'react-icons/fi';
 
 import useCurrentUser from '@/hooks/useCurrentUser';
 
@@ -42,8 +42,7 @@ const Header: React.FC = () => {
 
   const isCatalogOpened = useSelector((state: RootState) => state.catalog.isCatalogOpen);
 
-  const getActiveIcon = (href: string) =>
-    pathname === href ? styles.active : '';
+  const getActiveIcon = (href: string) => (pathname === href ? styles.active : '');
 
   const handleOpenCatalog = () => {
     dispatch(openCatalog());
@@ -73,13 +72,7 @@ const Header: React.FC = () => {
     <>
       <header className={styles.header}>
         <Link href='/' onClick={handleCloseCatalog}>
-          <Image
-            className={styles.logo}
-            src={Logo}
-            alt='Musify'
-            width={40}
-            height={40}
-          />
+          <Image className={styles.logo} src={Logo} alt='Musify' width={40} height={40} />
         </Link>
 
         <ul className={styles.headerActionData}>
@@ -110,18 +103,16 @@ const Header: React.FC = () => {
             {query && (
               <div className={styles.searchList}>
                 {filteredItems.length ? (
-                  filteredItems.map(
-                    ({ name, section, instrumentType, _id }) => (
-                      <div key={_id} className={styles.searchListItem}>
-                        <Link
-                          className={styles.searchItemLink}
-                          href={`/shop/${section}/${instrumentType}/${_id}`}
-                        >
-                          {name}
-                        </Link>
-                      </div>
-                    ),
-                  )
+                  filteredItems.map(({ name, section, instrumentType, _id }) => (
+                    <div key={_id} className={styles.searchListItem}>
+                      <Link
+                        className={styles.searchItemLink}
+                        href={`/shop/${section}/${instrumentType}/${_id}`}
+                      >
+                        {name}
+                      </Link>
+                    </div>
+                  ))
                 ) : (
                   <div className={styles.searchListItem}>No items found</div>
                 )}
@@ -138,10 +129,7 @@ const Header: React.FC = () => {
           {user && (
             <div className={styles.icons}>
               <div className={styles.profileContainer}>
-                <Link
-                  href='/profile'
-                  className={`${styles.icon} ${getActiveIcon('/profile')}`}
-                >
+                <Link href='/profile' className={`${styles.icon} ${getActiveIcon('/profile')}`}>
                   <FiSettings size={24} />
                 </Link>
 
@@ -149,23 +137,15 @@ const Header: React.FC = () => {
               </div>
 
               <div>
-                <Link
-                  href='/liked'
-                  className={`${styles.icon} ${getActiveIcon('/liked')}`}
-                >
+                <Link href='/liked' className={`${styles.icon} ${getActiveIcon('/liked')}`}>
                   <FiHeart size={24} />
                 </Link>
               </div>
 
               <div className={styles.cartContainer}>
-                <span className={styles.cartAmount}>
-                  {cartLoading ? '...' : cartItems.length}
-                </span>
+                <span className={styles.cartAmount}>{cartLoading ? '...' : cartItems.length}</span>
 
-                <Link
-                  href='/cart'
-                  className={`${styles.icon} ${getActiveIcon('/cart')}`}
-                >
+                <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
                   <FiShoppingCart size={24} />
                 </Link>
               </div>
