@@ -1,35 +1,29 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { usePathname } from "next/navigation";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { usePathname } from 'next/navigation';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
-import Link from "next/link";
-import Image from "next/image";
-import { Button, Catalog, Input, Dropdown, Loader } from "../../components";
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button, Catalog, Input, Dropdown, Loader } from '../../components';
 
-import { Logo } from "@/public/icons";
-import {
-  FiShoppingCart,
-  FiHeart,
-  FiSettings,
-  FiSearch,
-  FiX,
-} from "react-icons/fi";
+import { Logo } from '@/public/icons';
+import { FiShoppingCart, FiHeart, FiSettings, FiSearch,FiX } from 'react-icons/fi';
 
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentUser from '@/hooks/useCurrentUser';
 
-import { closeCatalog, openCatalog } from "@/features/catalog/catalogSlice";
-import { fetchCartItems } from "@/features/instruments/instrumentsSlice";
-import { searchInstruments } from "@/services/instruments/instrumentService";
+import { closeCatalog, openCatalog } from '@/features/catalog/catalogSlice';
+import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
+import { searchInstruments } from '@/services/instruments/instrumentService';
 
-import { ButtonOptions, InputTypes } from "@/types";
-import { RootState, AppDispatch } from "@/app/store";
+import { ButtonOptions, InputTypes } from '@/types';
+import { RootState, AppDispatch } from '@/app/store';
 
 const Header: React.FC = () => {
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = React.useState('');
   const [filteredItems, setFilteredItems] = React.useState<any[]>([]);
 
   const { user, loading } = useCurrentUser();
@@ -37,13 +31,8 @@ const Header: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const pathname = usePathname();
 
-  const cartItems = useSelector(
-    (state: RootState) => state.instruments.cartItems
-  );
-
-  const cartLoading = useSelector(
-    (state: RootState) => state.instruments.loading
-  );
+  const cartItems = useSelector((state: RootState) => state.instruments.cartItems);
+  const cartLoading = useSelector((state: RootState) => state.instruments.loading);
 
   useEffect(() => {
     if (!user) return;
@@ -51,12 +40,10 @@ const Header: React.FC = () => {
     dispatch(fetchCartItems());
   }, [dispatch, user]);
 
-  const isCatalogOpened = useSelector(
-    (state: RootState) => state.catalog.isCatalogOpen
-  );
+  const isCatalogOpened = useSelector((state: RootState) => state.catalog.isCatalogOpen);
 
   const getActiveIcon = (href: string) =>
-    pathname === href ? styles.active : "";
+    pathname === href ? styles.active : '';
 
   const handleOpenCatalog = () => {
     dispatch(openCatalog());
@@ -78,18 +65,18 @@ const Header: React.FC = () => {
       const result = await searchInstruments(e.target.value);
       setFilteredItems(result);
     } catch (error) {
-      console.error("Search failed", error);
+      console.error('Search failed', error);
     }
   };
 
   return (
     <>
       <header className={styles.header}>
-        <Link href="/" onClick={handleCloseCatalog}>
+        <Link href='/' onClick={handleCloseCatalog}>
           <Image
             className={styles.logo}
             src={Logo}
-            alt="Musify"
+            alt='Musify'
             width={40}
             height={40}
           />
@@ -114,7 +101,7 @@ const Header: React.FC = () => {
           <div className={styles.searchContainer}>
             <Input
               className={styles.search}
-              placeholder="Find on Musify"
+              placeholder='Find on Musify'
               type={InputTypes.TEXT}
               icon={<FiSearch size={24} />}
               onChange={handleSearch}
@@ -133,7 +120,7 @@ const Header: React.FC = () => {
                           {name}
                         </Link>
                       </div>
-                    )
+                    ),
                   )
                 ) : (
                   <div className={styles.searchListItem}>No items found</div>
@@ -142,7 +129,7 @@ const Header: React.FC = () => {
             )}
           </div>
 
-          <Link href="/shop" className={styles.linkShop}>
+          <Link href='/shop' className={styles.linkShop}>
             Shop
           </Link>
         </ul>
@@ -152,8 +139,8 @@ const Header: React.FC = () => {
             <div className={styles.icons}>
               <div className={styles.profileContainer}>
                 <Link
-                  href="/profile"
-                  className={`${styles.icon} ${getActiveIcon("/profile")}`}
+                  href='/profile'
+                  className={`${styles.icon} ${getActiveIcon('/profile')}`}
                 >
                   <FiSettings size={24} />
                 </Link>
@@ -163,8 +150,8 @@ const Header: React.FC = () => {
 
               <div>
                 <Link
-                  href="/liked"
-                  className={`${styles.icon} ${getActiveIcon("/liked")}`}
+                  href='/liked'
+                  className={`${styles.icon} ${getActiveIcon('/liked')}`}
                 >
                   <FiHeart size={24} />
                 </Link>
@@ -172,12 +159,12 @@ const Header: React.FC = () => {
 
               <div className={styles.cartContainer}>
                 <span className={styles.cartAmount}>
-                  {cartLoading ? "..." : cartItems.length}
+                  {cartLoading ? '...' : cartItems.length}
                 </span>
 
                 <Link
-                  href="/cart"
-                  className={`${styles.icon} ${getActiveIcon("/cart")}`}
+                  href='/cart'
+                  className={`${styles.icon} ${getActiveIcon('/cart')}`}
                 >
                   <FiShoppingCart size={24} />
                 </Link>
@@ -186,7 +173,7 @@ const Header: React.FC = () => {
           )}
 
           {!user && !loading && (
-            <Link href="/sign-in">
+            <Link href='/sign-in'>
               <Button option={ButtonOptions.OUTILINE}>Sign in</Button>
             </Link>
           )}
