@@ -94,19 +94,19 @@ export interface SignInDataI {
 }
 
 export enum ButtonOptions {
-  OUTILINE = "outline",
-  FILLED = "filled",
-  GOOGLE = "google",
+  OUTILINE = 'outline',
+  FILLED = 'filled',
+  GOOGLE = 'google',
 }
 
 export enum ButtonTypes {
-  SUBMIT = "submit",
-  RESET = "reset",
+  SUBMIT = 'submit',
+  RESET = 'reset',
 }
 
 export enum InputTypes {
-  TEXT = "text",
-  EMAIL = "email",
-  PASSWORD = "password",
-  SEARCH = "search",
+  TEXT = 'text',
+  EMAIL = 'email',
+  PASSWORD = 'password',
+  SEARCH = 'search',
 }

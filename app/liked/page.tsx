@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import styles from "./page.module.scss";
+import styles from './page.module.scss';
 
-import Link from "next/link";
-import { Button, InstrumentCard, Loader } from "@/components";
+import Link from 'next/link';
+import { Button, InstrumentCard, Loader } from '@/components';
 
-import { getLikedItems } from "@/services/liked/likedService";
+import { getLikedItems } from '@/services/liked/likedService';
 
-import { InstrumentCardI } from "@/types";
+import { InstrumentCardI } from '@/types';
 
 const Liked: React.FC = () => {
   const [likedItems, setLikedItems] = useState<InstrumentCardI[]>([]);
@@ -39,7 +39,7 @@ const Liked: React.FC = () => {
       <main className={styles.containerEmpty}>
         <h2>You did not like anything yet</h2>
 
-        <Link href="/shop">
+        <Link href='/shop'>
           <Button>Go back to shopping</Button>
         </Link>
       </main>
@@ -63,23 +63,21 @@ const Liked: React.FC = () => {
             colors,
             brandName,
             instrumentType,
-          }: InstrumentCardI) => {
-            return (
-              <InstrumentCard
-                key={_id}
-                name={name}
-                instrumentType={instrumentType}
-                section={section}
-                price={price}
-                colors={colors}
-                image={image}
-                id={instrumentId}
-                brandName={brandName}
-                isNew={isNew}
-                withLikeIcon
-              />
-            );
-          }
+          }: InstrumentCardI) => (
+            <InstrumentCard
+              key={_id}
+              name={name}
+              instrumentType={instrumentType}
+              section={section}
+              price={price}
+              colors={colors}
+              image={image}
+              id={instrumentId}
+              brandName={brandName}
+              isNew={isNew}
+              withLikeIcon
+            />
+          ),
         )}
       </div>
     </main>

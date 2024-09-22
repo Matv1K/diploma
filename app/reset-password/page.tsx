@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
-import styles from "./page.module.scss";
+import styles from './page.module.scss';
 
-import { Input, Button } from "@/components";
+import { Input, Button } from '@/components';
 
-import { InputTypes } from "@/types";
+import { InputTypes } from '@/types';
 
 const ResetPassword = () => {
   const handleChangePassword = () => {
-    console.log("password has been changed");
+    console.log('password has been changed');
   };
 
   return (
@@ -21,13 +21,13 @@ const ResetPassword = () => {
         <Input
           className={styles.input}
           type={InputTypes.PASSWORD}
-          placeholder="Enter new password"
+          placeholder='Enter new password'
         />
 
         <Input
           className={styles.input}
           type={InputTypes.PASSWORD}
-          placeholder="Confirm new password"
+          placeholder='Confirm new password'
         />
 
         <div>

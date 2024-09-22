@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import modalSlice from "@/features/modal/modalSlice";
-import catalogSlice from "@/features/catalog/catalogSlice";
-import instrumentsSlice from "@/features/instruments/instrumentsSlice";
-import commentsSlice from "@/features/comments/commentsSlice";
-import userSlice from "@/features/user/userSlice";
+import modalSlice from '@/features/modal/modalSlice';
+import catalogSlice from '@/features/catalog/catalogSlice';
+import instrumentsSlice from '@/features/instruments/instrumentsSlice';
+import commentsSlice from '@/features/comments/commentsSlice';
+import userSlice from '@/features/user/userSlice';
 
 export const store = configureStore({
   reducer: {

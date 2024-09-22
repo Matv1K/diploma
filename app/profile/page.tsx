@@ -1,36 +1,36 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import "react-phone-input-2/lib/style.css";
-import styles from "./page.module.scss";
+import 'react-phone-input-2/lib/style.css';
+import styles from './page.module.scss';
 
-import Link from "next/link";
-import { Input, Button, Select, Loader } from "@/components";
-import PhoneInput from "react-phone-input-2";
+import Link from 'next/link';
+import { Input, Button, Select, Loader } from '@/components';
+import PhoneInput from 'react-phone-input-2';
 
-import { getNames } from "country-list";
+import { getNames } from 'country-list';
 
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentUser from '@/hooks/useCurrentUser';
 
-import { setUser, updateUser } from "@/features/user/userSlice";
+import { setUser, updateUser } from '@/features/user/userSlice';
 
-import { updateCurrentUser } from "@/services/users/userService";
+import { updateCurrentUser } from '@/services/users/userService';
 
-import { InputTypes } from "@/types";
+import { InputTypes } from '@/types';
 
 const Profile: React.FC = () => {
   const { user: currentUser, loading } = useCurrentUser();
   const [updatedUserData, setUpdatedUserData] = useState({
-    name: currentUser?.name || "",
-    lastName: currentUser?.lastName || "",
-    email: currentUser?.email || "",
-    phoneNumber: currentUser?.phoneNumber || "",
+    name: currentUser?.name || '',
+    lastName: currentUser?.lastName || '',
+    email: currentUser?.email || '',
+    phoneNumber: currentUser?.phoneNumber || '',
     address: {
-      country: currentUser?.address?.country || "",
-      city: currentUser?.address?.city || "",
-      address: currentUser?.address?.address || "",
+      country: currentUser?.address?.country || '',
+      city: currentUser?.address?.city || '',
+      address: currentUser?.address?.address || '',
     },
   });
 
@@ -45,18 +45,16 @@ const Profile: React.FC = () => {
     }
   }, [currentUser, dispatch]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    if (["country", "city", "address"].includes(name)) {
-      setUpdatedUserData((prev) => ({
+    if (['country', 'city', 'address'].includes(name)) {
+      setUpdatedUserData(prev => ({
         ...prev,
         address: { ...prev.address, [name]: value },
       }));
     } else {
-      setUpdatedUserData((prev) => ({
+      setUpdatedUserData(prev => ({
         ...prev,
         [name]: value,
       }));
@@ -64,22 +62,16 @@ const Profile: React.FC = () => {
   };
 
   const handleSelectChange = (value: string) => {
-    setUpdatedUserData((prev) => ({
-      ...prev,
-      address: { ...prev.address, country: value },
-    }));
+    setUpdatedUserData(prev => ({ ...prev, address: { ...prev.address, country: value }}));
   };
 
   const handlePhoneChange = (
     value: string,
     country: any,
     e: React.ChangeEvent,
-    formattedPhone: string
+    formattedPhone: string,
   ) => {
-    setUpdatedUserData((prev) => ({
-      ...prev,
-      phoneNumber: formattedPhone,
-    }));
+    setUpdatedUserData(prev => ({...prev, phoneNumber: formattedPhone}));
   };
 
   const handleUpdateUser = async () => {
@@ -107,13 +99,13 @@ const Profile: React.FC = () => {
             className={styles.input}
             type={InputTypes.EMAIL}
             value={updatedUserData.email}
-            placeholder="Enter your email"
+            placeholder='Enter your email'
             onChange={handleInputChange}
-            name="email"
+            name='email'
           />
 
           <div className={styles.change}>
-            <Link href="/reset-password">Reset password</Link>
+            <Link href='/reset-password'>Reset password</Link>
           </div>
         </div>
 
@@ -125,8 +117,8 @@ const Profile: React.FC = () => {
               className={styles.input}
               type={InputTypes.TEXT}
               value={updatedUserData.name}
-              placeholder="Enter your first name"
-              name="name"
+              placeholder='Enter your first name'
+              name='name'
               onChange={handleInputChange}
               required
             />
@@ -135,21 +127,21 @@ const Profile: React.FC = () => {
               className={styles.input}
               type={InputTypes.TEXT}
               value={updatedUserData.lastName}
-              placeholder="Enter your last name"
+              placeholder='Enter your last name'
               onChange={handleInputChange}
-              name="lastName"
+              name='lastName'
             />
           </div>
 
           <div className={styles.input}>
             <PhoneInput
-              country={"us"}
+              country={'us'}
               value={updatedUserData.phoneNumber}
               onChange={handlePhoneChange}
-              placeholder="Enter your phone number"
-              preserveOrder={["+", "(", ")", "-", " "]}
+              placeholder='Enter your phone number'
+              preserveOrder={['+', '(', ')', '-', ' ']}
               inputProps={{
-                name: "phoneNumber",
+                name: 'phoneNumber',
                 required: true,
               }}
             />
@@ -163,14 +155,14 @@ const Profile: React.FC = () => {
             options={countries}
             value={updatedUserData.address.country}
             onChange={handleSelectChange}
-            placeholder="Choose your country"
+            placeholder='Choose your country'
           />
 
           <Input
             className={styles.input}
             type={InputTypes.TEXT}
-            placeholder="Choose your city"
-            name="city"
+            placeholder='Choose your city'
+            name='city'
             value={updatedUserData.address.city}
             onChange={handleInputChange}
           />
@@ -178,8 +170,8 @@ const Profile: React.FC = () => {
           <Input
             className={styles.input}
             type={InputTypes.TEXT}
-            placeholder="Enter your address"
-            name="address"
+            placeholder='Enter your address'
+            name='address'
             onChange={handleInputChange}
             value={updatedUserData.address.address}
           />

@@ -1,11 +1,9 @@
-import React from "react";
+import React from 'react';
 
-const Events: React.FC = () => {
-  return (
-    <main>
-      <h2>Events</h2>
-    </main>
-  );
-};
+const Events: React.FC = () => (
+  <main>
+    <h2>Events</h2>
+  </main>
+);
 
 export default Events;

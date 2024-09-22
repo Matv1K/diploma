@@ -1,21 +1,21 @@
 const trimInstrumentName = (name: string) => {
-  if (name.split(" ").length > 1) {
+  if (name.split(' ').length > 1) {
     return name
-      .split(" ")
+      .split(' ')
       .map((word, ind) => {
         if (ind !== 0) {
-          return "-" + word.trim().toLocaleLowerCase();
-        } else {
-          return word.trim().toLocaleLowerCase();
-        }
+          return `-${  word.trim().toLocaleLowerCase()}`;
+        } 
+        return word.trim().toLocaleLowerCase();
+        
       })
-      .join("");
+      .join('');
   }
 
   return name
-    .split("")
+    .split('')
     .map((part: string) => part.trim().toLocaleLowerCase())
-    .join("");
+    .join('');
 };
 
 export default trimInstrumentName;

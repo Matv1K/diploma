@@ -1,30 +1,24 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import styles from "./page.module.scss";
+import styles from './page.module.scss';
 
-import Link from "next/link";
-import { InstrumentRow, Button } from "@/components";
+import Link from 'next/link';
+import { InstrumentRow, Button } from '@/components';
 
-import { fetchCartItems } from "@/features/instruments/instrumentsSlice";
+import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
 
-import { CartItemIdI } from "@/types";
-import { RootState, AppDispatch } from "@/app/store";
+import { CartItemIdI } from '@/types';
+import { RootState, AppDispatch } from '@/app/store';
 
 const Cart: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const cartItems =
-    useSelector((state: RootState) => state.instruments.cartItems) || [];
 
-  const totalPrice = Array.isArray(cartItems)
-    ? cartItems.reduce(
-        (total, item) => total + Number(item.price.slice(0, -1)) * item.amount,
-        0
-      )
-    : 0;
+  const cartItems = useSelector((state: RootState) => state.instruments.cartItems) || [];
 
+  const totalPrice = Array.isArray(cartItems) ? cartItems.reduce((total, item) => total + Number(item.price.slice(0, -1)) * item.amount, 0): 0;
   const totalItems = Array.isArray(cartItems) ? cartItems.length : 0;
 
   useEffect(() => {
@@ -36,7 +30,7 @@ const Cart: React.FC = () => {
       <main className={styles.containerEmpty}>
         <h2>Your cart is empty</h2>
 
-        <Link href="/shop">
+        <Link href='/shop'>
           <Button>Go back to shopping</Button>
         </Link>
       </main>
@@ -60,21 +54,19 @@ const Cart: React.FC = () => {
                 amount,
                 instrumentId,
                 section,
-              }: CartItemIdI) => {
-                return (
-                  <InstrumentRow
-                    cartItemId={_id}
-                    key={_id}
-                    color={color}
-                    price={price}
-                    name={name}
-                    amount={amount}
-                    section={section}
-                    instrumentId={instrumentId}
-                    image={image}
-                  />
-                );
-              }
+              }: CartItemIdI) => (
+                <InstrumentRow
+                  cartItemId={_id}
+                  key={_id}
+                  color={color}
+                  price={price}
+                  name={name}
+                  amount={amount}
+                  section={section}
+                  instrumentId={instrumentId}
+                  image={image}
+                />
+              ),
             )}
           </tbody>
         </table>
@@ -92,7 +84,7 @@ const Cart: React.FC = () => {
             </div>
           </div>
 
-          <Link href="/checkout">
+          <Link href='/checkout'>
             <Button>Checkout</Button>
           </Link>
         </div>
