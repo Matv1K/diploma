@@ -24,7 +24,7 @@ export default [
     },
     rules: {
       indent: ['error', 2],
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_', 'varsIgnorePattern': '^_' }],
       eqeqeq: ['error', 'always'],
       semi: ['error', 'always'],
       'prefer-const': ['error'],
@@ -44,7 +44,6 @@ export default [
       'react/jsx-boolean-value': ['error', 'never'],
       'react/jsx-key': 'error',
 
-      'no-param-reassign': ['error', { props: true }],
       'arrow-body-style': ['error', 'as-needed'],
       'prefer-template': 'error',
       'no-nested-ternary': 'error',
@@ -59,6 +58,9 @@ export default [
       'object-curly-newline': ['error', { consistent: true }],
       'eol-last': ['error', 'always'],
       'arrow-parens': ['error', 'as-needed'],
+      'no-multi-spaces': 'error',
+      'no-trailing-spaces': 'error',
+      'object-curly-spacing': ['error', 'always'],
     },
   },
 ];

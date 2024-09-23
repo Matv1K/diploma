@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isCatalogOpen: false,
 };
 
 const catalogSlice = createSlice({
-  name: "Catalog",
+  name: 'сatalog',
   initialState,
   reducers: {
     openCatalog(state) {

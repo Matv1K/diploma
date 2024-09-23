@@ -14,16 +14,16 @@ import { FiSend, FiMessageCircle } from 'react-icons/fi';
 
 import { showModal } from '@/features/modal/modalSlice';
 
-import { getPopularIstruments, getNewInstruments} from '@/services/instruments/instrumentService';
+import { getPopularIstruments, getNewInstruments } from '@/services/instruments/instrumentService';
 
 import { ALL_SECTIONS } from './constants';
 
-import { InputTypes, ButtonOptions } from '@/types';
+import { InputTypes, ButtonOptions, InstrumentI } from '@/types';
 
 const Home: React.FC = () => {
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-  const [popularInstruments, setPopularInstruments] = useState<any>([]);
-  const [newInstruments, setNewInstruments] = useState<any>([]);
+  const [popularInstruments, setPopularInstruments] = useState<InstrumentI[]>([]);
+  const [newInstruments, setNewInstruments] = useState<InstrumentI[]>([]);
 
   const dispatch = useDispatch();
 
@@ -114,17 +114,17 @@ const Home: React.FC = () => {
           <div className={styles.actionData}>
             <Input
               className={styles.messageInput}
-              type={InputTypes.TEXT}
+              type={InputTypes._TEXT}
               placeholder='Write your message'
             />
-            <Button option={ButtonOptions.OUTILINE}>
+            <Button option={ButtonOptions._OUTILINE}>
               <FiSend size={20} />
             </Button>
           </div>
         </Modal>
       ) : (
         <Button
-          option={ButtonOptions.OUTILINE}
+          option={ButtonOptions._OUTILINE}
           onClick={handleOpenModal}
           className={styles.buttonSupport}
         >

@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import 'react-phone-input-2/lib/style.css';
 import styles from './page.module.scss';
+
+import { toast } from 'react-toastify';
 
 import Link from 'next/link';
 import { Input, Button, Select, Loader } from '@/components';
@@ -12,38 +14,44 @@ import PhoneInput from 'react-phone-input-2';
 
 import { getNames } from 'country-list';
 
-import useCurrentUser from '@/hooks/useCurrentUser';
-
-import { setUser, updateUser } from '@/features/user/userSlice';
-
-import { updateCurrentUser } from '@/services/users/userService';
+import { updateUser } from '@/features/user/userSlice';
 
 import { InputTypes } from '@/types';
+import { AppDispatch, RootState } from '@/app/store';
 
 const Profile: React.FC = () => {
-  const { user: currentUser, loading } = useCurrentUser();
+  const dispatch: AppDispatch = useDispatch();
+  const { user, loading } = useSelector((state: RootState) => state.user);
+
   const [updatedUserData, setUpdatedUserData] = useState({
-    name: currentUser?.name || '',
-    lastName: currentUser?.lastName || '',
-    email: currentUser?.email || '',
-    phoneNumber: currentUser?.phoneNumber || '',
+    name: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
     address: {
-      country: currentUser?.address?.country || '',
-      city: currentUser?.address?.city || '',
-      address: currentUser?.address?.address || '',
+      country: '',
+      city: '',
+      address: '',
     },
   });
-
-  const dispatch = useDispatch();
 
   const countries = getNames();
 
   useEffect(() => {
-    if (currentUser) {
-      setUpdatedUserData(currentUser);
-      dispatch(setUser(currentUser));
+    if (user) {
+      setUpdatedUserData({
+        name: user?.user?.name || '',
+        lastName: user?.user?.lastName || '',
+        email: user?.user?.email || '',
+        phoneNumber: user?.user?.phoneNumber || '',
+        address: {
+          country: user?.user?.address?.country || '',
+          city: user?.user?.address?.city || '',
+          address: user?.user?.address?.address || '',
+        },
+      });
     }
-  }, [currentUser, dispatch]);
+  }, [user]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -62,21 +70,33 @@ const Profile: React.FC = () => {
   };
 
   const handleSelectChange = (value: string) => {
-    setUpdatedUserData(prev => ({ ...prev, address: { ...prev.address, country: value }}));
+    setUpdatedUserData(prev => ({ ...prev, address: { ...prev.address, country: value } }));
   };
 
-  const handlePhoneChange = (
-    value: string,
-    country: any,
-    e: React.ChangeEvent,
-    formattedPhone: string,
-  ) => {
-    setUpdatedUserData(prev => ({...prev, phoneNumber: formattedPhone}));
+  const handlePhoneChange = (value: string, country: string, e: React.ChangeEvent, formattedPhone: string) => {
+    setUpdatedUserData(prev => ({ ...prev, phoneNumber: formattedPhone }));
   };
-
   const handleUpdateUser = async () => {
-    await updateCurrentUser(updatedUserData);
-    dispatch(updateUser(updatedUserData));
+    try {
+      const response = await dispatch(updateUser(updatedUserData)).unwrap();
+
+      setUpdatedUserData({
+        name: response.name || '',
+        lastName: response.lastName || '',
+        email: response.email || '',
+        phoneNumber: response.phoneNumber || '',
+        address: {
+          country: response.address?.country || '',
+          city: response.address?.city || '',
+          address: response.address?.address || '',
+        },
+      });
+
+      toast.success('User has been updated');
+    } catch (error) {
+      toast.error(`${error}`);
+      console.error(`Could not update user: ${error}`);
+    }
   };
 
   if (loading) {
@@ -97,7 +117,7 @@ const Profile: React.FC = () => {
 
           <Input
             className={styles.input}
-            type={InputTypes.EMAIL}
+            type={InputTypes._EMAIL}
             value={updatedUserData.email}
             placeholder='Enter your email'
             onChange={handleInputChange}
@@ -115,7 +135,7 @@ const Profile: React.FC = () => {
           <div className={styles.inputs}>
             <Input
               className={styles.input}
-              type={InputTypes.TEXT}
+              type={InputTypes._TEXT}
               value={updatedUserData.name}
               placeholder='Enter your first name'
               name='name'
@@ -125,7 +145,7 @@ const Profile: React.FC = () => {
 
             <Input
               className={styles.input}
-              type={InputTypes.TEXT}
+              type={InputTypes._TEXT}
               value={updatedUserData.lastName}
               placeholder='Enter your last name'
               onChange={handleInputChange}
@@ -160,7 +180,7 @@ const Profile: React.FC = () => {
 
           <Input
             className={styles.input}
-            type={InputTypes.TEXT}
+            type={InputTypes._TEXT}
             placeholder='Choose your city'
             name='city'
             value={updatedUserData.address.city}
@@ -169,7 +189,7 @@ const Profile: React.FC = () => {
 
           <Input
             className={styles.input}
-            type={InputTypes.TEXT}
+            type={InputTypes._TEXT}
             placeholder='Enter your address'
             name='address'
             onChange={handleInputChange}

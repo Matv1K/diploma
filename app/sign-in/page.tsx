@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 import styles from './page.module.scss';
@@ -10,16 +11,18 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { Button, Input } from '@/components';
 
-import { loginUser } from '@/services/users/userService';
+import { signIn } from '@/features/user/userSlice';
 
-import { TOAST_MESSAGES } from '../constants';
+import { TOAST_MESSAGES } from '@/app/constants';
 
 import { InputTypes, SignInDataI } from '@/types';
+import { AppDispatch } from '@/app/store';
 
 const SignIn: React.FC = () => {
-  const [inputData, setInputData] = useState<SignInDataI>({email: '', password: ''});
+  const [inputData, setInputData] = useState<SignInDataI>({ email: '', password: '' });
 
   const { push } = useRouter();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,13 +34,13 @@ const SignIn: React.FC = () => {
     e.preventDefault();
 
     try {
-      await loginUser({ email: inputData.email, password: inputData.password });
+      await dispatch(signIn(inputData)).unwrap();
 
       toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
       push('/');
     } catch (error) {
+      console.error(`Could not sign in: ${error}`);
       toast.error(TOAST_MESSAGES.SIGN_IN_ERROR);
-      console.error(error);
     }
   };
 
@@ -48,7 +51,7 @@ const SignIn: React.FC = () => {
       <form className={styles.form} onSubmit={handleSignIn}>
         <Input
           className={styles.input}
-          type={InputTypes.EMAIL}
+          type={InputTypes._EMAIL}
           placeholder='Enter your email'
           onChange={handleInputChange}
           name='email'
@@ -56,7 +59,7 @@ const SignIn: React.FC = () => {
 
         <Input
           className={styles.input}
-          type={InputTypes.PASSWORD}
+          type={InputTypes._PASSWORD}
           placeholder='Enter your password'
           title='Password must have at least 8 characters'
           onChange={handleInputChange}

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import {useStripe, PaymentElement} from '@stripe/react-stripe-js';
+import { useStripe, PaymentElement } from '@stripe/react-stripe-js';
 
 import styles from './index.module.scss';
 
@@ -19,17 +19,15 @@ import { ButtonTypes } from '@/types';
 const CheckoutForm: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [totalItems, setTotalItems] = useState<number>(0);
 
   const { push } = useRouter();
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      const { cartItems: items, length, totalPrice } = await getCartItems();
+      const { cartItems: items, totalPrice } = await getCartItems();
 
       setCartItems(items);
       setTotalPrice(totalPrice);
-      setTotalItems(length);
     };
 
     fetchCartItems();
@@ -42,16 +40,16 @@ const CheckoutForm: React.FC = () => {
 
     const totalPrice = getTotalPrice(cartItems);
 
-    await createOrder({
-      items: cartItems.map(({ name, color, price, instrumentId, amount }) => ({
-        name,
-        color,
-        price,
-        instrumentId,
-        amount,
-      })),
-      totalPrice,
-    });
+    const orderItems = cartItems.map(({ _id, name, color, price, instrumentId, amount }) => ({
+      _id,
+      name,
+      color,
+      price,
+      instrumentId,
+      amount,
+    }));
+
+    await createOrder({ items: orderItems, totalPrice });
 
     push('/');
   };
@@ -62,7 +60,7 @@ const CheckoutForm: React.FC = () => {
 
       <PaymentElement />
 
-      <Button disabled={!stripe} className={styles.checkoutButton} type={ButtonTypes.SUBMIT}>
+      <Button disabled={!stripe} className={styles.checkoutButton} type={ButtonTypes._SUBMIT}>
         Pay {totalPrice}$
       </Button>
     </form>

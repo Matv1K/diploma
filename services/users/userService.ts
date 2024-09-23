@@ -1,4 +1,4 @@
-import instance from "@/config/getAxiosInstance";
+import instance from '@/config/getAxiosInstance';
 
 export const registerUser = async ({
   name,
@@ -12,74 +12,63 @@ export const registerUser = async ({
   password: string;
 }) => {
   try {
-    const response = await instance.post("/users/register", {
+    const response = await instance.post('/users/register', {
       name,
       lastName,
       email,
       password,
     });
 
-    localStorage.setItem("token", response.data.token);
+    localStorage.setItem('token', response.data.token);
 
     return response.data;
   } catch (error) {
-    console.error("Something went wrong: ", error);
+    console.error('Something went wrong: ', error);
     throw error;
   }
 };
 
 export const loginUser = async ({ email, password }: any) => {
   try {
-    const response = await instance.post("/users/login", { email, password });
+    const response = await instance.post('/users/login', { email, password });
 
-    localStorage.setItem("token", response.data.token);
+    localStorage.setItem('token', response.data.token);
 
     return response.data;
   } catch (error) {
-    console.error("Something went wrong: ", error);
+    console.error('Something went wrong: ', error);
     throw error;
   }
 };
 
 export const getCurrentUser = async () => {
   try {
-    const response = await instance.get("/users/my-user");
+    const response = await instance.get('/users/my-user');
     return response.data;
   } catch (error) {
-    console.error("Something went wrong: ", error);
+    console.error('Failed to fetch current user:', error);
     throw error;
   }
 };
 
-export const updateCurrentUser = async ({
-  name,
-  lastName,
-  phoneNumber,
-  email,
-  address,
-}: any) => {
+export const updateCurrentUser = async (userData: any) => {
   try {
-    const response = await instance.patch("/users/my-user", {
-      name,
-      lastName,
-      email,
-      phoneNumber,
-      address,
-    });
+    const response = await instance.patch('/users/my-user', userData);
+    console.log('Response from server:', response.data);
     return response.data;
   } catch (error) {
-    console.error("Something went wrong: ", error);
+    console.error('Something went wrong: ', error);
     throw error;
   }
 };
 
 export const logOut = async () => {
   try {
-    const response = await instance.delete("/users/logout");
-    localStorage.removeItem("token");
+    const response = await instance.delete('/users/logout');
+    localStorage.removeItem('token');
     return response.data;
   } catch (error) {
-    console.error("Something went wrong: ", error);
+    console.error('Something went wrong: ', error);
     throw error;
   }
 };

@@ -8,7 +8,7 @@ interface SelectProps {
   options: string[];
   placeholder?: string;
   value?: string;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -28,7 +28,7 @@ const Select: React.FC<SelectProps> = ({
 
   const handleOptionClick = (option: string) => {
     onChange(option);
-    
+
     setIsOpen(false);
   };
 

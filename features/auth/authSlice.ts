@@ -1,21 +1,18 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { SignInDataI } from "@/types";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { loginUser as loginUserService } from "@/services/users/userService";
+import { loginUser as loginUserService } from '@/services/users/userService';
 
-// Define the loginUser async thunk
-export const loginUser = createAsyncThunk(
-  "auth/loginUser",
+import { SignInDataI } from '@/types';
+
+export const loginUser = createAsyncThunk('auth/loginUser',
   async ({ email, password }: SignInDataI, { rejectWithValue }) => {
     try {
-      const response = await loginUserService({ email, password }); // API call to login
-      return response.data; // Adjust based on your API response structure
+      const response = await loginUserService({ email, password });
+      return response.data;
     } catch (error: any) {
-      // Return a custom error message
-      return rejectWithValue(error.response.data || "Failed to log in");
+      return rejectWithValue(error.response.data || 'Failed to log in');
     }
-  }
-);
+  });
 
 interface AuthState {
   user: any;
@@ -30,17 +27,17 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
+    logout: state => {
       state.user = null;
       state.error = null;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, state => {
         state.loading = true;
         state.error = null;
       })

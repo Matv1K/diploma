@@ -75,3 +75,20 @@
     }
   }
 }
+
+.modalText {
+  color: $text-color;
+  font-size: 16px;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+
+  .modalButton {
+    height: 40px;
+  }
+}

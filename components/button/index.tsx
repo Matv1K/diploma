@@ -14,11 +14,11 @@ interface ButtonProps {
 }
 
 const getButtonOptionClass = (option: string) => {
-  if (option === 'outline') {
+  if (option === ButtonOptions._OUTILINE) {
     return styles.outline;
   }
 
-  if (option === 'google') {
+  if (option === ButtonOptions._GOOGLE) {
     return styles.google;
   }
 
@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   onClick,
   disabled,
-  option = ButtonOptions.FILLED,
+  option = ButtonOptions._FILLED,
 }) => (
   <button
     disabled={disabled}

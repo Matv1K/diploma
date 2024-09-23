@@ -1,10 +1,10 @@
-import express, { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
-import Order from "../../models/Order";
-import CartItem from "../../models/Cart-Item";
+import Order from '../../models/Order';
+import CartItem from '../../models/Cart-Item';
 
-import authMiddleware from "../../middlewares/authMiddleware";
+import authMiddleware from '../../middlewares/authMiddleware';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ interface AuthenticatedRequest extends Request {
   payload?: jwt.JwtPayload;
 }
 
-router.post("/", authMiddleware, async (req: Request, res: Response) => {
+router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { items, totalPrice } = req.body;
 
@@ -21,7 +21,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
     const newOrder = new Order({
       userId,
       items,
-      status: "in progress",
+      status: 'in progress',
       totalPrice,
     });
 
@@ -34,11 +34,11 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
     res.status(201).json(newOrder);
   } catch (error) {
     console.error(error);
-    res.status(500).json("Something went wrong");
+    res.status(500).json('Something went wrong');
   }
 });
 
-router.get("/", authMiddleware, async (req: Request, res: Response) => {
+router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = (req as AuthenticatedRequest).payload?.id;
 
@@ -50,7 +50,7 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
     res.status(201).json(orders);
   } catch (error) {
     console.error(error);
-    res.status(500).json("Something went wrong");
+    res.status(500).json('Something went wrong');
   }
 });
 

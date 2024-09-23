@@ -1,9 +1,9 @@
-import express, { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
-import authMiddleware from "../../middlewares/authMiddleware";
+import authMiddleware from '../../middlewares/authMiddleware';
 
-import Liked_Item from "../../models/Liked-Item";
+import Liked_Item from '../../models/Liked-Item';
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ interface AuthenticatedRequest extends Request {
   payload?: jwt.JwtPayload;
 }
 
-router.post("/", authMiddleware, async (req: Request, res: Response) => {
+router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { name, image, brandName, price, colors, section, instrumentId } =
       req.body;
@@ -38,7 +38,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/", authMiddleware, async (req: Request, res: Response) => {
+router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = (req as AuthenticatedRequest).payload?.id;
 
@@ -50,7 +50,7 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/:id", authMiddleware, async (req, res) => {
+router.get('/:id', authMiddleware, async (req, res) => {
   try {
     const { id: instrumentId } = req.params;
 
@@ -73,7 +73,7 @@ router.get("/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.delete("/:id", authMiddleware, async (req: Request, res: Response) => {
+router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { id: instrumentId } = req.params;
 

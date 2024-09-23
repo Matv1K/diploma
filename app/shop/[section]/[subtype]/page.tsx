@@ -11,6 +11,8 @@ import { removeSeparator } from '@/utils';
 
 import { getInstrumentBySubtype } from '@/services/instruments/instrumentService';
 
+import { InstrumentCardI } from '@/types';
+
 const brands = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
 const priceRanges = [
   { label: 'Under $500', min: 0, max: 500 },
@@ -20,7 +22,6 @@ const priceRanges = [
 
 const Subtype = () => {
   const [instruments, setInstruments] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const { subtype } = useParams();
 
@@ -32,9 +33,7 @@ const Subtype = () => {
         const data = await getInstrumentBySubtype(convertedSubtype);
         setInstruments(data);
       } catch (error) {
-        console.error('Error fetching instruments:', error);
-      } finally {
-        setLoading(false);
+        console.error(`Error fetching instruments: ${error}`);
       }
     };
 
@@ -107,7 +106,7 @@ const Subtype = () => {
           image,
           colors,
           brandName,
-        }: any) => (
+        }: InstrumentCardI) => (
           <InstrumentCard
             id={_id}
             key={_id}

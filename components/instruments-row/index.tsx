@@ -1,16 +1,18 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import styles from './index.module.scss';
 
 import Link from 'next/link';
-import { Button } from '../../components';
+import { Button, Modal } from '../../components';
 
 import { FiTrash2 } from 'react-icons/fi';
 
-import {removeCartItem, increaseAmount, decreaseAmount} from '@/services/cart/cartService';
+import { removeItem, increaseItemAmount, decreaseItemAmount } from '@/features/instruments/instrumentsSlice';
 
-import {removeItem, increaseItemAmount, decreaseItemAmount} from '@/features/instruments/instrumentsSlice';
+import { removeCartItem, increaseAmount, decreaseAmount } from '@/services/cart/cartService';
 
 interface InstrumentRowProps {
   instrumentId: string;
@@ -31,8 +33,11 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   color,
   price,
   amount,
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   image,
 }) => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleIncreaseCount = async () => {
@@ -53,6 +58,10 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
     }
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpened(true);
+  };
+
   const handleRemoveItem = async () => {
     try {
       await removeCartItem(cartItemId);
@@ -62,30 +71,52 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
     }
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpened(false);
+  };
+
   return (
-    <tr className={styles.row}>
-      <th className={`${styles.cell}`}>
-        <div className={styles.cellContainer}>
-          <div className={styles.image} />
+    <>
+      <div className={styles.row}>
+        <div className={`${styles.cell}`}>
+          <div className={styles.cellContainer}>
+            <div className={styles.image} />
 
-          <Link className={styles.link} href={`/shop/${section}/${instrumentId}`}>
-            {name} / <span className={styles.color}>{color}</span>
-          </Link>
+            <Link className={styles.link} href={`/shop/${section}/${instrumentId}`}>
+              {name} / <span className={styles.color}>{color}</span>
+            </Link>
+          </div>
         </div>
-      </th>
 
-      <th className={styles.cell}>
-        <Button className={styles.operator} onClick={handleDecreaseCount}>-</Button>
-        {amount}
-        <Button className={styles.operator} onClick={handleIncreaseCount}>+</Button>
-      </th>
+        <div className={styles.cell}>
+          <Button className={styles.operator} onClick={handleDecreaseCount}>-</Button>
+          {amount}
+          <Button className={styles.operator} onClick={handleIncreaseCount}>+</Button>
+        </div>
 
-      <th className={styles.cell}>{price} </th>
+        <div className={styles.cell}>{price} </div>
 
-      <th className={styles.cell} onClick={handleRemoveItem}>
-        <FiTrash2 className={styles.iconTrash} size={24} />
-      </th>
-    </tr>
+        <div className={styles.cell}>
+          <FiTrash2 onClick={handleOpenModal} className={styles.iconTrash} size={24} />
+        </div>
+      </div>
+
+      {isModalOpened && (
+        <Modal heading='Remove' setIsModalOpened={setIsModalOpened}>
+
+          <p className={styles.modalText}>Are you sure you want to remove the item from the cart?</p>
+
+          <div className={styles.modalButtons}>
+            <Button className={styles.modalButton} onClick={handleRemoveItem}>
+              <FiTrash2 className={styles.iconTrash} size={24} />
+            </Button>
+
+            <Button className={styles.modalButton} onClick={handleCloseModal}>Cancel</Button>
+          </div>
+        </Modal>
+      )}
+    </>
+
   );
 };
 

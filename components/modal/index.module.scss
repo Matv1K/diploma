@@ -22,6 +22,9 @@
 
     .modalClose {
       cursor: pointer;
+      position: absolute;
+      left: 5px;
+      top: 10px;
     }
 
     .modalHeading {
@@ -30,7 +33,7 @@
     }
 
     .modalContent {
-      margin-top: 20px;
+      margin-top: 10px;
     }
   }
 }
