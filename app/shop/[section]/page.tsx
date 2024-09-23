@@ -11,7 +11,7 @@ import { removeSeparator } from '@/utils';
 
 import { getInstrumentsBySection } from '@/services/instruments/instrumentService';
 
-import { InstrumentCardI } from '@/types';
+import { InstrumentI } from '@/types';
 
 const brands = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
 const priceRanges = [
@@ -21,7 +21,7 @@ const priceRanges = [
 ];
 
 const Section: React.FC = () => {
-  const [instruments, setInstruments] = useState<any>([]);
+  const [instruments, setInstruments] = useState<InstrumentI[]>([]);
 
   const { section: instrumentsSection } = useParams();
 
@@ -35,7 +35,7 @@ const Section: React.FC = () => {
     };
 
     fetchInstrumentsBySection();
-  }, [sectionName]);
+  }, [sectionName, instrumentsSection]);
 
   if (!instruments.length) {
     return (
@@ -101,7 +101,7 @@ const Section: React.FC = () => {
           image,
           colors,
           brandName,
-        }: InstrumentCardI) => (
+        }: InstrumentI) => (
           <InstrumentCard
             key={_id}
             id={_id}

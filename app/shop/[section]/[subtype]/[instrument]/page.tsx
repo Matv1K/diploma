@@ -15,17 +15,15 @@ import { FiHeart } from 'react-icons/fi';
 
 import { removeSeparator } from '@/utils';
 
-import { addItemToCart, addLikedItemToState, removeLikedItemFromState} from '@/features/instruments/instrumentsSlice';
-
+import { addItemToCart, addLikedItemToState, removeLikedItemFromState } from '@/features/instruments/instrumentsSlice';
 import { addComment, setComments } from '@/features/comments/commentsSlice';
 
 import { getInstrument } from '@/services/instruments/instrumentService';
 import { addCartItem } from '@/services/cart/cartService';
-import { addLikedItem, getLikedItem, deleteLikedItem} from '@/services/liked/likedService';
-import { createComment, getComments} from '@/services/comments/commentsService';
+import { addLikedItem, getLikedItem, deleteLikedItem } from '@/services/liked/likedService';
+import { createComment, getComments } from '@/services/comments/commentsService';
 
-import { ButtonTypes, InstrumentI } from '@/types';
-
+import { ButtonTypes, CommentI, InstrumentI } from '@/types';
 import { RootState } from '@/app/store';
 
 const Instrument: React.FC = () => {
@@ -38,7 +36,7 @@ const Instrument: React.FC = () => {
     salePrice: '',
     _id: '',
     description: '',
-    characteristics: [],
+    characteristics: {},
     instrumentType: '',
     price: '',
     image: '',
@@ -50,9 +48,9 @@ const Instrument: React.FC = () => {
   const [rating, setRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const dispatch = useDispatch();
   const { instrument: instrumentId } = useParams();
   const { push } = useRouter();
-  const dispatch = useDispatch();
 
   const comments = useSelector((state: RootState) => state.comments.comments);
 
@@ -94,7 +92,7 @@ const Instrument: React.FC = () => {
       toast.success(`${instrument.name} has been added to the cart!`);
       push('/');
     } catch (error) {
-      toast.error(`Failed to add ${instrument.name} to the cart.`);
+      toast.error(`Failed to add ${instrument.name} to the cart: ${error}`);
     }
   };
 
@@ -107,6 +105,7 @@ const Instrument: React.FC = () => {
       if (isLiked) {
         await deleteLikedItem(instrumentId);
         dispatch(removeLikedItemFromState(instrumentId));
+
         setIsLiked(false);
         toast.success(`${instrument.name} has been unliked.`);
       } else {
@@ -121,13 +120,13 @@ const Instrument: React.FC = () => {
         };
 
         await addLikedItem(likedData);
-        
         dispatch(addLikedItemToState(likedData));
+
         setIsLiked(true);
         toast.success(`${instrument.name} has been liked!`);
       }
     } catch (error) {
-      toast.error(`Failed to update like status for ${instrument.name}.`);
+      toast.error(`Failed to update like status for ${instrument.name}: ${error}`);
     }
   };
 
@@ -278,7 +277,7 @@ const Instrument: React.FC = () => {
 
         <div className={styles.commentsList}>
           {comments.map(
-            ({ _id, createdAt, description, userName, rating }: any) => (
+            ({ _id, createdAt, description, userName, rating }: CommentI) => (
               <Comment
                 key={_id}
                 description={description}

@@ -11,13 +11,11 @@ import { FiChevronRight } from 'react-icons/fi';
 
 import { trimInstrumentName } from '@/utils';
 
+import { closeCatalog } from '@/features/catalog/catalogSlice';
+
 import { CATALOG_LINKS } from '@/app/constants';
 
-interface CatalogProps {
-  closeCatalog: any;
-}
-
-const Catalog: React.FC<CatalogProps> = ({ closeCatalog }) => {
+const Catalog: React.FC = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
 
   const dispatch = useDispatch();

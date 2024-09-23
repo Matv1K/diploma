@@ -1,14 +1,14 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import cors from "cors";
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
 
-import instrumentRoutes from "./routes/instruments/instrumentRoutes";
-import userRoutes from "./routes/users/userRoutes";
-import cartRoutes from "./routes/cart/cartRoutes";
-import likedRoutes from "./routes/liked/likedRoutes";
-import ordersRoutes from "./routes/orders/ordersRoutes";
-import commentsRoutes from "./routes/comments/commentsRoutes";
+import instrumentRoutes from './routes/instruments/instrumentRoutes';
+import userRoutes from './routes/users/userRoutes';
+import cartRoutes from './routes/cart/cartRoutes';
+import likedRoutes from './routes/liked/likedRoutes';
+import ordersRoutes from './routes/orders/ordersRoutes';
+import commentsRoutes from './routes/comments/commentsRoutes';
 
 dotenv.config();
 
@@ -21,16 +21,16 @@ server.use(cors());
 // DB CONNECTION
 mongoose
   .connect(`${process.env.MONGO_URI}/${process.env.DB_NAME}`)
-  .then(() => console.log("MongoDB is connected"))
-  .catch(() => console.log("Could not set the connection with MongoDB"));
+  .then(() => console.log('MongoDB is connected'))
+  .catch(() => console.log('Could not set the connection with MongoDB'));
 
 // ROUTES
-server.use("/instruments", instrumentRoutes);
-server.use("/users", userRoutes);
-server.use("/cart", cartRoutes);
-server.use("/liked", likedRoutes);
-server.use("/orders", ordersRoutes);
-server.use("/comments", commentsRoutes);
+server.use('/instruments', instrumentRoutes);
+server.use('/users', userRoutes);
+server.use('/cart', cartRoutes);
+server.use('/liked', likedRoutes);
+server.use('/orders', ordersRoutes);
+server.use('/comments', commentsRoutes);
 
 const port = process.env.PORT || 5000;
 

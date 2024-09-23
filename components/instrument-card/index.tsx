@@ -93,7 +93,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         setIsLiked(true);
       }
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error(`Something went wrong: ${error}`);
     }
   };
 
@@ -116,7 +116,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       toast.success(`${name} has been added to the cart!`);
       push('/');
     } catch (error) {
-      toast.error(`Failed to add ${name} to the cart.`);
+      toast.error(`Failed to add ${name} to the cart: ${error}`);
     }
   };
 

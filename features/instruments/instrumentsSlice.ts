@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { getCartItems } from "@/services/cart/cartService";
-import { addLikedItem, deleteLikedItem } from "@/services/liked/likedService";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+
+import { getCartItems } from '@/services/cart/cartService';
+import { addLikedItem, deleteLikedItem } from '@/services/liked/likedService';
 
 interface InstrumentState {
   cartItems: any[];
@@ -16,44 +17,36 @@ const initialState: InstrumentState = {
   error: null,
 };
 
-export const fetchCartItems = createAsyncThunk(
-  "instruments/fetchCartItems",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getCartItems();
-      return Array.isArray(response.cartItems) ? response.cartItems : [];
-    } catch (error) {
-      return rejectWithValue("Error fetching cart items");
-    }
+export const fetchCartItems = createAsyncThunk('instruments/fetchCartItems', async (_, { rejectWithValue }) => {
+  try {
+    const response = await getCartItems();
+    return Array.isArray(response.cartItems) ? response.cartItems : [];
+  } catch (error) {
+    return rejectWithValue(`Error fetching cart items: ${error}`);
   }
-);
+});
 
-export const likeItem = createAsyncThunk(
-  "instruments/likeItem",
-  async (likedItem: any, { rejectWithValue }) => {
-    try {
-      const response = await addLikedItem(likedItem);
-      return response;
-    } catch (error) {
-      return rejectWithValue("Error liking item");
-    }
+export const likeItem = createAsyncThunk('instruments/likeItem', async (likedItem: any, { rejectWithValue }) => {
+  try {
+    const response = await addLikedItem(likedItem);
+    return response;
+  } catch (error) {
+    return rejectWithValue(`Error liking item: ${error}`);
   }
-);
+});
 
-export const unlikeItem = createAsyncThunk(
-  "instruments/unlikeItem",
+export const unlikeItem = createAsyncThunk('instruments/unlikeItem',
   async (id: string | string[], { rejectWithValue }) => {
     try {
       await deleteLikedItem(id);
       return id;
     } catch (error) {
-      return rejectWithValue("Error unliking item");
+      return rejectWithValue(`Error unliking item: ${error}`);
     }
-  }
-);
+  });
 
 const instrumentsSlice = createSlice({
-  name: "instruments",
+  name: 'instruments',
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<any>) => {
@@ -72,14 +65,14 @@ const instrumentsSlice = createSlice({
     },
 
     increaseItemAmount: (state, action: PayloadAction<string>) => {
-      const item = state.cartItems.find((item) => item._id === action.payload);
+      const item = state.cartItems.find(item => item._id === action.payload);
       if (item) {
         item.amount += 1;
       }
     },
 
     decreaseItemAmount: (state, action: PayloadAction<string>) => {
-      const item = state.cartItems.find((item) => item._id === action.payload);
+      const item = state.cartItems.find(item => item._id === action.payload);
       if (item && item.amount > 1) {
         item.amount -= 1;
       }
@@ -87,7 +80,7 @@ const instrumentsSlice = createSlice({
 
     removeItem: (state, action: PayloadAction<string>) => {
       state.cartItems = state.cartItems.filter(
-        (item) => item._id !== action.payload
+        item => item._id !== action.payload,
       );
     },
 
@@ -97,16 +90,16 @@ const instrumentsSlice = createSlice({
 
     removeLikedItemFromState: (
       state,
-      action: PayloadAction<string | string[]>
+      action: PayloadAction<string | string[]>,
     ) => {
       state.likedItems = state.likedItems.filter(
-        (item) => item.instrumentId !== action.payload
+        item => item.instrumentId !== action.payload,
       );
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchCartItems.pending, (state) => {
+      .addCase(fetchCartItems.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -123,7 +116,7 @@ const instrumentsSlice = createSlice({
       })
       .addCase(unlikeItem.fulfilled, (state, action) => {
         state.likedItems = state.likedItems.filter(
-          (item) => item.instrumentId !== action.payload
+          item => item.instrumentId !== action.payload,
         );
       });
   },

@@ -1,36 +1,31 @@
 //TODO
 
-2. ADD HUSKY
-3. ADD CI/CD PIPELINE
-4. ADD DOCKER
-5. ADD FAVICON
-6. Change LOGO (musify)
-8. ADD LOADERS/SKELETONS TO CAROUSELS
-9. Integrate digital ocean for staging and production
-10. Add error boundary component
-11. Store images inside cloud storage
-12. Authorization with Google
-13. Add three.js library
-14. ADD ENUM TO SECTION FIELD on mongoose model
-15. Add infinite scroll
-16. Add customize page
-17. Remove events page
-18. Retool admin dashboard
-19. Add accessibility
-20. Add mobile version
-21. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-22. MAKE PRIVAT ROUTES
-23. Optimize everything
-24. Refactor codebas
-25. Add input errors
-26. Add strong password
-27. ADD FILTERING LOGIC
-28. ADD RESET PASSWORD LOGIC
-29. Provide users with toasts
-30. If the item is already in the cart show the toast informing the user about that
-31. Immediately get value when log in and register
-32. Add modal before deleting the item from the cart
-33. Add modal before checkout
+1. ADD HUSKY
+2. ADD CI/CD PIPELINE
+3. ADD DOCKER
+4. ADD FAVICON
+5. Change LOGO (musify)
+6. ADD LOADERS/SKELETONS TO CAROUSELS
+7. Integrate digital ocean for staging and production
+8. Add error boundary component
+9. Store images inside cloud storage
+10. Authorization with Google
+11. Add three.js library
+12. Add infinite scroll
+13. Add customize page
+14. Retool admin dashboard
+15. Add accessibility
+16. Add mobile version
+17. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
+18. MAKE PRIVAT ROUTES
+19. Add input errors
+20. Add strong password and email validation
+21. ADD FILTERING LOGIC
+22. ADD RESET PASSWORD LOGIC
+23. If the item is already in the cart show the toast informing the user about that
+24. Add modal before checkout
+25. Fix bug with user info in dropdown
+26. Add redis
 
 //INVESTIGATE
 
@@ -50,3 +45,7 @@
 14. What is async thunk
 15. extraReducers
 16. Stylelint. Should I add it?
+17. Next static chunks
+18. Vercel deployment
+19. CDN what is that
+20. ORM what is that

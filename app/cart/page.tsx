@@ -10,7 +10,7 @@ import { InstrumentRow, Button } from '@/components';
 
 import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
 
-import { CartItemIdI } from '@/types';
+import { CartItemWithIdI } from '@/types';
 import { RootState, AppDispatch } from '@/app/store';
 
 const Cart: React.FC = () => {
@@ -18,7 +18,8 @@ const Cart: React.FC = () => {
 
   const cartItems = useSelector((state: RootState) => state.instruments.cartItems) || [];
 
-  const totalPrice = Array.isArray(cartItems) ? cartItems.reduce((total, item) => total + Number(item.price.slice(0, -1)) * item.amount, 0): 0;
+  const totalPrice = Array.isArray(cartItems) ?
+    cartItems.reduce((total, item) => total + Number(item.price.slice(0, -1)) * item.amount, 0): 0;
   const totalItems = Array.isArray(cartItems) ? cartItems.length : 0;
 
   useEffect(() => {
@@ -42,34 +43,30 @@ const Cart: React.FC = () => {
       <h2>Your Cart</h2>
 
       <div className={styles.cartLayout}>
-        <table className={styles.table}>
-          <tbody>
-            {cartItems?.map(
-              ({
-                _id,
-                color,
-                image,
-                price,
-                name,
-                amount,
-                instrumentId,
-                section,
-              }: CartItemIdI) => (
-                <InstrumentRow
-                  cartItemId={_id}
-                  key={_id}
-                  color={color}
-                  price={price}
-                  name={name}
-                  amount={amount}
-                  section={section}
-                  instrumentId={instrumentId}
-                  image={image}
-                />
-              ),
-            )}
-          </tbody>
-        </table>
+        <div className={styles.table}>
+          {cartItems?.map(({
+            _id,
+            color,
+            image,
+            price,
+            name,
+            amount,
+            instrumentId,
+            section,
+          }: CartItemWithIdI) => (
+            <InstrumentRow
+              cartItemId={_id}
+              key={_id}
+              color={color}
+              price={price}
+              name={name}
+              amount={amount}
+              section={section}
+              instrumentId={instrumentId}
+              image={image}
+            />
+          ))}
+        </div>
 
         <div className={styles.checkoutCard}>
           <div className={styles.checkoutInfo}>

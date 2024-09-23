@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-const useMediaQuery = (query: any) => {
+const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);
 
   useEffect(() => {
@@ -20,5 +20,3 @@ const useMediaQuery = (query: any) => {
 
 export default useMediaQuery;
 
-// USAGE
-// const isMobile = useMediaQuery("(max-width: 768px)");

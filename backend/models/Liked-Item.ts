@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const likedItemSchema = new mongoose.Schema(
   {
@@ -12,7 +12,7 @@ const likedItemSchema = new mongoose.Schema(
     instrumentId: { type: String, required: true },
     section: { type: String, required: true },
   },
-  { timestamps: true, suppressReservedKeysWarning: true }
+  { timestamps: true, suppressReservedKeysWarning: true },
 );
 
-export default mongoose.model("Liked_Item", likedItemSchema);
+export default mongoose.model('Liked_Item', likedItemSchema);

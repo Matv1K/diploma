@@ -11,7 +11,7 @@ import ReactCarousel from 'react-multi-carousel';
 import { InstrumentI } from '@/types';
 
 interface CarouselProps {
-  items: InstrumentI[];
+  items: (InstrumentI)[] | {name: string}[];
   isInstrumentsCarousel?: boolean;
 }
 
@@ -40,11 +40,7 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
   const { push } = useRouter();
 
-  const handleItemNavigation = (
-    section: string,
-    name: string,
-    instrumentType: string,
-  ) => {
+  const handleItemNavigation = ( section: string, name: string, instrumentType: string) => {
     if (isInstrumentsCarousel) {
       push(`/shop/${section}/${instrumentType}/${name}`);
     } else {
@@ -67,15 +63,33 @@ const Carousel: React.FC<CarouselProps> = ({
       removeArrowOnDeviceType={['tablet', 'mobile']}
       itemClass={styles.carouselItemPadding}
     >
-      {items.map(({ name, _id, section, instrumentType }) => (
-        <div
-          onClick={() => handleItemNavigation(section,isInstrumentsCarousel ? _id : name, instrumentType)}
-          key={name}
-          className={styles.carouselItem}
-        >
-          <h3>{name}</h3>
-        </div>
-      ))}
+      {items.map(item => {
+        const isInstrument = (item as InstrumentI)._id !== undefined;
+
+        if (isInstrument) {
+          const { _id, name, section, instrumentType } = item as InstrumentI;
+          return (
+            <div
+              onClick={() => handleItemNavigation(section, _id, instrumentType)}
+              key={_id}
+              className={styles.carouselItem}
+            >
+              <h3>{name}</h3>
+            </div>
+          );
+        }
+        const { name } = item as { name: string };
+        return (
+          <div
+            onClick={() => handleItemNavigation('', name, '')}
+            key={name}
+            className={styles.carouselItem}
+          >
+            <h3>{name}</h3>
+          </div>
+        );
+
+      })}
     </ReactCarousel>
   );
 };

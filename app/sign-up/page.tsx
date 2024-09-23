@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 import 'react-toastify/dist/ReactToastify.css';
-
 import styles from './page.module.scss';
 
 import { toast } from 'react-toastify';
@@ -12,11 +12,12 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { Input, Button } from '@/components';
 
-import { registerUser } from '@/services/users/userService';
+import { signUp } from '@/features/user/userSlice';
 
 import { TOAST_MESSAGES } from '../constants';
 
 import { ButtonOptions, InputTypes, SignUpDataI } from '@/types';
+import { AppDispatch } from '@/app/store';
 
 const SignUp: React.FC = () => {
   const [inputData, setInputData] = useState<SignUpDataI>({
@@ -26,35 +27,29 @@ const SignUp: React.FC = () => {
     password: '',
   });
 
+  const dispatch: AppDispatch = useDispatch();
   const { push } = useRouter();
 
   const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     try {
-      await registerUser({
-        name: inputData.name,
-        lastName: inputData.lastName,
-        password: inputData.password,
-        email: inputData.email,
-      });
+      await dispatch(signUp(inputData)).unwrap();
 
       toast.success(TOAST_MESSAGES.SIGN_UP_SUCCESS);
       push('/');
     } catch (error) {
+      console.error(`Could not sign in: ${error}`);
       toast.error(TOAST_MESSAGES.SIGN_UP_ERROR);
-      console.error(error);
     }
   };
 
-  const handleGoogleSignUp = () => {
-    console.log('google');
-  };
+  const handleGoogleSignUp = () => {};
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setInputData((prev: SignUpDataI) => ({...prev, [name]: value}));
+    setInputData((prev: SignUpDataI) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -64,7 +59,7 @@ const SignUp: React.FC = () => {
       <form className={styles.form}>
         <Input
           className={styles.input}
-          type={InputTypes.TEXT}
+          type={InputTypes._TEXT}
           placeholder='Enter your name'
           onChange={handleInputChange}
           name='name'
@@ -73,7 +68,7 @@ const SignUp: React.FC = () => {
 
         <Input
           className={styles.input}
-          type={InputTypes.TEXT}
+          type={InputTypes._TEXT}
           placeholder='Enter your last name'
           onChange={handleInputChange}
           name='lastName'
@@ -82,7 +77,7 @@ const SignUp: React.FC = () => {
 
         <Input
           className={styles.input}
-          type={InputTypes.EMAIL}
+          type={InputTypes._EMAIL}
           placeholder='Enter your email'
           onChange={handleInputChange}
           name='email'
@@ -92,7 +87,7 @@ const SignUp: React.FC = () => {
 
         <Input
           className={styles.input}
-          type={InputTypes.PASSWORD}
+          type={InputTypes._PASSWORD}
           placeholder='Enter your password'
           title='Password must have at least 8 characters'
           onChange={handleInputChange}
@@ -104,7 +99,7 @@ const SignUp: React.FC = () => {
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
             <Button onClick={handleSignUp}>Sign up</Button>
-            <Button option={ButtonOptions.GOOGLE} onClick={handleGoogleSignUp}>Sign up with Google</Button>
+            <Button option={ButtonOptions._GOOGLE} onClick={handleGoogleSignUp}>Sign up with Google</Button>
           </div>
 
           <span>

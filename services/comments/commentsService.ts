@@ -1,10 +1,10 @@
-import instance from "@/config/getAxiosInstance";
+import instance from '@/config/getAxiosInstance';
 
 export const createComment = async ({
   description,
   rating,
   instrumentId,
-}: any) => {
+}: { description: string, rating: number, instrumentId: string | string[] }) => {
   try {
     const response = await instance.post(`/comments/${instrumentId}`, {
       description,
@@ -12,7 +12,7 @@ export const createComment = async ({
     });
     return response.data;
   } catch (error) {
-    console.error("Could not create comment", error);
+    console.error('Could not create comment', error);
     throw error;
   }
 };
@@ -22,7 +22,7 @@ export const getComments = async (instrumentId: string | string[]) => {
     const response = await instance.get(`/comments/${instrumentId}`);
     return response.data;
   } catch (error) {
-    console.error("Could not create comment", error);
+    console.error('Could not create comment', error);
     throw error;
   }
 };

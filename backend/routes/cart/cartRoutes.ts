@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
-import authMiddleware from "../../middlewares/authMiddleware";
+import authMiddleware from '../../middlewares/authMiddleware';
 
-import Cart_Item from "../../models/Cart-Item";
+import Cart_Item from '../../models/Cart-Item';
 
-import getTotalPrice from "../../utils/getTotalPrice";
+import getTotalPrice from '../../utils/getTotalPrice';
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ interface AuthenticatedRequest extends Request {
   payload?: jwt.JwtPayload;
 }
 
-router.post("/", authMiddleware, async (req: Request, res: Response) => {
+router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { name, image, brandName, price, color, section, instrumentId } =
       req.body;
@@ -24,7 +24,7 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
     });
 
     if (existingItem && existingItem.color === color) {
-      return res.status(200).send("Instrument is already in the cart");
+      return res.status(200).send('Instrument is already in the cart');
     }
 
     const userId = (req as AuthenticatedRequest).payload?.id;
@@ -49,13 +49,13 @@ router.post("/", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/", authMiddleware, async (req: Request, res: Response) => {
+router.get('/', authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = (req as AuthenticatedRequest).payload?.id;
 
     const cartItems = await Cart_Item.find({ userId }).lean();
 
-    const formattedCartItems = cartItems.map((item) => ({
+    const formattedCartItems = cartItems.map(item => ({
       ...item,
       _id: item._id.toString(),
     }));
@@ -68,7 +68,7 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/amount", authMiddleware, async (req: Request, res: Response) => {
+router.get('/amount', authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = (req as AuthenticatedRequest).payload?.id;
 
@@ -82,7 +82,7 @@ router.get("/amount", authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:id", authMiddleware, async (req: Request, res: Response) => {
+router.delete('/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -95,7 +95,7 @@ router.delete("/:id", authMiddleware, async (req: Request, res: Response) => {
 });
 
 router.post(
-  "/increase/:id",
+  '/increase/:id',
   authMiddleware,
   async (req: Request, res: Response) => {
     try {
@@ -103,15 +103,15 @@ router.post(
 
       await Cart_Item.updateOne({ _id: id }, { $inc: { amount: 1 } });
 
-      res.status(200).json("Amount updated successfully");
+      res.status(200).json('Amount updated successfully');
     } catch (error) {
       res.status(500).json(error);
     }
-  }
+  },
 );
 
 router.post(
-  "/decrease/:id",
+  '/decrease/:id',
   authMiddleware,
   async (req: Request, res: Response) => {
     try {
@@ -119,11 +119,11 @@ router.post(
 
       await Cart_Item.updateOne({ _id: id }, { $inc: { amount: -1 } });
 
-      res.status(200).json("Amount updated successfully");
+      res.status(200).json('Amount updated successfully');
     } catch (error) {
       res.status(500).json(error);
     }
-  }
+  },
 );
 
 export default router;

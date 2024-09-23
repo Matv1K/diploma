@@ -13,31 +13,34 @@ import { Button, Catalog, Input, Dropdown, Loader } from '../../components';
 import { Logo } from '@/public/icons';
 import { FiShoppingCart, FiHeart, FiSettings, FiSearch, FiX } from 'react-icons/fi';
 
-import useCurrentUser from '@/hooks/useCurrentUser';
-
 import { closeCatalog, openCatalog } from '@/features/catalog/catalogSlice';
 import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
+import { fetchCurrentUser } from '@/features/user/userSlice';
+
 import { searchInstruments } from '@/services/instruments/instrumentService';
 
-import { ButtonOptions, InputTypes } from '@/types';
+import { ButtonOptions, InputTypes, InstrumentI } from '@/types';
 import { RootState, AppDispatch } from '@/app/store';
 
 const Header: React.FC = () => {
   const [query, setQuery] = React.useState('');
-  const [filteredItems, setFilteredItems] = React.useState<any[]>([]);
+  const [filteredItems, setFilteredItems] = React.useState<InstrumentI[]>([]);
 
-  const { user, loading } = useCurrentUser();
+  const { user, loading } = useSelector((state: RootState) => state.user);
 
   const dispatch: AppDispatch = useDispatch();
   const pathname = usePathname();
 
   const cartItems = useSelector((state: RootState) => state.instruments.cartItems);
-  const cartLoading = useSelector((state: RootState) => state.instruments.loading);
 
   useEffect(() => {
-    if (!user) return;
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
 
-    dispatch(fetchCartItems());
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchCartItems());
+    }
   }, [dispatch, user]);
 
   const isCatalogOpened = useSelector((state: RootState) => state.catalog.isCatalogOpen);
@@ -64,7 +67,7 @@ const Header: React.FC = () => {
       const result = await searchInstruments(e.target.value);
       setFilteredItems(result);
     } catch (error) {
-      console.error('Search failed', error);
+      console.error(`Search failed ${error}`);
     }
   };
 
@@ -95,7 +98,7 @@ const Header: React.FC = () => {
             <Input
               className={styles.search}
               placeholder='Find on Musify'
-              type={InputTypes.TEXT}
+              type={InputTypes._TEXT}
               icon={<FiSearch size={24} />}
               onChange={handleSearch}
             />
@@ -125,44 +128,42 @@ const Header: React.FC = () => {
           </Link>
         </ul>
 
-        <div>
-          {user && (
-            <div className={styles.icons}>
-              <div className={styles.profileContainer}>
-                <Link href='/profile' className={`${styles.icon} ${getActiveIcon('/profile')}`}>
-                  <FiSettings size={24} />
-                </Link>
+        {user && (
+          <div className={styles.icons}>
+            <div className={styles.profileContainer}>
+              <Link href='/profile' className={`${styles.icon} ${getActiveIcon('/profile')}`}>
+                <FiSettings size={24} />
+              </Link>
 
-                <Dropdown className={styles.dropdown} />
-              </div>
-
-              <div>
-                <Link href='/liked' className={`${styles.icon} ${getActiveIcon('/liked')}`}>
-                  <FiHeart size={24} />
-                </Link>
-              </div>
-
-              <div className={styles.cartContainer}>
-                <span className={styles.cartAmount}>{cartLoading ? '...' : cartItems.length}</span>
-
-                <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
-                  <FiShoppingCart size={24} />
-                </Link>
-              </div>
+              <Dropdown className={styles.dropdown} />
             </div>
-          )}
 
-          {!user && !loading && (
-            <Link href='/sign-in'>
-              <Button option={ButtonOptions.OUTILINE}>Sign in</Button>
-            </Link>
-          )}
+            <div>
+              <Link href='/liked' className={`${styles.icon} ${getActiveIcon('/liked')}`}>
+                <FiHeart size={24} />
+              </Link>
+            </div>
 
-          {loading && <Loader />}
-        </div>
+            <div className={styles.cartContainer}>
+              <span className={styles.cartAmount}>{cartItems.length}</span>
+
+              <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
+                <FiShoppingCart size={24} />
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {!user && !loading && (
+          <Link href='/sign-in'>
+            <Button option={ButtonOptions._OUTILINE}>Sign in</Button>
+          </Link>
+        )}
+
+        {loading && <Loader />}
       </header>
 
-      {isCatalogOpened && <Catalog closeCatalog={closeCatalog} />}
+      {isCatalogOpened && <Catalog />}
     </>
   );
 };

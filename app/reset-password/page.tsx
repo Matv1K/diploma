@@ -9,9 +9,7 @@ import { Input, Button } from '@/components';
 import { InputTypes } from '@/types';
 
 const ResetPassword = () => {
-  const handleChangePassword = () => {
-    console.log('password has been changed');
-  };
+  const handleChangePassword = () => {};
 
   return (
     <main>
@@ -20,13 +18,13 @@ const ResetPassword = () => {
       <form className={styles.form}>
         <Input
           className={styles.input}
-          type={InputTypes.PASSWORD}
+          type={InputTypes._PASSWORD}
           placeholder='Enter new password'
         />
 
         <Input
           className={styles.input}
-          type={InputTypes.PASSWORD}
+          type={InputTypes._PASSWORD}
           placeholder='Confirm new password'
         />
 

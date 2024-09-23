@@ -12,7 +12,7 @@ interface ModalProps {
   buttonName?: string;
   onButtonClick?: () => void;
   className?: string;
-  setIsModalOpened?: (isOpen: boolean) => void;
+  setIsModalOpened?: (_isOpen: boolean) => void;
   children: React.ReactNode;
 }
 
@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({
       <div className={`${styles.modal} ${className}`}>
         <FiX size={24} onClick={handleCloseModal} className={styles.modalClose} />
 
-        <h2 className={styles.modalHeading}>{heading}</h2>
+        {heading && <h2 className={styles.modalHeading}>{heading}</h2>}
 
         <div className={styles.modalContent}>{children}</div>
       </div>

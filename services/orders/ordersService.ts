@@ -1,23 +1,28 @@
-import instance from "@/config/getAxiosInstance";
+import instance from '@/config/getAxiosInstance';
 
-import { OrderItemI } from "../../types";
+import { OrderItemI } from '../../types';
 
-export const createOrder = async (items: OrderItemI[]) => {
+interface OrderPayload {
+  items: OrderItemI[],
+  totalPrice: number,
+}
+
+export const createOrder = async (orderPayload: OrderPayload) => {
   try {
-    const response = await instance.post("/orders", items);
+    const response = await instance.post('/orders', orderPayload);
     return response.data;
   } catch (error) {
-    console.error("Error creating new order: ", error);
+    console.error('Error creating new order: ', error);
     throw error;
   }
 };
 
 export const getOrders = async () => {
   try {
-    const response = await instance.get("/orders");
+    const response = await instance.get('/orders');
     return response.data;
   } catch (error) {
-    console.error("Error creating new order: ", error);
+    console.error('Error creating new order: ', error);
     throw error;
   }
 };

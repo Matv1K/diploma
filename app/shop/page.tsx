@@ -143,18 +143,18 @@ const Shop: React.FC = () => {
           <div className={styles.modalData}>
             <Input
               className={styles.modalInput}
-              type={InputTypes.TEXT}
+              type={InputTypes._TEXT}
               placeholder='Write your message'
             />
 
-            <Button option={ButtonOptions.OUTILINE}>
+            <Button option={ButtonOptions._OUTILINE}>
               <FiSend size={24} />
             </Button>
           </div>
         </Modal>
       ) : (
         <Button
-          option={ButtonOptions.OUTILINE}
+          option={ButtonOptions._OUTILINE}
           onClick={handleOpenModal}
           className={styles.buttonSupportModal}
         >

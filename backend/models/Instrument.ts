@@ -1,6 +1,4 @@
-import mongoose from "mongoose";
-
-// ADD ENUM TO SECTION FIELD LATER
+import mongoose from 'mongoose';
 
 const instrumentSchema = new mongoose.Schema(
   {
@@ -11,7 +9,7 @@ const instrumentSchema = new mongoose.Schema(
     isNew: { type: Boolean, default: false },
     section: { type: String, required: true },
     brandName: { type: String, required: true },
-    salePrice: { type: String, default: "" },
+    salePrice: { type: String, default: '' },
     onSale: { type: Boolean, default: false },
     bought: { type: Number, default: 0 },
     colors: { type: Array, required: true },
@@ -22,7 +20,7 @@ const instrumentSchema = new mongoose.Schema(
       default: {},
     },
   },
-  { timestamps: true, suppressReservedKeysWarning: true }
+  { timestamps: true, suppressReservedKeysWarning: true },
 );
 
-export default mongoose.model("Instrument", instrumentSchema);
+export default mongoose.model('Instrument', instrumentSchema);
