@@ -15,7 +15,7 @@ import { signIn } from '@/features/user/userSlice';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { InputTypes, SignInDataI } from '@/types';
+import { InputTypes, SignInDataI, ButtonOptions } from '@/types';
 import { AppDispatch } from '@/app/store';
 
 const SignIn: React.FC = () => {
@@ -38,17 +38,23 @@ const SignIn: React.FC = () => {
 
       toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
       push('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error(`Could not sign in: ${error}`);
-      toast.error(TOAST_MESSAGES.SIGN_IN_ERROR);
+      toast.error(error);
     }
+  };
+
+  const handleGoogleSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    console.log('Google sign in logic here');
   };
 
   return (
     <main>
       <h2>Sign in</h2>
 
-      <form className={styles.form} onSubmit={handleSignIn}>
+      <form className={styles.form}>
         <Input
           className={styles.input}
           type={InputTypes._EMAIL}
@@ -67,7 +73,10 @@ const SignIn: React.FC = () => {
         />
 
         <div className={styles.formInfo}>
-          <Button>Sign in</Button>
+          <div className={styles.buttons}>
+            <Button onClick={handleSignIn}>Sign in</Button>
+            <Button option={ButtonOptions._GOOGLE} onClick={handleGoogleSignIn}>Sign up with Google</Button>
+          </div>
 
           <span>
             Don&apos;t have an account?

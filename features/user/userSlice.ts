@@ -25,20 +25,33 @@ export const fetchCurrentUser = createAsyncThunk('user/fetchCurrentUser', async 
   }
 });
 
-export const signUp = createAsyncThunk('user/signUp', async (userData: SignUpDataI, { rejectWithValue }) => {
-  try {
-    const response = await registerUser(userData);
-    return response;
-  } catch (error) {
-    return rejectWithValue(`Failed to sign up: ${error}`);
-  }
-});
+export const signUp = createAsyncThunk(
+  'user/signUp',
+  async (userData: SignUpDataI, { rejectWithValue }) => {
+    try {
+      const response = await registerUser(userData);
+      return response;
+    } catch (error: any) {
+
+      if (error.message) {
+        return rejectWithValue(error.message);
+      }
+
+      return rejectWithValue('An unknown error occurred during sign-up');
+    }
+  },
+);
 
 export const signIn = createAsyncThunk('user/signIn', async (userData: SignInDataI, { rejectWithValue }) => {
   try {
     const response = await loginUser(userData);
     return response;
-  } catch (error) {
+  } catch (error: any) {
+
+    if (error.message) {
+      return rejectWithValue(error.message);
+    }
+
     return rejectWithValue(`Failed to sign in: ${error}`);
   }
 });
@@ -81,7 +94,12 @@ export const userSlice = createSlice({
         state.user = null;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.error = null;
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.error = action.payload;
       })
       .addCase(signIn.fulfilled, (state, action) => {
         state.user = action.payload;

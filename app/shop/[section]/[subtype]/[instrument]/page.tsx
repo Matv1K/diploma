@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 import styles from './page.module.scss';
 
@@ -33,12 +33,12 @@ const Instrument: React.FC = () => {
     brandName: '',
     bought: 0,
     section: '',
-    salePrice: '',
+    salePrice: 0,
     _id: '',
     description: '',
     characteristics: {},
     instrumentType: '',
-    price: '',
+    price: 0,
     image: '',
     colors: [],
   });
@@ -50,7 +50,6 @@ const Instrument: React.FC = () => {
 
   const dispatch = useDispatch();
   const { instrument: instrumentId } = useParams();
-  const { push } = useRouter();
 
   const comments = useSelector((state: RootState) => state.comments.comments);
 
@@ -85,12 +84,12 @@ const Instrument: React.FC = () => {
         brandName: instrument?.brandName,
         instrumentId: instrument?._id,
         section: instrument?.section,
+        instrumentType: instrument?.instrumentType,
         amount: 1,
       });
 
       dispatch(addItemToCart(newItem));
       toast.success(`${instrument.name} has been added to the cart!`);
-      push('/');
     } catch (error) {
       toast.error(`Failed to add ${instrument.name} to the cart: ${error}`);
     }
@@ -192,12 +191,16 @@ const Instrument: React.FC = () => {
               </p>
 
               <h3 className={styles.infoPrice}>
-                {instrument?.onSale ? (
+                {instrument?.onSale && (
                   <>
-                    <span className={styles.priceOriginal}>{instrument.price}</span>
-                    <span>{instrument.salePrice}</span>
+                    <span className={styles.priceOriginal}>{instrument.price}$</span>
+                    <span>{instrument.salePrice}$</span>
                   </>
-                ) : (instrument?.price)}
+                )}
+
+                {!instrument?.onSale && (
+                  <span>{instrument.price}$</span>
+                )}
               </h3>
 
               <p className={styles.infoAvailable}>The instrument is available at our store</p>
@@ -271,7 +274,7 @@ const Instrument: React.FC = () => {
           </div>
 
           <div>
-            <Button type={ButtonTypes.SUBMIT}>Submit</Button>
+            <Button type={ButtonTypes._SUBMIT}>Submit</Button>
           </div>
         </form>
 

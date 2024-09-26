@@ -10,12 +10,13 @@ export interface CartItemWithIdI {
   _id: string;
   color: string;
   image: string;
-  price: string;
+  price: number;
   name: string;
   amount: number;
   instrumentId: string;
   section: string;
   brandName: string;
+  instrumentType: string,
 }
 
 export interface SignUpDataI {
@@ -34,12 +35,12 @@ export interface InstrumentI {
   _id: string;
   name: string;
   description: string;
-  price: string;
+  price: number;
   image: string;
   isNew?: boolean;
   section: string;
   brandName: string;
-  salePrice?: string;
+  salePrice?: number;
   onSale?: boolean;
   bought?: number;
   colors: string[];
@@ -51,7 +52,7 @@ export interface InstrumentCardI {
   _id: string;
   name: string;
   section: string;
-  price: string;
+  price: number;
   instrumentType: string;
   isNew: boolean;
   image: string;
@@ -63,12 +64,13 @@ export interface InstrumentCardI {
 export interface CartItemI {
   color: string;
   image: string;
-  price: string;
+  price: number;
   name: string;
   amount: number;
   instrumentId: string;
   section: string;
   brandName: string;
+  instrumentType: string,
 }
 
 export interface LikedItemI {
@@ -81,7 +83,7 @@ export interface LikedItemI {
   instrumentId: string;
   section: string;
   amount?: number;
-  price: string;
+  price: number;
 }
 
 export interface OrderItemI {

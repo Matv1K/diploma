@@ -44,7 +44,7 @@ export const removeCartItem = async (id: string) => {
 
 export const increaseAmount = async (id: string) => {
   try {
-    const response = await instance.post(`/cart/increase/${id}`);
+    const response = await instance.patch(`/cart/increase/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error increasing amount: ', error);
@@ -54,7 +54,7 @@ export const increaseAmount = async (id: string) => {
 
 export const decreaseAmount = async (id: string) => {
   try {
-    const response = await instance.post(`/cart/decrease/${id}`);
+    const response = await instance.patch(`/cart/decrease/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error decreasing amount: ', error);

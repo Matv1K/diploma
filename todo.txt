@@ -1,31 +1,37 @@
-//TODO
+//! TOP PRIORITY
 
 1. ADD HUSKY
-2. ADD CI/CD PIPELINE
+2. ADD CI/CD PIPELINE (ADD ESLINT TESTS AND CONFIGURE VERCEL)
 3. ADD DOCKER
 4. ADD FAVICON
 5. Change LOGO (musify)
-6. ADD LOADERS/SKELETONS TO CAROUSELS
-7. Integrate digital ocean for staging and production
-8. Add error boundary component
-9. Store images inside cloud storage
-10. Authorization with Google
-11. Add three.js library
-12. Add infinite scroll
-13. Add customize page
-14. Retool admin dashboard
+6. Add error boundary component
+7. Store images inside cloud storage
+8. Authorization with Google
+9. Add infinite scroll
+10. Add mobile version
+11. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
+12. Add strong password
+13. MAKE PRIVAT ROUTES
+14. Fix bug with user info in dropdown
 15. Add accessibility
-16. Add mobile version
-17. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-18. MAKE PRIVAT ROUTES
-19. Add input errors
-20. Add strong password and email validation
-21. ADD FILTERING LOGIC
-22. ADD RESET PASSWORD LOGIC
-23. If the item is already in the cart show the toast informing the user about that
-24. Add modal before checkout
-25. Fix bug with user info in dropdown
-26. Add redis
+16. ADD RESET PASSWORD LOGIC
+17. Fix stripe
+18. ADD FILTERING LOGIC
+19. Add modal before checkout
+21. Create hoc with error: for inputs and for selects
+22. Add an eye to see password
+23. Add average rating to the instrument cart
+24. User is not able to checkout if he does not specify the phone number and address
+25. Each users has the cart.
+
+//! LOW PRIORITY
+
+1. Add three.js library
+2. Add customize page
+3. Retool admin dashboard
+4. Add redis
+5. Fix support modal (websockets)
 
 //INVESTIGATE
 

@@ -1,6 +1,6 @@
 import instance from '@/config/getAxiosInstance';
 
-import { OrderItemI } from '../../types';
+import { OrderItemI } from '@/types';
 
 interface OrderPayload {
   items: OrderItemI[],

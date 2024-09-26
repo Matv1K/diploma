@@ -14,8 +14,7 @@ import { Input, Button } from '@/components';
 
 import { signUp } from '@/features/user/userSlice';
 
-import { TOAST_MESSAGES } from '../constants';
-
+import { TOAST_MESSAGES } from '@/app/constants';
 import { ButtonOptions, InputTypes, SignUpDataI } from '@/types';
 import { AppDispatch } from '@/app/store';
 
@@ -38,9 +37,9 @@ const SignUp: React.FC = () => {
 
       toast.success(TOAST_MESSAGES.SIGN_UP_SUCCESS);
       push('/');
-    } catch (error) {
-      console.error(`Could not sign in: ${error}`);
-      toast.error(TOAST_MESSAGES.SIGN_UP_ERROR);
+    } catch (error: any) {
+      console.error(`Could not sign up: ${error}`);
+      toast.error(error || 'Failed to sign up. Please try again.');
     }
   };
 

@@ -44,7 +44,7 @@ const Shop: React.FC = () => {
     };
 
     fetchInstruments();
-  }, [instruments]);
+  }, []);
 
   const handleOpenModal = () => {
     dispatch(showModal());

@@ -26,7 +26,7 @@ import { AppDispatch } from '@/app/store';
 interface InstrumentCardProps {
   isNew?: boolean;
   name: string;
-  price: string;
+  price: number;
   instrumentType: string;
   section: string;
   image: string;
@@ -75,20 +75,20 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
     try {
       if (isLiked) {
         await dispatch(unlikeItem(id));
+
         toast.success('You do not like the item anymore');
         setIsLiked(false);
       } else {
-        await dispatch(
-          likeItem({
-            price,
-            name,
-            image: '///',
-            colors,
-            brandName,
-            instrumentId: id,
-            section,
-          }),
-        );
+        await dispatch(likeItem({
+          price,
+          name,
+          image: '///',
+          colors,
+          brandName,
+          instrumentId: id,
+          section,
+        }));
+
         toast.success('You like the item');
         setIsLiked(true);
       }
@@ -102,7 +102,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
     try {
       const newItem = await addCartItem({
-        price,
         name,
         image,
         color: selectedColor,
@@ -110,13 +109,21 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         instrumentId: id,
         section,
         amount: 1,
+        instrumentType,
+        price,
       });
 
       dispatch(addItemToCart(newItem));
+
       toast.success(`${name} has been added to the cart!`);
       push('/');
-    } catch (error) {
-      toast.error(`Failed to add ${name} to the cart: ${error}`);
+    } catch (error: any) {
+      if (error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Failed to add item to the cart. Try again later');
+      }
+
     }
   };
 
@@ -136,7 +143,9 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         />
       </div>
 
-      <h3 className={styles.instrumentPrice}>{price}</h3>
+      <h3 className={styles.instrumentPrice}>{price}$</h3>
+
+      <p className={styles.rating}>★ ★ ★ ★ ★ </p>
 
       <h4 className={styles.instrumentName}>
         {name} <span className={styles.instrumentType}>/ {brandName}</span>

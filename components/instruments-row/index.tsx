@@ -5,8 +5,10 @@ import { useDispatch } from 'react-redux';
 
 import styles from './index.module.scss';
 
+import { toast } from 'react-toastify';
+
 import Link from 'next/link';
-import { Button, Modal } from '../../components';
+import { Button, Modal } from '@/components';
 
 import { FiTrash2 } from 'react-icons/fi';
 
@@ -20,15 +22,17 @@ interface InstrumentRowProps {
   section: string;
   amount: number;
   color: string;
-  price: string;
+  price: number;
   name: string;
   image: string;
+  instrumentType: string;
 }
 
 const InstrumentRow: React.FC<InstrumentRowProps> = ({
   section,
   cartItemId,
   instrumentId,
+  instrumentType,
   name,
   color,
   price,
@@ -66,6 +70,8 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
     try {
       await removeCartItem(cartItemId);
       dispatch(removeItem(cartItemId));
+
+      toast.success('Item has been removed from the cart');
     } catch (error) {
       console.error('Failed to remove cart item:', error);
     }
@@ -82,7 +88,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
           <div className={styles.cellContainer}>
             <div className={styles.image} />
 
-            <Link className={styles.link} href={`/shop/${section}/${instrumentId}`}>
+            <Link className={styles.link} href={`/shop/${section}/${instrumentType}/${instrumentId}`}>
               {name} / <span className={styles.color}>{color}</span>
             </Link>
           </div>
@@ -94,7 +100,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
           <Button className={styles.operator} onClick={handleIncreaseCount}>+</Button>
         </div>
 
-        <div className={styles.cell}>{price} </div>
+        <div className={styles.cell}>{price}$</div>
 
         <div className={styles.cell}>
           <FiTrash2 onClick={handleOpenModal} className={styles.iconTrash} size={24} />

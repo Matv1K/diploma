@@ -53,6 +53,7 @@ const instrumentsSlice = createSlice({
       if (!Array.isArray(state.cartItems)) {
         state.cartItems = [];
       }
+
       state.cartItems.push(action.payload);
     },
 
