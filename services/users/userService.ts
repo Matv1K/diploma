@@ -5,7 +5,7 @@ export const registerUser = async ({ name, lastName, email, password }:
   try {
     const response = await instance.post('/users/register', { name, lastName, email, password });
 
-    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('token', response.data.user.token);
 
     return response.data;
   } catch (error: any) {

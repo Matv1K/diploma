@@ -11,7 +11,6 @@
 9. Add infinite scroll
 10. Add mobile version
 11. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-12. Add strong password
 13. MAKE PRIVAT ROUTES
 14. Fix bug with user info in dropdown
 15. Add accessibility
@@ -19,11 +18,8 @@
 17. Fix stripe
 18. ADD FILTERING LOGIC
 19. Add modal before checkout
-21. Create hoc with error: for inputs and for selects
-22. Add an eye to see password
 23. Add average rating to the instrument cart
 24. User is not able to checkout if he does not specify the phone number and address
-25. Each users has the cart.
 
 //! LOW PRIORITY
 
@@ -32,6 +28,9 @@
 3. Retool admin dashboard
 4. Add redis
 5. Fix support modal (websockets)
+6. Fix user.user
+7. Add ... if username is big to dropdown
+8. Each users has the cart.
 
 //INVESTIGATE
 

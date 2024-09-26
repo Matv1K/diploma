@@ -123,7 +123,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       } else {
         toast.error('Failed to add item to the cart. Try again later');
       }
-
     }
   };
 

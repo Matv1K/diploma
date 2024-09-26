@@ -90,8 +90,10 @@ const Instrument: React.FC = () => {
 
       dispatch(addItemToCart(newItem));
       toast.success(`${instrument.name} has been added to the cart!`);
-    } catch (error) {
-      toast.error(`Failed to add ${instrument.name} to the cart: ${error}`);
+    } catch (error: any) {
+      if (error.message) {
+        toast.error(error.message);
+      }
     }
   };
 

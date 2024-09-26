@@ -19,7 +19,7 @@ interface InputProps {
   autoComplete?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({
   placeholder,
   onChange,
   type,
@@ -32,9 +32,10 @@ const Input: React.FC<InputProps> = ({
   value,
   required,
   autoComplete,
-}) => (
+}, ref) => (
   <div className={styles.inputWrapper}>
     <input
+      ref={ref}
       className={`${styles.input} ${className}`}
       name={name}
       id={id}
@@ -46,13 +47,14 @@ const Input: React.FC<InputProps> = ({
       required={required}
       autoComplete={autoComplete}
     />
-
     {icon && (
       <span className={styles.icon} onClick={handleIconClick}>
         {icon}
       </span>
     )}
   </div>
-);
+));
+
+Input.displayName = 'Input';
 
 export default Input;

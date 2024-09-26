@@ -6,19 +6,28 @@
   margin-top: 20px;
   gap: 20px;
 
-  .input {
-    &:not(:last-child) {
-      margin-bottom: 10px;
-    }
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+  }
+
+  .error {
+    color: red;
   }
 
   .formInfo {
     display: flex;
     justify-content: space-between;
 
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
     .signUpLink {
       color: $secondary-color;
-      margin-left: 20px;
+      margin-left: 10px;
 
       &:hover {
         color: darken($color: $secondary-color, $amount: 5%);
@@ -26,9 +35,4 @@
       }
     }
   }
-}
-
-.buttons {
-  display: flex;
-  gap: 20px;
 }

@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 
+import { validationResult } from 'express-validator';
+
 import UserService from '../services/user/userService';
 
 import User from '../models/User';
@@ -30,6 +32,12 @@ class UserController {
   async registerUser(req: Request, res: Response) {
     try {
       const { name, lastName, email, password } = req.body;
+
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
 
       const existingUser = await User.findOne({ email });
 
