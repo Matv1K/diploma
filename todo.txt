@@ -5,7 +5,6 @@
 3. ADD DOCKER
 4. ADD FAVICON
 5. Change LOGO (musify)
-7. Authorization with Google
 8. Add infinite scroll
 9. Add mobile version
 10. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
@@ -30,6 +29,7 @@
 12. Add error boundary component
 13. Add accessibility
 14. If user enters wrong current password to the reset password it does not throw the error
+15. Authorization with Google
 
 //INVESTIGATE
 

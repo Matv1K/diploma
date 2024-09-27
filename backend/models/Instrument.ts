@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 const instrumentSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
+  { name: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
     image: { type: String, required: true },
@@ -18,8 +17,7 @@ const instrumentSchema = new mongoose.Schema(
       type: Object,
       of: mongoose.Schema.Types.Mixed,
       default: {},
-    },
-  },
+    } },
   { timestamps: true, suppressReservedKeysWarning: true },
 );
 

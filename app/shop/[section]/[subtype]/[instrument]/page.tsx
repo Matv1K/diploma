@@ -184,7 +184,7 @@ const Instrument: React.FC = () => {
             className={styles.instrumentImage}
             src={instrument?.image}
             width={300}
-            height={400}
+            height={300}
           />
         </div>
 

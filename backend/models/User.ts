@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
+  { name: { type: String, required: true },
     lastName: { type: String, default: '' },
     email: { type: String, required: true },
     password: { type: String, required: true },
@@ -16,8 +15,7 @@ const userSchema = new mongoose.Schema(
       country: { type: String, default: '' },
       city: { type: String, default: '' },
       address: { type: String, default: '' },
-    },
-  },
+    } },
   { timestamps: true, suppressReservedKeysWarning: true },
 );
 

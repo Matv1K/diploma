@@ -13,7 +13,6 @@ import Image from 'next/image';
 import { Button } from '../../components';
 
 import { FiHeart } from 'react-icons/fi';
-import { ElectricGuitar } from '@/public/images';
 
 import { getRatingString } from '@/utils';
 

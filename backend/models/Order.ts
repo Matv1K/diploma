@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema(
-  {
-    userId: { type: String, required: true },
+  { userId: { type: String, required: true },
     items: [
       {
         name: { type: String, required: true },
@@ -18,8 +17,7 @@ const orderSchema = new mongoose.Schema(
       enum: ['rejected', 'in progress', 'delivered'],
       default: 'in progress',
     },
-    totalPrice: { type: String, required: true },
-  },
+    totalPrice: { type: String, required: true } },
   { timestamps: true },
 );
 
