@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
+dotenv.config();
+
 import instrumentRoutes from './routes/instruments/instrumentRoutes';
 import userRoutes from './routes/users/userRoutes';
 import cartRoutes from './routes/cart/cartRoutes';
 import likedRoutes from './routes/liked/likedRoutes';
 import ordersRoutes from './routes/orders/ordersRoutes';
 import commentsRoutes from './routes/comments/commentsRoutes';
-
-dotenv.config();
 
 const server = express();
 

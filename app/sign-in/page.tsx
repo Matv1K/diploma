@@ -18,7 +18,7 @@ import { signIn } from '@/features/user/userSlice';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { InputTypes, SignInDataI, ButtonOptions } from '@/types';
+import { InputTypes, SignInDataI, ButtonOptions, ButtonTypes } from '@/types';
 import { AppDispatch } from '@/app/store';
 
 const SignIn: React.FC = () => {
@@ -31,6 +31,7 @@ const SignIn: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignInDataI> = async data => {
     try {
+
       await dispatch(signIn(data)).unwrap();
 
       toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
@@ -83,7 +84,7 @@ const SignIn: React.FC = () => {
 
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
-            <Button>Sign in</Button>
+            <Button type={ButtonTypes._SUBMIT}>Sign in</Button>
             <Button option={ButtonOptions._GOOGLE} onClick={handleGoogleSignIn}>Sign up with Google</Button>
           </div>
 

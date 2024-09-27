@@ -9,6 +9,7 @@ import styles from './page.module.scss';
 import { toast } from 'react-toastify';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button, Comment, Loader } from '@/components';
 
 import { FiHeart } from 'react-icons/fi';
@@ -177,7 +178,15 @@ const Instrument: React.FC = () => {
       <h2>{removeSeparator(instrument?.name)}</h2>
 
       <div className={styles.instrumentPageContainer}>
-        <div className={styles.instrumentImage}>Instrument Image</div>
+        <div className={styles.instrumentImageContainer}>
+          <Image
+            alt={instrument?.name}
+            className={styles.instrumentImage}
+            src={instrument?.image}
+            width={300}
+            height={400}
+          />
+        </div>
 
         <div className={styles.instrumentData}>
           <div className={styles.instrumentInfo}>

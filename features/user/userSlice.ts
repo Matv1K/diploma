@@ -30,7 +30,6 @@ export const signUp = createAsyncThunk(
   async (userData: SignUpDataI, { rejectWithValue }) => {
     try {
       const response = await registerUser(userData);
-      console.log(response);
 
       return response;
     } catch (error: any) {
@@ -113,8 +112,6 @@ export const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        console.log(action.payload);
-
         state.loading = false;
         state.user = { user: action.payload };
       });

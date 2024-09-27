@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 
+import cloudinary from '../services/cloudinary/cloudinaryService';
+
 import Comment from '../models/Comment';
 
 import InstrumentService from '../services/instruments/instrumentService';
@@ -20,10 +22,26 @@ class InstrumentController {
   async getAllInstruments(req: Request, res: Response) {
     try {
       const instruments = await InstrumentService.getAllInstruments();
-      res.status(200).json(instruments);
+
+      const { resources } = await cloudinary.api.resources({
+        type: 'upload',
+      });
+
+      const cloudinaryImages = resources.map((resource: any) => ({
+        url: resource.secure_url,
+        public_id: resource.public_id,
+      }));
+
+      const instrumentsWithImages = instruments.map(instrument => {
+        const matchingImage = cloudinaryImages.find(image => image.url === instrument.image);
+
+        return { ...instrument.toObject(), image: matchingImage ? matchingImage.url : '' };
+      });
+
+      return res.status(200).json(instrumentsWithImages);
     } catch (error) {
       console.error('Error fetching instruments: ', error);
-      res.status(500).json(`Something went wrong: ${error}`);
+      return res.status(500).json({ message: `Something went wrong: ${error}` });
     }
   }
 

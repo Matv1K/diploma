@@ -92,7 +92,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         await dispatch(likeItem({
           price,
           name,
-          image: '///',
+          image,
           colors,
           brandName,
           instrumentId: id,
@@ -146,10 +146,10 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       <div className={styles.imageContainer}>
         <Image
           className={styles.instrumentImage}
-          src={ElectricGuitar}
+          src={image}
           alt='guitar'
-          width={150}
-          height={150}
+          width={200}
+          height={200}
         />
       </div>
 

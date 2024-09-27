@@ -7,14 +7,18 @@
   margin-top: 20px;
   gap: 20px;
 
-  .instrumentImage {
-    height: 500px;
-    background-color: $primary-color;
-    border-radius: 8px;
+  .instrumentImageContainer {
     flex: 50%;
+    border:  1px solid $primary-color;
     display: flex;
     align-content: center;
     justify-content: center;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+
+  .instrumentImage {
+    background-color: $primary-color;
     transition: background-color 0.3s ease;
 
     &:hover {
