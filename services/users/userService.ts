@@ -58,10 +58,21 @@ export const updateCurrentUser = async (userData: any) => {
 export const logOut = async () => {
   try {
     const response = await instance.delete('/users/logout');
+
     localStorage.removeItem('token');
+
     return response.data;
   } catch (error) {
     console.error('Something went wrong: ', error);
     throw error;
+  }
+};
+
+export const resetPassword = async (currentPassword: string, newPassword: string) => {
+  try {
+    const response = await instance.post('/users/reset-password', { currentPassword, newPassword });
+    return response;
+  } catch (error) {
+    console.error('Somehting went wrong', error);
   }
 };

@@ -15,11 +15,14 @@ import { Button } from '../../components';
 import { FiHeart } from 'react-icons/fi';
 import { ElectricGuitar } from '@/public/images';
 
+import { getRatingString } from '@/utils';
+
 import { addItemToCart } from '@/features/instruments/instrumentsSlice';
 import { likeItem, unlikeItem } from '@/features/instruments/instrumentsSlice';
 
 import { addCartItem } from '@/services/cart/cartService';
 import { getLikedItem } from '@/services/liked/likedService';
+import { getInstrumentRating } from '@/services/instruments/instrumentService';
 
 import { AppDispatch } from '@/app/store';
 
@@ -51,15 +54,22 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 }) => {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [isLiked, setIsLiked] = useState(false);
+  const [averageRating, setAverageRating] = useState(0);
 
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
+    const getAverageRating = async () => {
+      const { averageRating } = await getInstrumentRating(id);
+      setAverageRating(averageRating);
+    };
+
     const checkLiked = async () => {
       const likedItem = await getLikedItem(id);
       setIsLiked(!!likedItem);
     };
 
+    getAverageRating();
     checkLiked();
   }, [id]);
 
@@ -87,6 +97,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           brandName,
           instrumentId: id,
           section,
+          instrumentType,
         }));
 
         toast.success('You like the item');
@@ -144,7 +155,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
       <h3 className={styles.instrumentPrice}>{price}$</h3>
 
-      <p className={styles.rating}>★ ★ ★ ★ ★ </p>
+      <p className={styles.rating}>{getRatingString(averageRating)}</p>
 
       <h4 className={styles.instrumentName}>
         {name} <span className={styles.instrumentType}>/ {brandName}</span>

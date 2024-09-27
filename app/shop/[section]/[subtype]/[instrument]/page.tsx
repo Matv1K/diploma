@@ -118,6 +118,7 @@ const Instrument: React.FC = () => {
           brandName: instrument?.brandName,
           instrumentId: instrument?._id,
           section: instrument?.section,
+          instrumentType: instrument?.instrumentType,
         };
 
         await addLikedItem(likedData);

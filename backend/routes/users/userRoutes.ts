@@ -15,6 +15,7 @@ router.get('/', UserController.getAllUsers);
 router.get('/my-user', authMiddleware, UserController.getMyUser);
 router.patch('/my-user', authMiddleware, UserController.updateMyUser);
 router.delete('/logout', authMiddleware, UserController.logoutUser);
+router.post('/reset-password', authMiddleware, UserController.resetPassword);
 router.get('/admin', roleMiddleware('admin'), UserController.adminAccess);
 
 export default router;

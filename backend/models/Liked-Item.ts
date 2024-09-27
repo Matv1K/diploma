@@ -11,6 +11,7 @@ const likedItemSchema = new mongoose.Schema(
     userId: { type: String, required: true },
     instrumentId: { type: String, required: true },
     section: { type: String, required: true },
+    instrumentType: { type: String, required: true },
   },
   { timestamps: true, suppressReservedKeysWarning: true },
 );

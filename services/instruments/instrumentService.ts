@@ -84,12 +84,19 @@ export const searchInstruments = async (query: string) => {
 
 export const getInstrumentBySubtype = async (subtype: string | string[]) => {
   try {
-    const response = await instance.get(
-      `/instruments/section/subtype/${subtype}`,
-    );
+    const response = await instance.get(`/instruments/section/subtype/${subtype}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching instruments', error);
     throw error;
+  }
+};
+
+export const getInstrumentRating = async (instrumentId: string) => {
+  try {
+    const response = await instance.get(`/instruments/rating/${instrumentId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching average rating', error);
   }
 };

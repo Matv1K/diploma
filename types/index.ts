@@ -112,6 +112,7 @@ export enum ButtonOptions {
 export enum ButtonTypes {
   _SUBMIT = 'submit',
   _RESET = 'reset',
+  _BUTTON = 'button',
 }
 
 export enum InputTypes {

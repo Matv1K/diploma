@@ -5,21 +5,15 @@
 3. ADD DOCKER
 4. ADD FAVICON
 5. Change LOGO (musify)
-6. Add error boundary component
-7. Store images inside cloud storage
-8. Authorization with Google
-9. Add infinite scroll
-10. Add mobile version
-11. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-13. MAKE PRIVAT ROUTES
-14. Fix bug with user info in dropdown
-15. Add accessibility
-16. ADD RESET PASSWORD LOGIC
-17. Fix stripe
-18. ADD FILTERING LOGIC
-19. Add modal before checkout
-23. Add average rating to the instrument cart
-24. User is not able to checkout if he does not specify the phone number and address
+6. Store images inside cloud storage
+7. Authorization with Google
+8. Add infinite scroll
+9. Add mobile version
+10. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
+11. MAKE PRIVAT ROUTES
+13. Fix stripe
+14. ADD FILTERING LOGIC
+15. User is not able to checkout if he does not specify the phone number and address
 
 //! LOW PRIORITY
 
@@ -29,8 +23,14 @@
 4. Add redis
 5. Fix support modal (websockets)
 6. Fix user.user
-7. Add ... if username is big to dropdown
+7. Add ... if username is big at dropdown
 8. Each users has the cart.
+9. Add sparkles when like
+10. Add forgot password
+11. Add toast message when resetting password
+12. Add error boundary component
+13. Add accessibility
+
 
 //INVESTIGATE
 

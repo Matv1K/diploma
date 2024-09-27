@@ -22,8 +22,6 @@ const Cart: React.FC = () => {
     cartItems.reduce((total, item) => total + Number(item.price) * item.amount, 0): 0;
   const totalItems = Array.isArray(cartItems) ? cartItems.length : 0;
 
-  cartItems.forEach(item => console.log(item));
-
   useEffect(() => {
     dispatch(fetchCartItems());
   }, [dispatch]);

@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
 import { useStripe, PaymentElement } from '@stripe/react-stripe-js';
 
 import styles from './index.module.scss';
 
-import { Button } from '@/components';
+import { Button, Modal } from '@/components';
 
 import { getTotalPrice } from '@/utils';
 
@@ -19,7 +18,10 @@ import { ButtonTypes } from '@/types';
 const CheckoutForm: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
+  const stripe = useStripe();
   const { push } = useRouter();
 
   useEffect(() => {
@@ -33,10 +35,12 @@ const CheckoutForm: React.FC = () => {
     fetchCartItems();
   }, []);
 
-  const stripe = useStripe();
+  const handleOpenModal = () => {
+    setIsModalOpened(true);
+  };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleConfirmCheckout = async () => {
+    setIsProcessing(true);
 
     const totalPrice = getTotalPrice(cartItems);
 
@@ -49,20 +53,46 @@ const CheckoutForm: React.FC = () => {
       amount,
     }));
 
-    await createOrder({ items: orderItems, totalPrice });
+    try {
+      await createOrder({ items: orderItems, totalPrice });
 
-    push('/');
+      push('/');
+    } catch (error) {
+      console.error('Error processing order:', error);
+    } finally {
+      setIsProcessing(false);
+      setIsModalOpened(false);
+    }
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleOpenModal();
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.checkoutForm}>
+    <form className={styles.checkoutForm} onSubmit={handleSubmit}>
       <h2 className={styles.headingCheckout}>Checkout</h2>
 
       <PaymentElement />
 
-      <Button disabled={!stripe} className={styles.checkoutButton} type={ButtonTypes._SUBMIT}>
+      <Button type={ButtonTypes._BUTTON} onClick={handleOpenModal} className={styles.checkoutButton}>
         Pay {totalPrice}$
       </Button>
+
+      {isModalOpened && (
+        <Modal heading='Checkout' setIsModalOpened={setIsModalOpened}>
+          <p className={styles.modalText}>Are you sure you want to proceed with the checkout?</p>
+
+          <Button
+            disabled={!stripe || isProcessing}
+            className={styles.checkoutButton}
+            onClick={handleConfirmCheckout}
+          >
+            {isProcessing ? 'Processing...' : `Pay ${totalPrice}$`}
+          </Button>
+        </Modal>
+      )}
     </form>
   );
 };

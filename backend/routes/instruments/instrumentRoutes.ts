@@ -17,5 +17,6 @@ router.get('/section/subtype/:subtype', InstrumentController.getInstrumentsBySub
 router.get('/brands/:brand', InstrumentController.getInstrumentsByBrand);
 router.get('/:id', InstrumentController.getInstrumentById);
 router.get('/search/query', InstrumentController.searchInstruments);
+router.get('/rating/:instrumentId', InstrumentController.getInstrumentRating);
 
 export default router;

@@ -1,0 +1,42 @@
+.heartContainer {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  
+    .heartIcon {
+      font-size: 2rem;
+      transition: color 0.2s ease-in-out;
+  
+      &.liked {
+        color: purple;
+      }
+    }
+  
+    .sparkle {
+      position: absolute;
+      border-radius: 50%; 
+      opacity: 0;
+      animation: sparkleAnimation 0.8s forwards; 
+      pointer-events: none; 
+  
+      @keyframes sparkleAnimation {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        30% {
+          transform: scale(1.5) translateY(-10px);
+          opacity: 0.8;
+        }
+        70% {
+          transform: scale(2) translateY(-20px);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(0);
+          opacity: 0;
+        }
+      }
+    }
+  }
+  

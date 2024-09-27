@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 
+import Comment from '../models/Comment';
+
 import InstrumentService from '../services/instruments/instrumentService';
 
 class InstrumentController {
@@ -128,6 +130,27 @@ class InstrumentController {
       res.status(500).json(`Something went wrong: ${error}`);
     }
   };
+
+  async getInstrumentRating(req: Request, res: Response) {
+    try {
+      const { instrumentId } = req.params;
+
+      const instrumentComments = await Comment.find({ instrumentId });
+
+      if (instrumentComments.length === 0) {
+        return res.status(200).json({ averageRating: 0 });
+      }
+
+      const totalRating = instrumentComments.reduce((acc, comment) => acc + comment.rating, 0);
+      const avgRating = Math.round(totalRating / instrumentComments.length);
+
+      res.status(200).json({ averageRating: avgRating });
+    } catch (error) {
+      console.error('Error fetching instrument rating:', error);
+      res.status(500).json({ message: 'Something went wrong', error: error.message });
+    }
+  }
+
 }
 
 export default new InstrumentController();

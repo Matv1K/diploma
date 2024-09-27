@@ -27,7 +27,7 @@ const getButtonOptionClass = (option: string) => {
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  type,
+  type = ButtonTypes._BUTTON,
   className,
   onClick,
   disabled,
