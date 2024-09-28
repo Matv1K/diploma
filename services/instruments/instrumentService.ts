@@ -12,7 +12,6 @@ export const createInstrument = async (instrument: InstrumentI) => {
   }
 };
 
-// Axios service to fetch instruments
 export const getInstruments = async (page: number, limit: number = 10) => {
   try {
     const response = await instance.get(`/instruments?page=${page}&limit=${limit}`);
@@ -63,13 +62,17 @@ export const getNewInstruments = async () => {
   }
 };
 
-export const getInstrumentsBySection = async (section: string | string[]) => {
+export const getInstrumentsBySection = async (section: string | string[], page: number = 1) => {
   try {
-    const response = await instance.get(`/instruments/section/${section}`);
+    const response = await instance.get(`/instruments/section/${section}`, {
+      params: {
+        page, // Send the page as a query parameter
+      },
+    });
     return response.data;
   } catch (error) {
-    console.error('Error fetching instruments', error);
-    throw error;
+    console.error(`Error fetching instruments for section: ${section}`, error.message);
+    throw new Error(`Failed to fetch instruments for section ${section}`);
   }
 };
 
@@ -83,9 +86,18 @@ export const searchInstruments = async (query: string) => {
   }
 };
 
-export const getInstrumentBySubtype = async (subtype: string | string[]) => {
+export const getInstrumentBySubtype = async (
+  subtype: string | string[],
+  page: number = 1,
+  limit: number = 10,
+) => {
   try {
-    const response = await instance.get(`/instruments/section/subtype/${subtype}`);
+    const response = await instance.get(`/instruments/section/subtype/${subtype}`, {
+      params: {
+        page, // Send the page number as a query parameter
+        limit, // Send the limit as a query parameter
+      },
+    });
     return response.data;
   } catch (error) {
     console.error('Error fetching instruments', error);

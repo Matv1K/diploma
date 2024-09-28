@@ -107,6 +107,12 @@ export const userSlice = createSlice({
       })
       .addCase(logOutUser.fulfilled, state => {
         state.user = null;
+        state.token = undefined;
+        state.loading = false;
+      })
+      .addCase(logOutUser.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
       })
       .addCase(updateUser.pending, state => {
         state.loading = true;

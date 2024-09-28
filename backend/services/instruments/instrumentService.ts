@@ -37,14 +37,36 @@ class InstrumentService {
     return instruments;
   }
 
-  async getInstrumentsBySection(section: string) {
-    const instruments = await Instrument.find({ section });
-    return instruments;
+  // Service: Get instruments by section
+  async getInstrumentsBySection(section: string, page: number = 1, pageSize: number = 10) {
+    try {
+      const skip = (page - 1) * pageSize; // Calculate how many documents to skip
+      const instruments = await Instrument.find({ section })
+        .skip(skip) // Skip the calculated number of documents
+        .limit(pageSize); // Limit the number of documents to fetch
+
+      if (instruments.length === 0) {
+        // If no instruments were found, return an empty array
+        return [];
+      }
+
+      return instruments;
+    } catch (error) {
+      throw new Error(`Failed to fetch instruments for section ${section}: ${error.message}`);
+    }
   }
 
-  async getInstrumentsBySubtype(subtype: string) {
-    const instruments = await Instrument.find({ instrumentType: subtype });
-    return instruments;
+  async getInstrumentsBySubtype(subtype: string, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+
+    const instruments = await Instrument.find({ instrumentType: subtype })
+      .skip(skip)
+      .limit(limit);
+
+    const totalInstruments = await Instrument.countDocuments({ instrumentType: subtype });
+    const hasMore = skip + instruments.length < totalInstruments;
+
+    return { instruments, hasMore };
   }
 
   async getInstrumentsByBrand(brand: string) {

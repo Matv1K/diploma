@@ -5,7 +5,8 @@ import { useParams } from 'next/navigation';
 
 import styles from './page.module.scss';
 
-import { InstrumentCard } from '@/components';
+import { InstrumentCard, Loader } from '@/components';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { removeSeparator } from '@/utils';
 
@@ -21,24 +22,34 @@ const priceRanges = [
 ];
 
 const Subtype = () => {
-  const [instruments, setInstruments] = useState([]);
+  const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const { subtype } = useParams();
 
   const convertedSubtype = Array.isArray(subtype) ? subtype[0] : subtype;
 
-  useEffect(() => {
-    const fetchInstruments = async () => {
-      try {
-        const data = await getInstrumentBySubtype(convertedSubtype);
-        setInstruments(data);
-      } catch (error) {
-        console.error(`Error fetching instruments: ${error}`);
-      }
-    };
+  const fetchInstruments = async (currentPage: number) => {
+    try {
+      const { instruments: newInstruments, hasMore: moreData } = await getInstrumentBySubtype(convertedSubtype, currentPage);
 
+      if (newInstruments.length === 0) {
+        setHasMore(false);
+      }
+
+      setInstruments(prevInstruments => [...prevInstruments, ...newInstruments]);
+      setHasMore(moreData);
+      setPage(prevPage => prevPage + 1);
+    } catch (error) {
+      console.error(`Error fetching instruments: ${error}`);
+      setHasMore(false);
+    }
+  };
+
+  useEffect(() => {
     if (convertedSubtype) {
-      fetchInstruments();
+      fetchInstruments(1); // Initial load
     }
   }, [convertedSubtype]);
 
@@ -95,33 +106,29 @@ const Subtype = () => {
         </div>
       </div>
 
-      <div className={styles.instruments}>
-        {instruments.map(({
-          _id,
-          price,
-          name,
-          section,
-          instrumentType,
-          isNew,
-          image,
-          colors,
-          brandName,
-        }: InstrumentCardI) => (
+      <InfiniteScroll
+        dataLength={instruments.length}
+        next={() => fetchInstruments(page)}
+        hasMore={hasMore}
+        loader={<div><Loader /></div>}
+        className={styles.instruments}
+      >
+        {instruments.map((instrument: InstrumentCardI) => (
           <InstrumentCard
-            id={_id}
-            key={_id}
-            name={name}
-            price={price}
-            section={section}
-            instrumentType={instrumentType}
-            isNew={isNew}
-            colors={colors}
-            image={image}
-            brandName={brandName}
+            id={instrument._id}
+            key={instrument._id}
+            name={instrument.name}
+            price={instrument.price}
+            section={instrument.section}
+            instrumentType={instrument.instrumentType}
+            isNew={instrument.isNew}
+            colors={instrument.colors}
+            image={instrument.image}
+            brandName={instrument.brandName}
             withLikeIcon
           />
         ))}
-      </div>
+      </InfiniteScroll>
     </main>
   );
 };

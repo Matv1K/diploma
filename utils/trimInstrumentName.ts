@@ -4,10 +4,10 @@ const trimInstrumentName = (name: string) => {
       .split(' ')
       .map((word, ind) => {
         if (ind !== 0) {
-          return `-${  word.trim().toLocaleLowerCase()}`;
-        } 
+          return `-${ word.trim().toLocaleLowerCase()}`;
+        }
         return word.trim().toLocaleLowerCase();
-        
+
       })
       .join('');
   }

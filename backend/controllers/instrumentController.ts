@@ -104,15 +104,21 @@ class InstrumentController {
     }
   }
 
+  // Controller: Get instruments by section
   async getInstrumentsBySection(req: Request, res: Response) {
     const { section } = req.params;
+    const { page } = req.query; // Get the page from query parameters
+    const pageNumber = parseInt(page as string, 10) || 1; // Default to 1 if page is not provided
 
     try {
-      const instruments = await InstrumentService.getInstrumentsBySection(section);
+      // Call the service to fetch instruments
+      const instruments = await InstrumentService.getInstrumentsBySection(section, pageNumber);
+
+      // Always respond with 200 and an empty array if no instruments found
       res.status(200).json(instruments);
     } catch (error) {
-      console.error('Error fetching instruments by section: ', error);
-      res.status(500).json(`Something went wrong: ${error}`);
+      console.error('Error fetching instruments by section: ', error.message);
+      res.status(500).json({ message: `Something went wrong: ${error.message}` });
     }
   }
 
@@ -130,10 +136,12 @@ class InstrumentController {
 
   async getInstrumentsBySubtype(req: Request, res: Response) {
     const { subtype } = req.params;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
 
     try {
-      const instruments = await InstrumentService.getInstrumentsBySubtype(subtype);
-      res.status(200).json(instruments);
+      const { instruments, hasMore } = await InstrumentService.getInstrumentsBySubtype(subtype, page, limit);
+      res.status(200).json({ instruments, hasMore });
     } catch (error) {
       console.error('Error fetching instruments by subtype: ', error);
       res.status(500).json(`Something went wrong: ${error}`);

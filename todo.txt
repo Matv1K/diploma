@@ -10,6 +10,9 @@
 10. ADD FILTERING LOGIC
 11. User is not able to checkout if he does not specify the phone number and address
 12. When checkout immediately update cart amount in the header
+13. When logout update header information
+14. If there is no current user, add items to cart (store them in session storage)
+15. Remove liked icon if the user is not signed in
 
 //! LOW PRIORITY
 

@@ -39,14 +39,21 @@ const Shop: React.FC = () => {
 
   const fetchMoreInstruments = async () => {
     try {
-      const { instruments: newInstruments, hasMore: moreData } = await getInstruments(page);
+      const { instruments: newInstruments, hasMore } = await getInstruments(page);
+
+      if (newInstruments.length === 0) {
+        setHasMore(false);
+      }
 
       setInstruments(prevInstruments => [...prevInstruments, ...newInstruments]);
-      setHasMore(moreData);
+      setHasMore(hasMore);
       setPage(prevPage => prevPage + 1);
       setIsLoading(false);
+
     } catch (error) {
       console.error('Error fetching instruments:', error);
+      setHasMore(false);
+      setIsLoading(false);
     }
   };
 
@@ -114,41 +121,15 @@ const Shop: React.FC = () => {
       </div>
 
       <InfiniteScroll
+        className={styles.instruments}
         dataLength={instruments.length}
         next={fetchMoreInstruments}
         hasMore={hasMore}
-        loader={<Loader />}
-        className={styles.infiniteScroll}
+        loader={<div><Loader /></div>}
       >
-        <div className={styles.instruments}>
-          {instruments.map(
-            ({
-              _id,
-              price,
-              name,
-              section,
-              instrumentType,
-              isNew,
-              image,
-              colors,
-              brandName,
-            }: InstrumentCardI) => (
-              <InstrumentCard
-                key={_id}
-                id={_id}
-                price={price}
-                name={name}
-                section={section}
-                instrumentType={instrumentType}
-                isNew={isNew}
-                image={image}
-                colors={colors}
-                brandName={brandName}
-                withLikeIcon
-              />
-            ),
-          )}
-        </div>
+        {instruments.map(({ _id, ...props }: InstrumentCardI) => (
+          <InstrumentCard key={_id} id={_id} withLikeIcon {...props} />
+        ))}
       </InfiniteScroll>
 
       {isModalOpened ? (

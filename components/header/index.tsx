@@ -155,9 +155,19 @@ const Header: React.FC = () => {
         )}
 
         {!user && !loading && (
-          <Link href='/sign-in'>
-            <Button option={ButtonOptions._OUTILINE}>Sign in</Button>
-          </Link>
+          <div className={styles.icons}>
+            <Link href='/sign-in'>
+              <Button option={ButtonOptions._OUTILINE}>Sign in</Button>
+            </Link>
+
+            <div className={styles.cartContainer}>
+              <span className={styles.cartAmount}>{cartItems.length}</span>
+
+              <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
+                <FiShoppingCart size={24} />
+              </Link>
+            </div>
+          </div>
         )}
 
         {loading && <Loader />}
