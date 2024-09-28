@@ -3,15 +3,13 @@
 1. ADD HUSKY
 2. ADD CI/CD PIPELINE (ADD ESLINT TESTS AND CONFIGURE VERCEL)
 3. ADD DOCKER
-4. ADD FAVICON
-5. Change LOGO (musify)
-8. Add infinite scroll
-9. Add mobile version
-10. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-11. MAKE PRIVAT ROUTES
-12. Fix stripe
-13. ADD FILTERING LOGIC
-14. User is not able to checkout if he does not specify the phone number and address
+6. Add mobile version
+7. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
+8. MAKE PRIVAT ROUTES
+9. Fix stripe
+10. ADD FILTERING LOGIC
+11. User is not able to checkout if he does not specify the phone number and address
+12. When checkout immediately update cart amount in the header
 
 //! LOW PRIORITY
 
@@ -30,6 +28,10 @@
 13. Add accessibility
 14. If user enters wrong current password to the reset password it does not throw the error
 15. Authorization with Google
+16. Make props like this: {...props}
+17. Close search when click on the element
+18. ADD FAVICON
+19. Change LOGO (musify)
 
 //INVESTIGATE
 

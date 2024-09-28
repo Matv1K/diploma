@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import cloudinary from '../services/cloudinary/cloudinaryService';
 
 import Comment from '../models/Comment';
+import Instrument from '../models/Instrument';
 
 import InstrumentService from '../services/instruments/instrumentService';
 
@@ -19,26 +20,44 @@ class InstrumentController {
     }
   };
 
+  // Backend - Ensure that instruments have unique _ids
   async getAllInstruments(req: Request, res: Response) {
     try {
-      const instruments = await InstrumentService.getAllInstruments();
+      const { page = 1, limit = 10 } = req.query;
+      const currentPage = Number(page);
+      const instruments = await InstrumentService.getAllInstrumentsPaginated(currentPage, Number(limit));
 
+      // Fetch cloudinary resources (images)
       const { resources } = await cloudinary.api.resources({
         type: 'upload',
       });
 
+      // Map cloudinary images to instruments
       const cloudinaryImages = resources.map((resource: any) => ({
         url: resource.secure_url,
         public_id: resource.public_id,
       }));
 
+      // Map instruments with cloudinary images (ensure that it is a 1-to-1 match)
       const instrumentsWithImages = instruments.map(instrument => {
         const matchingImage = cloudinaryImages.find(image => image.url === instrument.image);
-
-        return { ...instrument.toObject(), image: matchingImage ? matchingImage.url : '' };
+        return {
+          ...instrument.toObject(),
+          image: matchingImage ? matchingImage.url : instrument.image, // Retain original image if no match
+        };
       });
 
-      return res.status(200).json(instrumentsWithImages);
+      // Check for duplicates by _id and remove them
+      const uniqueInstruments = instrumentsWithImages.filter((instrument, index, self) =>
+        index === self.findIndex(i => i._id.toString() === instrument._id.toString()));
+
+      // Get the total count of instruments to calculate hasMore
+      const totalInstruments = await Instrument.countDocuments();
+
+      return res.status(200).json({
+        instruments: uniqueInstruments,
+        hasMore: currentPage * limit < totalInstruments, // Pagination check for "hasMore"
+      });
     } catch (error) {
       console.error('Error fetching instruments: ', error);
       return res.status(500).json({ message: `Something went wrong: ${error}` });

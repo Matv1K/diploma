@@ -12,9 +12,10 @@ export const createInstrument = async (instrument: InstrumentI) => {
   }
 };
 
-export const getInstruments = async () => {
+// Axios service to fetch instruments
+export const getInstruments = async (page: number, limit: number = 10) => {
   try {
-    const response = await instance.get('/instruments');
+    const response = await instance.get(`/instruments?page=${page}&limit=${limit}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching instruments');

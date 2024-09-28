@@ -149,6 +149,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           alt='guitar'
           width={200}
           height={200}
+          priority
         />
       </div>
 
@@ -161,7 +162,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       </h4>
 
       <div className={styles.radioButtons} onClick={e => { e.stopPropagation();}}>
-        {colors.map((color: string, index: number) => (
+        {colors?.map((color: string, index: number) => (
           <label key={index} className={styles.label}>
             <input
               name='color'

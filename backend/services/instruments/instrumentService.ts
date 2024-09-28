@@ -11,6 +11,12 @@ class InstrumentService {
     return instruments;
   }
 
+  async getAllInstrumentsPaginated(page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    const instruments = await Instrument.find().skip(skip).limit(limit);
+    return instruments;
+  }
+
   async getPopularInstruments() {
     const instruments = await Instrument.aggregate([{ $sort: { bought: -1 } }, { $limit: 10 }]);
     return instruments;

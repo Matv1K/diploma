@@ -1,5 +1,14 @@
 @import "../variables.scss";
 
+.infiniteScroll {
+  overflow: visible;
+  overflow-y: auto;
+}
+
+.infiniteScroll::-webkit-scrollbar {
+  display: none;
+}
+
 .instruments {
   margin-top: 20px;
   display: grid;
@@ -7,6 +16,8 @@
   gap: 20px;
   width: 100%;
   flex: 70%;
+  pointer-events: auto;
+  overflow: visible;
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
