@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 import { toast } from 'react-toastify';
 
 import Image from 'next/image';
-import { Button } from '../../components';
+import { Button } from '@/components';
 
 import { FiHeart } from 'react-icons/fi';
 
@@ -60,6 +60,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   useEffect(() => {
     const getAverageRating = async () => {
       const { averageRating } = await getInstrumentRating(id);
+
       setAverageRating(averageRating);
     };
 
@@ -161,7 +162,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         {name} <span className={styles.instrumentType}>/ {brandName}</span>
       </h4>
 
-      <div className={styles.radioButtons} onClick={e => { e.stopPropagation();}}>
+      <div className={styles.radioButtons} onClick={e => {e.stopPropagation();}}>
         {colors?.map((color: string, index: number) => (
           <label key={index} className={styles.label}>
             <input
@@ -193,4 +194,4 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   );
 };
 
-export default InstrumentCard;
+export default memo(InstrumentCard);

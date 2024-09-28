@@ -85,6 +85,10 @@ const instrumentsSlice = createSlice({
       );
     },
 
+    resetCart: state => {
+      state.cartItems = [];
+    },
+
     addLikedItemToState: (state, action: PayloadAction<any>) => {
       state.likedItems.push(action.payload);
     },
@@ -130,6 +134,7 @@ export const {
   removeItem,
   addLikedItemToState,
   removeLikedItemFromState,
+  resetCart,
 } = instrumentsSlice.actions;
 
 export default instrumentsSlice.reducer;

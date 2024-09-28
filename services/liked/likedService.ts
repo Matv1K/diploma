@@ -5,7 +5,6 @@ import { LikedItemI } from '@/types';
 export const addLikedItem = async (likedItem: LikedItemI) => {
   try {
     const response = await instance.post('/liked', likedItem);
-
     return response.data;
   } catch (error) {
     console.error('Error creating liked item: ', error);

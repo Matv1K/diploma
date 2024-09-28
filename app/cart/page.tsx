@@ -44,29 +44,8 @@ const Cart: React.FC = () => {
 
       <div className={styles.cartLayout}>
         <div className={styles.table}>
-          {cartItems?.map(({
-            _id,
-            color,
-            image,
-            price,
-            name,
-            amount,
-            instrumentId,
-            section,
-            instrumentType,
-          }: CartItemWithIdI) => (
-            <InstrumentRow
-              cartItemId={_id}
-              key={_id}
-              color={color}
-              name={name}
-              amount={amount}
-              section={section}
-              instrumentId={instrumentId}
-              image={image}
-              instrumentType={instrumentType}
-              price={price}
-            />
+          {cartItems?.map(({ _id, ...props }: CartItemWithIdI) => (
+            <InstrumentRow cartItemId={_id} key={_id} {...props} />
           ))}
         </div>
 

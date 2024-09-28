@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 
@@ -178,4 +178,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

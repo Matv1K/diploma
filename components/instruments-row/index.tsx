@@ -122,7 +122,6 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
         </Modal>
       )}
     </>
-
   );
 };
 

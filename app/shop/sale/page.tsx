@@ -76,30 +76,8 @@ const Sale: React.FC = () => {
       </div>
 
       <div className={styles.instruments}>
-        {instruments.map(({
-          _id,
-          name,
-          section,
-          price,
-          instrumentType,
-          isNew,
-          image,
-          colors,
-          brandName,
-        }: InstrumentCardI) => (
-          <InstrumentCard
-            key={_id}
-            id={_id}
-            price={price}
-            name={name}
-            section={section}
-            instrumentType={instrumentType}
-            isNew={isNew}
-            image={image}
-            colors={colors}
-            brandName={brandName}
-            withLikeIcon
-          />
+        {instruments.map(({ _id, ...props }: InstrumentCardI) => (
+          <InstrumentCard key={_id} id={_id} {...props} withLikeIcon />
         ))}
       </div>
     </main>

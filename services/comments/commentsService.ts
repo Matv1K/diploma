@@ -1,10 +1,7 @@
 import instance from '@/config/getAxiosInstance';
 
-export const createComment = async ({
-  description,
-  rating,
-  instrumentId,
-}: { description: string, rating: number, instrumentId: string | string[] }) => {
+export const createComment = async ({ description, rating, instrumentId }:
+  { description: string, rating: number, instrumentId: string | string[] }) => {
   try {
     const response = await instance.post(`/comments/${instrumentId}`, {
       description,

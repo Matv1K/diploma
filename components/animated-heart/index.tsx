@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FiHeart } from 'react-icons/fi';
+
 import styles from './index.module.scss';
+
+import { FiHeart } from 'react-icons/fi';
 
 const Heart: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -27,10 +29,10 @@ const Heart: React.FC = () => {
           className={styles.sparkle}
           style={{
             left: `${Math.random() * 100}%`,
-            top: '100%', // Random vertical position
-            backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`, // Random color
-            width: `${Math.random() * 8 + 8}px`, // Random size between 8px and 16px
-            height: `${Math.random() * 8 + 8}px`, // Random size between 8px and 16px
+            top: '100%',
+            backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
+            width: `${Math.random() * 8 + 8}px`,
+            height: `${Math.random() * 8 + 8}px`,
           }}
         />
       ))}

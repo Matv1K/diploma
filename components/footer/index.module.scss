@@ -9,6 +9,10 @@
   flex-direction: column;
   align-items: center;
 
+  .copyright {
+    margin-top: 10px;
+  }
+
   .footerContainer {
     display: flex;
     justify-content: space-between;
@@ -48,9 +52,5 @@
         }
       }
     }
-  }
-
-  .copyright {
-    margin-top: 10px;
   }
 }

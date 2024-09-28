@@ -58,21 +58,16 @@ export const getNewInstruments = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching instruments', error);
-    throw error;
   }
 };
 
 export const getInstrumentsBySection = async (section: string | string[], page: number = 1) => {
   try {
-    const response = await instance.get(`/instruments/section/${section}`, {
-      params: {
-        page, // Send the page as a query parameter
-      },
-    });
+    const response = await instance.get(`/instruments/section/${section}`, { params: { page } });
     return response.data;
   } catch (error) {
-    console.error(`Error fetching instruments for section: ${section}`, error.message);
-    throw new Error(`Failed to fetch instruments for section ${section}`);
+    console.error(`Error fetching instruments for section: ${section}`, error);
+
   }
 };
 
@@ -86,18 +81,9 @@ export const searchInstruments = async (query: string) => {
   }
 };
 
-export const getInstrumentBySubtype = async (
-  subtype: string | string[],
-  page: number = 1,
-  limit: number = 10,
-) => {
+export const getInstrumentBySubtype = async (subtype: string | string[], page: number = 1, limit: number = 10) => {
   try {
-    const response = await instance.get(`/instruments/section/subtype/${subtype}`, {
-      params: {
-        page, // Send the page number as a query parameter
-        limit, // Send the limit as a query parameter
-      },
-    });
+    const response = await instance.get(`/instruments/section/subtype/${subtype}`, { params: { page, limit } });
     return response.data;
   } catch (error) {
     console.error('Error fetching instruments', error);
