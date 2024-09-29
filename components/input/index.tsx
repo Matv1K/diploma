@@ -47,6 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
       required={required}
       autoComplete={autoComplete}
     />
+
     {icon && (
       <span className={styles.icon} onClick={handleIconClick}>
         {icon}

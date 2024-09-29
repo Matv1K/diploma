@@ -1,22 +1,19 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 
 import styles from './index.module.scss';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Catalog, Input, Dropdown, Loader } from '../../components';
-
 import { Logo } from '@/public/icons';
 import { FiShoppingCart, FiHeart, FiSettings, FiSearch, FiX } from 'react-icons/fi';
 
 import { closeCatalog, openCatalog } from '@/features/catalog/catalogSlice';
-import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
+import { fetchCartItems, removeCartItem } from '@/features/instruments/instrumentsSlice'; // Make sure to import removeCartItem
 import { fetchCurrentUser } from '@/features/user/userSlice';
-
 import { searchInstruments } from '@/services/instruments/instrumentService';
 
 import { ButtonOptions, InputTypes, InstrumentI } from '@/types';
@@ -25,35 +22,50 @@ import { RootState, AppDispatch } from '@/app/store';
 const Header: React.FC = () => {
   const [query, setQuery] = React.useState('');
   const [filteredItems, setFilteredItems] = React.useState<InstrumentI[]>([]);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   const { user, loading } = useSelector((state: RootState) => state.user);
-
   const dispatch: AppDispatch = useDispatch();
   const pathname = usePathname();
 
   const cartItems = useSelector((state: RootState) => state.instruments.cartItems);
+  const isAuthorized = !!user;
 
   useEffect(() => {
-    dispatch(fetchCurrentUser());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (user) {
+    if (isAuthorized) {
+      dispatch(fetchCurrentUser());
       dispatch(fetchCartItems());
+    } else {
+      const storedCartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+      setCartItemsCount(storedCartItems.length);
     }
-  }, [dispatch, user]);
+  }, [dispatch, isAuthorized]);
+
+  // Update cart count on sessionStorage change
+  useEffect(() => {
+    const handleCartUpdated = () => {
+      const updatedCartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+      setCartItemsCount(updatedCartItems.length);
+    };
+
+    window.addEventListener('cartUpdated', handleCartUpdated);
+    return () => window.removeEventListener('cartUpdated', handleCartUpdated);
+  }, []);
+
+  // Update cart count when cart items change
+  useEffect(() => {
+    if (isAuthorized) {
+      setCartItemsCount(cartItems.length);
+    }
+  }, [cartItems, isAuthorized]);
 
   const isCatalogOpened = useSelector((state: RootState) => state.catalog.isCatalogOpen);
 
   const getActiveIcon = (href: string) => (pathname === href ? styles.active : '');
 
-  const handleOpenCatalog = () => {
-    dispatch(openCatalog());
-  };
+  const handleOpenCatalog = () => dispatch(openCatalog());
 
-  const handleCloseCatalog = () => {
-    dispatch(closeCatalog());
-  };
+  const handleCloseCatalog = () => dispatch(closeCatalog());
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -67,9 +79,11 @@ const Header: React.FC = () => {
       const result = await searchInstruments(e.target.value);
       setFilteredItems(result);
     } catch (error) {
-      console.error(`Search failed ${error}`);
+      console.error(`Search failed: ${error}`);
     }
   };
+
+  const displayedCartItemsCount = isAuthorized && cartItems ? cartItems.length : cartItemsCount;
 
   return (
     <>
@@ -83,9 +97,7 @@ const Header: React.FC = () => {
             className={styles.buttonCatalog}
             onClick={isCatalogOpened ? handleCloseCatalog : handleOpenCatalog}
           >
-            {isCatalogOpened ? (
-              <FiX size={24} />
-            ) : (
+            {isCatalogOpened ? <FiX size={24} /> : (
               <>
                 <div className={styles.menuLine} />
                 <div className={styles.menuLine} />
@@ -102,7 +114,6 @@ const Header: React.FC = () => {
               icon={<FiSearch size={24} />}
               onChange={handleSearch}
             />
-
             {query && (
               <div className={styles.searchList}>
                 {filteredItems.length ? (
@@ -134,19 +145,13 @@ const Header: React.FC = () => {
               <Link href='/profile' className={`${styles.icon} ${getActiveIcon('/profile')}`}>
                 <FiSettings size={24} />
               </Link>
-
               <Dropdown className={styles.dropdown} />
             </div>
-
-            <div>
-              <Link href='/liked' className={`${styles.icon} ${getActiveIcon('/liked')}`}>
-                <FiHeart size={24} />
-              </Link>
-            </div>
-
+            <Link href='/liked' className={`${styles.icon} ${getActiveIcon('/liked')}`}>
+              <FiHeart size={24} />
+            </Link>
             <div className={styles.cartContainer}>
-              <span className={styles.cartAmount}>{cartItems.length}</span>
-
+              <span className={styles.cartAmount}>{displayedCartItemsCount}</span>
               <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
                 <FiShoppingCart size={24} />
               </Link>
@@ -159,10 +164,8 @@ const Header: React.FC = () => {
             <Link href='/sign-in'>
               <Button option={ButtonOptions._OUTILINE}>Sign in</Button>
             </Link>
-
             <div className={styles.cartContainer}>
-              <span className={styles.cartAmount}>{cartItems.length}</span>
-
+              <span className={styles.cartAmount}>{displayedCartItemsCount}</span>
               <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
                 <FiShoppingCart size={24} />
               </Link>
@@ -178,4 +181,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

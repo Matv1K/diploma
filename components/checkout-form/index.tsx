@@ -67,6 +67,7 @@ const CheckoutForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     handleOpenModal();
   };
 
@@ -84,11 +85,7 @@ const CheckoutForm: React.FC = () => {
         <Modal heading='Checkout' setIsModalOpened={setIsModalOpened}>
           <p className={styles.modalText}>Are you sure you want to proceed with the checkout?</p>
 
-          <Button
-            disabled={!stripe || isProcessing}
-            className={styles.checkoutButton}
-            onClick={handleConfirmCheckout}
-          >
+          <Button disabled={!stripe || isProcessing} className={styles.checkoutButton} onClick={handleConfirmCheckout}>
             {isProcessing ? 'Processing...' : `Pay ${totalPrice}$`}
           </Button>
         </Modal>

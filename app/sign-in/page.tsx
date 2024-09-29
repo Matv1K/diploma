@@ -31,10 +31,10 @@ const SignIn: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignInDataI> = async data => {
     try {
-
       await dispatch(signIn(data)).unwrap();
 
       toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
+      sessionStorage.removeItem('cartItems');
       push('/');
     } catch (error: any) {
       console.error(`Could not sign in: ${error}`);

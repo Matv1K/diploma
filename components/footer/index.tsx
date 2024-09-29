@@ -31,30 +31,15 @@ const Footer: React.FC = () => (
         <h4 className={styles.heading}>Follow Us</h4>
 
         <div className={styles.socialLinks}>
-          <Link
-            className={styles.link}
-            href='https://facebook.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
+          <Link className={styles.link} href='https://facebook.com' target='_blank' rel='noopener noreferrer'>
             <FaFacebookF />
           </Link>
 
-          <Link
-            className={styles.link}
-            href='https://twitter.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
+          <Link className={styles.link} href='https://twitter.com' target='_blank' rel='noopener noreferrer'>
             <FaTwitter />
           </Link>
 
-          <Link
-            className={styles.link}
-            href='https://instagram.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
+          <Link className={styles.link} href='https://instagram.com' target='_blank' rel='noopener noreferrer'>
             <FaInstagram />
           </Link>
         </div>

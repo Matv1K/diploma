@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { Button } from '@/components';
 
 import { logOutUser } from '@/features/user/userSlice';
+import { resetCart } from '@/features/instruments/instrumentsSlice';
 
 import { RootState, AppDispatch } from '@/app/store';
 
@@ -21,19 +22,18 @@ interface DropdownProps {
 
 const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   const { user } = useSelector((state: RootState) => state.user);
-
   const { push } = useRouter();
 
   const dispatch: AppDispatch = useDispatch();
-
   const handleLogOut = async () => {
     try {
       dispatch(logOutUser());
+      dispatch(resetCart());
       push('/');
       toast.success('Log out');
     } catch (error) {
       console.error(error);
-      toast.error('Error loggin out');
+      toast.error('Error logging out');
     }
   };
 
@@ -41,6 +41,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
     <div className={`${styles.dropdownMenu} ${className}`}>
       <div className={styles.dropdownHeader}>
         <h4>{user?.user.name} {user?.user.lastName}</h4>
+
         <p className={styles.dropdownNumber}>
           {user?.user.phoneNumber !== 0 && user?.user.phoneNumber}
         </p>
@@ -50,6 +51,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
         <Link href='/profile' className={styles.dropdownLink}>
           My profile
         </Link>
+
         <Link href='/profile/orders' className={styles.dropdownLink}>
           Order history
         </Link>
@@ -60,4 +62,4 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   );
 };
 
-export default Dropdown;
+export default memo(Dropdown);

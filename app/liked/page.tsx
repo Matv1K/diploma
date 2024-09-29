@@ -15,6 +15,8 @@ const Liked: React.FC = () => {
   const [likedItems, setLikedItems] = useState<InstrumentCardI[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  console.log(likedItems);
+
   useEffect(() => {
     const fetchLikedItems = async () => {
       const items = await getLikedItems();
@@ -51,31 +53,8 @@ const Liked: React.FC = () => {
       <h2>Liked Items</h2>
 
       <div className={styles.table}>
-        {likedItems.map(({
-          _id,
-          price,
-          name,
-          section,
-          instrumentId,
-          isNew = false,
-          image,
-          colors,
-          brandName,
-          instrumentType,
-        }: InstrumentCardI) => (
-          <InstrumentCard
-            key={_id}
-            name={name}
-            instrumentType={instrumentType}
-            section={section}
-            price={price}
-            colors={colors}
-            image={image}
-            id={instrumentId}
-            brandName={brandName}
-            isNew={isNew}
-            withLikeIcon
-          />
+        {likedItems.map(({ _id, ...props }: InstrumentCardI) => (
+          <InstrumentCard key={_id} id={_id} withLikeIcon {...props} />
         ))}
       </div>
     </main>

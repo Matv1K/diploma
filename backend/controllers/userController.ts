@@ -73,6 +73,10 @@ class UserController {
     try {
       const userId = req.payload?.id;
 
+      if (!userId) {
+        return res.status(401).json({ message: 'Unauthorized access. Please log in.' });
+      }
+
       const user = await UserService.fetchUserById(userId);
 
       if (!user) {

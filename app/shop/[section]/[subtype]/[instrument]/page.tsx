@@ -49,18 +49,25 @@ const Instrument: React.FC = () => {
   const [rating, setRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const { user } = useSelector((state: RootState) => state.user);
+
   const dispatch = useDispatch();
   const { instrument: instrumentId } = useParams();
 
   const comments = useSelector((state: RootState) => state.comments.comments);
+
+  const isAuthorized = !!user;
 
   useEffect(() => {
     const fetchInstrument = async () => {
       const instrument = await getInstrument(instrumentId);
       setInstrument(instrument);
 
-      const likedItem = await getLikedItem(instrumentId);
-      setIsLiked(!!likedItem);
+      if (isAuthorized) {
+        const likedItem = await getLikedItem(instrumentId);
+        setIsLiked(!!likedItem);
+      }
+
       setIsLoading(false);
     };
 
@@ -205,13 +212,13 @@ const Instrument: React.FC = () => {
               <h3 className={styles.infoPrice}>
                 {instrument?.onSale && (
                   <>
-                    <span className={styles.priceOriginal}>{instrument.price}$</span>
-                    <span>{instrument.salePrice}$</span>
+                    <span className={styles.priceOriginal}>{instrument?.price}$</span>
+                    <span>{instrument?.salePrice}$</span>
                   </>
                 )}
 
                 {!instrument?.onSale && (
-                  <span>{instrument.price}$</span>
+                  <span>{instrument?.price}$</span>
                 )}
               </h3>
 
@@ -240,7 +247,7 @@ const Instrument: React.FC = () => {
             <h4>Description: </h4>
             <p className={styles.instrumentDescription}>{instrument?.description}</p>
 
-            {instrument.characteristics && (
+            {instrument?.characteristics && (
               <div>
                 <h4>Characteristics: </h4>
                 <ul className={styles.instrumentSpecs}>

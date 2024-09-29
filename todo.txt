@@ -9,10 +9,12 @@
 9. Fix stripe
 10. ADD FILTERING LOGIC
 11. User is not able to checkout if he does not specify the phone number and address
-12. When checkout immediately update cart amount in the header
-13. When logout update header information
-14. If there is no current user, add items to cart (store them in session storage)
-15. Remove liked icon if the user is not signed in
+
+
+1. When checkout immediately update cart amount in the header
+2. Fix liked icon on liked page
+3. Add total price on checkout page (session storage)
+4. Create order with unauthorized user (store phone number and address in the order collection)
 
 //! LOW PRIORITY
 
@@ -35,6 +37,8 @@
 17. Close search when click on the element
 18. ADD FAVICON
 19. Change LOGO (musify)
+20. When the user is not authorized go to sign in page if u want to like something
+21. Instrument row should have images
 
 //INVESTIGATE
 
@@ -58,3 +62,4 @@
 18. Vercel deployment
 19. CDN what is that
 20. ORM what is that
+21. Cloudflare
