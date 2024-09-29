@@ -16,14 +16,21 @@ const initialState: UserState = {
   error: null,
 };
 
-export const fetchCurrentUser = createAsyncThunk('user/fetchCurrentUser', async (_, { rejectWithValue }) => {
-  try {
-    const user = await getCurrentUser();
-    return user;
-  } catch (error) {
-    return rejectWithValue(`Failed to fetch user: ${error}`);
-  }
-});
+export const fetchCurrentUser = createAsyncThunk(
+  'user/fetchCurrentUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = await getCurrentUser();
+      return user;
+    } catch (error) {
+      if (error.response?.status === 401) {
+        // User is unauthorized
+        return rejectWithValue('User is not authorized');
+      }
+      return rejectWithValue(`Failed to fetch user: ${error.message}`);
+    }
+  },
+);
 
 export const signUp = createAsyncThunk(
   'user/signUp',

@@ -1,30 +1,40 @@
 'use client';
 
+<<<<<<< Updated upstream
 import React, { useState, useEffect, memo } from 'react';
+=======
+<<<<<<< Updated upstream
+import React, { useState, useEffect } from 'react';
+>>>>>>> Stashed changes
 import { useDispatch } from 'react-redux';
+=======
+import React, { useState, useEffect, memo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+>>>>>>> Stashed changes
 import { useRouter } from 'next/navigation';
-
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './index.module.scss';
-
 import { toast } from 'react-toastify';
-
 import Image from 'next/image';
+<<<<<<< Updated upstream
 import { Button } from '@/components';
+=======
+<<<<<<< Updated upstream
+import { Button } from '../../components';
+>>>>>>> Stashed changes
 
+=======
+import { Button } from '@/components';
+>>>>>>> Stashed changes
 import { FiHeart } from 'react-icons/fi';
-
 import { getRatingString } from '@/utils';
-
-import { addItemToCart } from '@/features/instruments/instrumentsSlice';
-import { likeItem, unlikeItem } from '@/features/instruments/instrumentsSlice';
-
+import { addItemToCart, likeItem, unlikeItem } from '@/features/instruments/instrumentsSlice';
 import { addCartItem } from '@/services/cart/cartService';
-import { getLikedItem } from '@/services/liked/likedService';
 import { getInstrumentRating } from '@/services/instruments/instrumentService';
+import { AppDispatch, RootState } from '@/app/store';
+import { v4 as uuidv4 } from 'uuid';
 
-import { AppDispatch } from '@/app/store';
-
+import { getLikedItem } from '@/services/liked/likedService';
 interface InstrumentCardProps {
   isNew?: boolean;
   name: string;
@@ -49,31 +59,42 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   id,
   colors,
   withLikeIcon,
+  liked = false,
   brandName,
 }) => {
   const [selectedColor, setSelectedColor] = useState<string>('');
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(liked);
   const [averageRating, setAverageRating] = useState(0);
 
+  const user = useSelector((state: RootState) => state.user.user);
+
   const dispatch: AppDispatch = useDispatch();
+  const { push } = useRouter();
 
   useEffect(() => {
     const getAverageRating = async () => {
       const { averageRating } = await getInstrumentRating(id);
+<<<<<<< Updated upstream
 
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
       setAverageRating(averageRating);
     };
+=======
 
-    const checkLiked = async () => {
-      const likedItem = await getLikedItem(id);
-      setIsLiked(!!likedItem);
+      if (user) {
+        const likedItem = await getLikedItem(id);
+
+        setIsLiked(!!likedItem);
+      }
+      setAverageRating(averageRating);
+>>>>>>> Stashed changes
+
     };
 
     getAverageRating();
-    checkLiked();
   }, [id]);
-
-  const { push } = useRouter();
 
   const handleInstrumentNavigation = () => {
     push(`/shop/${section}/${instrumentType}/${id}`);
@@ -85,7 +106,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
     try {
       if (isLiked) {
         await dispatch(unlikeItem(id));
-
         toast.success('You do not like the item anymore');
         setIsLiked(false);
       } else {
@@ -99,7 +119,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           section,
           instrumentType,
         }));
-
         toast.success('You like the item');
         setIsLiked(true);
       }
@@ -107,33 +126,43 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       toast.error(`Something went wrong: ${error}`);
     }
   };
-
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
+    // Generate a unique cartItemId for unauthenticated users
+    const cartItemId = uuidv4();
+
+    const newItem = {
+      cartItemId, // Assign unique ID
+      name,
+      image,
+      color: selectedColor,
+      brandName,
+      instrumentId: id,
+      section,
+      amount: 1,
+      instrumentType,
+      price,
+    };
+
     try {
-      const newItem = await addCartItem({
-        name,
-        image,
-        color: selectedColor,
-        brandName: 'cort',
-        instrumentId: id,
-        section,
-        amount: 1,
-        instrumentType,
-        price,
-      });
-
-      dispatch(addItemToCart(newItem));
-
-      toast.success(`${name} has been added to the cart!`);
-      push('/');
-    } catch (error: any) {
-      if (error.response.data.message) {
-        toast.error(error.response.data.message);
+      if (user) {
+        const addedItem = await addCartItem(newItem);
+        dispatch(addItemToCart(addedItem));
+        toast.success(`${name} has been added to the cart!`);
+        push('/');
       } else {
-        toast.error('Failed to add item to the cart. Try again later');
+        // Add newItem to session storage with unique cartItemId
+        const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+        cartItems.push(newItem);
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+        toast.success(`${name} has been added to the cart (session)`);
+
+        // Dispatch a custom event to notify Header component
+        window.dispatchEvent(new Event('cartUpdated'));
       }
+    } catch (error) {
+      toast.error('Failed to add item to the cart. Try again later');
     }
   };
 
@@ -147,7 +176,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         <Image
           className={styles.instrumentImage}
           src={image}
-          alt='guitar'
+          alt='instrument'
           width={200}
           height={200}
           priority
@@ -183,7 +212,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
       {isNew && <div className={styles.newPin}>New</div>}
 
-      {withLikeIcon && (
+      {user && withLikeIcon && (
         <FiHeart
           size={24}
           onClick={handleLikeItem}

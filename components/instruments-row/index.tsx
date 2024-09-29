@@ -1,17 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './index.module.scss';
 
 import { toast } from 'react-toastify';
-
 import Link from 'next/link';
 import { Button, Modal } from '@/components';
-
 import { FiTrash2 } from 'react-icons/fi';
 
+import { RootState } from '@/app/store';
 import { removeItem, increaseItemAmount, decreaseItemAmount } from '@/features/instruments/instrumentsSlice';
 
 import { removeCartItem, increaseAmount, decreaseAmount } from '@/services/cart/cartService';
@@ -37,49 +36,106 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   color,
   price,
   amount,
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   image,
 }) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
-
+  const [localAmount, setLocalAmount] = useState(amount); // Local state to track amount
   const dispatch = useDispatch();
 
+  const user = useSelector((state: RootState) => state.user.user);
+
   const handleIncreaseCount = async () => {
+    // Increase amount in the UI immediately
+    setLocalAmount(localAmount + 1);
+
     try {
-      await increaseAmount(cartItemId);
-      dispatch(increaseItemAmount(cartItemId));
+      dispatch(increaseItemAmount(cartItemId)); // Optimistic UI update in Redux
+
+      if (user) {
+        await increaseAmount(cartItemId); // Update backend for authenticated user
+      } else {
+        const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+        const updatedCart = cart.map((item: any) => {
+          if (item.cartItemId === cartItemId) {
+            return { ...item, amount: item.amount + 1 };
+          }
+          return item;
+        });
+        sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+
+        // Trigger event to notify that session storage has changed
+        window.dispatchEvent(new Event('cartUpdated'));
+      }
     } catch (error) {
       console.error('Failed to increase item amount:', error);
     }
   };
 
   const handleDecreaseCount = async () => {
-    try {
-      await decreaseAmount(cartItemId);
-      dispatch(decreaseItemAmount(cartItemId));
-    } catch (error) {
-      console.error('Failed to decrease item amount:', error);
-    }
-  };
+    if (localAmount > 1) {
+      setLocalAmount(localAmount - 1); // Immediately update UI
 
-  const handleOpenModal = () => {
-    setIsModalOpened(true);
+      try {
+        dispatch(decreaseItemAmount(cartItemId)); // Optimistic UI update in Redux
+
+        if (user) {
+          await decreaseAmount(cartItemId); // Update backend for authenticated user
+        } else {
+          const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+          const updatedCart = cart.map((item: any) => {
+            if (item.cartItemId === cartItemId) {
+              return { ...item, amount: item.amount - 1 };
+            }
+            return item;
+          });
+          sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+
+          window.dispatchEvent(new Event('cartUpdated'));
+        }
+      } catch (error) {
+        console.error('Failed to decrease item amount:', error);
+      }
+    }
   };
 
   const handleRemoveItem = async () => {
     try {
-      await removeCartItem(cartItemId);
-      dispatch(removeItem(cartItemId));
+      if (user) {
+        await removeCartItem(cartItemId);
+      } else {
+        const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+        const updatedCart = cart.filter((item: any) => item.cartItemId !== cartItemId);
+        sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
 
+        window.dispatchEvent(new Event('cartUpdated'));
+      }
+      dispatch(removeItem(cartItemId));
       toast.success('Item has been removed from the cart');
     } catch (error) {
-      console.error('Failed to remove cart item:', error);
+      toast.error('Failed to remove item');
+    } finally {
+      setIsModalOpened(false);
     }
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpened(false);
-  };
+  // Listen for cart updates in sessionStorage
+  useEffect(() => {
+    const handleCartUpdate = () => {
+      const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+      const currentItem = cart.find((item: any) => item.cartItemId === cartItemId);
+
+      if (currentItem) {
+        setLocalAmount(currentItem.amount); // Sync local state with sessionStorage
+      }
+    };
+
+    // Listen to the custom event
+    window.addEventListener('cartUpdated', handleCartUpdate);
+
+    return () => {
+      window.removeEventListener('cartUpdated', handleCartUpdate);
+    };
+  }, [cartItemId]);
 
   return (
     <>
@@ -96,28 +152,25 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
 
         <div className={styles.cell}>
           <Button className={styles.operator} onClick={handleDecreaseCount}>-</Button>
-          {amount}
+          {localAmount}
           <Button className={styles.operator} onClick={handleIncreaseCount}>+</Button>
         </div>
 
         <div className={styles.cell}>{price}$</div>
 
         <div className={styles.cell}>
-          <FiTrash2 onClick={handleOpenModal} className={styles.iconTrash} size={24} />
+          <FiTrash2 onClick={() => setIsModalOpened(true)} className={styles.iconTrash} size={24} />
         </div>
       </div>
 
       {isModalOpened && (
         <Modal heading='Remove' setIsModalOpened={setIsModalOpened}>
-
           <p className={styles.modalText}>Are you sure you want to remove the item from the cart?</p>
-
           <div className={styles.modalButtons}>
             <Button className={styles.modalButton} onClick={handleRemoveItem}>
               <FiTrash2 className={styles.iconTrash} size={24} />
             </Button>
-
-            <Button className={styles.modalButton} onClick={handleCloseModal}>Cancel</Button>
+            <Button className={styles.modalButton} onClick={() => setIsModalOpened(false)}>Cancel</Button>
           </div>
         </Modal>
       )}
