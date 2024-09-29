@@ -1,31 +1,14 @@
 'use client';
 
-<<<<<<< Updated upstream
-import React, { useState, useEffect, memo } from 'react';
-=======
-<<<<<<< Updated upstream
-import React, { useState, useEffect } from 'react';
->>>>>>> Stashed changes
-import { useDispatch } from 'react-redux';
-=======
 import React, { useState, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
->>>>>>> Stashed changes
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './index.module.scss';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-<<<<<<< Updated upstream
 import { Button } from '@/components';
-=======
-<<<<<<< Updated upstream
-import { Button } from '../../components';
->>>>>>> Stashed changes
 
-=======
-import { Button } from '@/components';
->>>>>>> Stashed changes
 import { FiHeart } from 'react-icons/fi';
 import { getRatingString } from '@/utils';
 import { addItemToCart, likeItem, unlikeItem } from '@/features/instruments/instrumentsSlice';
@@ -74,14 +57,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   useEffect(() => {
     const getAverageRating = async () => {
       const { averageRating } = await getInstrumentRating(id);
-<<<<<<< Updated upstream
-
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-      setAverageRating(averageRating);
-    };
-=======
 
       if (user) {
         const likedItem = await getLikedItem(id);
@@ -89,7 +64,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         setIsLiked(!!likedItem);
       }
       setAverageRating(averageRating);
->>>>>>> Stashed changes
 
     };
 

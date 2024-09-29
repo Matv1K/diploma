@@ -1,14 +1,6 @@
 'use client';
 
-<<<<<<< Updated upstream
-import React, { useEffect, memo } from 'react';
-=======
-<<<<<<< Updated upstream
-import React, { useEffect } from 'react';
-=======
 import React, { useEffect, memo, useState } from 'react';
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 import { useDispatch, useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 

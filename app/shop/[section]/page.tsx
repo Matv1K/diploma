@@ -121,25 +121,11 @@ const Section: React.FC = () => {
       </div>
 
       <InfiniteScroll
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
         dataLength={instruments.length} // Length of the current data
         next={loadMoreInstruments} // Method to load more data
         hasMore={hasMore} // Condition to check if more data is available
         loader={<h4>Loading more instruments...</h4>} // Loader component
         endMessage={<p>No more instruments to load</p>} // End message when no more items to load
-=======
->>>>>>> Stashed changes
-        dataLength={instruments.length}
-        next={loadMoreInstruments}
-        hasMore={hasMore}
-        loader={<h4>Loading more instruments...</h4>}
-<<<<<<< Updated upstream
-        endMessage={<p>No more instruments to load</p>}
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
       >
         <div className={styles.instruments}>
           {instruments.map(({ _id, ...props }: InstrumentI) => (

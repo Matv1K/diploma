@@ -67,42 +67,12 @@ const Cart: React.FC = () => {
 
       <div className={styles.cartLayout}>
         <div className={styles.table}>
-<<<<<<< Updated upstream
-          {cartItems?.map(({ _id, ...props }: CartItemWithIdI) => (
-            <InstrumentRow cartItemId={_id} key={_id} {...props} />
-=======
-<<<<<<< Updated upstream
-          {cartItems?.map(({
-            _id,
-            color,
-            image,
-            price,
-            name,
-            amount,
-            instrumentId,
-            section,
-            instrumentType,
-          }: CartItemWithIdI) => (
-            <InstrumentRow
-              cartItemId={_id}
-              key={_id}
-              color={color}
-              name={name}
-              amount={amount}
-              section={section}
-              instrumentId={instrumentId}
-              image={image}
-              instrumentType={instrumentType}
-              price={price}
-=======
           {displayedCartItems?.map((item: CartItemWithIdI) => (
             <InstrumentRow
               cartItemId={item.cartItemId || item._id}
               key={item.cartItemId || item._id}
               {...item}
->>>>>>> Stashed changes
             />
->>>>>>> Stashed changes
           ))}
         </div>
 
