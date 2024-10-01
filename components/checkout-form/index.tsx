@@ -4,14 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStripe, PaymentElement } from '@stripe/react-stripe-js';
 import { useForm, Controller } from 'react-hook-form';
-import { useSelector } from 'react-redux'; // Import useSelector to get user data from Redux
+import { useSelector, useDispatch } from 'react-redux';
 
-import PhoneInput from 'react-phone-input-2';
+import { toast } from 'react-toastify';
+
 import 'react-phone-input-2/lib/style.css';
-
 import styles from './index.module.scss';
 
-import { Button, Modal, Input } from '@/components'; // Assuming custom Input component is imported from here
+import PhoneInput from 'react-phone-input-2';
+import { Button, Modal, Input } from '@/components';
+
+import { resetCart } from '@/features/instruments/instrumentsSlice';
 
 import { getCartItems } from '@/services/cart/cartService';
 import { createOrder } from '@/services/orders/ordersService';
@@ -19,27 +22,19 @@ import { createOrder } from '@/services/orders/ordersService';
 import { ButtonTypes } from '@/types';
 
 const CheckoutForm: React.FC = () => {
-  const [cartItems, setCartItems] = useState<any[]>([]); // Ensure proper typing
+  const [cartItems, setCartItems] = useState<any[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
   const stripe = useStripe();
   const { push } = useRouter();
 
-  // Get current user details from Redux store
-  const { user } = useSelector((state: any) => state.user); // Assuming the user is stored in the auth slice
+  const { user } = useSelector((state: any) => state.user);
 
-  console.log(user);
-
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors, isValid },
-  } = useForm({
-    mode: 'onChange', // Real-time validation
+  const { control, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
+    mode: 'onChange',
     defaultValues: {
       phoneNumber: '',
       country: '',
@@ -48,23 +43,19 @@ const CheckoutForm: React.FC = () => {
     },
   });
 
-  // Watch form fields to disable submit if any field is empty
   const watchAllFields = watch();
 
-  // Fetch cart items and set form values based on user data
   useEffect(() => {
     const fetchCartItemsAndSetUserData = async () => {
       let items = [];
       let totalPrice = 0;
 
-      // Check if user is logged in and fetch cart items accordingly
       if (user?.user) {
         try {
           const response = await getCartItems();
           items = response.cartItems;
           totalPrice = response.totalPrice;
 
-          // If user is logged in, populate form with user data
           setValue('phoneNumber', user.user.phoneNumber || '');
           setValue('country', user.user.address?.country || '');
           setValue('city', user.user.address?.city || '');
@@ -73,14 +64,13 @@ const CheckoutForm: React.FC = () => {
           console.error('Error fetching cart items:', error);
         }
       } else {
-        // If user is not logged in, get cart items from session storage
         const sessionCartItems = sessionStorage.getItem('cartItems');
+
         if (sessionCartItems) {
           items = JSON.parse(sessionCartItems);
           totalPrice = items.reduce((total: number, item: any) => total + item.price * item.amount, 0);
         }
 
-        // Clear form values for non-authorized users
         setValue('phoneNumber', '');
         setValue('country', '');
         setValue('city', '');
@@ -101,7 +91,6 @@ const CheckoutForm: React.FC = () => {
   const onConfirmCheckout = async () => {
     setIsProcessing(true);
 
-    // Prepare the order items based on cart items
     const orderItems = cartItems.map(({ _id, name, color, price, instrumentId, amount }) => ({
       _id,
       name,
@@ -122,20 +111,29 @@ const CheckoutForm: React.FC = () => {
       await createOrder({
         items: orderItems,
         totalPrice,
+        phoneNumber: formValues.phoneNumber,
         address: {
           country: formValues.country,
           city: formValues.city,
           address: formValues.address,
         },
-        phoneNumber: formValues.phoneNumber,
       });
+
+      sessionStorage.removeItem('cartItems');
+
+      if (user?.user) {
+        dispatch(resetCart());
+      }
+
+      window.dispatchEvent(new Event('cartUpdated'));
+
+      toast.success('Item has been ordered');
       push('/');
     } catch (error) {
       console.error('Error processing order:', error);
     } finally {
       setIsProcessing(false);
       setIsModalOpened(false);
-      sessionStorage.removeItem('cartItems'); // Optionally clear session storage
     }
   };
 
@@ -153,72 +151,69 @@ const CheckoutForm: React.FC = () => {
         <Modal heading='Checkout' setIsModalOpened={setIsModalOpened}>
           <p className={styles.modalText}>Please confirm your details before proceeding:</p>
 
-          {/* Phone Number Input (using PhoneInput component with react-hook-form) */}
-          <Controller
-            name='phoneNumber'
-            control={control}
-            rules={{ required: 'Phone number is required' }}
-            render={({ field }) => (
-              <PhoneInput
-                country={'us'}
-                value={field.value}
-                onChange={phone => field.onChange(phone)}
-                containerClass={styles.phoneInputContainer}
-                inputClass={styles.phoneInput}
-                inputProps={{
-                  name: 'phone',
-                  required: true,
-                  autoFocus: true,
-                }}
-              />
-            )}
-          />
-          {errors.phoneNumber && <p className={styles.error}>{errors.phoneNumber.message}</p>}
+          <div className={styles.inputGroup}>
+            <Controller
+              name='phoneNumber'
+              control={control}
+              rules={{ required: 'Phone number is required' }}
+              render={({ field }) => (
+                <PhoneInput
+                  country={'us'}
+                  value={field.value}
+                  onChange={phone => field.onChange(phone)}
+                  inputClass={styles.input}
+                  inputProps={{
+                    name: 'phone',
+                    required: true,
+                    autoFocus: true,
+                  }}
+                />
+              )}
+            />
+            {errors.phoneNumber && <p className={styles.error}>{errors.phoneNumber.message}</p>}
 
-          {/* Country Input */}
-          <Controller
-            name='country'
-            control={control}
-            rules={{ required: 'Country is required' }}
-            render={({ field }) => (
-              <Input
-                label='Country'
-                {...field}
-                error={errors.country?.message}
-                placeholder='Enter your country'
-              />
-            )}
-          />
+            <Controller
+              name='country'
+              control={control}
+              rules={{ required: 'Country is required' }}
+              render={({ field }) => (
+                <Input
+                  placeholder='Enter your country'
+                  error={errors.country?.message}
+                  className={styles.input}
+                  {...field}
+                />
+              )}
+            />
 
-          {/* City Input */}
-          <Controller
-            name='city'
-            control={control}
-            rules={{ required: 'City is required' }}
-            render={({ field }) => (
-              <Input
-                label='City'
-                {...field}
-                error={errors.city?.message}
-                placeholder='Enter your city'
-              />
-            )}
-          />
+            <Controller
+              name='city'
+              control={control}
+              rules={{ required: 'City is required' }}
+              render={({ field }) => (
+                <Input
+                  placeholder='Enter your city'
+                  error={errors.city?.message}
+                  className={styles.input}
+                  {...field}
+                />
+              )}
+            />
 
-          {/* Address Input */}
-          <Controller
-            name='address'
-            control={control}
-            rules={{ required: 'Address is required' }}
-            render={({ field }) => (
-              <Input
-                label='Address'
-                {...field}
-                error={errors.address?.message}
-                placeholder='Enter your address'
-              />
-            )}
-          />
+            <Controller
+              name='address'
+              control={control}
+              rules={{ required: 'Address is required' }}
+              render={({ field }) => (
+                <Input
+                  placeholder='Enter your address'
+                  error={errors.address?.message}
+                  className={styles.input}
+                  {...field}
+                />
+              )}
+            />
+          </div>
 
           <Button
             disabled={!stripe || isProcessing || !isValid}

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import styles from './page.module.scss';
 
@@ -52,6 +52,7 @@ const Instrument: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
+  const { push } = useRouter();
   const { instrument: instrumentId } = useParams();
 
   const comments = useSelector((state: RootState) => state.comments.comments);
@@ -110,33 +111,37 @@ const Instrument: React.FC = () => {
   };
 
   const handleLikeItem = async () => {
-    try {
-      if (isLiked) {
-        await deleteLikedItem(instrumentId);
-        dispatch(removeLikedItemFromState(instrumentId));
+    if (isAuthorized) {
+      try {
+        if (isLiked) {
+          await deleteLikedItem(instrumentId);
+          dispatch(removeLikedItemFromState(instrumentId));
 
-        setIsLiked(false);
-        toast.success(`${instrument.name} has been unliked.`);
-      } else {
-        const likedData = {
-          price: instrument?.price,
-          name: instrument?.name,
-          image: instrument?.image,
-          colors: instrument?.colors,
-          brandName: instrument?.brandName,
-          instrumentId: instrument?._id,
-          section: instrument?.section,
-          instrumentType: instrument?.instrumentType,
-        };
+          setIsLiked(false);
+          toast.success(`${instrument.name} has been unliked.`);
+        } else {
+          const likedData = {
+            price: instrument?.price,
+            name: instrument?.name,
+            image: instrument?.image,
+            colors: instrument?.colors,
+            brandName: instrument?.brandName,
+            instrumentId: instrument?._id,
+            section: instrument?.section,
+            instrumentType: instrument?.instrumentType,
+          };
 
-        await addLikedItem(likedData);
-        dispatch(addLikedItemToState(likedData));
+          await addLikedItem(likedData);
+          dispatch(addLikedItemToState(likedData));
 
-        setIsLiked(true);
-        toast.success(`${instrument.name} has been liked!`);
+          setIsLiked(true);
+          toast.success(`${instrument.name} has been liked!`);
+        }
+      } catch (error) {
+        toast.error(`Failed to update like status for ${instrument.name}: ${error}`);
       }
-    } catch (error) {
-      toast.error(`Failed to update like status for ${instrument.name}: ${error}`);
+    } else {
+      push('/sign-in');
     }
   };
 
@@ -151,24 +156,28 @@ const Instrument: React.FC = () => {
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!commentText || rating === 0) {
-      alert('Please provide a comment and a rating.');
-      return;
-    }
+    if (isAuthorized) {
+      if (!commentText || rating === 0) {
+        alert('Please provide a comment and a rating.');
+        return;
+      }
 
-    try {
-      const newComment = await createComment({
-        rating,
-        description: commentText,
-        instrumentId,
-      });
+      try {
+        const newComment = await createComment({
+          rating,
+          description: commentText,
+          instrumentId,
+        });
 
-      dispatch(addComment(newComment));
+        dispatch(addComment(newComment));
 
-      setCommentText('');
-      setRating(0);
-    } catch (error) {
-      console.error('Error submitting comment:', error);
+        setCommentText('');
+        setRating(0);
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+      }
+    } else {
+      push('/sign-in');
     }
   };
 

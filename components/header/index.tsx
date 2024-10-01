@@ -31,8 +31,6 @@ const Header: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.instruments.cartItems);
   const isAuthorized = typeof window !== 'undefined' && !!localStorage.getItem('token');
 
-  console.log(isAuthorized, user);
-
   useEffect(() => {
     if (isAuthorized) {
       dispatch(fetchCurrentUser());
@@ -47,11 +45,18 @@ const Header: React.FC = () => {
     const handleCartUpdated = () => {
       const updatedCartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
       setCartItemsCount(updatedCartItems.length);
+
+      if (isAuthorized) {
+        dispatch(fetchCartItems());
+      }
     };
 
     window.addEventListener('cartUpdated', handleCartUpdated);
-    return () => window.removeEventListener('cartUpdated', handleCartUpdated);
-  }, []);
+
+    return () => {
+      window.removeEventListener('cartUpdated', handleCartUpdated);
+    };
+  }, [dispatch, isAuthorized]);
 
   useEffect(() => {
     if (isAuthorized) {
@@ -80,6 +85,10 @@ const Header: React.FC = () => {
     } catch (error) {
       console.error(`Search failed: ${error}`);
     }
+  };
+
+  const handleCloseSearchMenu = () => {
+    setQuery('');
   };
 
   const displayedCartItemsCount = isAuthorized && cartItems ? cartItems.length : cartItemsCount;
@@ -122,6 +131,7 @@ const Header: React.FC = () => {
                       <Link
                         className={styles.searchItemLink}
                         href={`/shop/${section}/${instrumentType}/${_id}`}
+                        onClick={handleCloseSearchMenu}
                       >
                         {name}
                       </Link>

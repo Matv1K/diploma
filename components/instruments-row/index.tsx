@@ -6,14 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.scss';
 
 import { toast } from 'react-toastify';
+
+import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Modal } from '@/components';
+
 import { FiTrash2 } from 'react-icons/fi';
 
-import { RootState } from '@/app/store';
 import { removeItem, increaseItemAmount, decreaseItemAmount } from '@/features/instruments/instrumentsSlice';
 
 import { removeCartItem, increaseAmount, decreaseAmount } from '@/services/cart/cartService';
+
+import { RootState } from '@/app/store';
 
 interface InstrumentRowProps {
   instrumentId: string;
@@ -56,10 +60,10 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       dispatch(increaseItemAmount(cartItemId));
 
       if (user) {
-        await increaseAmount(cartItemId); // Update backend for authenticated user
+        await increaseAmount(cartItemId);
       } else {
         const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-        const updatedCart = cart.map((item: any) => item.cartItemId === cartItemId
+        const updatedCart = cart.map((item: any) => item._id === cartItemId
           ? { ...item, amount: item.amount + 1 }
           : item);
         sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
@@ -67,7 +71,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       }
     } catch (error) {
       console.error('Failed to increase item amount:', error);
-      setLocalAmount(prevAmount); // Rollback UI
+      setLocalAmount(prevAmount);
     }
   };
 
@@ -77,13 +81,13 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       setLocalAmount(localAmount - 1);
 
       try {
-        dispatch(decreaseItemAmount(cartItemId)); // Optimistic UI update
+        dispatch(decreaseItemAmount(cartItemId));
 
         if (user) {
           await decreaseAmount(cartItemId);
         } else {
           const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-          const updatedCart = cart.map((item: any) => item.cartItemId === cartItemId
+          const updatedCart = cart.map((item: any) => item._id === cartItemId
             ? { ...item, amount: item.amount - 1 }
             : item);
           sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
@@ -91,7 +95,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
         }
       } catch (error) {
         console.error('Failed to decrease item amount:', error);
-        setLocalAmount(prevAmount); // Rollback UI
+        setLocalAmount(prevAmount);
       }
     }
   };
@@ -102,13 +106,13 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
         await removeCartItem(cartItemId);
       } else {
         const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-        const updatedCart = cart.filter((item: any) => item.cartItemId !== cartItemId);
+        const updatedCart = cart.filter((item: any) => item._id !== cartItemId);
         sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
         window.dispatchEvent(new Event('cartUpdated'));
       }
       dispatch(removeItem(cartItemId));
       toast.success('Item has been removed from the cart');
-    } catch (error) {
+    } catch (error: any) {
       toast.error('Failed to remove item');
     } finally {
       setIsModalOpened(false);
@@ -118,7 +122,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   useEffect(() => {
     const handleCartUpdate = () => {
       const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-      const currentItem = cart.find((item: any) => item.cartItemId === cartItemId);
+      const currentItem = cart.find((item: any) => item._id === cartItemId);
       if (currentItem) setLocalAmount(currentItem.amount);
     };
 
@@ -134,7 +138,8 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
       <div className={styles.row}>
         <div className={styles.cell}>
           <div className={styles.cellContainer}>
-            <div className={styles.image} />
+            <Image alt='' width={50} height={50} src={image} className={styles.image} />
+
             <Link href={`/shop/${section}/${instrumentType}/${instrumentId}`} className={styles.link}>
               {name} / <span className={styles.color}>{color}</span>
             </Link>

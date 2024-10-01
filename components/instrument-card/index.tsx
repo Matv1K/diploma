@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
@@ -77,36 +77,40 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const handleLikeItem = async (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.stopPropagation();
 
-    try {
-      if (isLiked) {
-        await dispatch(unlikeItem(id));
-        toast.success('You do not like the item anymore');
-        setIsLiked(false);
-      } else {
-        await dispatch(likeItem({
-          price,
-          name,
-          image,
-          colors,
-          brandName,
-          instrumentId: id,
-          section,
-          instrumentType,
-        }));
-        toast.success('You like the item');
-        setIsLiked(true);
+    if (user) {
+      try {
+        if (isLiked) {
+          await dispatch(unlikeItem(id));
+          toast.success('You do not like the item anymore');
+          setIsLiked(false);
+        } else {
+          await dispatch(likeItem({
+            price,
+            name,
+            image,
+            colors,
+            brandName,
+            instrumentId: id,
+            section,
+            instrumentType,
+          }));
+          toast.success('You like the item');
+          setIsLiked(true);
+        }
+      } catch (error) {
+        toast.error(`Something went wrong: ${error}`);
       }
-    } catch (error) {
-      toast.error(`Something went wrong: ${error}`);
+    } else {
+      push('/sign-in');
     }
   };
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    const cartItemId = uuidv4();
+    const _id = uuidv4();
 
     const newItem = {
-      cartItemId, // Assign unique ID
+      _id,
       name,
       image,
       color: selectedColor,
@@ -121,20 +125,20 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
     try {
       if (user) {
         const addedItem = await addCartItem(newItem);
+
         dispatch(addItemToCart(addedItem));
         toast.success(`${name} has been added to the cart!`);
         push('/');
       } else {
-        // Add newItem to session storage with unique cartItemId
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
         cartItems.push(newItem);
-        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-        toast.success(`${name} has been added to the cart (session)`);
 
-        // Dispatch a custom event to notify Header component
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        toast.success(`${name} has been added to the cart (session)`);
         window.dispatchEvent(new Event('cartUpdated'));
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error('Failed to add item to the cart. Try again later');
     }
   };
@@ -185,7 +189,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
       {isNew && <div className={styles.newPin}>New</div>}
 
-      {user && withLikeIcon && (
+      {withLikeIcon && (
         <FiHeart
           size={24}
           onClick={handleLikeItem}
