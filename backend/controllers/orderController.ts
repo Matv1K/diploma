@@ -9,10 +9,11 @@ interface AuthenticatedRequest extends Request {
 class OrderController {
   async createOrder(req: AuthenticatedRequest, res: Response) {
     try {
-      const { items, totalPrice } = req.body;
-      const userId = req.payload?.id;
+      const { items, totalPrice, address, phoneNumber } = req.body;
 
-      const newOrder = await OrderService.createNewOrder(userId, items, totalPrice);
+      const userId = req.payload?.id || '';
+
+      const newOrder = await OrderService.createNewOrder(userId, items, totalPrice, address, phoneNumber);
 
       res.status(201).json(newOrder);
     } catch (error) {

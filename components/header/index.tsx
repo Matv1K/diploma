@@ -12,7 +12,7 @@ import { Logo } from '@/public/icons';
 import { FiShoppingCart, FiHeart, FiSettings, FiSearch, FiX } from 'react-icons/fi';
 
 import { closeCatalog, openCatalog } from '@/features/catalog/catalogSlice';
-import { fetchCartItems, removeCartItem } from '@/features/instruments/instrumentsSlice'; // Make sure to import removeCartItem
+import { fetchCartItems } from '@/features/instruments/instrumentsSlice'; // Make sure to import removeCartItem
 import { fetchCurrentUser } from '@/features/user/userSlice';
 import { searchInstruments } from '@/services/instruments/instrumentService';
 
@@ -29,7 +29,9 @@ const Header: React.FC = () => {
   const pathname = usePathname();
 
   const cartItems = useSelector((state: RootState) => state.instruments.cartItems);
-  const isAuthorized = !!user;
+  const isAuthorized = typeof window !== 'undefined' && !!localStorage.getItem('token');
+
+  console.log(isAuthorized, user);
 
   useEffect(() => {
     if (isAuthorized) {
@@ -41,7 +43,6 @@ const Header: React.FC = () => {
     }
   }, [dispatch, isAuthorized]);
 
-  // Update cart count on sessionStorage change
   useEffect(() => {
     const handleCartUpdated = () => {
       const updatedCartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
@@ -52,7 +53,6 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('cartUpdated', handleCartUpdated);
   }, []);
 
-  // Update cart count when cart items change
   useEffect(() => {
     if (isAuthorized) {
       setCartItemsCount(cartItems.length);
@@ -64,7 +64,6 @@ const Header: React.FC = () => {
   const getActiveIcon = (href: string) => (pathname === href ? styles.active : '');
 
   const handleOpenCatalog = () => dispatch(openCatalog());
-
   const handleCloseCatalog = () => dispatch(closeCatalog());
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +113,7 @@ const Header: React.FC = () => {
               icon={<FiSearch size={24} />}
               onChange={handleSearch}
             />
+
             {query && (
               <div className={styles.searchList}>
                 {filteredItems.length ? (

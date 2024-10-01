@@ -39,61 +39,59 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   image,
 }) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [localAmount, setLocalAmount] = useState(amount); // Local state to track amount
+  const [localAmount, setLocalAmount] = useState(amount);
   const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.user.user);
 
+  useEffect(() => {
+    setLocalAmount(amount);
+  }, [amount]);
+
   const handleIncreaseCount = async () => {
-    // Increase amount in the UI immediately
+    const prevAmount = localAmount;
     setLocalAmount(localAmount + 1);
 
     try {
-      dispatch(increaseItemAmount(cartItemId)); // Optimistic UI update in Redux
+      dispatch(increaseItemAmount(cartItemId));
 
       if (user) {
         await increaseAmount(cartItemId); // Update backend for authenticated user
       } else {
         const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-        const updatedCart = cart.map((item: any) => {
-          if (item.cartItemId === cartItemId) {
-            return { ...item, amount: item.amount + 1 };
-          }
-          return item;
-        });
+        const updatedCart = cart.map((item: any) => item.cartItemId === cartItemId
+          ? { ...item, amount: item.amount + 1 }
+          : item);
         sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
-
-        // Trigger event to notify that session storage has changed
         window.dispatchEvent(new Event('cartUpdated'));
       }
     } catch (error) {
       console.error('Failed to increase item amount:', error);
+      setLocalAmount(prevAmount); // Rollback UI
     }
   };
 
   const handleDecreaseCount = async () => {
     if (localAmount > 1) {
-      setLocalAmount(localAmount - 1); // Immediately update UI
+      const prevAmount = localAmount;
+      setLocalAmount(localAmount - 1);
 
       try {
-        dispatch(decreaseItemAmount(cartItemId)); // Optimistic UI update in Redux
+        dispatch(decreaseItemAmount(cartItemId)); // Optimistic UI update
 
         if (user) {
-          await decreaseAmount(cartItemId); // Update backend for authenticated user
+          await decreaseAmount(cartItemId);
         } else {
           const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-          const updatedCart = cart.map((item: any) => {
-            if (item.cartItemId === cartItemId) {
-              return { ...item, amount: item.amount - 1 };
-            }
-            return item;
-          });
+          const updatedCart = cart.map((item: any) => item.cartItemId === cartItemId
+            ? { ...item, amount: item.amount - 1 }
+            : item);
           sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
-
           window.dispatchEvent(new Event('cartUpdated'));
         }
       } catch (error) {
         console.error('Failed to decrease item amount:', error);
+        setLocalAmount(prevAmount); // Rollback UI
       }
     }
   };
@@ -106,7 +104,6 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
         const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
         const updatedCart = cart.filter((item: any) => item.cartItemId !== cartItemId);
         sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
-
         window.dispatchEvent(new Event('cartUpdated'));
       }
       dispatch(removeItem(cartItemId));
@@ -118,18 +115,13 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
     }
   };
 
-  // Listen for cart updates in sessionStorage
   useEffect(() => {
     const handleCartUpdate = () => {
       const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
       const currentItem = cart.find((item: any) => item.cartItemId === cartItemId);
-
-      if (currentItem) {
-        setLocalAmount(currentItem.amount); // Sync local state with sessionStorage
-      }
+      if (currentItem) setLocalAmount(currentItem.amount);
     };
 
-    // Listen to the custom event
     window.addEventListener('cartUpdated', handleCartUpdate);
 
     return () => {
@@ -140,11 +132,10 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   return (
     <>
       <div className={styles.row}>
-        <div className={`${styles.cell}`}>
+        <div className={styles.cell}>
           <div className={styles.cellContainer}>
             <div className={styles.image} />
-
-            <Link className={styles.link} href={`/shop/${section}/${instrumentType}/${instrumentId}`}>
+            <Link href={`/shop/${section}/${instrumentType}/${instrumentId}`} className={styles.link}>
               {name} / <span className={styles.color}>{color}</span>
             </Link>
           </div>
@@ -168,7 +159,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
           <p className={styles.modalText}>Are you sure you want to remove the item from the cart?</p>
           <div className={styles.modalButtons}>
             <Button className={styles.modalButton} onClick={handleRemoveItem}>
-              <FiTrash2 className={styles.iconTrash} size={24} />
+              Remove Item
             </Button>
             <Button className={styles.modalButton} onClick={() => setIsModalOpened(false)}>Cancel</Button>
           </div>

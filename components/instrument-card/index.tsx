@@ -103,7 +103,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    // Generate a unique cartItemId for unauthenticated users
     const cartItemId = uuidv4();
 
     const newItem = {
@@ -197,4 +196,4 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   );
 };
 
-export default memo(InstrumentCard);
+export default InstrumentCard;

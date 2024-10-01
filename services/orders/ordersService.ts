@@ -5,6 +5,12 @@ import { OrderItemI } from '@/types';
 interface OrderPayload {
   items: OrderItemI[],
   totalPrice: number,
+  address: {
+    country: string,
+    city: string,
+    address: string,
+  },
+  phoneNumber: string,
 }
 
 export const createOrder = async (orderPayload: OrderPayload) => {

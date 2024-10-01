@@ -2,8 +2,8 @@ import Order from '../../models/Order';
 import CartItem from '../../models/Cart-Item';
 
 class OrderService {
-  async createNewOrder(userId: string | undefined, items: any[], totalPrice: number) {
-    const newOrder = new Order({ userId, items, status: 'in progress', totalPrice });
+  async createNewOrder(userId: string | undefined, items: any[], totalPrice: number, address: any, phoneNumber: string) {
+    const newOrder = new Order({ userId, items, status: 'in progress', totalPrice, address, phoneNumber });
     await newOrder.save();
 
     if (newOrder) {
