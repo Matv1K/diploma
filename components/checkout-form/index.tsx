@@ -52,16 +52,16 @@ const CheckoutForm: React.FC = () => {
       let items = [];
       let totalPrice = 0;
 
-      if (user?.user) {
+      if (user) {
         try {
           const response = await getCartItems();
           items = response.cartItems;
           totalPrice = response.totalPrice;
 
-          setValue('phoneNumber', user.user.phoneNumber || '');
-          setValue('country', user.user.address?.country || '');
-          setValue('city', user.user.address?.city || '');
-          setValue('address', user.user.address?.address || '');
+          setValue('phoneNumber', user.phoneNumber || '');
+          setValue('country', user.address?.country || '');
+          setValue('city', user.address?.city || '');
+          setValue('address', user.address?.address || '');
         } catch (error) {
           console.error('Error fetching cart items:', error);
         }
@@ -124,7 +124,7 @@ const CheckoutForm: React.FC = () => {
 
       sessionStorage.removeItem('cartItems');
 
-      if (user?.user) {
+      if (user) {
         dispatch(resetCart());
       }
 

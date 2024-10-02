@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface CatalogStateI {
+  isCatalogOpen: boolean;
+}
+
+const initialState: CatalogStateI = {
   isCatalogOpen: false,
 };
 
@@ -11,6 +15,7 @@ const catalogSlice = createSlice({
     openCatalog(state) {
       state.isCatalogOpen = true;
     },
+
     closeCatalog(state) {
       state.isCatalogOpen = false;
     },

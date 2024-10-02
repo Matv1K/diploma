@@ -22,9 +22,8 @@
 10. When like item from instrumeng page it does not work correctly
 11. Immediately remove unliked item from favorites
 12. Add onsale value to instrumentcart
-13. Add error color
-14. Fix instrument row design
-15. Remove image warning
+13. Add error color variable
+14. Remove image warning
 
 
 //! LOW PRIORITY
@@ -34,9 +33,7 @@
 3. Retool admin dashboard
 4. Add redis
 5. Fix support modal (websockets)
-6. Fix user.user
 7. Add ... if username is big at dropdown
-8. Each users has the cart.
 9. Add sparkles when like
 10. Add forgot password
 11. Add toast message when resetting password
@@ -45,7 +42,6 @@
 14. If user enters wrong current password to the reset password it does not throw the error
 15. Authorization with Google
 16. Make props like this: {...props}
-17. Close search when click on the element
 18. ADD FAVICON
 19. Change LOGO (musify)
 22. Go to login page when trying to leave the comment

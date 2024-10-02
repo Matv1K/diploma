@@ -107,7 +107,6 @@ const Instrument: React.FC = () => {
 
         dispatch(addItemToCart(addedItem));
         toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
-        push('/');
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
         cartItems.push(newItem);

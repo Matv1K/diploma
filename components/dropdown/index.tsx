@@ -2,7 +2,6 @@
 
 import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
 
 import styles from './index.module.scss';
 
@@ -24,7 +23,6 @@ interface DropdownProps {
 
 const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   const { user } = useSelector((state: RootState) => state.user);
-  const { push } = useRouter();
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -33,7 +31,6 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
       dispatch(logOutUser());
       dispatch(resetCart());
 
-      push('/');
       toast.success(TOAST_MESSAGES.LOG_OUT_USER);
     } catch (error) {
       console.error(error);
@@ -44,10 +41,10 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   return (
     <div className={`${styles.dropdownMenu} ${className}`}>
       <div className={styles.dropdownHeader}>
-        <h4>{user?.user.name} {user?.user.lastName}</h4>
+        <h4>{user?.name} {user?.lastName}</h4>
 
         <p className={styles.dropdownNumber}>
-          {user?.user.phoneNumber !== 0 && user?.user.phoneNumber}
+          {user?.phoneNumber}
         </p>
       </div>
 

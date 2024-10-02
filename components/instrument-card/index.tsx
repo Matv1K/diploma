@@ -58,7 +58,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const [isLiked, setIsLiked] = useState(liked);
   const [averageRating, setAverageRating] = useState(0);
 
-  const user = useSelector((state: RootState) => state.user.user);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const { push } = useRouter();
   const dispatch: AppDispatch = useDispatch();
@@ -72,8 +72,8 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
         setIsLiked(!!likedItem);
       }
-      setAverageRating(averageRating);
 
+      setAverageRating(averageRating);
     };
 
     getAverageRating();

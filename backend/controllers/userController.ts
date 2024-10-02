@@ -83,7 +83,7 @@ class UserController {
         return res.status(404).json('User was not found');
       }
 
-      res.status(200).json({ user });
+      res.status(200).json(user);
     } catch (error) {
       console.error('Could not get user', error);
       res.status(500).json('Something went wrong');

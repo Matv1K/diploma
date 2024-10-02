@@ -52,7 +52,7 @@ export default [
 
       quotes: ['error', 'single', { avoidEscape: true }],
       'jsx-quotes': ['error', 'prefer-single'],
-      'max-len': ['error', { code: 125 }],
+      'max-len': ['error', { code: 126 }],
       'comma-dangle': ['error', 'always-multiline'],
       'function-paren-newline': ['error', 'consistent'],
       'eol-last': ['error', 'always'],

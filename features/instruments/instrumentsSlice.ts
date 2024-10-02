@@ -3,14 +3,16 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getCartItems } from '@/services/cart/cartService';
 import { addLikedItem, deleteLikedItem } from '@/services/liked/likedService';
 
-interface InstrumentState {
-  cartItems: any[];
-  likedItems: any[];
+import { CartItemWithDatabaseIdI, LikedItemI } from '@/types';
+
+interface InstrumentsStateI {
+  cartItems: CartItemWithDatabaseIdI[];
+  likedItems: LikedItemI[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: InstrumentState = {
+const initialState: InstrumentsStateI = {
   cartItems: [],
   likedItems: [],
   loading: false,
@@ -26,7 +28,7 @@ export const fetchCartItems = createAsyncThunk('instruments/fetchCartItems', asy
   }
 });
 
-export const likeItem = createAsyncThunk('instruments/likeItem', async (likedItem: any, { rejectWithValue }) => {
+export const likeItem = createAsyncThunk('instruments/likeItem', async (likedItem: LikedItemI, { rejectWithValue }) => {
   try {
     const response = await addLikedItem(likedItem);
     return response;
@@ -35,21 +37,20 @@ export const likeItem = createAsyncThunk('instruments/likeItem', async (likedIte
   }
 });
 
-export const unlikeItem = createAsyncThunk('instruments/unlikeItem',
-  async (id: string | string[], { rejectWithValue }) => {
-    try {
-      await deleteLikedItem(id);
-      return id;
-    } catch (error) {
-      return rejectWithValue(`Error unliking item: ${error}`);
-    }
-  });
+export const unlikeItem = createAsyncThunk('instruments/unlikeItem', async (id: string | string[], { rejectWithValue }) => {
+  try {
+    await deleteLikedItem(id);
+    return id;
+  } catch (error) {
+    return rejectWithValue(`Error unliking item: ${error}`);
+  }
+});
 
 const instrumentsSlice = createSlice({
   name: 'instruments',
   initialState,
   reducers: {
-    addItemToCart: (state, action: PayloadAction<any>) => {
+    addItemToCart: (state, action: PayloadAction<CartItemWithDatabaseIdI>) => {
       if (!Array.isArray(state.cartItems)) {
         state.cartItems = [];
       }
@@ -57,7 +58,7 @@ const instrumentsSlice = createSlice({
       state.cartItems.push(action.payload);
     },
 
-    setCartItems: (state, action: PayloadAction<any[]>) => {
+    setCartItems: (state, action: PayloadAction<CartItemWithDatabaseIdI[]>) => {
       state.cartItems = action.payload;
     },
 
@@ -67,6 +68,7 @@ const instrumentsSlice = createSlice({
 
     increaseItemAmount: (state, action: PayloadAction<string>) => {
       const item = state.cartItems.find(item => item._id === action.payload);
+
       if (item) {
         item.amount += 1;
       }
@@ -74,32 +76,26 @@ const instrumentsSlice = createSlice({
 
     decreaseItemAmount: (state, action: PayloadAction<string>) => {
       const item = state.cartItems.find(item => item._id === action.payload);
+
       if (item && item.amount > 1) {
         item.amount -= 1;
       }
     },
 
     removeItem: (state, action: PayloadAction<string>) => {
-      state.cartItems = state.cartItems.filter(
-        item => item._id !== action.payload,
-      );
+      state.cartItems = state.cartItems.filter(item => item._id !== action.payload);
     },
 
     resetCart: state => {
       state.cartItems = [];
     },
 
-    addLikedItemToState: (state, action: PayloadAction<any>) => {
+    addLikedItemToState: (state, action: PayloadAction<LikedItemI>) => {
       state.likedItems.push(action.payload);
     },
 
-    removeLikedItemFromState: (
-      state,
-      action: PayloadAction<string | string[]>,
-    ) => {
-      state.likedItems = state.likedItems.filter(
-        item => item.instrumentId !== action.payload,
-      );
+    removeLikedItemFromState: (state, action: PayloadAction<string | string[]>) => {
+      state.likedItems = state.likedItems.filter(item => item.instrumentId !== action.payload);
     },
   },
   extraReducers: builder => {
@@ -108,21 +104,23 @@ const instrumentsSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
+
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.cartItems = action.payload;
         state.loading = false;
       })
+
       .addCase(fetchCartItems.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
+
       .addCase(likeItem.fulfilled, (state, action) => {
         state.likedItems.push(action.payload);
       })
+
       .addCase(unlikeItem.fulfilled, (state, action) => {
-        state.likedItems = state.likedItems.filter(
-          item => item.instrumentId !== action.payload,
-        );
+        state.likedItems = state.likedItems.filter(item => item.instrumentId !== action.payload);
       });
   },
 });

@@ -41,14 +41,14 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      reset({ name: user?.user?.name || '',
-        lastName: user?.user?.lastName || '',
-        email: user?.user?.email || '',
-        phoneNumber: user?.user?.phoneNumber || '',
+      reset({ name: user?.name || '',
+        lastName: user?.lastName || '',
+        email: user?.email || '',
+        phoneNumber: user?.phoneNumber || '',
         address: {
-          country: user?.user?.address?.country || '',
-          city: user?.user?.address?.city || '',
-          address: user?.user?.address?.address || '',
+          country: user?.address?.country || '',
+          city: user?.address?.city || '',
+          address: user?.address?.address || '',
         },
       });
     }

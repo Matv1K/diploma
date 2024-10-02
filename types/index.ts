@@ -28,6 +28,20 @@ export interface InstrumentI {
   instrumentType: string;
 }
 
+export interface UserDataI {
+  address: {
+    country: string;
+    city: string;
+    address: string;
+  };
+  name: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  role: string;
+}
+
 export interface UpdatedUserDataI {
   name: string,
   lastName: string,
@@ -115,12 +129,15 @@ export interface LikedItemI {
   userId?: string;
   instrumentId: string;
   section: string;
+  instrumentType: string;
   amount?: number;
   price: number;
 }
 
 export interface ApiError {
+  message: string;
   response: {
+    status: number;
     data: {
       message: string;
     };
