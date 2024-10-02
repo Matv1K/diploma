@@ -9,14 +9,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Carousel, Button, Modal, Input } from '@/components';
 
-import { Piano } from '@/public/images';
 import { FiSend, FiMessageCircle } from 'react-icons/fi';
+import { Piano } from '@/public/images';
 
 import { showModal } from '@/features/modal/modalSlice';
 
 import { getPopularIstruments, getNewInstruments } from '@/services/instruments/instrumentService';
 
-import { ALL_SECTIONS } from './constants';
+import { ALL_SECTIONS } from '@/app/constants';
 
 import { InputTypes, ButtonOptions, InstrumentI } from '@/types';
 

@@ -4,29 +4,31 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
+import { toast } from 'react-toastify';
+
 import 'react-phone-input-2/lib/style.css';
 import styles from './page.module.scss';
 
-import { toast } from 'react-toastify';
-
 import Link from 'next/link';
-import { Input, Button, Select, Loader } from '@/components';
 import PhoneInput from 'react-phone-input-2';
+import { Input, Button, Select, Loader } from '@/components';
 
 import { getNames } from 'country-list';
 
 import { updateUser } from '@/features/user/userSlice';
 
-import { ButtonTypes, InputTypes } from '@/types';
+import { TOAST_MESSAGES } from '@/app/constants';
+
+import { ButtonTypes, InputTypes, UpdatedUserDataI } from '@/types';
 import { AppDispatch, RootState } from '@/app/store';
-import { TOAST_MESSAGES } from '../constants';
 
 const Profile: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
   const { user, loading } = useSelector((state: RootState) => state.user);
+  const dispatch: AppDispatch = useDispatch();
 
-  const { register, handleSubmit, reset, control, formState: { errors } } = useForm({ defaultValues: {
-    name: '',
+  const countries = getNames();
+
+  const { register, handleSubmit, reset, control, formState: { errors } } = useForm({ defaultValues: { name: '',
     lastName: '',
     email: '',
     phoneNumber: '',
@@ -39,8 +41,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      reset({
-        name: user?.user?.name || '',
+      reset({ name: user?.user?.name || '',
         lastName: user?.user?.lastName || '',
         email: user?.user?.email || '',
         phoneNumber: user?.user?.phoneNumber || '',
@@ -53,14 +54,11 @@ const Profile: React.FC = () => {
     }
   }, [user, reset]);
 
-  const countries = getNames();
-
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: UpdatedUserDataI) => {
     try {
       const response = await dispatch(updateUser(data)).unwrap();
 
-      reset({
-        name: response.name || '',
+      reset({ name: response.name || '',
         lastName: response.lastName || '',
         email: response.email || '',
         phoneNumber: response.phoneNumber || '',
@@ -80,7 +78,7 @@ const Profile: React.FC = () => {
 
   if (loading) {
     return (
-      <main>
+      <main className={styles.containerEmpty}>
         <Loader />
       </main>
     );
@@ -137,8 +135,8 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
-          <div className={styles.input}>
-            <div className={styles.inputContainer}>
+          <div className={styles.inputContainer}>
+            <div className={styles.input}>
               <Controller
                 control={control}
                 name='phoneNumber'

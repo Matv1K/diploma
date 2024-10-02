@@ -18,6 +18,21 @@ export const POPULAR_BRANDS = [
   { name: 'Flight', id: 4 },
 ];
 
+export const BRANDS = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
+
+export const PRICE_RANGES = [
+  { label: 'Under $500', min: 0, max: 500 },
+  { label: '$500 - $1000', min: 500, max: 1000 },
+  { label: 'Above $1000', min: 1000, max: Infinity },
+];
+
+export const FILTERS = [
+  { label: 'By popularity' },
+  { label: 'By rating' },
+  { label: 'The most expensive' },
+  { label: 'The cheapest' },
+];
+
 export const ORDER_STATES = {
   REJECTED: 'rejected',
   DELIVERED: 'delivered',

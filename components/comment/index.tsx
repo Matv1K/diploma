@@ -12,12 +12,7 @@ interface CommentProps {
   rating: number;
 }
 
-const Comment: React.FC<CommentProps> = ({
-  userName,
-  createdAt,
-  description,
-  rating,
-}) => {
+const Comment: React.FC<CommentProps> = ({ userName, createdAt, description, rating }) => {
   const formattedDate = dayjs(createdAt).format('MMMM D, YYYY');
 
   return (

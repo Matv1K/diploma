@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSelector, useDispatch } from 'react-redux';
 import { useStripe, PaymentElement } from '@stripe/react-stripe-js';
 import { useForm, Controller } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { toast } from 'react-toastify';
 
@@ -19,11 +19,13 @@ import { resetCart } from '@/features/instruments/instrumentsSlice';
 import { getCartItems } from '@/services/cart/cartService';
 import { createOrder } from '@/services/orders/ordersService';
 
-import { ButtonTypes, InputTypes } from '@/types';
 import { TOAST_MESSAGES } from '@/app/constants';
 
+import { ButtonTypes, InputTypes, CartItemUnionI } from '@/types';
+import { RootState } from '@/app/store';
+
 const CheckoutForm: React.FC = () => {
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<CartItemUnionI[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -32,10 +34,9 @@ const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
   const { push } = useRouter();
 
-  const { user } = useSelector((state: any) => state.user);
+  const { user } = useSelector((state: RootState) => state.user);
 
-  const { control, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
-    mode: 'onChange',
+  const { control, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({ mode: 'onChange',
     defaultValues: {
       phoneNumber: '',
       country: '',
@@ -69,7 +70,7 @@ const CheckoutForm: React.FC = () => {
 
         if (sessionCartItems) {
           items = JSON.parse(sessionCartItems);
-          totalPrice = items.reduce((total: number, item: any) => total + item.price * item.amount, 0);
+          totalPrice = items.reduce((total: number, item: CartItemUnionI) => total + item.price * item.amount, 0);
         }
 
         setValue('phoneNumber', '');
@@ -92,14 +93,16 @@ const CheckoutForm: React.FC = () => {
   const onConfirmCheckout = async () => {
     setIsProcessing(true);
 
-    const orderItems = cartItems.map(({ _id, name, color, price, instrumentId, amount }) => ({
-      _id,
-      name,
-      color,
-      price,
-      instrumentId,
-      amount,
-    }));
+    const orderItems = cartItems.map(item => {
+      if ('_id' in item) {
+        const { _id, name, color, price, instrumentId, amount } = item;
+        return { _id, name, color, price, instrumentId, amount };
+      }
+
+      const { cartItemId, name, color, price, instrumentId, amount } = item;
+      return { instrumentId, amount, name, color, price, cartItemId };
+
+    });
 
     const formValues = {
       phoneNumber: watchAllFields.phoneNumber,
@@ -109,8 +112,7 @@ const CheckoutForm: React.FC = () => {
     };
 
     try {
-      await createOrder({
-        items: orderItems,
+      await createOrder({ items: orderItems,
         totalPrice,
         phoneNumber: formValues.phoneNumber,
         address: {
@@ -235,7 +237,9 @@ const CheckoutForm: React.FC = () => {
             </div>
           </div>
 
-          <Button disabled={!stripe || isProcessing || !isValid} className={styles.checkoutButton}
+          <Button
+            disabled={!stripe || isProcessing || !isValid}
+            className={styles.checkoutButton}
             onClick={handleSubmit(onConfirmCheckout)}
           >
             {isProcessing ? 'Processing...' : `Pay ${totalPrice}$`}

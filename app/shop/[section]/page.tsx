@@ -3,27 +3,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
-import InfiniteScroll from 'react-infinite-scroll-component';
-
 import styles from './page.module.scss';
 
-import { InstrumentCard } from '@/components';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { InstrumentCard, Loader } from '@/components';
 
 import { removeSeparator } from '@/utils';
 
 import { getInstrumentsBySection } from '@/services/instruments/instrumentService';
 
-import { InstrumentI } from '@/types';
+import { BRANDS, PRICE_RANGES } from '@/app/constants';
 
-const brands = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
-const priceRanges = [
-  { label: 'Under $500', min: 0, max: 500 },
-  { label: '$500 - $1000', min: 500, max: 1000 },
-  { label: 'Above $1000', min: 1000, max: Infinity },
-];
+import { InstrumentCardI } from '@/types';
 
 const Section: React.FC = () => {
-  const [instruments, setInstruments] = useState<InstrumentI[]>([]);
+  const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,6 +58,14 @@ const Section: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <main className={styles.containerEmpty}>
+        <Loader />
+      </main>
+    );
+  }
+
   if (!instruments.length && !loading) {
     return (
       <main className={styles.containerEmpty}>
@@ -82,7 +84,8 @@ const Section: React.FC = () => {
 
           <select id='brand'>
             <option value=''>All</option>
-            {brands.map(brand => (
+
+            {BRANDS.map(brand => (
               <option key={brand} value={brand}>
                 {brand}
               </option>
@@ -94,7 +97,7 @@ const Section: React.FC = () => {
           <label htmlFor='price'>Price Range:</label>
 
           <select id='price'>
-            {priceRanges.map(range => (
+            {PRICE_RANGES.map(range => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>
@@ -106,7 +109,7 @@ const Section: React.FC = () => {
           <label htmlFor='price'>Filter By:</label>
 
           <select id='price'>
-            {priceRanges.map(range => (
+            {PRICE_RANGES.map(range => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>
@@ -121,14 +124,14 @@ const Section: React.FC = () => {
       </div>
 
       <InfiniteScroll
-        dataLength={instruments.length} // Length of the current data
-        next={loadMoreInstruments} // Method to load more data
-        hasMore={hasMore} // Condition to check if more data is available
-        loader={<h4>Loading more instruments...</h4>} // Loader component
-        endMessage={<p>No more instruments to load</p>} // End message when no more items to load
+        dataLength={instruments.length}
+        next={loadMoreInstruments}
+        hasMore={hasMore}
+        loader={<h4>Loading more instruments...</h4>}
+        endMessage={<p>No more instruments to load</p>}
       >
         <div className={styles.instruments}>
-          {instruments.map(({ _id, ...props }: InstrumentI) => (
+          {instruments.map(({ _id, ...props }: InstrumentCardI) => (
             <InstrumentCard key={_id} id={_id} withLikeIcon {...props} />
           ))}
         </div>

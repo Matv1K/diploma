@@ -18,6 +18,13 @@
 6. Fix stripe
 7. Fix change password
 8. If item is already in the cart get a toast message (for non auth users)
+9. Create OrderItem component
+10. When like item from instrumeng page it does not work correctly
+11. Immediately remove unliked item from favorites
+12. Add onsale value to instrumentcart
+13. Add error color
+14. Fix instrument row design
+15. Remove image warning
 
 
 //! LOW PRIORITY
@@ -45,6 +52,7 @@
 23. Add onboarding for users who just register
 24. When user created an order notify the user by sending an sms to his number
 25. Add apple pay
+26. Add mixins for empty containers
 
 //INVESTIGATE
 

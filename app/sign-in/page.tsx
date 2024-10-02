@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import styles from './page.module.scss';
-
 import { toast } from 'react-toastify';
+
+import styles from './page.module.scss';
 
 import Link from 'next/link';
 import { Button, Input } from '@/components';
@@ -18,7 +18,7 @@ import { signIn } from '@/features/user/userSlice';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { InputTypes, SignInDataI, ButtonOptions, ButtonTypes } from '@/types';
+import { InputTypes, SignInDataI, ButtonOptions, ButtonTypes, ApiError } from '@/types';
 import { AppDispatch } from '@/app/store';
 
 const SignIn: React.FC = () => {
@@ -26,8 +26,8 @@ const SignIn: React.FC = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignInDataI>();
 
-  const dispatch: AppDispatch = useDispatch();
   const { push } = useRouter();
+  const dispatch: AppDispatch = useDispatch();
 
   const onSubmit: SubmitHandler<SignInDataI> = async data => {
     try {
@@ -36,9 +36,11 @@ const SignIn: React.FC = () => {
       toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
       sessionStorage.removeItem('cartItems');
       push('/');
-    } catch (error: any) {
-      console.error(`Could not sign in: ${error}`);
-      toast.error(error);
+    } catch (error) {
+      const apiError = error as ApiError;
+
+      console.error(`Could not sign in: ${apiError}`);
+      toast.error(apiError.response.data.message);
     }
   };
 

@@ -10,12 +10,13 @@ import { InstrumentRow, Button, Loader } from '@/components';
 
 import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
 
-import { CartItemWithIdI } from '@/types';
-import { RootState, AppDispatch } from '@/app/store';
 import { getTotalPrice } from '@/utils';
 
+import { CartItemUnionI, CartItemWithLocalIdI } from '@/types';
+import { RootState, AppDispatch } from '@/app/store';
+
 const Cart: React.FC = () => {
-  const [sessionCartItems, setSessionCartItems] = useState<CartItemWithIdI[]>([]);
+  const [sessionCartItems, setSessionCartItems] = useState<CartItemWithLocalIdI[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -48,22 +49,9 @@ const Cart: React.FC = () => {
 
   const displayedCartItems = isAuthorized ? cartItems : sessionCartItems;
 
-  // Function to remove item from the cart
-  const removeItemFromCart = (id: string) => {
-    if (isAuthorized) {
-      // Update Redux state or make API call to remove item (if backend is involved)
-      // Assuming a Redux action removeCartItem(id)
-      dispatch(removeCartItem(id)); // Assuming you have this action in your slice
-    } else {
-      // Remove from session storage-based cart
-      const updatedSessionCartItems = sessionCartItems.filter(item => item._id !== id);
-      setSessionCartItems(updatedSessionCartItems);
-      sessionStorage.setItem('cartItems', JSON.stringify(updatedSessionCartItems)); // Update sessionStorage
-    }
-  };
-
   useEffect(() => {
     const totalPrice = getTotalPrice(displayedCartItems);
+
     setTotalPrice(totalPrice);
   }, [displayedCartItems]);
 
@@ -71,13 +59,13 @@ const Cart: React.FC = () => {
     const handleCartUpdate = () => {
       if (typeof window !== 'undefined') {
         const storedCartItems = sessionStorage.getItem('cartItems');
+
         if (storedCartItems) {
           setSessionCartItems(JSON.parse(storedCartItems));
         }
       }
     };
 
-    // Listen to the custom event when the cart is updated
     window.addEventListener('cartUpdated', handleCartUpdate);
 
     return () => {
@@ -97,6 +85,7 @@ const Cart: React.FC = () => {
     return (
       <main className={styles.containerEmpty}>
         <h2>Your cart is empty</h2>
+
         <Link href='/shop'>
           <Button>Go back to shopping</Button>
         </Link>
@@ -109,20 +98,18 @@ const Cart: React.FC = () => {
       <h2>Your Cart</h2>
       <div className={styles.cartLayout}>
         <div className={styles.table}>
-          {displayedCartItems.map((item: CartItemWithIdI) => (
-            <InstrumentRow
-              cartItemId={item._id || item.cartItemId}
-              key={item._id || item.cartItemId}
-              {...item}
-            />
-          ))}
+          {displayedCartItems.map((item: CartItemUnionI) => {
+            const id = ('_id' in item) ? item._id : item.cartItemId;
+
+            return <InstrumentRow cartItemId={id} key={id} {...item} />;
+          })}
         </div>
 
         <div className={styles.checkoutCard}>
           <div className={styles.checkoutInfo}>
             <div className={styles.checkoutCardField}>
               <span>Items</span>
-              <span>{displayedCartItems.length}</span> {/* Correct the displayed item count */}
+              <span>{displayedCartItems.length}</span>
             </div>
 
             <div className={styles.checkoutCardField}>

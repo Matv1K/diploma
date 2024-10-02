@@ -8,14 +8,9 @@ import { InstrumentCard } from '@/components';
 
 import { getInstrumentsOnSale } from '@/services/instruments/instrumentService';
 
-import { InstrumentCardI } from '@/types';
+import { BRANDS, PRICE_RANGES } from '@/app/constants';
 
-const brands = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
-const priceRanges = [
-  { label: 'Under $500', min: 0, max: 500 },
-  { label: '$500 - $1000', min: 500, max: 1000 },
-  { label: 'Above $1000', min: 1000, max: Infinity },
-];
+import { InstrumentCardI } from '@/types';
 
 const Sale: React.FC = () => {
   const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
@@ -37,9 +32,10 @@ const Sale: React.FC = () => {
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
+
           <select id='brand'>
             <option value=''>All</option>
-            {brands.map(brand => (
+            {BRANDS.map(brand => (
               <option key={brand} value={brand}>
                 {brand}
               </option>
@@ -49,8 +45,9 @@ const Sale: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
+
           <select id='price'>
-            {priceRanges.map(range => (
+            {PRICE_RANGES.map(range => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>
@@ -60,8 +57,9 @@ const Sale: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Filter By:</label>
+
           <select id='price'>
-            {priceRanges.map(range => (
+            {PRICE_RANGES.map(range => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>

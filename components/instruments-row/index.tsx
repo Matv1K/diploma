@@ -17,8 +17,10 @@ import { removeItem, increaseItemAmount, decreaseItemAmount } from '@/features/i
 
 import { removeCartItem, increaseAmount, decreaseAmount } from '@/services/cart/cartService';
 
-import { RootState } from '@/app/store';
 import { TOAST_MESSAGES } from '@/app/constants';
+
+import { RootState } from '@/app/store';
+import { CartItemWithLocalIdI } from '@/types';
 
 interface InstrumentRowProps {
   instrumentId: string;
@@ -45,6 +47,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
 }) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [localAmount, setLocalAmount] = useState(amount);
+
   const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.user.user);
@@ -64,8 +67,10 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
         await increaseAmount(cartItemId);
       } else {
         const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-        const updatedCart = cart.map((item: any) =>
+
+        const updatedCart = cart.map((item: CartItemWithLocalIdI) =>
           item.cartItemId === cartItemId ? { ...item, amount: item.amount + 1 } : item);
+
         sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
         window.dispatchEvent(new Event('cartUpdated'));
       }
@@ -87,9 +92,12 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
           await decreaseAmount(cartItemId);
         } else {
           const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-          const updatedCart = cart.map((item: any) =>
+
+          const updatedCart = cart.map((item: CartItemWithLocalIdI) =>
             item.cartItemId === cartItemId ? { ...item, amount: item.amount - 1 } : item);
+
           sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+
           window.dispatchEvent(new Event('cartUpdated'));
         }
       } catch (error) {
@@ -102,23 +110,19 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   const handleRemoveItem = async () => {
     try {
       if (user) {
-        // Authenticated: Remove the item from the server
         await removeCartItem(cartItemId);
-        dispatch(removeItem(cartItemId)); // Update Redux state
+        dispatch(removeItem(cartItemId));
       } else {
-        // Non-Authenticated: Remove the item from sessionStorage
         const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-        const updatedCart = cart.filter((item: any) => item.cartItemId !== cartItemId);
+        const updatedCart = cart.filter((item: CartItemWithLocalIdI) => item.cartItemId !== cartItemId);
 
-        // Update sessionStorage
         sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
 
-        // Notify the Cart component to update its state
-        window.dispatchEvent(new Event('cartUpdated')); // This will be handled in the Cart component
+        window.dispatchEvent(new Event('cartUpdated'));
       }
 
       toast.success(TOAST_MESSAGES.REMOVE_CART_ITEM_SUCCESS);
-    } catch (error: any) {
+    } catch {
       toast.error('Failed to remove item');
     } finally {
       setIsModalOpened(false);
@@ -128,7 +132,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
   useEffect(() => {
     const handleCartUpdate = () => {
       const cart = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
-      const currentItem = cart.find((item: any) => item.cartItemId === cartItemId);
+      const currentItem = cart.find((item: CartItemWithLocalIdI) => item.cartItemId === cartItemId);
       if (currentItem) setLocalAmount(currentItem.amount);
     };
 

@@ -5,10 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useRouter } from 'next/navigation';
 
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
 
 import styles from './page.module.scss';
-
-import { toast } from 'react-toastify';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -26,11 +25,17 @@ import { addCartItem } from '@/services/cart/cartService';
 import { addLikedItem, getLikedItem, deleteLikedItem } from '@/services/liked/likedService';
 import { createComment, getComments } from '@/services/comments/commentsService';
 
-import { ButtonTypes, CommentI, InstrumentI } from '@/types';
-import { RootState } from '@/app/store';
 import { TOAST_MESSAGES } from '@/app/constants';
 
+import { ButtonTypes, CommentI, InstrumentI } from '@/types';
+import { RootState } from '@/app/store';
+
 const Instrument: React.FC = () => {
+  const [selectedColor, setSelectedColor] = useState<string>('');
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [commentText, setCommentText] = useState<string>('');
+  const [rating, setRating] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [instrument, setInstrument] = useState<InstrumentI>({
     name: '',
     isNew: false,
@@ -46,19 +51,13 @@ const Instrument: React.FC = () => {
     image: '',
     colors: [],
   });
-  const [selectedColor, setSelectedColor] = useState<string>('');
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [commentText, setCommentText] = useState<string>('');
-  const [rating, setRating] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const { user } = useSelector((state: RootState) => state.user);
-
-  const dispatch = useDispatch();
-  const { push } = useRouter();
-  const { instrument: instrumentId } = useParams();
-
   const comments = useSelector((state: RootState) => state.comments.comments);
+
+  const { instrument: instrumentId } = useParams();
+  const { push } = useRouter();
+  const dispatch = useDispatch();
 
   const isAuthorized = !!user;
 
@@ -115,10 +114,11 @@ const Instrument: React.FC = () => {
 
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
         window.dispatchEvent(new Event('cartUpdated'));
+
+        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       }
-    } catch (error: any) {
+    } catch {
       toast.error('Failed to add item to the cart. Try again later');
     }
   };
@@ -200,7 +200,7 @@ const Instrument: React.FC = () => {
 
   if (isLoading) {
     return (
-      <main>
+      <main className={styles.containerEmpty}>
         <Loader />
       </main>
     );

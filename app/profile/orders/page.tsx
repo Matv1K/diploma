@@ -28,7 +28,7 @@ const Orders: React.FC = () => {
 
   if (isLoading) {
     return (
-      <main>
+      <main className={styles.containerEmpty}>
         <Loader />
       </main>
     );

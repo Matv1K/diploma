@@ -6,10 +6,9 @@ import { Open_Sans, Montserrat } from 'next/font/google';
 import './globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ToastContainer } from 'react-toastify';
-
 import ReduxProvider from '@/app/provider';
 
+import { ToastContainer } from 'react-toastify';
 import { Footer, Header } from '@/components';
 
 const montserrat = Montserrat({ subsets: ['latin'] });

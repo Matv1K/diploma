@@ -14,8 +14,9 @@ import { Button } from '@/components';
 import { logOutUser } from '@/features/user/userSlice';
 import { resetCart } from '@/features/instruments/instrumentsSlice';
 
-import { RootState, AppDispatch } from '@/app/store';
 import { TOAST_MESSAGES } from '@/app/constants';
+
+import { RootState, AppDispatch } from '@/app/store';
 
 interface DropdownProps {
   className?: string;
@@ -26,10 +27,12 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   const { push } = useRouter();
 
   const dispatch: AppDispatch = useDispatch();
+
   const handleLogOut = async () => {
     try {
       dispatch(logOutUser());
       dispatch(resetCart());
+
       push('/');
       toast.success(TOAST_MESSAGES.LOG_OUT_USER);
     } catch (error) {

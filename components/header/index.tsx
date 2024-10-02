@@ -5,15 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 
 import styles from './index.module.scss';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Catalog, Input, Dropdown, Loader } from '../../components';
-import { Logo } from '@/public/icons';
+
 import { FiShoppingCart, FiHeart, FiSettings, FiSearch, FiX } from 'react-icons/fi';
+import { Logo } from '@/public/icons';
 
 import { closeCatalog, openCatalog } from '@/features/catalog/catalogSlice';
-import { fetchCartItems } from '@/features/instruments/instrumentsSlice'; // Make sure to import removeCartItem
+import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
 import { fetchCurrentUser } from '@/features/user/userSlice';
+
 import { searchInstruments } from '@/services/instruments/instrumentService';
 
 import { ButtonOptions, InputTypes, InstrumentI } from '@/types';
@@ -25,11 +28,16 @@ const Header: React.FC = () => {
   const [cartItemsCount, setCartItemsCount] = useState(0);
 
   const { user, loading } = useSelector((state: RootState) => state.user);
-  const dispatch: AppDispatch = useDispatch();
+
   const pathname = usePathname();
+  const dispatch: AppDispatch = useDispatch();
 
   const cartItems = useSelector((state: RootState) => state.instruments.cartItems);
+  const isCatalogOpened = useSelector((state: RootState) => state.catalog.isCatalogOpen);
+
   const isAuthorized = typeof window !== 'undefined' && !!localStorage.getItem('token');
+
+  const getActiveIcon = (href: string) => (pathname === href ? styles.active : '');
 
   useEffect(() => {
     if (isAuthorized) {
@@ -64,10 +72,6 @@ const Header: React.FC = () => {
     }
   }, [cartItems, isAuthorized]);
 
-  const isCatalogOpened = useSelector((state: RootState) => state.catalog.isCatalogOpen);
-
-  const getActiveIcon = (href: string) => (pathname === href ? styles.active : '');
-
   const handleOpenCatalog = () => dispatch(openCatalog());
   const handleCloseCatalog = () => dispatch(closeCatalog());
 
@@ -101,17 +105,15 @@ const Header: React.FC = () => {
         </Link>
 
         <ul className={styles.headerActionData}>
-          <Button
-            className={styles.buttonCatalog}
-            onClick={isCatalogOpened ? handleCloseCatalog : handleOpenCatalog}
-          >
-            {isCatalogOpened ? <FiX size={24} /> : (
-              <>
-                <div className={styles.menuLine} />
-                <div className={styles.menuLine} />
-                <div className={styles.menuLine} />
-              </>
-            )}
+          <Button className={styles.buttonCatalog} onClick={isCatalogOpened ? handleCloseCatalog : handleOpenCatalog}>
+            {isCatalogOpened ?
+              <FiX size={24} /> : (
+                <>
+                  <div className={styles.menuLine} />
+                  <div className={styles.menuLine} />
+                  <div className={styles.menuLine} />
+                </>
+              )}
           </Button>
 
           <div className={styles.searchContainer}>
@@ -155,13 +157,17 @@ const Header: React.FC = () => {
               <Link href='/profile' className={`${styles.icon} ${getActiveIcon('/profile')}`}>
                 <FiSettings size={24} />
               </Link>
+
               <Dropdown className={styles.dropdown} />
             </div>
+
             <Link href='/liked' className={`${styles.icon} ${getActiveIcon('/liked')}`}>
               <FiHeart size={24} />
             </Link>
+
             <div className={styles.cartContainer}>
               <span className={styles.cartAmount}>{displayedCartItemsCount}</span>
+
               <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
                 <FiShoppingCart size={24} />
               </Link>
@@ -174,6 +180,7 @@ const Header: React.FC = () => {
             <Link href='/sign-in'>
               <Button option={ButtonOptions._OUTILINE}>Sign in</Button>
             </Link>
+
             <div className={styles.cartContainer}>
               <span className={styles.cartAmount}>{displayedCartItemsCount}</span>
               <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>

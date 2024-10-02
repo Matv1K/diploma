@@ -15,8 +15,6 @@ const Liked: React.FC = () => {
   const [likedItems, setLikedItems] = useState<InstrumentCardI[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  console.log(likedItems);
-
   useEffect(() => {
     const fetchLikedItems = async () => {
       const items = await getLikedItems();

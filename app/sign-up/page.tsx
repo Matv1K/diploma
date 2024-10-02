@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
+import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './page.module.scss';
-
-import { toast } from 'react-toastify';
 
 import Link from 'next/link';
 import { Input, Button } from '@/components';
@@ -19,7 +19,7 @@ import { signUp } from '@/features/user/userSlice';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { ButtonOptions, ButtonTypes, InputTypes, SignUpDataI } from '@/types';
+import { ButtonOptions, ButtonTypes, InputTypes, SignUpDataI, ApiError } from '@/types';
 import { AppDispatch } from '@/app/store';
 
 const SignUp: React.FC = () => {
@@ -27,8 +27,8 @@ const SignUp: React.FC = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpDataI>();
 
-  const dispatch: AppDispatch = useDispatch();
   const { push } = useRouter();
+  const dispatch: AppDispatch = useDispatch();
 
   const onSubmit = async (data: SignUpDataI) => {
     try {
@@ -36,9 +36,11 @@ const SignUp: React.FC = () => {
 
       toast.success(TOAST_MESSAGES.SIGN_UP_SUCCESS);
       push('/');
-    } catch (error: any) {
+    } catch (error) {
+      const apiError = error as ApiError;
+
       console.error(`Could not sign up: ${error}`);
-      toast.error(error || 'Failed to sign up. Please try again.');
+      toast.error(apiError.response.data.message || 'Failed to sign up. Please try again.');
     }
   };
 
@@ -113,7 +115,6 @@ const SignUp: React.FC = () => {
                 message: 'Password must contain at least one uppercase letter, one lowercase letter, and 8 characters',
               },
             })}
-
             icon={isPasswordShown ?
               <FiEye size={24} onClick={handlePasswordShown}/> : <FiEyeOff size={24} onClick={handlePasswordShown} />}
           />

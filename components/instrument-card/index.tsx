@@ -3,22 +3,30 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './index.module.scss';
-import { toast } from 'react-toastify';
+
 import Image from 'next/image';
 import { Button } from '@/components';
 
 import { FiHeart } from 'react-icons/fi';
+
 import { getRatingString } from '@/utils';
+
 import { addItemToCart, likeItem, unlikeItem } from '@/features/instruments/instrumentsSlice';
+
 import { addCartItem } from '@/services/cart/cartService';
 import { getInstrumentRating } from '@/services/instruments/instrumentService';
-import { AppDispatch, RootState } from '@/app/store';
-import { v4 as uuidv4 } from 'uuid';
-
 import { getLikedItem } from '@/services/liked/likedService';
+
 import { TOAST_MESSAGES } from '@/app/constants';
+
+import { AppDispatch, RootState } from '@/app/store';
+
 interface InstrumentCardProps {
   isNew?: boolean;
   name: string;
@@ -30,7 +38,7 @@ interface InstrumentCardProps {
   colors: string[];
   withLikeIcon?: boolean;
   liked?: boolean;
-  brandName?: string;
+  brandName: string;
 }
 
 const InstrumentCard: React.FC<InstrumentCardProps> = ({
@@ -52,8 +60,8 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
   const user = useSelector((state: RootState) => state.user.user);
 
-  const dispatch: AppDispatch = useDispatch();
   const { push } = useRouter();
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     const getAverageRating = async () => {
@@ -82,6 +90,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       try {
         if (isLiked) {
           await dispatch(unlikeItem(id));
+
           toast.success(TOAST_MESSAGES.UNLIKE_ITEM_SUCCESS);
           setIsLiked(false);
         } else {
@@ -95,6 +104,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
             section,
             instrumentType,
           }));
+
           toast.success(TOAST_MESSAGES.LIKE_ITEM_SUCCES);
           setIsLiked(true);
         }
@@ -128,18 +138,20 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         const addedItem = await addCartItem(newItem);
 
         dispatch(addItemToCart(addedItem));
-        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
+
         push('/');
+        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
         cartItems.push(newItem);
 
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
         window.dispatchEvent(new Event('cartUpdated'));
+
+        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       }
-    } catch (error: any) {
+    } catch {
       toast.error('Failed to add item to the cart. Try again later');
     }
   };

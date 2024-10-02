@@ -6,6 +6,21 @@
   .field {
     margin-bottom: 40px;
 
+    .inputContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .input {
+        width: 100%;
+        margin-top: 20px;
+      }
+    
+      .error {
+        color: red;
+      }
+    }
+
     .headingSecondary {
       color: $text-color;
     }
@@ -16,23 +31,16 @@
       gap: 20px;
     }
 
-    .input {
-      width: 100%;
-      margin-top: 20px;
-    }
-
     .change {
       margin-top: 20px;
     }
   }
 }
 
-.inputContainer {
+.containerEmpty {
   display: flex;
-  flex-direction: column;
-  gap: 10px
-}
-
-.error {
-  color: red;
+  align-items: center;
+  flex-flow: column;
+  justify-content: center;
+  gap: 20px;
 }

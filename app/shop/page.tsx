@@ -11,22 +11,12 @@ import { InstrumentCard, Button, Modal, Input, Loader } from '@/components';
 import { FiSend, FiMessageCircle } from 'react-icons/fi';
 
 import { showModal } from '@/features/modal/modalSlice';
+
 import { getInstruments } from '@/services/instruments/instrumentService';
 
-import { InstrumentCardI, ButtonOptions, InputTypes } from '@/types';
+import { BRANDS, PRICE_RANGES, FILTERS } from '@/app/constants';
 
-const brands = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
-const priceRanges = [
-  { label: 'Under $500', min: 0, max: 500 },
-  { label: '$500 - $1000', min: 500, max: 1000 },
-  { label: 'Above $1000', min: 1000, max: Infinity },
-];
-const filters = [
-  { label: 'By popularity' },
-  { label: 'By rating' },
-  { label: 'The most expensive' },
-  { label: 'The cheapest' },
-];
+import { InstrumentCardI, ButtonOptions, InputTypes } from '@/types';
 
 const Shop: React.FC = () => {
   const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
@@ -82,9 +72,10 @@ const Shop: React.FC = () => {
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
+
           <select id='brand'>
             <option value=''>All</option>
-            {brands.map(brand => (
+            {BRANDS.map(brand => (
               <option key={brand} value={brand}>
                 {brand}
               </option>
@@ -94,8 +85,9 @@ const Shop: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
+
           <select id='price'>
-            {priceRanges.map(range => (
+            {PRICE_RANGES.map(range => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>
@@ -105,8 +97,9 @@ const Shop: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='filterBy'>Filter By:</label>
+
           <select id='filterBy'>
-            {filters.map(filter => (
+            {FILTERS.map(filter => (
               <option key={filter.label} value={filter.label}>
                 {filter.label}
               </option>
@@ -133,11 +126,7 @@ const Shop: React.FC = () => {
       </InfiniteScroll>
 
       {isModalOpened ? (
-        <Modal
-          setIsModalOpened={setIsModalOpened}
-          buttonName='Send'
-          heading='Support'
-        >
+        <Modal setIsModalOpened={setIsModalOpened} buttonName='Send' heading='Support'>
           <div>Ask your questions here.</div>
 
           <div className={styles.modalData}>
@@ -153,11 +142,7 @@ const Shop: React.FC = () => {
           </div>
         </Modal>
       ) : (
-        <Button
-          option={ButtonOptions._OUTILINE}
-          onClick={handleOpenModal}
-          className={styles.buttonSupportModal}
-        >
+        <Button option={ButtonOptions._OUTILINE} onClick={handleOpenModal} className={styles.buttonSupportModal}>
           <FiMessageCircle size={24} />
         </Button>
       )}

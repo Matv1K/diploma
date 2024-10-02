@@ -3,35 +3,41 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import styles from './page.module.scss';
-
 import { toast } from 'react-toastify';
+
+import styles from './page.module.scss';
 
 import { Input, Button } from '@/components';
 
 import { resetPassword } from '@/services/users/userService';
 
-import { ButtonTypes, InputTypes } from '@/types';
-import { TOAST_MESSAGES } from '../constants';
+import { ApiError, ButtonTypes, InputTypes, ResetPasswordI } from '@/types';
+
+import { TOAST_MESSAGES } from '@/app/constants';
 
 const ResetPassword = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
   const [loading, setLoading] = useState(false);
 
-  const handleChangePassword = async (data: any) => {
-    const { currentPassword, newPassword, confirmPassword } = data;
+  const { register, handleSubmit, formState: { errors } } = useForm<ResetPasswordI>();
 
-    if (newPassword !== confirmPassword) {
+  const handleChangePassword = async (data: ResetPasswordI) => {
+    const { currentPassword, newPassword, confirmedPassword } = data;
+
+    if (newPassword !== confirmedPassword) {
       toast.error('New passwords do not match');
       return;
     }
 
     try {
       setLoading(true);
+
       await resetPassword(currentPassword, newPassword);
+
       toast.success(TOAST_MESSAGES.CHANGE_PASSWORD_SUCCESS);
     } catch (error) {
-      toast.error(`Error changing password: ${error.response?.data?.message || 'Unknown error'}`);
+      const apiError = error as ApiError;
+
+      toast.error(`Error changing password: ${apiError.response?.data?.message || 'Unknown error'}`);
     } finally {
       setLoading(false);
     }
@@ -40,6 +46,7 @@ const ResetPassword = () => {
   return (
     <main>
       <h2>Reset Password</h2>
+
       <form className={styles.form} onSubmit={handleSubmit(handleChangePassword)}>
         <div className={styles.inputContainer}>
           <Input
@@ -68,10 +75,10 @@ const ResetPassword = () => {
             className={styles.input}
             type={InputTypes._PASSWORD}
             placeholder='Confirm new password'
-            {...register('confirmPassword', { required: 'Please confirm your new password' })}
+            {...register('confirmedPassword', { required: 'Please confirm your new password' })}
           />
 
-          {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword.message}</p>}
+          {errors.confirmedPassword && <p className={styles.error}>{errors.confirmedPassword.message}</p>}
         </div>
 
         <div>

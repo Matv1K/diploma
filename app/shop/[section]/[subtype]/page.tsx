@@ -5,21 +5,16 @@ import { useParams } from 'next/navigation';
 
 import styles from './page.module.scss';
 
-import { InstrumentCard, Loader } from '@/components';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { InstrumentCard, Loader } from '@/components';
 
 import { removeSeparator } from '@/utils';
 
 import { getInstrumentBySubtype } from '@/services/instruments/instrumentService';
 
-import { InstrumentCardI } from '@/types';
+import { BRANDS, PRICE_RANGES } from '@/app/constants';
 
-const brands = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
-const priceRanges = [
-  { label: 'Under $500', min: 0, max: 500 },
-  { label: '$500 - $1000', min: 500, max: 1000 },
-  { label: 'Above $1000', min: 1000, max: Infinity },
-];
+import { InstrumentCardI } from '@/types';
 
 const Subtype = () => {
   const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
@@ -49,7 +44,7 @@ const Subtype = () => {
 
   useEffect(() => {
     if (convertedSubtype) {
-      fetchInstruments(1); // Initial load
+      fetchInstruments(1);
     }
   }, [convertedSubtype]);
 
@@ -68,9 +63,10 @@ const Subtype = () => {
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
+
           <select id='brand'>
             <option value=''>All</option>
-            {brands.map(brand => (
+            {BRANDS.map(brand => (
               <option key={brand} value={brand}>
                 {brand}
               </option>
@@ -80,8 +76,9 @@ const Subtype = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
+
           <select id='price'>
-            {priceRanges.map(range => (
+            {PRICE_RANGES.map(range => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>
@@ -91,8 +88,9 @@ const Subtype = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Filter By:</label>
+
           <select id='price'>
-            {priceRanges.map(range => (
+            {PRICE_RANGES.map(range => (
               <option key={range.label} value={range.label}>
                 {range.label}
               </option>
@@ -110,23 +108,14 @@ const Subtype = () => {
         dataLength={instruments.length}
         next={() => fetchInstruments(page)}
         hasMore={hasMore}
-        loader={<div><Loader /></div>}
         className={styles.instruments}
+        loader={
+          <div>
+            <Loader />
+          </div>}
       >
-        {instruments.map((instrument: InstrumentCardI) => (
-          <InstrumentCard
-            id={instrument._id}
-            key={instrument._id}
-            name={instrument.name}
-            price={instrument.price}
-            section={instrument.section}
-            instrumentType={instrument.instrumentType}
-            isNew={instrument.isNew}
-            colors={instrument.colors}
-            image={instrument.image}
-            brandName={instrument.brandName}
-            withLikeIcon
-          />
+        {instruments.map(({ _id, ...props }: InstrumentCardI) => (
+          <InstrumentCard id={_id} key={_id} withLikeIcon {...props} />
         ))}
       </InfiniteScroll>
     </main>
