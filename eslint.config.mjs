@@ -60,25 +60,8 @@ export default [
       'no-multi-spaces': 'error',
       'no-trailing-spaces': 'error',
       'object-curly-spacing': ['error', 'always'],
-
-      'object-curly-newline': [
-        'error',
-        {
-          'ObjectExpression': { 'multiline': true, 'consistent': true },
-          'ObjectPattern': { 'multiline': true, 'consistent': true },
-          'ImportDeclaration': { 'multiline': true, 'consistent': true },
-          'ExportDeclaration': { 'multiline': true, 'consistent': true },
-        },
-      ],
-      'object-property-newline': [
-        'error',
-        {
-          'allowAllPropertiesOnSameLine': true,
-        },
-      ],
       'brace-style': ['error', '1tbs', { 'allowSingleLine': true }],
       'array-bracket-newline': ['error', { 'multiline': true, 'minItems': null }],
-      'array-element-newline': ['error', { 'multiline': true, 'minItems': null }],
     },
   },
 ];

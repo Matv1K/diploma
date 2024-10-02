@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useRouter } from 'next/navigation';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import styles from './page.module.scss';
 
 import { toast } from 'react-toastify';
@@ -26,6 +28,7 @@ import { createComment, getComments } from '@/services/comments/commentsService'
 
 import { ButtonTypes, CommentI, InstrumentI } from '@/types';
 import { RootState } from '@/app/store';
+import { TOAST_MESSAGES } from '@/app/constants';
 
 const Instrument: React.FC = () => {
   const [instrument, setInstrument] = useState<InstrumentI>({
@@ -84,25 +87,39 @@ const Instrument: React.FC = () => {
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    try {
-      const newItem = await addCartItem({
-        price: instrument?.price,
-        name: instrument?.name,
-        image: instrument?.image,
-        color: selectedColor,
-        brandName: instrument?.brandName,
-        instrumentId: instrument?._id,
-        section: instrument?.section,
-        instrumentType: instrument?.instrumentType,
-        amount: 1,
-      });
+    const cartItemId = uuidv4();
 
-      dispatch(addItemToCart(newItem));
-      toast.success(`${instrument.name} has been added to the cart!`);
-    } catch (error: any) {
-      if (error.message) {
-        toast.error(error.message);
+    const newItem = {
+      cartItemId,
+      name: instrument.name,
+      image: instrument.image,
+      color: selectedColor,
+      brandName: instrument.brandName,
+      instrumentId: instrument._id,
+      section: instrument.section,
+      amount: 1,
+      instrumentType: instrument.instrumentType,
+      price: instrument.price,
+    };
+
+    try {
+      if (user) {
+        const addedItem = await addCartItem(newItem);
+
+        dispatch(addItemToCart(addedItem));
+        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
+        push('/');
+      } else {
+        const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+        cartItems.push(newItem);
+
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
+        window.dispatchEvent(new Event('cartUpdated'));
       }
+    } catch (error: any) {
+      toast.error('Failed to add item to the cart. Try again later');
     }
   };
 
@@ -118,7 +135,7 @@ const Instrument: React.FC = () => {
           dispatch(removeLikedItemFromState(instrumentId));
 
           setIsLiked(false);
-          toast.success(`${instrument.name} has been unliked.`);
+          toast.success(TOAST_MESSAGES.UNLIKE_ITEM_SUCCESS);
         } else {
           const likedData = {
             price: instrument?.price,
@@ -135,7 +152,7 @@ const Instrument: React.FC = () => {
           dispatch(addLikedItemToState(likedData));
 
           setIsLiked(true);
-          toast.success(`${instrument.name} has been liked!`);
+          toast.success(TOAST_MESSAGES.UNLIKE_ITEM_SUCCESS);
         }
       } catch (error) {
         toast.error(`Failed to update like status for ${instrument.name}: ${error}`);

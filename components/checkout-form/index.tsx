@@ -19,7 +19,8 @@ import { resetCart } from '@/features/instruments/instrumentsSlice';
 import { getCartItems } from '@/services/cart/cartService';
 import { createOrder } from '@/services/orders/ordersService';
 
-import { ButtonTypes } from '@/types';
+import { ButtonTypes, InputTypes } from '@/types';
+import { TOAST_MESSAGES } from '@/app/constants';
 
 const CheckoutForm: React.FC = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
@@ -127,7 +128,7 @@ const CheckoutForm: React.FC = () => {
 
       window.dispatchEvent(new Event('cartUpdated'));
 
-      toast.success('Item has been ordered');
+      toast.success(TOAST_MESSAGES.CREATE_ORDER);
       push('/');
     } catch (error) {
       console.error('Error processing order:', error);
@@ -152,72 +153,89 @@ const CheckoutForm: React.FC = () => {
           <p className={styles.modalText}>Please confirm your details before proceeding:</p>
 
           <div className={styles.inputGroup}>
-            <Controller
-              name='phoneNumber'
-              control={control}
-              rules={{ required: 'Phone number is required' }}
-              render={({ field }) => (
-                <PhoneInput
-                  country={'us'}
-                  value={field.value}
-                  onChange={phone => field.onChange(phone)}
-                  inputClass={styles.input}
-                  inputProps={{
-                    name: 'phone',
-                    required: true,
-                    autoFocus: true,
-                  }}
-                />
-              )}
-            />
-            {errors.phoneNumber && <p className={styles.error}>{errors.phoneNumber.message}</p>}
+            <div>
+              <Controller
+                name='phoneNumber'
+                control={control}
+                rules={{ required: 'Phone number is required' }}
+                render={({ field }) => (
+                  <PhoneInput
+                    country={'us'}
+                    value={field.value}
+                    onChange={phone => field.onChange(phone)}
+                    inputClass={styles.input}
+                    inputProps={{
+                      name: 'phone',
+                      required: true,
+                      autoFocus: true,
+                    }}
+                  />
+                )}
+              />
 
-            <Controller
-              name='country'
-              control={control}
-              rules={{ required: 'Country is required' }}
-              render={({ field }) => (
-                <Input
-                  placeholder='Enter your country'
-                  error={errors.country?.message}
-                  className={styles.input}
-                  {...field}
-                />
-              )}
-            />
+              {errors.phoneNumber && <p className={styles.error}>{errors.phoneNumber.message}</p>}
+            </div>
 
-            <Controller
-              name='city'
-              control={control}
-              rules={{ required: 'City is required' }}
-              render={({ field }) => (
-                <Input
-                  placeholder='Enter your city'
-                  error={errors.city?.message}
-                  className={styles.input}
-                  {...field}
-                />
-              )}
-            />
+            <div>
+              <Controller
+                name='country'
+                control={control}
+                rules={{ required: 'Country is required' }}
+                render={({ field }) => (
+                  <>
+                    <Input
+                      type={InputTypes._TEXT}
+                      placeholder='Enter your country'
+                      className={styles.input}
+                      {...field}
+                    />
 
-            <Controller
-              name='address'
-              control={control}
-              rules={{ required: 'Address is required' }}
-              render={({ field }) => (
-                <Input
-                  placeholder='Enter your address'
-                  error={errors.address?.message}
-                  className={styles.input}
-                  {...field}
-                />
-              )}
-            />
+                    {errors.country && <p className={styles.error}>{errors.country.message}</p>}
+                  </>
+                )}
+              />
+            </div>
+
+            <div>
+              <Controller
+                name='city'
+                control={control}
+                rules={{ required: 'City is required' }}
+                render={({ field }) => (
+                  <>
+                    <Input
+                      type={InputTypes._TEXT}
+                      placeholder='Enter your city'
+                      className={styles.input}
+                      {...field}
+                    />
+                    {errors.city && <p className={styles.error}>{errors.city.message}</p>}
+                  </>
+                )}
+              />
+            </div>
+
+            <div>
+              <Controller
+                name='address'
+                control={control}
+                rules={{ required: 'Address is required' }}
+                render={({ field }) => (
+                  <>
+                    <Input
+                      type={InputTypes._TEXT}
+                      placeholder='Enter your address'
+                      className={styles.input}
+                      {...field}
+                    />
+                    {errors.address && <p className={styles.error}>{errors.address.message}</p>}
+                  </>
+                )}
+              />
+            </div>
           </div>
 
-          <Button
-            disabled={!stripe || isProcessing || !isValid}
-            className={styles.checkoutButton}
+          <Button disabled={!stripe || isProcessing || !isValid} className={styles.checkoutButton}
             onClick={handleSubmit(onConfirmCheckout)}
           >
             {isProcessing ? 'Processing...' : `Pay ${totalPrice}$`}

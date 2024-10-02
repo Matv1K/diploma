@@ -30,7 +30,7 @@ const Liked: React.FC = () => {
 
   if (isLoading) {
     return (
-      <main>
+      <main className={styles.containerEmpty}>
         <Loader />
       </main>
     );
@@ -53,8 +53,8 @@ const Liked: React.FC = () => {
       <h2>Liked Items</h2>
 
       <div className={styles.table}>
-        {likedItems.map(({ _id, ...props }: InstrumentCardI) => (
-          <InstrumentCard key={_id} id={_id} withLikeIcon {...props} />
+        {likedItems.map(({ _id, instrumentId, ...props }: InstrumentCardI) => (
+          <InstrumentCard key={_id} id={instrumentId} withLikeIcon {...props} />
         ))}
       </div>
     </main>

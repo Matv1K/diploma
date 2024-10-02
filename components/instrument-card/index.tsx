@@ -18,6 +18,7 @@ import { AppDispatch, RootState } from '@/app/store';
 import { v4 as uuidv4 } from 'uuid';
 
 import { getLikedItem } from '@/services/liked/likedService';
+import { TOAST_MESSAGES } from '@/app/constants';
 interface InstrumentCardProps {
   isNew?: boolean;
   name: string;
@@ -81,7 +82,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       try {
         if (isLiked) {
           await dispatch(unlikeItem(id));
-          toast.success('You do not like the item anymore');
+          toast.success(TOAST_MESSAGES.UNLIKE_ITEM_SUCCESS);
           setIsLiked(false);
         } else {
           await dispatch(likeItem({
@@ -94,7 +95,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
             section,
             instrumentType,
           }));
-          toast.success('You like the item');
+          toast.success(TOAST_MESSAGES.LIKE_ITEM_SUCCES);
           setIsLiked(true);
         }
       } catch (error) {
@@ -107,10 +108,10 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    const _id = uuidv4();
+    const cartItemId = uuidv4();
 
     const newItem = {
-      _id,
+      cartItemId,
       name,
       image,
       color: selectedColor,
@@ -127,7 +128,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         const addedItem = await addCartItem(newItem);
 
         dispatch(addItemToCart(addedItem));
-        toast.success(`${name} has been added to the cart!`);
+        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
         push('/');
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
@@ -135,7 +136,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-        toast.success(`${name} has been added to the cart (session)`);
+        toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
         window.dispatchEvent(new Event('cartUpdated'));
       }
     } catch (error: any) {

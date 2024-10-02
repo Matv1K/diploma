@@ -31,14 +31,19 @@ export const TOAST_MESSAGES = {
   SIGN_UP_ERROR: '',
   ADD_TO_CART_SUCCESS: 'Item has been added to your cart',
   ADD_TO_CART_ERROR: '',
-  LIKE_ITEM_SUCCES: '',
+  LIKE_ITEM_SUCCES: 'Item has been added to your favorites',
   LIKE_ITEM_ERROR: '',
-  UNLIKE_ITEM_SUCCESS: '',
+  UNLIKE_ITEM_SUCCESS: 'Item has been removed from your favorites',
   UNLIKE_ITEM_ERROR: '',
   LEAVE_COMMENT_SUCCESS: '',
   LEAVE_COMMENT_ERROR: '',
-  CHECKOUT_ITEMS_SUCCESS: '',
+  CHECKOUT_ITEMS_SUCCESS: 'Item has been ordered',
   CHECKOUT_ITEMS_ERROR: '',
+  UPDATE_USER_SUCCESS: 'User has been updated',
+  CHANGE_PASSWORD_SUCCESS: 'Your password has been changed',
+  REMOVE_CART_ITEM_SUCCESS: 'Item has been removed from the cart',
+  LOG_OUT_USER: 'You’ve been successfully logged out',
+  CREATE_ORDER: 'Your order has been created',
 };
 
 export const CATALOG_LINKS = [

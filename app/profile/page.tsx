@@ -19,6 +19,7 @@ import { updateUser } from '@/features/user/userSlice';
 
 import { ButtonTypes, InputTypes } from '@/types';
 import { AppDispatch, RootState } from '@/app/store';
+import { TOAST_MESSAGES } from '../constants';
 
 const Profile: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -70,7 +71,7 @@ const Profile: React.FC = () => {
         },
       });
 
-      toast.success('User has been updated');
+      toast.success(TOAST_MESSAGES.UPDATE_USER_SUCCESS);
     } catch (error) {
       toast.error(`${error}`);
       console.error(`Could not update user: ${error}`);

@@ -11,7 +11,6 @@ import { convertToSubcurrency } from '@/utils';
 
 const Checkout: React.FC = () => (
   <main>
-
     <Elements options={{ mode: 'payment', currency: 'usd', amount: convertToSubcurrency(49.9) }} stripe={stripePromise}>
       <CheckoutForm />
     </Elements>
