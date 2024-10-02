@@ -12,6 +12,7 @@ import { Input, Button } from '@/components';
 import { resetPassword } from '@/services/users/userService';
 
 import { ButtonTypes, InputTypes } from '@/types';
+import { TOAST_MESSAGES } from '../constants';
 
 const ResetPassword = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -27,8 +28,8 @@ const ResetPassword = () => {
 
     try {
       setLoading(true);
-      await resetPassword(currentPassword, newPassword); // Use the new API method
-      toast.success('Password changed successfully');
+      await resetPassword(currentPassword, newPassword);
+      toast.success(TOAST_MESSAGES.CHANGE_PASSWORD_SUCCESS);
     } catch (error) {
       toast.error(`Error changing password: ${error.response?.data?.message || 'Unknown error'}`);
     } finally {

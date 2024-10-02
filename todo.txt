@@ -8,7 +8,6 @@
 8. MAKE PRIVAT ROUTES
 9. Fix stripe
 10. ADD FILTERING LOGIC
-11. Fix liked icon on liked page
 
 // BUGS
 
@@ -16,13 +15,9 @@
 2. Fix any types
 3. Add error toasts
 4. Refactor codebase
-5. Change toast names
-6. Fix checkout form modal
-7. Fix stripe
-8. Fix change password
-9. Fix total number (change decimal number to integer)
-10. add to cart from the instrument page for non-auth users
-
+6. Fix stripe
+7. Fix change password
+8. If item is already in the cart get a toast message (for non auth users)
 
 
 //! LOW PRIORITY
@@ -46,8 +41,6 @@
 17. Close search when click on the element
 18. ADD FAVICON
 19. Change LOGO (musify)
-20. When the user is not authorized go to sign in page if u want to like something
-21. Instrument row should have images
 22. Go to login page when trying to leave the comment
 23. Add onboarding for users who just register
 24. When user created an order notify the user by sending an sms to his number
@@ -76,3 +69,4 @@
 19. CDN what is that
 20. ORM what is that
 21. Cloudflare
+22. uuid4

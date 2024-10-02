@@ -15,6 +15,7 @@ import { logOutUser } from '@/features/user/userSlice';
 import { resetCart } from '@/features/instruments/instrumentsSlice';
 
 import { RootState, AppDispatch } from '@/app/store';
+import { TOAST_MESSAGES } from '@/app/constants';
 
 interface DropdownProps {
   className?: string;
@@ -30,7 +31,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
       dispatch(logOutUser());
       dispatch(resetCart());
       push('/');
-      toast.success('Log out');
+      toast.success(TOAST_MESSAGES.LOG_OUT_USER);
     } catch (error) {
       console.error(error);
       toast.error('Error logging out');
