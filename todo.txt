@@ -12,13 +12,9 @@
 // BUGS
 
 1. Fix loaders
-2. Fix any types
-3. Add error toasts
-4. Refactor codebase
-5. Fix change password
-6. Immediately remove unliked item from favorites
-7. Add scss linter that will add last line, and lint all the code
-8. Cart item is in the cart error is not shown
+2. Add error toasts
+4. Immediately remove unliked item from favorites
+6. Add scss linter that will add last line, and lint all the code
 
 //! LOW PRIORITY
 

@@ -27,7 +27,7 @@ import { createComment, getComments } from '@/services/comments/commentsService'
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { ButtonTypes, CartItemWithLocalIdI, CommentI, InstrumentI } from '@/types';
+import { ApiError, ButtonTypes, CartItemWithLocalIdI, CommentI, InstrumentI } from '@/types';
 import { RootState } from '@/app/store';
 
 const Instrument: React.FC = () => {
@@ -125,8 +125,10 @@ const Instrument: React.FC = () => {
 
         toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       }
-    } catch {
-      toast.error('Failed to add item to the cart. Try again later');
+    } catch(error) {
+      const apiError = error as ApiError;
+
+      toast.error(apiError.response.data.message);
     }
   };
 

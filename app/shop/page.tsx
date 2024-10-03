@@ -20,13 +20,13 @@ import { InstrumentCardI, ButtonOptions, InputTypes } from '@/types';
 
 const Shop: React.FC = () => {
   const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
-  
+
   const fetchMoreInstruments = async () => {
     try {
       const { instruments: newInstruments, hasMore } = await getInstruments(page);
@@ -39,7 +39,6 @@ const Shop: React.FC = () => {
       setHasMore(hasMore);
       setPage(prevPage => prevPage + 1);
       setIsLoading(false);
-
     } catch (error) {
       console.error('Error fetching instruments:', error);
       setHasMore(false);

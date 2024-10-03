@@ -2,6 +2,7 @@
 
 import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 import styles from './index.module.scss';
 
@@ -25,6 +26,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   const { user } = useSelector((state: RootState) => state.user);
 
   const dispatch: AppDispatch = useDispatch();
+  const { push } = useRouter();
 
   const handleLogOut = async () => {
     try {
@@ -32,6 +34,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
       dispatch(resetCart());
 
       toast.success(TOAST_MESSAGES.LOG_OUT_USER);
+      push('/');
     } catch (error) {
       console.error(error);
       toast.error('Error logging out');

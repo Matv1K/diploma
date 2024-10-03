@@ -20,27 +20,27 @@ const Section: React.FC = () => {
   const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const { section: instrumentsSection } = useParams();
   const sectionName = Array.isArray(instrumentsSection) ? instrumentsSection[0] : instrumentsSection;
 
-  const fetchInstruments = async (pageNumber: number) => {
-    setLoading(true);
+  const fetchInstruments = async () => {
     try {
-      const newInstruments = await getInstrumentsBySection(instrumentsSection, pageNumber);
+      const newInstruments = await getInstrumentsBySection(instrumentsSection, page);
 
       if (newInstruments.length === 0) {
         setHasMore(false);
-      } else {
-        setInstruments(prev => [...prev, ...newInstruments]);
-        setPage(prevPage => prevPage + 1);
-      }
+      } 
+
+      setInstruments(prev => [...prev, ...newInstruments]);
+      setHasMore(hasMore)
+      setPage(prevPage => prevPage + 1);
+      setIsLoading(false)
     } catch (error) {
       console.error('Error fetching instruments:', error);
       setHasMore(false);
-    } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -49,16 +49,10 @@ const Section: React.FC = () => {
     setPage(1);
     setHasMore(true);
 
-    fetchInstruments(1);
+    fetchInstruments();
   }, []);
 
-  const loadMoreInstruments = () => {
-    if (!loading && hasMore) {
-      fetchInstruments(page);
-    }
-  };
-
-  if (loading) {
+  if (isLoading) {
     return (
       <main className={styles.containerEmpty}>
         <Loader />
@@ -66,7 +60,7 @@ const Section: React.FC = () => {
     );
   }
 
-  if (!instruments.length && !loading) {
+  if (!instruments.length && !isLoading) {
     return (
       <main className={styles.containerEmpty}>
         <h2>Currently, there are no items in this category</h2>
@@ -124,17 +118,15 @@ const Section: React.FC = () => {
       </div>
 
       <InfiniteScroll
+        className={styles.instruments}
         dataLength={instruments.length}
-        next={loadMoreInstruments}
+        next={fetchInstruments}
         hasMore={hasMore}
         loader={<h4>Loading more instruments...</h4>}
-        endMessage={<p>No more instruments to load</p>}
       >
-        <div className={styles.instruments}>
-          {instruments.map(({ _id, ...props }: InstrumentCardI) => (
-            <InstrumentCard key={_id} id={_id} withLikeIcon {...props} />
-          ))}
-        </div>
+        {instruments.map(({ _id, ...props }: InstrumentCardI) => (
+          <InstrumentCard key={_id} id={_id} withLikeIcon {...props} />
+        ))}
       </InfiniteScroll>
     </main>
   );

@@ -14,8 +14,6 @@ class CartController {
 
       const result = await CartService.addCartItem(req.body, userId);
 
-      console.log(result);
-
       return res.status(result.status).json(result.data);
     } catch (error: any) {
       console.error('Error adding item to cart', error);

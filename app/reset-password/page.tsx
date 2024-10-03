@@ -9,6 +9,8 @@ import styles from './page.module.scss';
 
 import { Input, Button } from '@/components';
 
+import { FiEyeOff, FiEye } from 'react-icons/fi';
+
 import { resetPassword } from '@/services/users/userService';
 
 import { ApiError, ButtonTypes, InputTypes, ResetPasswordI } from '@/types';
@@ -16,9 +18,14 @@ import { ApiError, ButtonTypes, InputTypes, ResetPasswordI } from '@/types';
 import { TOAST_MESSAGES } from '@/app/constants';
 
 const ResetPassword = () => {
-  const [loading, setLoading] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<ResetPasswordI>();
+
+  const handlePasswordShown = () => {
+    setIsPasswordShown(prev => !prev);
+  };
 
   const handleChangePassword = async (data: ResetPasswordI) => {
     const { currentPassword, newPassword, confirmedPassword } = data;
@@ -37,7 +44,11 @@ const ResetPassword = () => {
     } catch (error) {
       const apiError = error as ApiError;
 
-      toast.error(`Error changing password: ${apiError.response?.data?.message || 'Unknown error'}`);
+      if (apiError.response?.status === 400) {
+        toast.error(apiError.response?.data?.message || 'Current password is incorrect');
+      } else {
+        toast.error(`Error changing password: ${apiError.response?.data?.message || 'Unknown error'}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -51,8 +62,10 @@ const ResetPassword = () => {
         <div className={styles.inputContainer}>
           <Input
             className={styles.input}
-            type={InputTypes._PASSWORD}
+            type={!isPasswordShown ? InputTypes._PASSWORD : InputTypes._TEXT}
             placeholder='Enter your current password'
+            icon={isPasswordShown ?
+              <FiEye size={24} onClick={handlePasswordShown} /> : <FiEyeOff size={24} onClick={handlePasswordShown}/>}
             {...register('currentPassword', { required: 'Current password is required' })}
           />
 
@@ -62,8 +75,10 @@ const ResetPassword = () => {
         <div className={styles.inputContainer}>
           <Input
             className={styles.input}
-            type={InputTypes._PASSWORD}
+            type={!isPasswordShown ? InputTypes._PASSWORD : InputTypes._TEXT}
             placeholder='Enter new password'
+            icon={isPasswordShown ?
+              <FiEye size={24} onClick={handlePasswordShown} /> : <FiEyeOff size={24} onClick={handlePasswordShown}/>}
             {...register('newPassword', { required: 'New password is required' })}
           />
 
@@ -73,8 +88,10 @@ const ResetPassword = () => {
         <div className={styles.inputContainer}>
           <Input
             className={styles.input}
-            type={InputTypes._PASSWORD}
+            type={!isPasswordShown ? InputTypes._PASSWORD : InputTypes._TEXT}
             placeholder='Confirm new password'
+            icon={isPasswordShown ?
+              <FiEye size={24} onClick={handlePasswordShown} /> : <FiEyeOff size={24} onClick={handlePasswordShown}/>}
             {...register('confirmedPassword', { required: 'Please confirm your new password' })}
           />
 

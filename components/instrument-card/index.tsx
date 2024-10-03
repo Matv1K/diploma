@@ -26,7 +26,7 @@ import { getLikedItem } from '@/services/liked/likedService';
 import { TOAST_MESSAGES } from '@/app/constants';
 
 import { AppDispatch, RootState } from '@/app/store';
-import { CartItemWithLocalIdI } from '@/types';
+import { ApiError, CartItemWithLocalIdI } from '@/types';
 
 interface InstrumentCardProps {
   isNew?: boolean;
@@ -140,6 +140,8 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
     try {
       if (user) {
+        console.log(selectedColor);
+        
         const addedItem = await addCartItem(newItem);
 
         dispatch(addItemToCart(addedItem));
@@ -164,8 +166,10 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
         toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       }
-    } catch {
-      toast.error('Failed to add item to the cart. Try again later');
+    } catch(error) {
+      const apiError = error as ApiError;
+      
+      toast.error(apiError.response.data.message);
     }
   };
 

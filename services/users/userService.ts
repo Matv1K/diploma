@@ -78,5 +78,6 @@ export const resetPassword = async (currentPassword: string, newPassword: string
     return response;
   } catch (error) {
     console.error('Somehting went wrong', error);
+    throw error;
   }
 };

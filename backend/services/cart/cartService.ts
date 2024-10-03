@@ -6,9 +6,13 @@ class CartService {
   async addCartItem(data: any, userId: string) {
     const { name, image, brandName, price, color, section, instrumentId, instrumentType } = data;
 
-    const existingItem = await Cart_Item.findOne({ instrumentId, userId });
+    const existingItems = await Cart_Item.find({ instrumentId, userId });
 
-    if (existingItem && existingItem.color === color) {
+    const isInTheCart = existingItems.some((existingItem) => {
+      return existingItem.instrumentId === instrumentId && existingItem.color === color
+    });
+    
+    if (isInTheCart) {
       throw new Error('Item is already in the cart');
     }
 

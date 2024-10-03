@@ -40,7 +40,7 @@ const SignIn: React.FC = () => {
       const apiError = error as ApiError;
 
       console.error(`Could not sign in: ${apiError}`);
-      toast.error(apiError.response.data.message);
+      toast.error(apiError);
     }
   };
 
