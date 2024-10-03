@@ -1,0 +1,56 @@
+@import "../../app/variables.scss";
+
+.order {
+    border: 1px solid $primary-color;
+    border-radius: 8px;
+    color: $text-color;
+  
+    .tableCell {
+      overflow: hidden;
+      padding: 10px;
+      text-transform: capitalize;
+    }
+  
+    .tableRow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      justify-items: center;
+    }
+
+    .tableHeader {
+        background-color: $primary-color;
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+
+        .tableHeaderCell {
+          color: $white-color;
+          background-color: $primary-color;
+          overflow: hidden;
+        }
+    }
+  
+  
+    .orderData {
+      padding: 15px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      justify-items: center;
+  
+      .orderDataRowPrice {
+        grid-column: 3;
+        display: flex;
+        gap: 10px
+      }
+
+      .orderDataRowStatus {
+        grid-column: 4;
+        display: flex;
+        gap: 10px
+      }
+    }
+  }
+  
+  .bold {
+    font-weight: 700;
+    text-transform: capitalize;
+  }

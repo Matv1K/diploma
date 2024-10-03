@@ -26,6 +26,7 @@ import { getLikedItem } from '@/services/liked/likedService';
 import { TOAST_MESSAGES } from '@/app/constants';
 
 import { AppDispatch, RootState } from '@/app/store';
+import { CartItemWithLocalIdI } from '@/types';
 
 interface InstrumentCardProps {
   isNew?: boolean;
@@ -39,6 +40,8 @@ interface InstrumentCardProps {
   withLikeIcon?: boolean;
   liked?: boolean;
   brandName: string;
+  salePrice: number;
+  onSale: boolean;
 }
 
 const InstrumentCard: React.FC<InstrumentCardProps> = ({
@@ -53,6 +56,8 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
   withLikeIcon,
   liked = false,
   brandName,
+  salePrice,
+  onSale,
 }) => {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [isLiked, setIsLiked] = useState(liked);
@@ -62,7 +67,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
   const { push } = useRouter();
   const dispatch: AppDispatch = useDispatch();
-
+  
   useEffect(() => {
     const getAverageRating = async () => {
       const { averageRating } = await getInstrumentRating(id);
@@ -143,6 +148,14 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
         toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+
+        if(cartItems.some((cartItem: CartItemWithLocalIdI) => {
+          return cartItem.instrumentId === newItem.instrumentId && cartItem.color === newItem.color
+        }) === true) {
+          toast.error('Item is already in the cart')
+          return;
+        }
+        
         cartItems.push(newItem);
 
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -172,8 +185,19 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           priority
         />
       </div>
+      
+      <h3 className={styles.infoPrice}>
+        {onSale && (
+          <>
+            <span className={styles.priceOriginal}>{price}$</span>
+            <span>{salePrice}$</span>
+          </>
+        )}
 
-      <h3 className={styles.instrumentPrice}>{price}$</h3>
+        {!onSale && (
+          <span>{price}$</span>
+        )}
+      </h3>
 
       <p className={styles.rating}>{getRatingString(averageRating)}</p>
 

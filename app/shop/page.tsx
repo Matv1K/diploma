@@ -26,7 +26,7 @@ const Shop: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
-
+  
   const fetchMoreInstruments = async () => {
     try {
       const { instruments: newInstruments, hasMore } = await getInstruments(page);

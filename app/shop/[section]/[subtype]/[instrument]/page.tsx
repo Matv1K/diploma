@@ -27,7 +27,7 @@ import { createComment, getComments } from '@/services/comments/commentsService'
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { ButtonTypes, CommentI, InstrumentI } from '@/types';
+import { ButtonTypes, CartItemWithLocalIdI, CommentI, InstrumentI } from '@/types';
 import { RootState } from '@/app/store';
 
 const Instrument: React.FC = () => {
@@ -109,6 +109,14 @@ const Instrument: React.FC = () => {
         toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+
+        if(cartItems.some((cartItem: CartItemWithLocalIdI) => {
+          return cartItem.instrumentId === newItem.instrumentId && cartItem.color === newItem.color
+        }) === true) {
+          toast.error('Item is already in the cart')
+          return;
+        }
+
         cartItems.push(newItem);
 
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -151,7 +159,7 @@ const Instrument: React.FC = () => {
           dispatch(addLikedItemToState(likedData));
 
           setIsLiked(true);
-          toast.success(TOAST_MESSAGES.UNLIKE_ITEM_SUCCESS);
+          toast.success(TOAST_MESSAGES.LIKE_ITEM_SUCCES);
         }
       } catch (error) {
         toast.error(`Failed to update like status for ${instrument.name}: ${error}`);

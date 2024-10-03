@@ -9,6 +9,8 @@ export interface InstrumentCardI {
   brandName: string;
   colors: string[];
   instrumentId: string;
+  onSale: boolean;
+  salePrice: number;
 }
 
 export interface InstrumentI {

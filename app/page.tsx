@@ -55,6 +55,7 @@ const Home: React.FC = () => {
           alt='piano'
           width={200}
           height={200}
+          priority
         />
       </div>
 
@@ -86,6 +87,7 @@ const Home: React.FC = () => {
             alt='piano'
             width={200}
             height={180}
+            priority
           />
 
           <h2 className={styles.headingHome}>

@@ -12,51 +12,6 @@
     color: $secondary-color;
     margin-bottom: 10px;
   }
-
-  .order {
-    border: 1px solid $primary-color;
-    margin-bottom: 20px;
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: $white-color;
-    overflow: hidden;
-
-    .tableCell {
-      padding: 12px 15px;
-      text-align: left;
-      font-size: 16px;
-      color: $text-color;
-      word-wrap: break-word;
-      border-bottom: 1px solid $primary-color;
-    }
-
-    .tableHeader {
-      font-weight: bold;
-      color: $white-color;
-      background-color: $primary-color;
-      text-transform: uppercase;
-      border-bottom: 2px solid $primary-color;
-      padding: 15px;
-    }
-
-    .tableHeader,
-    .tableCell {
-      width: 25%;
-    }
-
-    .tableRow {
-      &:nth-child(even) {
-        background-color: lighten($background-color, 10%);
-      }
-
-      &:hover {
-        background-color: lighten($primary-color, 30%);
-        color: $white-color;
-        transition: background-color 0.3s ease-in-out;
-      }
-    }
-  }
 }
 
 .containerEmpty {

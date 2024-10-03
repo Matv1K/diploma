@@ -101,7 +101,7 @@ const Header: React.FC = () => {
     <>
       <header className={styles.header}>
         <Link href='/' onClick={handleCloseCatalog}>
-          <Image className={styles.logo} src={Logo} alt='Musify' width={40} height={40} />
+          <Image className={styles.logo} src={Logo} alt='Musify' width={40} height={40} priority/>
         </Link>
 
         <ul className={styles.headerActionData}>

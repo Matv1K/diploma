@@ -32,10 +32,12 @@ export default [
       'no-debugger': 'error',
       'no-var': 'error',
       'no-multiple-empty-lines': ['error', { max: 1 }],
+      '@typescript-eslint/indent': ['error', 2],
+      'react/jsx-indent': ['error', 2],
+      'react/jsx-indent-props': ['error', 2],
 
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react/jsx-indent': ['error', 2],
       'react/jsx-no-duplicate-props': ['error'],
       'react/self-closing-comp': 'error',
       'react/prop-types': 'off',

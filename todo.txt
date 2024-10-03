@@ -15,15 +15,10 @@
 2. Fix any types
 3. Add error toasts
 4. Refactor codebase
-6. Fix stripe
-7. Fix change password
-8. If item is already in the cart get a toast message (for non auth users)
-9. Create OrderItem component
-10. When like item from instrumeng page it does not work correctly
-11. Immediately remove unliked item from favorites
-12. Add onsale value to instrumentcart
-13. Add error color variable
-14. Remove image warning
+5. Fix stripe
+6. Fix change password
+7. Immediately remove unliked item from favorites
+8. Add scss linter that will add last line, and lint all the code
 
 
 //! LOW PRIORITY
