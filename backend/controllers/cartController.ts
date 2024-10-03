@@ -1,14 +1,22 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 import CartService from '../services/cart/cartService';
 
+interface AuthenticatedRequest extends Request {
+  payload?: jwt.JwtPayload;
+}
+
 class CartController {
-  async addCartItem(req: Request, res: Response) {
+  async addCartItem(req: AuthenticatedRequest, res: Response) {
     try {
       const userId = req.payload?.id;
+
       const result = await CartService.addCartItem(req.body, userId);
 
-      return res.status(result.status).json(result.data || result.message);
+      console.log(result);
+
+      return res.status(result.status).json(result.data);
     } catch (error: any) {
       console.error('Error adding item to cart', error);
 
@@ -20,7 +28,7 @@ class CartController {
     }
   }
 
-  async getCartItems(req: Request, res: Response) {
+  async getCartItems(req: AuthenticatedRequest, res: Response) {
     try {
       const userId = req.payload?.id;
       const { cartItems, totalPrice } = await CartService.getCartItems(userId);
@@ -32,7 +40,7 @@ class CartController {
     }
   }
 
-  async getCartItemsAmount(req: Request, res: Response) {
+  async getCartItemsAmount(req: AuthenticatedRequest, res: Response) {
     try {
       const userId = req.payload?.id;
       const cartItemsAmount = await CartService.getCartItemsAmount(userId);
@@ -75,15 +83,6 @@ class CartController {
   async decreaseCartItemAmount(req: Request, res: Response) {
     try {
       const { id } = req.params;
-
-      // FIX getCartItemsAmount
-
-      // const cartItem = await CartService.getCartItemsAmount(id);
-
-      // if (cartItem <= 1) {
-      //   return res.status(400).json({ message: 'Cart item amount cannot be less than 1' });
-      // }
-
       await CartService.decreaseCartItemAmount(id);
       return res.status(200).json({ message: 'Cart item quantity decreased' });
     } catch (error) {

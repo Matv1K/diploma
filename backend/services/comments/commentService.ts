@@ -2,7 +2,6 @@ import Comment from '../../models/Comment';
 import User from '../../models/User';
 
 class CommentService {
-  // Add a new comment
   async addComment(userId: string, instrumentId: string, description: string, rating: number) {
     const user = await User.findById(userId);
 
@@ -22,7 +21,6 @@ class CommentService {
     return newComment;
   }
 
-  // Get all comments for a specific instrument
   async getComments(instrumentId: string) {
     const comments = await Comment.aggregate([
       { $match: { instrumentId } },

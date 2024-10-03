@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 
-import cloudinary from '../services/cloudinary/cloudinaryService';
-
 import Comment from '../models/Comment';
 import Instrument from '../models/Instrument';
 
+import cloudinary from '../services/cloudinary/cloudinaryService';
 import InstrumentService from '../services/instruments/instrumentService';
+
+import { ApiError } from '../../types';
 
 class InstrumentController {
   async createInstrument(req: Request, res: Response) {
@@ -20,49 +21,50 @@ class InstrumentController {
     }
   };
 
-  // Backend - Ensure that instruments have unique _ids
   async getAllInstruments(req: Request, res: Response) {
     try {
       const { page = 1, limit = 10 } = req.query;
+  
       const currentPage = Number(page);
       const instruments = await InstrumentService.getAllInstrumentsPaginated(currentPage, Number(limit));
-
-      // Fetch cloudinary resources (images)
-      const { resources } = await cloudinary.api.resources({
-        type: 'upload',
-      });
-
-      // Map cloudinary images to instruments
-      const cloudinaryImages = resources.map((resource: any) => ({
+  
+      const { resources } = await cloudinary.api.resources({ type: 'upload' });
+  
+      interface CloudinaryResource {
+        secure_url: string;
+        public_id: string;
+      }
+  
+      const cloudinaryImages = resources.map((resource: CloudinaryResource) => ({
         url: resource.secure_url,
         public_id: resource.public_id,
       }));
-
-      // Map instruments with cloudinary images (ensure that it is a 1-to-1 match)
+  
       const instrumentsWithImages = instruments.map(instrument => {
-        const matchingImage = cloudinaryImages.find(image => image.url === instrument.image);
+        const matchingImage = cloudinaryImages.find((image: {url: string, public_id: string}) => image.url === instrument.image);
         return {
           ...instrument.toObject(),
-          image: matchingImage ? matchingImage.url : instrument.image, // Retain original image if no match
+          image: matchingImage ? matchingImage.url : instrument.image, 
         };
       });
-
-      // Check for duplicates by _id and remove them
-      const uniqueInstruments = instrumentsWithImages.filter((instrument, index, self) =>
-        index === self.findIndex(i => i._id.toString() === instrument._id.toString()));
-
-      // Get the total count of instruments to calculate hasMore
+  
+      const uniqueInstruments = instrumentsWithImages.filter(
+        (instrument, index, self) =>
+          index === self.findIndex(i => i._id.toString() === instrument._id.toString())
+      );
+  
       const totalInstruments = await Instrument.countDocuments();
-
+  
       return res.status(200).json({
         instruments: uniqueInstruments,
-        hasMore: currentPage * limit < totalInstruments, // Pagination check for "hasMore"
+        hasMore: currentPage * Number(limit) < totalInstruments,
       });
     } catch (error) {
       console.error('Error fetching instruments: ', error);
       return res.status(500).json({ message: `Something went wrong: ${error}` });
     }
   }
+  
 
   async getPopularInstruments(req: Request, res: Response) {
     try {
@@ -104,21 +106,21 @@ class InstrumentController {
     }
   }
 
-  // Controller: Get instruments by section
   async getInstrumentsBySection(req: Request, res: Response) {
     const { section } = req.params;
-    const { page } = req.query; // Get the page from query parameters
-    const pageNumber = parseInt(page as string, 10) || 1; // Default to 1 if page is not provided
+    const { page } = req.query;
+    
+    const pageNumber = parseInt(page as string, 10) || 1;
 
     try {
-      // Call the service to fetch instruments
       const instruments = await InstrumentService.getInstrumentsBySection(section, pageNumber);
 
-      // Always respond with 200 and an empty array if no instruments found
       res.status(200).json(instruments);
     } catch (error) {
-      console.error('Error fetching instruments by section: ', error.message);
-      res.status(500).json({ message: `Something went wrong: ${error.message}` });
+      const apiError = error as ApiError;
+
+      console.error('Error fetching instruments by section: ', apiError.message);
+      res.status(500).json({ message: `Something went wrong: ${apiError.message}` });
     }
   }
 
@@ -191,8 +193,8 @@ class InstrumentController {
 
       res.status(200).json({ averageRating: avgRating });
     } catch (error) {
-      console.error('Error fetching instrument rating:', error);
-      res.status(500).json({ message: 'Something went wrong', error: error.message });
+      const apiError = error as ApiError;
+      res.status(500).json({ message: 'Something went wrong', error: apiError.message });
     }
   }
 

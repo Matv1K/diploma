@@ -15,11 +15,10 @@
 2. Fix any types
 3. Add error toasts
 4. Refactor codebase
-5. Fix stripe
-6. Fix change password
-7. Immediately remove unliked item from favorites
-8. Add scss linter that will add last line, and lint all the code
-
+5. Fix change password
+6. Immediately remove unliked item from favorites
+7. Add scss linter that will add last line, and lint all the code
+8. Cart item is in the cart error is not shown
 
 //! LOW PRIORITY
 
@@ -36,7 +35,6 @@
 13. Add accessibility
 14. If user enters wrong current password to the reset password it does not throw the error
 15. Authorization with Google
-16. Make props like this: {...props}
 18. ADD FAVICON
 19. Change LOGO (musify)
 22. Go to login page when trying to leave the comment

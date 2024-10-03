@@ -1,5 +1,7 @@
 import Instrument from '../../models/Instrument';
 
+import { ApiError } from '../../../types';
+
 class InstrumentService {
   async createInstrument(instrumentData: any) {
     const newInstrument = new Instrument(instrumentData);
@@ -37,22 +39,21 @@ class InstrumentService {
     return instruments;
   }
 
-  // Service: Get instruments by section
   async getInstrumentsBySection(section: string, page: number = 1, pageSize: number = 10) {
     try {
-      const skip = (page - 1) * pageSize; // Calculate how many documents to skip
+      const skip = (page - 1) * pageSize;
       const instruments = await Instrument.find({ section })
-        .skip(skip) // Skip the calculated number of documents
-        .limit(pageSize); // Limit the number of documents to fetch
+        .skip(skip)
+        .limit(pageSize);
 
       if (instruments.length === 0) {
-        // If no instruments were found, return an empty array
         return [];
       }
 
       return instruments;
     } catch (error) {
-      throw new Error(`Failed to fetch instruments for section ${section}: ${error.message}`);
+      const apiError = error as ApiError
+      throw new Error(`Failed to fetch instruments for section ${section}: ${apiError.message}`);
     }
   }
 
