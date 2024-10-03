@@ -65,7 +65,7 @@ const ResetPassword = () => {
             type={!isPasswordShown ? InputTypes._PASSWORD : InputTypes._TEXT}
             placeholder='Enter your current password'
             icon={isPasswordShown ?
-              <FiEye size={24} onClick={handlePasswordShown} /> : <FiEyeOff size={24} onClick={handlePasswordShown}/>}
+              <FiEyeOff size={24} onClick={handlePasswordShown} /> : <FiEye size={24} onClick={handlePasswordShown}/>}
             {...register('currentPassword', { required: 'Current password is required' })}
           />
 
@@ -78,7 +78,7 @@ const ResetPassword = () => {
             type={!isPasswordShown ? InputTypes._PASSWORD : InputTypes._TEXT}
             placeholder='Enter new password'
             icon={isPasswordShown ?
-              <FiEye size={24} onClick={handlePasswordShown} /> : <FiEyeOff size={24} onClick={handlePasswordShown}/>}
+              <FiEyeOff size={24} onClick={handlePasswordShown} /> : <FiEye size={24} onClick={handlePasswordShown}/>}
             {...register('newPassword', { required: 'New password is required' })}
           />
 
@@ -91,7 +91,7 @@ const ResetPassword = () => {
             type={!isPasswordShown ? InputTypes._PASSWORD : InputTypes._TEXT}
             placeholder='Confirm new password'
             icon={isPasswordShown ?
-              <FiEye size={24} onClick={handlePasswordShown} /> : <FiEyeOff size={24} onClick={handlePasswordShown}/>}
+              <FiEyeOff size={24} onClick={handlePasswordShown} /> : <FiEye size={24} onClick={handlePasswordShown}/>}
             {...register('confirmedPassword', { required: 'Please confirm your new password' })}
           />
 
