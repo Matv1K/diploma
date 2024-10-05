@@ -35,6 +35,24 @@ export const loginUser = async ({ email, password }: {email: string, password: s
   }
 };
 
+export const googleLoginUser = async (token: string) => {
+  try {
+    const response = await instance.post('/users/googleSignIn', { token });
+
+    localStorage.setItem('token', response.data.token);
+    
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      console.error('Google login failed', error.response.data);
+      throw error.response.data;
+    } else {
+      console.error('Google login failed', error.message);
+      throw new Error('Google login failed');
+    }
+  }
+};
+
 export const getCurrentUser = async () => {
   try {
     const response = await instance.get('/users/my-user');
@@ -43,6 +61,7 @@ export const getCurrentUser = async () => {
     if (error.response && error.response.status === 401) {
       return null;
     }
+    
     console.error('Failed to fetch current user:', error);
     throw error;
 

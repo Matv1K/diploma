@@ -59,6 +59,11 @@ class UserService {
     const user = await User.findByIdAndUpdate(userId, updates, { new: true, runValidators: true });
     return user;
   }
+
+  async generateAuthToken(userId: string) {
+    const token = jwt.sign({ id: userId }, `${process.env.SECRET_KEY}`, { expiresIn: '7d'});
+    return token;
+  }
 }
 
 export default new UserService();

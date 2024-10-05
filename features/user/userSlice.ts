@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { registerUser, loginUser, getCurrentUser, logOut, updateCurrentUser } from '@/services/users/userService';
+import { registerUser, loginUser, getCurrentUser, logOut, updateCurrentUser, googleLoginUser } from '@/services/users/userService';
 
 import { SignInDataI, SignUpDataI, ApiError, UserDataI } from '@/types';
 
@@ -21,6 +21,7 @@ const handleApiError = (error: ApiError): string => {
   if (error.response && error.response.data && error.response.data.message) {
     return error.response.data.message;
   }
+
   return error.message || 'An unknown error occurred';
 };
 
@@ -31,9 +32,11 @@ export const fetchCurrentUser =
       return user;
     } catch (error) {
       const apiError = error as ApiError;
+
       if (apiError.response?.status === 401) {
         return rejectWithValue('User is not authorized');
       }
+
       return rejectWithValue(handleApiError(apiError));
     }
   });
@@ -50,7 +53,7 @@ export const signUp =
       }
     });
 
-export const signIn =
+export const signIn = 
   createAsyncThunk<UserDataI, SignInDataI, { rejectValue: string }>('user/signIn', async (userData, { rejectWithValue }) => {
     try {
       const response = await loginUser(userData);
@@ -60,6 +63,15 @@ export const signIn =
       return rejectWithValue(handleApiError(apiError));
     }
   });
+
+export const googleSignIn = createAsyncThunk('user/googleSignIn', async (token: string, { rejectWithValue }) => {
+  try {
+    const response = await googleLoginUser(token);
+    return response;  // No need for response.data here, as it was returned earlier
+  } catch (error) {
+    return rejectWithValue(error);  // Handle the error by rejecting the value
+  }
+});
 
 export const logOutUser =
   createAsyncThunk<void, void, { rejectValue: string }>('user/logOut', async (_, { rejectWithValue }) => {
@@ -90,7 +102,7 @@ export const userSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchCurrentUser.pending, state => {
-        state.loading = true;
+        state.loading = false;
         state.error = null;
       })
 
@@ -117,6 +129,11 @@ export const userSlice = createSlice({
 
       .addCase(signIn.fulfilled, (state, action: PayloadAction<UserDataI>) => {
         state.user = action.payload;
+      })
+
+      .addCase(googleSignIn.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
       })
 
       .addCase(logOutUser.fulfilled, state => {

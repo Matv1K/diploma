@@ -3,7 +3,6 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
-import prettier from 'eslint-plugin-prettier';
 
 export default [
   {
@@ -20,10 +19,26 @@ export default [
   {
     plugins: {
       'react-hooks': pluginReactHooks,
-      prettier: prettier,
     },
     rules: {
-      indent: ['error', 2],
+      'indent': ['error', 2, {
+        'SwitchCase': 1,
+        'VariableDeclarator': { 'var': 2, 'let': 2, 'const': 2 },
+        'outerIIFEBody': 1,
+        'MemberExpression': 1,
+        'FunctionDeclaration': {
+          'parameters': 1,
+          'body': 1,
+        },
+        'FunctionExpression': {
+          'parameters': 1,
+          'body': 1,
+        },
+        'CallExpression': { 'arguments': 1 },
+        'ArrayExpression': 1,
+        'ObjectExpression': 1,
+        'ImportDeclaration': 1,
+      }],
       'no-unused-vars': ['error', { 'argsIgnorePattern': '^_', 'varsIgnorePattern': '^_' }],
       eqeqeq: ['error', 'always'],
       semi: ['error', 'always'],
@@ -35,6 +50,7 @@ export default [
 
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      'react/jsx-indent': ['error', 2],
       'react/jsx-no-duplicate-props': ['error'],
       'react/self-closing-comp': 'error',
       'react/prop-types': 'off',
@@ -51,16 +67,15 @@ export default [
 
       quotes: ['error', 'single', { avoidEscape: true }],
       'jsx-quotes': ['error', 'prefer-single'],
-      'max-len': ['error', { code: 126 }],
+      'max-len': ['error', { code: 120 }],
       'comma-dangle': ['error', 'always-multiline'],
       'function-paren-newline': ['error', 'consistent'],
+      'object-curly-newline': ['error', { consistent: true }],
       'eol-last': ['error', 'always'],
       'arrow-parens': ['error', 'as-needed'],
       'no-multi-spaces': 'error',
       'no-trailing-spaces': 'error',
       'object-curly-spacing': ['error', 'always'],
-      'brace-style': ['error', '1tbs', { 'allowSingleLine': true }],
-      'array-bracket-newline': ['error', { 'multiline': true, 'minItems': null }],
     },
   },
 ];

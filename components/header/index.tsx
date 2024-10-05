@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   const [filteredItems, setFilteredItems] = React.useState<InstrumentI[]>([]);
   const [cartItemsCount, setCartItemsCount] = useState(0);
 
-  const { user, loading } = useSelector((state: RootState) => state.user);
+  const { user, loading } = useSelector((state: RootState ) => state.user);
 
   const pathname = usePathname();
   const dispatch: AppDispatch = useDispatch();
@@ -37,21 +37,21 @@ const Header: React.FC = () => {
 
   const isAuthorized = typeof window !== 'undefined' && !!localStorage.getItem('token');
 
-  const getActiveIcon = (href: string) => (pathname === href ? styles.active : '');
+  const getActiveIcon = ( href: string ) => (pathname === href ? styles.active : '');
 
-  useEffect(() => {
-    if (isAuthorized) {
-      dispatch(fetchCurrentUser());
-      dispatch(fetchCartItems());
+  useEffect( () => {
+    if ( isAuthorized ) {
+      dispatch( fetchCurrentUser() );
+      dispatch( fetchCartItems() );
     } else {
-      const storedCartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+      const storedCartItems = JSON.parse( sessionStorage.getItem('cartItems') || '[]');
       setCartItemsCount(storedCartItems.length);
     }
   }, [dispatch, isAuthorized]);
 
-  useEffect(() => {
+  useEffect( () => {
     const handleCartUpdated = () => {
-      const updatedCartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
+      const updatedCartItems = JSON.parse( sessionStorage.getItem('cartItems') || '[]');
       setCartItemsCount(updatedCartItems.length);
 
       if (isAuthorized) {
@@ -70,10 +70,10 @@ const Header: React.FC = () => {
     if (isAuthorized) {
       setCartItemsCount(cartItems.length);
     }
-  }, [cartItems, isAuthorized]);
+  }, [cartItems, isAuthorized] );
 
-  const handleOpenCatalog = () => dispatch(openCatalog());
-  const handleCloseCatalog = () => dispatch(closeCatalog());
+  const handleOpenCatalog = () => dispatch( openCatalog());
+  const handleCloseCatalog = () => dispatch( closeCatalog());
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -138,7 +138,7 @@ const Header: React.FC = () => {
                         {name}
                       </Link>
                     </div>
-                  ))
+                  ) )
                 ) : (
                   <div className={styles.searchListItem}>No items found</div>
                 )}
@@ -198,4 +198,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default memo(Header);
+export default Header;

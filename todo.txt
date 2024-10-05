@@ -12,9 +12,7 @@
 // BUGS
 
 1. Fix loaders
-2. Add error toasts
 4. Immediately remove unliked item from favorites
-6. Add scss linter that will add last line, and lint all the code
 
 //! LOW PRIORITY
 
@@ -29,8 +27,6 @@
 11. Add toast message when resetting password
 12. Add error boundary component
 13. Add accessibility
-14. If user enters wrong current password to the reset password it does not throw the error
-15. Authorization with Google
 18. ADD FAVICON
 19. Change LOGO (musify)
 22. Go to login page when trying to leave the comment

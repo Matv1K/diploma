@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import ReduxProvider from '@/app/provider';
 
+import Head from 'next/head';
+import Script from 'next/script';
 import { ToastContainer } from 'react-toastify';
 import { Footer, Header } from '@/components';
 
@@ -27,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <Head>
+        <meta name='google-signin-client_id' content={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} />
+      </Head>
       <body
         className={`${montserrat.className} ${openSans.className}`}
         suppressHydrationWarning
@@ -37,6 +42,7 @@ export default function RootLayout({
           <Footer />
 
           <ToastContainer />
+          <Script src='https://accounts.google.com/gsi/client' strategy='afterInteractive' async defer />
         </ReduxProvider>
       </body>
     </html>

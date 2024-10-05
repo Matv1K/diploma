@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { OAuth2Client } from 'google-auth-library';
 import bcrypt from 'bcrypt';
 
 import { validationResult } from 'express-validator';
@@ -10,6 +11,9 @@ import User from '../models/User';
 interface AuthenticatedRequest extends Request {
   payload?: { id: string };
 }
+
+const client = new OAuth2Client('340340902283-26jvr48c75ocm1tugmsqt2tihpqm9fud.apps.googleusercontent.com');
+
 
 class UserController {
   async loginUser(req: Request, res: Response) {
@@ -29,6 +33,47 @@ class UserController {
       res.status(500).json('Something went wrong');
     }
   };
+
+  async loginGoogleUser(req: Request, res: Response) {
+    try {
+        const { token: googleToken } = req.body;
+
+        const ticket = await client.verifyIdToken({
+            idToken: googleToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+
+        if (!payload) {
+          return res.status(401).json({ message: 'Invalid Google token' });
+        }
+
+        console.log(payload);
+        
+        const { sub, email, name, picture } = payload;
+        
+        let user = await User.findOne({ email });
+        
+        if (!user) {
+            user = new User({ 
+                googleId: sub, 
+                email, 
+                name, 
+                picture 
+            });
+
+            await user.save();
+        }
+
+        const token = await UserService.generateAuthToken(user);
+
+        return res.status(200).json({ token, user });
+    } catch (error) {
+        console.error('Google login error:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
 
   async registerUser(req: Request, res: Response) {
     try {

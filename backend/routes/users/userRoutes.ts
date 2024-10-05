@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.post('/register', validateRegister, UserController.registerUser);
 router.post('/login', UserController.loginUser);
+router.post("/googleSignIn", UserController.loginGoogleUser);
 router.get('/', UserController.getAllUsers);
 router.get('/my-user', authMiddleware, UserController.getMyUser);
 router.patch('/my-user', authMiddleware, UserController.updateMyUser);
