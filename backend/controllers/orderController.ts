@@ -26,6 +26,10 @@ class OrderController {
     try {
       const userId = req.payload?.id;
 
+      if (!userId) {
+        return res.status(500).json('No user id');
+      }
+
       const orders = await OrderService.fetchUserOrders(userId);
 
       res.status(200).json(orders);
