@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 
 import User from '../../models/User';
 
+import { UpdatedUserDataI } from '../../../types';
+
 class UserService {
   async createUser(name: string, lastName: string, email: string, password: string) {
     const salt = await bcrypt.genSalt(6);
@@ -50,18 +52,18 @@ class UserService {
     return users;
   }
 
-  async fetchUserById(userId: string | undefined) {
+  async fetchUserById(userId: string) {
     const user = await User.findById(userId);
     return user;
   }
 
-  async updateUserById(userId: string | undefined, updates: any) {
-    const user = await User.findByIdAndUpdate(userId, updates, { new: true, runValidators: true });
+  async updateUserById(userId: string, data: UpdatedUserDataI) {
+    const user = await User.findByIdAndUpdate(userId, data, { new: true, runValidators: true });
     return user;
   }
 
   async generateAuthToken(userId: string) {
-    const token = jwt.sign({ id: userId }, `${process.env.SECRET_KEY}`, { expiresIn: '7d'});
+    const token = jwt.sign({ id: userId }, `${process.env.SECRET_KEY}`, { expiresIn: '7d' });
     return token;
   }
 }

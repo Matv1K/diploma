@@ -1,3 +1,5 @@
+// Types related to instruments
+
 export interface InstrumentCardI {
   _id: string;
   name: string;
@@ -30,6 +32,8 @@ export interface InstrumentI {
   instrumentType: string;
 }
 
+// Types related to users
+
 export interface UserDataI {
   address: {
     country: string;
@@ -56,6 +60,8 @@ export interface UpdatedUserDataI {
   }
 }
 
+// Types related to auth
+
 export interface SignUpDataI {
   name: string;
   lastName: string;
@@ -73,6 +79,8 @@ export interface ResetPasswordI {
   newPassword: string,
   confirmedPassword: string,
 }
+
+// Types related to orders
 
 export interface OrderItemI {
   _id?: string;
@@ -92,6 +100,8 @@ export interface OrderI {
   totalPrice: number;
 }
 
+// Types related to comments
+
 export interface CommentI {
   _id: string,
   createdAt: string,
@@ -99,6 +109,8 @@ export interface CommentI {
   userName: string,
   rating: number
 }
+
+// Types related to cart items
 
 export interface CartItemI {
   color: string;
@@ -122,6 +134,8 @@ export interface CartItemWithLocalIdI extends CartItemI {
 
 export type CartItemUnionI = CartItemWithDatabaseIdI | CartItemWithLocalIdI;
 
+// Types related to liked items
+
 export interface LikedItemI {
   _id?: string;
   name: string;
@@ -136,6 +150,8 @@ export interface LikedItemI {
   price: number;
 }
 
+// Types related to errors
+
 export interface ApiError {
   message: string;
   response: {
@@ -145,6 +161,8 @@ export interface ApiError {
     };
   };
 }
+
+// Enum types
 
 export enum ButtonOptions {
   _OUTILINE = 'outline',

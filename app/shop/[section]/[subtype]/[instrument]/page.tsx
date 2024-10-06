@@ -20,10 +20,10 @@ import { removeSeparator } from '@/utils';
 import { addItemToCart, addLikedItemToState, removeLikedItemFromState } from '@/features/instruments/instrumentsSlice';
 import { addComment, setComments } from '@/features/comments/commentsSlice';
 
-import { getInstrument } from '@/services/instruments/instrumentService';
-import { addCartItem } from '@/services/cart/cartService';
-import { addLikedItem, getLikedItem, deleteLikedItem } from '@/services/liked/likedService';
-import { createComment, getComments } from '@/services/comments/commentsService';
+import { getInstrument } from '@/api/instruments/instrumentService';
+import { addCartItem } from '@/api/cart/cartService';
+import { addLikedItem, getLikedItem, deleteLikedItem } from '@/api/liked/likedService';
+import { createComment, getComments } from '@/api/comments/commentsService';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
@@ -59,15 +59,17 @@ const Instrument: React.FC = () => {
   const { push } = useRouter();
   const dispatch = useDispatch();
 
+  const convertedInstrumentId = Array.isArray(instrumentId) ? instrumentId[0] : instrumentId;
+
   const isAuthorized = !!user;
 
   useEffect(() => {
     const fetchInstrument = async () => {
-      const instrument = await getInstrument(instrumentId);
+      const instrument = await getInstrument(convertedInstrumentId);
       setInstrument(instrument);
 
       if (isAuthorized) {
-        const likedItem = await getLikedItem(instrumentId);
+        const likedItem = await getLikedItem(convertedInstrumentId);
         setIsLiked(!!likedItem);
       }
 
@@ -75,7 +77,7 @@ const Instrument: React.FC = () => {
     };
 
     const fetchComments = async () => {
-      const fetchedComments = await getComments(instrumentId);
+      const fetchedComments = await getComments(convertedInstrumentId);
       dispatch(setComments(fetchedComments));
     };
 
@@ -110,10 +112,9 @@ const Instrument: React.FC = () => {
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
 
-        if(cartItems.some((cartItem: CartItemWithLocalIdI) => {
-          return cartItem.instrumentId === newItem.instrumentId && cartItem.color === newItem.color
-        }) === true) {
-          toast.error('Item is already in the cart')
+        if(cartItems.some((cartItem: CartItemWithLocalIdI) =>
+          cartItem.instrumentId === newItem.instrumentId && cartItem.color === newItem.color) === true) {
+          toast.error('Item is already in the cart');
           return;
         }
 
@@ -140,7 +141,7 @@ const Instrument: React.FC = () => {
     if (isAuthorized) {
       try {
         if (isLiked) {
-          await deleteLikedItem(instrumentId);
+          await deleteLikedItem(convertedInstrumentId);
           dispatch(removeLikedItemFromState(instrumentId));
 
           setIsLiked(false);
@@ -192,7 +193,7 @@ const Instrument: React.FC = () => {
         const newComment = await createComment({
           rating,
           description: commentText,
-          instrumentId,
+          instrumentId: convertedInstrumentId,
         });
 
         dispatch(addComment(newComment));

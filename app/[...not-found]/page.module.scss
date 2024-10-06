@@ -1,10 +1,5 @@
-.mainNotFound {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
+@import "../mixins.scss";
 
-  .textNotFound {
-    margin-top: 20px;
-  }
+.mainNotFound {
+  @include centerInitialState;
 }

@@ -10,7 +10,7 @@ import { InstrumentCard, Loader } from '@/components';
 
 import { removeSeparator } from '@/utils';
 
-import { getInstrumentsBySection } from '@/services/instruments/instrumentService';
+import { getInstrumentsBySection } from '@/api/instruments/instrumentService';
 
 import { BRANDS, PRICE_RANGES } from '@/app/constants';
 
@@ -23,20 +23,20 @@ const Section: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const { section: instrumentsSection } = useParams();
-  const sectionName = Array.isArray(instrumentsSection) ? instrumentsSection[0] : instrumentsSection;
+  const convertedSection = Array.isArray(instrumentsSection) ? instrumentsSection[0] : instrumentsSection;
 
   const fetchInstruments = async () => {
     try {
-      const newInstruments = await getInstrumentsBySection(instrumentsSection, page);
+      const newInstruments = await getInstrumentsBySection(convertedSection, page);
 
       if (newInstruments.length === 0) {
         setHasMore(false);
-      } 
+      }
 
       setInstruments(prev => [...prev, ...newInstruments]);
-      setHasMore(hasMore)
+      setHasMore(hasMore);
       setPage(prevPage => prevPage + 1);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching instruments:', error);
       setHasMore(false);
@@ -70,7 +70,7 @@ const Section: React.FC = () => {
 
   return (
     <main>
-      <h2 className={styles.headingSection}>{removeSeparator(sectionName)}</h2>
+      <h2 className={styles.headingSection}>{removeSeparator(convertedSection)}</h2>
 
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>

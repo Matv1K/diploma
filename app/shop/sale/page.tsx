@@ -6,7 +6,7 @@ import styles from './page.module.scss';
 
 import { InstrumentCard } from '@/components';
 
-import { getInstrumentsOnSale } from '@/services/instruments/instrumentService';
+import { getInstrumentsOnSale } from '@/api/instruments/instrumentService';
 
 import { BRANDS, PRICE_RANGES } from '@/app/constants';
 

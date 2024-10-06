@@ -21,25 +21,25 @@ export default [
       'react-hooks': pluginReactHooks,
     },
     rules: {
-      'indent': ['error', 2, {
-        'SwitchCase': 1,
-        'VariableDeclarator': { 'var': 2, 'let': 2, 'const': 2 },
-        'outerIIFEBody': 1,
-        'MemberExpression': 1,
-        'FunctionDeclaration': {
-          'parameters': 1,
-          'body': 1,
+      indent: ['error', 2, {
+        SwitchCase: 1,
+        VariableDeclarator: { var: 2, let: 2, const: 2 },
+        outerIIFEBody: 1,
+        MemberExpression: 1,
+        FunctionDeclaration: {
+          parameters: 1,
+          body: 1,
         },
-        'FunctionExpression': {
-          'parameters': 1,
-          'body': 1,
+        FunctionExpression: {
+          parameters: 1,
+          body: 1,
         },
-        'CallExpression': { 'arguments': 1 },
-        'ArrayExpression': 1,
-        'ObjectExpression': 1,
-        'ImportDeclaration': 1,
+        CallExpression: { arguments: 1 },
+        ArrayExpression: 1,
+        ObjectExpression: 1,
+        ImportDeclaration: 1,
       }],
-      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_', 'varsIgnorePattern': '^_' }],
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       eqeqeq: ['error', 'always'],
       semi: ['error', 'always'],
       'prefer-const': ['error'],
@@ -48,6 +48,7 @@ export default [
       'no-var': 'error',
       'no-multiple-empty-lines': ['error', { max: 1 }],
 
+      // React-specific rules
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'react/jsx-indent': ['error', 2],
@@ -59,15 +60,17 @@ export default [
       'react/jsx-boolean-value': ['error', 'never'],
       'react/jsx-key': 'error',
 
+      // Additional code style rules
       'arrow-body-style': ['error', 'as-needed'],
       'prefer-template': 'error',
       'no-nested-ternary': 'error',
       'no-else-return': ['error', { allowElseIf: false }],
       'no-use-before-define': ['error', { functions: false, classes: true }],
 
+      // Formatting rules
       quotes: ['error', 'single', { avoidEscape: true }],
       'jsx-quotes': ['error', 'prefer-single'],
-      'max-len': ['error', { code: 120 }],
+      'max-len': ['error', { code: 125 }],
       'comma-dangle': ['error', 'always-multiline'],
       'function-paren-newline': ['error', 'consistent'],
       'object-curly-newline': ['error', { consistent: true }],

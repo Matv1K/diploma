@@ -16,8 +16,8 @@ import { Button, Modal, Input } from '@/components';
 
 import { resetCart } from '@/features/instruments/instrumentsSlice';
 
-import { getCartItems } from '@/services/cart/cartService';
-import { createOrder } from '@/services/orders/ordersService';
+import { getCartItems } from '@/api/cart/cartService';
+import { createOrder } from '@/api/orders/ordersService';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
@@ -31,8 +31,8 @@ const CheckoutForm: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const stripe = useStripe();
   const { push } = useRouter();
+  const stripe = useStripe();
 
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -42,8 +42,7 @@ const CheckoutForm: React.FC = () => {
       country: '',
       city: '',
       address: '',
-    },
-  });
+    } });
 
   const watchAllFields = watch();
 
@@ -119,8 +118,7 @@ const CheckoutForm: React.FC = () => {
           country: formValues.country,
           city: formValues.city,
           address: formValues.address,
-        },
-      });
+        } });
 
       sessionStorage.removeItem('cartItems');
 

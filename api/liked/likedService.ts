@@ -22,7 +22,7 @@ export const getLikedItems = async () => {
   }
 };
 
-export const getLikedItem = async (id: string | string[]) => {
+export const getLikedItem = async (id: string) => {
   try {
     const response = await instance.get(`/liked/${id}`);
     return response.data;
@@ -32,7 +32,7 @@ export const getLikedItem = async (id: string | string[]) => {
   }
 };
 
-export const deleteLikedItem = async (id: string | string[]) => {
+export const deleteLikedItem = async (id: string) => {
   try {
     const response = await instance.delete(`/liked/${id}`);
     return response.data;

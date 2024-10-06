@@ -10,7 +10,7 @@ import { InstrumentCard, Loader } from '@/components';
 
 import { removeSeparator } from '@/utils';
 
-import { getInstrumentBySubtype } from '@/services/instruments/instrumentService';
+import { getInstrumentBySubtype } from '@/api/instruments/instrumentService';
 
 import { BRANDS, PRICE_RANGES } from '@/app/constants';
 

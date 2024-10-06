@@ -19,7 +19,7 @@ import { signUp } from '@/features/user/userSlice';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { ButtonOptions, ButtonTypes, InputTypes, SignUpDataI, ApiError } from '@/types';
+import { ButtonTypes, InputTypes, SignUpDataI, ApiError } from '@/types';
 import { AppDispatch } from '@/app/store';
 
 const SignUp: React.FC = () => {
@@ -38,13 +38,9 @@ const SignUp: React.FC = () => {
       push('/');
     } catch (error) {
       const apiError = error as ApiError;
-
-      console.error(`Could not sign up: ${error}`);
-      toast.error(apiError.response.data.message || 'Failed to sign up. Please try again.');
+      toast.error(apiError.message);
     }
   };
-
-  const handleGoogleSignUp = () => {};
 
   const handlePasswordShown = () => {
     setIsPasswordShown(prev => !prev);
@@ -125,9 +121,6 @@ const SignUp: React.FC = () => {
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
             <Button type={ButtonTypes._SUBMIT}>Sign up</Button>
-            <Button option={ButtonOptions._GOOGLE} onClick={handleGoogleSignUp}>
-              Sign up with Google
-            </Button>
           </div>
 
           <span>

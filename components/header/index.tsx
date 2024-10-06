@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, memo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 
@@ -17,7 +17,7 @@ import { closeCatalog, openCatalog } from '@/features/catalog/catalogSlice';
 import { fetchCartItems } from '@/features/instruments/instrumentsSlice';
 import { fetchCurrentUser } from '@/features/user/userSlice';
 
-import { searchInstruments } from '@/services/instruments/instrumentService';
+import { searchInstruments } from '@/api/instruments/instrumentService';
 
 import { ButtonOptions, InputTypes, InstrumentI } from '@/types';
 import { RootState, AppDispatch } from '@/app/store';

@@ -15,7 +15,7 @@ import { FiTrash2 } from 'react-icons/fi';
 
 import { removeItem, increaseItemAmount, decreaseItemAmount } from '@/features/instruments/instrumentsSlice';
 
-import { removeCartItem, increaseAmount, decreaseAmount } from '@/services/cart/cartService';
+import { removeCartItem, increaseAmount, decreaseAmount } from '@/api/cart/cartService';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 

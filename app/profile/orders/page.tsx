@@ -7,7 +7,7 @@ import styles from './page.module.scss';
 import Link from 'next/link';
 import { Button, Loader, OrderItem } from '@/components';
 
-import { getOrders } from '@/services/orders/ordersService';
+import { getOrders } from '@/api/orders/ordersService';
 
 import { OrderI } from '@/types';
 

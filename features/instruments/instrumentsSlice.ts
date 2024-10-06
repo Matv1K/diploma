@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { getCartItems } from '@/services/cart/cartService';
-import { addLikedItem, deleteLikedItem } from '@/services/liked/likedService';
+import { getCartItems } from '@/api/cart/cartService';
+import { addLikedItem, deleteLikedItem } from '@/api/liked/likedService';
 
 import { CartItemWithDatabaseIdI, LikedItemI } from '@/types';
 
@@ -37,7 +37,7 @@ export const likeItem = createAsyncThunk('instruments/likeItem', async (likedIte
   }
 });
 
-export const unlikeItem = createAsyncThunk('instruments/unlikeItem', async (id: string | string[], { rejectWithValue }) => {
+export const unlikeItem = createAsyncThunk('instruments/unlikeItem', async (id: string, { rejectWithValue }) => {
   try {
     await deleteLikedItem(id);
     return id;

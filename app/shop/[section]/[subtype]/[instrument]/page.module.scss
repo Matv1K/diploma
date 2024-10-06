@@ -1,4 +1,5 @@
 @import "../../../../variables.scss";
+@import "../../../../mixins.scss";
 
 .instrumentPageContainer {
   display: flex;
@@ -221,7 +222,5 @@
 }
 
 .containerEmpty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include centerInitialState
 }

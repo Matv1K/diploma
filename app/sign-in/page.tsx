@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -10,16 +10,16 @@ import { toast } from 'react-toastify';
 import styles from './page.module.scss';
 
 import Link from 'next/link';
-import { Button, Input } from '@/components';
+import { Button, Input, GoogleSignInButton } from '@/components';
 
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-import { signIn, googleSignIn } from '@/features/user/userSlice';
+import { signIn } from '@/features/user/userSlice';
+
+import { InputTypes, SignInDataI, ButtonTypes, ApiError } from '@/types';
+import { AppDispatch } from '@/app/store';
 
 import { TOAST_MESSAGES } from '@/app/constants';
-
-import { InputTypes, SignInDataI, ButtonOptions, ButtonTypes, ApiError } from '@/types';
-import { AppDispatch } from '@/app/store';
 
 const SignIn: React.FC = () => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -28,38 +28,6 @@ const SignIn: React.FC = () => {
 
   const { push } = useRouter();
   const dispatch: AppDispatch = useDispatch();
-
-  const handleCallbackResponse = async (response: any) => {
-    try {
-      // Google JWT token
-      const googleToken = response.credential;
-
-      // Send this token to your backend API for validation and login
-      const result = await dispatch(googleSignIn(googleToken)).unwrap();
-
-      toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
-      sessionStorage.removeItem('cartItems');
-      push('/');
-    } catch (error) {
-      console.error('Google Sign-In failed:', error);
-      toast.error('Google Sign-In failed');
-    }
-  };
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.google) {
-      window.google.accounts.id.initialize({
-        client_id:
-        process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        callback: handleCallbackResponse,
-      });
-
-      window.google.accounts.id.renderButton(
-        document.getElementById('googleSignInButton'),
-        { theme: 'outline', size: 'large' },
-      );
-    }
-  }, []);
 
   const onSubmit: SubmitHandler<SignInDataI> = async data => {
     try {
@@ -70,9 +38,7 @@ const SignIn: React.FC = () => {
       push('/');
     } catch (error) {
       const apiError = error as ApiError;
-
-      console.error(`Could not sign in: ${apiError}`);
-      toast.error(apiError);
+      toast.error(apiError.message);
     }
   };
 
@@ -113,8 +79,7 @@ const SignIn: React.FC = () => {
         <div className={styles.formInfo}>
           <div className={styles.buttons}>
             <Button type={ButtonTypes._SUBMIT}>Sign in</Button>
-            {/* <Button option={ButtonOptions._GOOGLE} onClick={handleGoogleSignIn}>Sign up with Google</Button> */}
-            <div id='googleSignInButton' />
+            <GoogleSignInButton />
           </div>
 
           <span>

@@ -1,8 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { registerUser, loginUser, getCurrentUser, logOut, updateCurrentUser, googleLoginUser } from '@/services/users/userService';
+import {
+  registerUser,
+  loginUser, getCurrentUser,
+  logOut,
+  updateCurrentUser,
+  googleLoginUser,
+} from '@/api/users/userService';
 
-import { SignInDataI, SignUpDataI, ApiError, UserDataI } from '@/types';
+import { SignInDataI, SignUpDataI, ApiError, UserDataI, UpdatedUserDataI } from '@/types';
 
 interface UserStateI {
   user: UserDataI | null;
@@ -42,34 +48,36 @@ export const fetchCurrentUser =
   });
 
 export const signUp =
-  createAsyncThunk<{ user: UserDataI; token: string }, SignUpDataI, { rejectValue: string }>('user/signUp',
+  createAsyncThunk<{ user: UserDataI; token: string }, SignUpDataI, { rejectValue: { message: string } }>('user/signUp',
     async (userData, { rejectWithValue }) => {
       try {
         const response = await registerUser(userData);
         return response;
       } catch (error) {
         const apiError = error as ApiError;
-        return rejectWithValue(handleApiError(apiError));
+        return rejectWithValue({ message: apiError.message });
       }
     });
 
-export const signIn = 
-  createAsyncThunk<UserDataI, SignInDataI, { rejectValue: string }>('user/signIn', async (userData, { rejectWithValue }) => {
-    try {
-      const response = await loginUser(userData);
-      return response;
-    } catch (error) {
-      const apiError = error as ApiError;
-      return rejectWithValue(handleApiError(apiError));
-    }
-  });
+export const signIn =
+  createAsyncThunk<UserDataI, SignInDataI, { rejectValue: { message: string } }>('user/signIn',
+    async (userData, { rejectWithValue }) => {
+      try {
+        const response = await loginUser(userData);
+        return response;
+      } catch (error) {
+        const apiError = error as ApiError;
+
+        return rejectWithValue({ message: apiError.message });
+      }
+    });
 
 export const googleSignIn = createAsyncThunk('user/googleSignIn', async (token: string, { rejectWithValue }) => {
   try {
     const response = await googleLoginUser(token);
-    return response;  // No need for response.data here, as it was returned earlier
+    return response;
   } catch (error) {
-    return rejectWithValue(error);  // Handle the error by rejecting the value
+    return rejectWithValue(error);
   }
 });
 
@@ -84,7 +92,7 @@ export const logOutUser =
   });
 
 export const updateUser =
-  createAsyncThunk<UserDataI, Partial<UserDataI>, { rejectValue: string }>('user/updateUser',
+  createAsyncThunk<UserDataI, Partial<UpdatedUserDataI>, { rejectValue: string }>('user/updateUser',
     async (updatedUserData, { rejectWithValue }) => {
       try {
         const response = await updateCurrentUser(updatedUserData);
@@ -121,10 +129,6 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.error = null;
-      })
-
-      .addCase(signUp.rejected, (state, action: PayloadAction<string | undefined>) => {
-        state.error = action.payload || 'Sign-up error';
       })
 
       .addCase(signIn.fulfilled, (state, action: PayloadAction<UserDataI>) => {

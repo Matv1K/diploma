@@ -12,7 +12,7 @@ import { FiSend, FiMessageCircle } from 'react-icons/fi';
 
 import { showModal } from '@/features/modal/modalSlice';
 
-import { getInstruments } from '@/services/instruments/instrumentService';
+import { getInstruments } from '@/api/instruments/instrumentService';
 
 import { BRANDS, PRICE_RANGES, FILTERS } from '@/app/constants';
 

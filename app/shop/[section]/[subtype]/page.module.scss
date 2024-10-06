@@ -1,4 +1,5 @@
 @import "../../../variables.scss";
+@import "../../../mixins.scss";
 
 .instruments {
   margin-top: 20px;
@@ -60,7 +61,5 @@
 }
 
 .containerEmpty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include centerInitialState
 }

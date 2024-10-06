@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 
 import CartService from '../services/cart/cartService';
 
+import { ApiError } from '../../types';
+
 interface AuthenticatedRequest extends Request {
   payload?: jwt.JwtPayload;
 }
@@ -15,11 +17,13 @@ class CartController {
       const result = await CartService.addCartItem(req.body, userId);
 
       return res.status(result.status).json(result.data);
-    } catch (error: any) {
+    } catch (error) {
+      const apiError = error as ApiError;
+
       console.error('Error adding item to cart', error);
 
-      if (error.message === 'Item is already in the cart') {
-        return res.status(400).json({ message: error.message });
+      if (apiError.message === 'Item is already in the cart') {
+        return res.status(400).json({ message: apiError.message });
       }
 
       return res.status(500).json({ message: 'Error adding item to cart' });
@@ -29,6 +33,7 @@ class CartController {
   async getCartItems(req: AuthenticatedRequest, res: Response) {
     try {
       const userId = req.payload?.id;
+
       const { cartItems, totalPrice } = await CartService.getCartItems(userId);
 
       return res.status(200).json({ cartItems, totalPrice });
@@ -41,6 +46,7 @@ class CartController {
   async getCartItemsAmount(req: AuthenticatedRequest, res: Response) {
     try {
       const userId = req.payload?.id;
+
       const cartItemsAmount = await CartService.getCartItemsAmount(userId);
 
       return res.status(200).json({ cartItemsAmount });
@@ -53,6 +59,7 @@ class CartController {
   async deleteCartItem(req: Request, res: Response) {
     try {
       const { id } = req.params;
+
       const result = await CartService.deleteCartItem(id);
 
       if (result.deletedCount === 0) {
@@ -69,6 +76,7 @@ class CartController {
   async increaseCartItemAmount(req: Request, res: Response) {
     try {
       const { id } = req.params;
+
       await CartService.increaseCartItemAmount(id);
 
       return res.status(200).json({ message: 'Cart item quantity increased' });
@@ -81,7 +89,9 @@ class CartController {
   async decreaseCartItemAmount(req: Request, res: Response) {
     try {
       const { id } = req.params;
+
       await CartService.decreaseCartItemAmount(id);
+
       return res.status(200).json({ message: 'Cart item quantity decreased' });
     } catch (error) {
       console.error('Error decreasing cart item quantity', error);

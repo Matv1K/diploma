@@ -3,16 +3,16 @@
 1. ADD HUSKY
 2. ADD CI/CD PIPELINE (ADD ESLINT TESTS AND CONFIGURE VERCEL)
 3. ADD DOCKER
-6. Add mobile version
-7. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-8. MAKE PRIVAT ROUTES
-9. Fix stripe
-10. ADD FILTERING LOGIC
+4. Add mobile version
+5. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
+6. MAKE PRIVAT ROUTES
+7. Fix stripe
+8. ADD FILTERING LOGIC
 
 // BUGS
 
 1. Fix loaders
-4. Immediately remove unliked item from favorites
+2. Immediately remove unliked item from favorites
 
 //! LOW PRIORITY
 
@@ -21,21 +21,29 @@
 3. Retool admin dashboard
 4. Add redis
 5. Fix support modal (websockets)
-7. Add ... if username is big at dropdown
-9. Add sparkles when like
-10. Add forgot password
-11. Add toast message when resetting password
-12. Add error boundary component
-13. Add accessibility
-18. ADD FAVICON
-19. Change LOGO (musify)
-22. Go to login page when trying to leave the comment
-23. Add onboarding for users who just register
-24. When user created an order notify the user by sending an sms to his number
-25. Add apple pay
-26. Add mixins for empty containers
+6. Add ... if username is big at dropdown
+7. Add sparkles when like
+8. Add forgot password
+9. Add error boundary component
+10. Add accessibility
+11. ADD FAVICON
+13. Change LOGO (musify)
+14. Go to login page when trying to leave the comment
+15. Add onboarding for users who just register
+16. When user created an order notify the user by sending an sms to his number
+17. Add apple pay
 
-//INVESTIGATE
+20. Cors error in the console when signin in with google
+21. Google button vanishes when reloading the sign inpage
+
+22. Rename cloudinary to CloudinaryService
+23. Move controller files to controller folders and call them index.ts
+24. Call api files index.ts
+25. Move AuthenticatedRequest interface to separate file
+
+26. Add errors to checkout form
+
+// INVESTIGATE
 
 1. INVESTIGATE SERVER COMPONENTS 
 2. WHAT IS MICROFRONTENDS

@@ -4,16 +4,17 @@ import bcrypt from 'bcrypt';
 
 import { validationResult } from 'express-validator';
 
+import User from '../models/User';
+
 import UserService from '../services/user/userService';
 
-import User from '../models/User';
+import { ApiError } from '../../types';
 
 interface AuthenticatedRequest extends Request {
   payload?: { id: string };
 }
 
-const client = new OAuth2Client('340340902283-26jvr48c75ocm1tugmsqt2tihpqm9fud.apps.googleusercontent.com');
-
+const client = new OAuth2Client(`${process.env.GOOGLE_CLIENT_ID}`);
 
 class UserController {
   async loginUser(req: Request, res: Response) {
@@ -23,57 +24,57 @@ class UserController {
       const user = await UserService.authenticateUser(email, password);
 
       res.status(200).json(user);
-    } catch (error: any) {
+    } catch (error) {
+      const apiError = error as ApiError;
+
       console.error('Could not login', error);
 
-      if (error.message === 'User was not found' || error.message === 'Password is incorrect') {
-        return res.status(400).json({ message: error.message });
+      if (apiError.message === 'User was not found' || apiError.message === 'Password is incorrect') {
+        return res.status(400).json({ message: apiError.message });
       }
 
-      res.status(500).json('Something went wrong');
+      res.status(500).json({ message: 'Something went wrong' });
     }
   };
 
   async loginGoogleUser(req: Request, res: Response) {
     try {
-        const { token: googleToken } = req.body;
+      const { token: googleToken } = req.body;
 
-        const ticket = await client.verifyIdToken({
-            idToken: googleToken,
-            audience: process.env.GOOGLE_CLIENT_ID,
+      const ticket = await client.verifyIdToken({
+        idToken: googleToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+
+      const payload = ticket.getPayload();
+
+      if (!payload) {
+        return res.status(401).json({ message: 'Invalid Google token' });
+      }
+
+      const { sub, email, name, picture } = payload;
+
+      let user = await User.findOne({ email });
+
+      if (!user) {
+        user = new User({
+          googleId: sub,
+          email,
+          name,
+          picture,
         });
 
-        const payload = ticket.getPayload();
+        await user.save();
+      }
 
-        if (!payload) {
-          return res.status(401).json({ message: 'Invalid Google token' });
-        }
+      const token = await UserService.generateAuthToken(user._id.toString());
 
-        console.log(payload);
-        
-        const { sub, email, name, picture } = payload;
-        
-        let user = await User.findOne({ email });
-        
-        if (!user) {
-            user = new User({ 
-                googleId: sub, 
-                email, 
-                name, 
-                picture 
-            });
-
-            await user.save();
-        }
-
-        const token = await UserService.generateAuthToken(user);
-
-        return res.status(200).json({ token, user });
+      return res.status(200).json({ token, user });
     } catch (error) {
-        console.error('Google login error:', error);
-        return res.status(500).json({ message: 'Internal Server Error' });
+      console.error('Google login error:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
     }
-}
+  }
 
   async registerUser(req: Request, res: Response) {
     try {
@@ -138,6 +139,10 @@ class UserController {
   async updateMyUser(req: AuthenticatedRequest, res: Response) {
     try {
       const userId = req.payload?.id;
+
+      if (!userId) {
+        return res.status(500).json('User is not authenticated');
+      }
 
       const updatedUser = await UserService.updateUserById(userId, req.body);
 

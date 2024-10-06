@@ -6,7 +6,7 @@ const NotFound: React.FC = () => (
   <main className={styles.mainNotFound}>
     <h1>404 - Page Not Found</h1>
 
-    <p className={styles.textNotFound}>
+    <p>
       Sorry, the page you are looking for does not exist
     </p>
   </main>

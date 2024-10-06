@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "services/cart"
+    "api/cart",
+    "global.d.ts"
   ],
   "exclude": ["node_modules"]
 }

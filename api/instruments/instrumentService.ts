@@ -22,7 +22,7 @@ export const getInstruments = async (page: number, limit: number = 10) => {
   }
 };
 
-export const getInstrument = async (id: string | string[]) => {
+export const getInstrument = async (id: string) => {
   try {
     const response = await instance.get(`/instruments/${id}`);
     return response.data;
@@ -61,7 +61,7 @@ export const getNewInstruments = async () => {
   }
 };
 
-export const getInstrumentsBySection = async (section: string | string[], page: number = 1) => {
+export const getInstrumentsBySection = async (section: string, page: number = 1) => {
   try {
     const response = await instance.get(`/instruments/section/${section}`, { params: { page } });
     return response.data;
@@ -81,7 +81,7 @@ export const searchInstruments = async (query: string) => {
   }
 };
 
-export const getInstrumentBySubtype = async (subtype: string | string[], page: number = 1, limit: number = 10) => {
+export const getInstrumentBySubtype = async (subtype: string, page: number = 1, limit: number = 10) => {
   try {
     const response = await instance.get(`/instruments/section/subtype/${subtype}`, { params: { page, limit } });
     return response.data;

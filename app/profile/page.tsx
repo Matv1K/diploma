@@ -36,8 +36,7 @@ const Profile: React.FC = () => {
       country: '',
       city: '',
       address: '',
-    },
-  } });
+    } } });
 
   useEffect(() => {
     if (user) {
@@ -49,8 +48,7 @@ const Profile: React.FC = () => {
           country: user?.address?.country || '',
           city: user?.address?.city || '',
           address: user?.address?.address || '',
-        },
-      });
+        } });
     }
   }, [user, reset]);
 
@@ -66,8 +64,7 @@ const Profile: React.FC = () => {
           country: response.address?.country || '',
           city: response.address?.city || '',
           address: response.address?.address || '',
-        },
-      });
+        } });
 
       toast.success(TOAST_MESSAGES.UPDATE_USER_SUCCESS);
     } catch (error) {

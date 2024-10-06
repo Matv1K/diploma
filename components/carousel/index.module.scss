@@ -7,35 +7,35 @@
   @media screen and (max-width: 1200px) {
     padding: 10px;
   }
+
+  .carouselItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background-color: $primary-color;
+    border-radius: 8px;
+    text-align: center;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  
+    @media screen and (max-width: 1024px) {
+      height: 130px;
+    }
+  
+    h3 {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      color: $background-color;
+    }
+  
+    &:hover {
+      background-color: darken($primary-color, 5%);
+    }
+  }
 }
 
 .carouselItemPadding {
   padding: 0 5px;
-}
-
-.carouselItem {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-  background-color: $primary-color;
-  border-radius: 8px;
-  text-align: center;
-  overflow: hidden;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-
-  @media screen and (max-width: 1024px) {
-    height: 130px;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-    margin: 10px 0;
-    color: $background-color;
-  }
-
-  &:hover {
-    background-color: darken($primary-color, 5%);
-  }
 }

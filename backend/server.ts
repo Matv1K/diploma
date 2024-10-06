@@ -15,16 +15,19 @@ import commentsRoutes from './routes/comments/commentsRoutes';
 const server = express();
 
 // MIDDLEWARES
+
 server.use(express.json());
 server.use(cors());
 
 // DB CONNECTION
+
 mongoose
   .connect(`${process.env.MONGO_URI}/${process.env.DB_NAME}`)
   .then(() => console.log('MongoDB is connected'))
   .catch(() => console.log('Could not set the connection with MongoDB'));
 
 // ROUTES
+
 server.use('/instruments', instrumentRoutes);
 server.use('/users', userRoutes);
 server.use('/cart', cartRoutes);

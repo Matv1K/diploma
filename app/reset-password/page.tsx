@@ -11,7 +11,7 @@ import { Input, Button } from '@/components';
 
 import { FiEyeOff, FiEye } from 'react-icons/fi';
 
-import { resetPassword } from '@/services/users/userService';
+import { resetPassword } from '@/api/users/userService';
 
 import { ApiError, ButtonTypes, InputTypes, ResetPasswordI } from '@/types';
 

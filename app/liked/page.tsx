@@ -7,7 +7,7 @@ import styles from './page.module.scss';
 import Link from 'next/link';
 import { Button, InstrumentCard, Loader } from '@/components';
 
-import { getLikedItems } from '@/services/liked/likedService';
+import { getLikedItems } from '@/api/liked/likedService';
 
 import { InstrumentCardI } from '@/types';
 

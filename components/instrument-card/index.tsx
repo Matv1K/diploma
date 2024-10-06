@@ -19,9 +19,9 @@ import { getRatingString } from '@/utils';
 
 import { addItemToCart, likeItem, unlikeItem } from '@/features/instruments/instrumentsSlice';
 
-import { addCartItem } from '@/services/cart/cartService';
-import { getInstrumentRating } from '@/services/instruments/instrumentService';
-import { getLikedItem } from '@/services/liked/likedService';
+import { addCartItem } from '@/api/cart/cartService';
+import { getInstrumentRating } from '@/api/instruments/instrumentService';
+import { getLikedItem } from '@/api/liked/likedService';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
@@ -67,7 +67,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
   const { push } = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  
+
   useEffect(() => {
     const getAverageRating = async () => {
       const { averageRating } = await getInstrumentRating(id);
@@ -140,8 +140,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
     try {
       if (user) {
-        console.log(selectedColor);
-        
         const addedItem = await addCartItem(newItem);
 
         dispatch(addItemToCart(addedItem));
@@ -151,13 +149,12 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
 
-        if(cartItems.some((cartItem: CartItemWithLocalIdI) => {
-          return cartItem.instrumentId === newItem.instrumentId && cartItem.color === newItem.color
-        }) === true) {
-          toast.error('Item is already in the cart')
+        if(cartItems.some((cartItem: CartItemWithLocalIdI) =>
+          cartItem.instrumentId === newItem.instrumentId && cartItem.color === newItem.color) === true) {
+          toast.error('Item is already in the cart');
           return;
         }
-        
+
         cartItems.push(newItem);
 
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -168,7 +165,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
       }
     } catch(error) {
       const apiError = error as ApiError;
-      
+
       toast.error(apiError.response.data.message);
     }
   };
@@ -189,7 +186,7 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
           priority
         />
       </div>
-      
+
       <h3 className={styles.infoPrice}>
         {onSale && (
           <>

@@ -1,4 +1,5 @@
 @import "../variables.scss";
+@import "../mixins.scss";
 
 .cartLayout {
   display: flex;
@@ -44,9 +45,5 @@
 }
 
 .containerEmpty {
-  display: flex;
-  align-items: center;
-  flex-flow: column;
-  justify-content: center;
-  gap: 20px;
+  @include centerInitialState;
 }

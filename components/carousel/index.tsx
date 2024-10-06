@@ -65,6 +65,7 @@ const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => 
 
         if (isInstrument) {
           const { _id, name, section, instrumentType } = item as InstrumentI;
+
           return (
             <div
               onClick={() => handleItemNavigation(section, _id, instrumentType)}
@@ -75,7 +76,9 @@ const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => 
             </div>
           );
         }
+
         const { name } = item as { name: string };
+
         return (
           <div
             onClick={() => handleItemNavigation('', name, '')}

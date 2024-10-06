@@ -1,4 +1,5 @@
 @import "../variables.scss";
+@import "../mixins.scss";
 
 .table {
   margin-top: 20px;
@@ -16,9 +17,5 @@
 }
 
 .containerEmpty {
-  display: flex;
-  align-items: center;
-  flex-flow: column;
-  justify-content: center;
-  gap: 20px;
+  @include centerInitialState;
 }

@@ -14,3 +14,4 @@ export { default as Comment } from './comment';
 export { default as Select } from './select';
 export { default as AnimatedHeart } from './animated-heart';
 export { default as OrderItem } from './order-item';
+export { default as GoogleSignInButton } from './google-button';

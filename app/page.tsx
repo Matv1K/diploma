@@ -14,7 +14,7 @@ import { Piano } from '@/public/images';
 
 import { showModal } from '@/features/modal/modalSlice';
 
-import { getPopularIstruments, getNewInstruments } from '@/services/instruments/instrumentService';
+import { getPopularIstruments, getNewInstruments } from '@/api/instruments/instrumentService';
 
 import { ALL_SECTIONS } from '@/app/constants';
 

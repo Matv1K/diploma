@@ -1,9 +1,9 @@
 import Instrument from '../../models/Instrument';
 
-import { ApiError } from '../../../types';
+import { ApiError, InstrumentI } from '../../../types';
 
 class InstrumentService {
-  async createInstrument(instrumentData: any) {
+  async createInstrument(instrumentData: InstrumentI) {
     const newInstrument = new Instrument(instrumentData);
     return await newInstrument.save();
   }
@@ -15,7 +15,9 @@ class InstrumentService {
 
   async getAllInstrumentsPaginated(page: number, limit: number) {
     const skip = (page - 1) * limit;
+
     const instruments = await Instrument.find().skip(skip).limit(limit);
+
     return instruments;
   }
 
@@ -42,6 +44,7 @@ class InstrumentService {
   async getInstrumentsBySection(section: string, page: number = 1, pageSize: number = 10) {
     try {
       const skip = (page - 1) * pageSize;
+
       const instruments = await Instrument.find({ section })
         .skip(skip)
         .limit(pageSize);
@@ -52,7 +55,7 @@ class InstrumentService {
 
       return instruments;
     } catch (error) {
-      const apiError = error as ApiError
+      const apiError = error as ApiError;
       throw new Error(`Failed to fetch instruments for section ${section}: ${apiError.message}`);
     }
   }

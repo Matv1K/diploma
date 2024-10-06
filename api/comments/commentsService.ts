@@ -1,7 +1,7 @@
 import instance from '@/config/getAxiosInstance';
 
 export const createComment = async ({ description, rating, instrumentId }:
-  { description: string, rating: number, instrumentId: string | string[] }) => {
+  { description: string, rating: number, instrumentId: string }) => {
   try {
     const response = await instance.post(`/comments/${instrumentId}`, {
       description,
@@ -14,7 +14,7 @@ export const createComment = async ({ description, rating, instrumentId }:
   }
 };
 
-export const getComments = async (instrumentId: string | string[]) => {
+export const getComments = async (instrumentId: string) => {
   try {
     const response = await instance.get(`/comments/${instrumentId}`);
     return response.data;

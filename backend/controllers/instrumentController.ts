@@ -24,37 +24,39 @@ class InstrumentController {
   async getAllInstruments(req: Request, res: Response) {
     try {
       const { page = 1, limit = 10 } = req.query;
-  
+
       const currentPage = Number(page);
       const instruments = await InstrumentService.getAllInstrumentsPaginated(currentPage, Number(limit));
-  
+
       const { resources } = await cloudinary.api.resources({ type: 'upload' });
-  
+
       interface CloudinaryResource {
         secure_url: string;
         public_id: string;
       }
-  
+
       const cloudinaryImages = resources.map((resource: CloudinaryResource) => ({
         url: resource.secure_url,
         public_id: resource.public_id,
       }));
-  
+
       const instrumentsWithImages = instruments.map(instrument => {
-        const matchingImage = cloudinaryImages.find((image: {url: string, public_id: string}) => image.url === instrument.image);
+        const matchingImage =
+          cloudinaryImages.find((image: {url: string, public_id: string}) => image.url === instrument.image);
+
         return {
           ...instrument.toObject(),
-          image: matchingImage ? matchingImage.url : instrument.image, 
+          image: matchingImage ? matchingImage.url : instrument.image,
         };
       });
-  
+
       const uniqueInstruments = instrumentsWithImages.filter(
         (instrument, index, self) =>
-          index === self.findIndex(i => i._id.toString() === instrument._id.toString())
+          index === self.findIndex(i => i._id.toString() === instrument._id.toString()),
       );
-  
+
       const totalInstruments = await Instrument.countDocuments();
-  
+
       return res.status(200).json({
         instruments: uniqueInstruments,
         hasMore: currentPage * Number(limit) < totalInstruments,
@@ -64,7 +66,6 @@ class InstrumentController {
       return res.status(500).json({ message: `Something went wrong: ${error}` });
     }
   }
-  
 
   async getPopularInstruments(req: Request, res: Response) {
     try {
@@ -109,7 +110,7 @@ class InstrumentController {
   async getInstrumentsBySection(req: Request, res: Response) {
     const { section } = req.params;
     const { page } = req.query;
-    
+
     const pageNumber = parseInt(page as string, 10) || 1;
 
     try {
