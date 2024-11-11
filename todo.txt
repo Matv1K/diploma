@@ -16,8 +16,6 @@
 
 //! LOW PRIORITY
 
-1. Add three.js library
-2. Add customize page
 3. Retool admin dashboard
 4. Add redis
 5. Fix support modal (websockets)
@@ -29,7 +27,6 @@
 11. ADD FAVICON
 13. Change LOGO (musify)
 14. Go to login page when trying to leave the comment
-15. Add onboarding for users who just register
 16. When user created an order notify the user by sending an sms to his number
 17. Add apple pay
 

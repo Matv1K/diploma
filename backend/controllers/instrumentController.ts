@@ -67,6 +67,30 @@ class InstrumentController {
     }
   }
 
+  async getInstrumentsByPriceRange(req: Request, res: Response) {
+    try {
+      const { min, max } = req.query;
+
+      // Ensure min and max are numbers
+      const minPrice = Number(min);
+      const maxPrice = Number(max);
+
+      if (isNaN(minPrice) || isNaN(maxPrice)) {
+        return res.status(400).json({ message: 'Invalid price range values' });
+      }
+
+      // Query instruments within the price range
+      const instruments = await Instrument.find({
+        price: { $gte: minPrice, $lte: maxPrice },
+      }).exec();
+
+      res.status(200).json(instruments);
+    } catch (error) {
+      console.error('Error fetching instruments by price range:', error);
+      res.status(500).json({ message: 'Failed to fetch instruments by price range.' });
+    }
+  }
+
   async getPopularInstruments(req: Request, res: Response) {
     try {
       const instruments = await InstrumentService.getPopularInstruments();
@@ -147,6 +171,18 @@ class InstrumentController {
       res.status(200).json({ instruments, hasMore });
     } catch (error) {
       console.error('Error fetching instruments by subtype: ', error);
+      res.status(500).json(`Something went wrong: ${error}`);
+    }
+  }
+
+  async getInstrumentsByFilter(req: Request, res: Response) {
+    const { filter } = req.params;
+
+    try {
+      const instruments = await InstrumentService.getInstrumentsByFilter(filter);
+      res.status(200).json(instruments);
+    } catch (error) {
+      console.error('Error fetching instruments by filter:', error);
       res.status(500).json(`Something went wrong: ${error}`);
     }
   }

@@ -21,16 +21,17 @@ export const POPULAR_BRANDS = [
 export const BRANDS = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
 
 export const PRICE_RANGES = [
-  { label: 'Under $500', min: 0, max: 500 },
-  { label: '$500 - $1000', min: 500, max: 1000 },
-  { label: 'Above $1000', min: 1000, max: Infinity },
+  { label: 'Under $1000', min: 0, max: 1000 },
+  { label: '$1000 - $2000', min: 1000, max: 2000 },
+  { label: '$2000 - $5000', min: 2000, max: 5000 },
+  { label: 'Above $5000', min: 5000, max: Infinity },
 ];
 
 export const FILTERS = [
-  { label: 'By popularity' },
-  { label: 'By rating' },
-  { label: 'The most expensive' },
-  { label: 'The cheapest' },
+  { label: 'By popularity', value:  'most_popular' },
+  { label: 'By rating', value: 'by_rating' },
+  { label: 'The most expensive', value: 'most_expensive' },
+  { label: 'The cheapest', value:  'cheapest' },
 ];
 
 export const ORDER_STATES = {
@@ -58,7 +59,7 @@ export const TOAST_MESSAGES = {
   CHANGE_PASSWORD_SUCCESS: 'Your password has been changed',
   REMOVE_CART_ITEM_SUCCESS: 'Item has been removed from the cart',
   LOG_OUT_USER: 'You’ve been successfully logged out',
-  CREATE_ORDER: 'Your order has been created',
+  CREATE_ORDER: 'Your order has been accepted',
 };
 
 export const CATALOG_LINKS = [

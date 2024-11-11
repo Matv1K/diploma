@@ -71,6 +71,38 @@ export const getInstrumentsBySection = async (section: string, page: number = 1)
   }
 };
 
+export const getInstrumentsByPriceRange = async (min: number, max: number) => {
+  try {
+    const response = await instance.get('/instruments/filter/priceRange', {
+      params: { min, max },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching instruments by price range:', error);
+    throw error;
+  }
+};
+
+export const getInstrumentsByBrand = async (brand: string) => {
+  try {
+    const response = await instance.get(`/instruments/brands/${brand}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching instruments by brand:', error);
+    throw error;
+  }
+};
+
+export const getInstrumentsByFilter = async (filter: string) => {
+  try {
+    const response = await instance.get(`/instruments/filter/${filter}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching instruments by filter:', error);
+    throw error;
+  }
+};
+
 export const searchInstruments = async (query: string) => {
   try {
     const response = await instance.get(`/instruments/search/query?q=${query}`);

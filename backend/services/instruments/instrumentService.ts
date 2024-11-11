@@ -83,6 +83,30 @@ class InstrumentService {
     return instrument;
   }
 
+  async getInstrumentsByFilter(filter: string) {
+    let sortCondition;
+
+    switch (filter) {
+      case 'cheapest':
+        sortCondition = { price: 1 };
+        break;
+      case 'most_expensive':
+        sortCondition = { price: -1 };
+        break;
+      case 'most_popular':
+        sortCondition = { popularity: -1 }; // Assuming you have a 'popularity' field
+        break;
+      case 'by_rating':
+        sortCondition = { rating: -1 }; // Assuming you have a 'rating' field
+        break;
+      default:
+        sortCondition = {};
+    }
+
+    const instruments = await Instrument.find().sort(sortCondition);
+    return instruments;
+  }
+
   async searchInstruments(query: string) {
     const instruments = await Instrument.find({ name: { $regex: query, $options: 'i' } });
     return instruments;

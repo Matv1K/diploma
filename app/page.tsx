@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import styles from './page.module.scss';
 
@@ -9,10 +8,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Carousel, Button, Modal, Input } from '@/components';
 
-import { FiSend, FiMessageCircle } from 'react-icons/fi';
+import { FiSend } from 'react-icons/fi';
 import { Piano } from '@/public/images';
-
-import { showModal } from '@/features/modal/modalSlice';
 
 import { getPopularIstruments, getNewInstruments } from '@/api/instruments/instrumentService';
 
@@ -25,8 +22,6 @@ const Home: React.FC = () => {
   const [popularInstruments, setPopularInstruments] = useState<InstrumentI[]>([]);
   const [newInstruments, setNewInstruments] = useState<InstrumentI[]>([]);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     const fetchInstruments = async () => {
       const popularInstruments = await getPopularIstruments();
@@ -38,11 +33,6 @@ const Home: React.FC = () => {
 
     fetchInstruments();
   }, []);
-
-  const handleOpenModal = () => {
-    dispatch(showModal());
-    setIsModalOpened(true);
-  };
 
   return (
     <main>
@@ -105,7 +95,7 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {isModalOpened ? (
+      {isModalOpened && (
         <Modal
           setIsModalOpened={setIsModalOpened}
           buttonName='Send'
@@ -124,14 +114,6 @@ const Home: React.FC = () => {
             </Button>
           </div>
         </Modal>
-      ) : (
-        <Button
-          option={ButtonOptions._OUTILINE}
-          onClick={handleOpenModal}
-          className={styles.buttonSupport}
-        >
-          <FiMessageCircle size={24} />
-        </Button>
       )}
     </main>
   );
