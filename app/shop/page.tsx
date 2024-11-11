@@ -110,44 +110,55 @@ const Shop: React.FC = () => {
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
 
-          <select id='brand' onChange={handleBrandNameChange}>
-            <option value='All'>All</option>
-            {BRANDS.map(brand => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select className={styles.select} id='brand' onChange={handleBrandNameChange}>
+              <option value='All'>All</option>
+              {BRANDS.map(brand => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
 
-          <select id='price' value={selectedPriceRange} onChange={handlePriceRangeChange}>
-            <option value='All'>All</option>
-            {PRICE_RANGES.map(range => (
-              <option key={range.label} value={range.label}>
-                {range.label}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select id='price' value={selectedPriceRange} onChange={handlePriceRangeChange} className={styles.select}>
+              <option value='All'>All</option>
+              {PRICE_RANGES.map(range => (
+                <option key={range.label} value={range.label}>
+                  {range.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.filterItem}>
           <label htmlFor='filterBy'>Filter By:</label>
 
-          <select id='filterBy' onChange={handleFilterChange}>
-            {FILTERS.map(filter => (
-              <option key={filter.label} value={filter.value}>
-                {filter.label}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select className={styles.select} id='filterBy' onChange={handleFilterChange}>
+              {FILTERS.map(filter => (
+                <option key={filter.label} value={filter.value}>
+                  {filter.label}
+                </option>
+              ))}
+            </select>
+
+          </div>
         </div>
 
         <div className={`${styles.filterItem} ${styles.checkboxItem}`}>
           <label htmlFor='isNew'>New Only</label>
-          <input type='checkbox' id='isNew' checked={isNewOnly} onChange={handleNewOnlyChange} />
+
+          <label className={styles.label}>
+            <input
+              className={styles.checkbox} type='checkbox' id='isNew' checked={isNewOnly} onChange={handleNewOnlyChange} />
+          </label>
         </div>
       </div>
 

@@ -67,23 +67,142 @@
       padding: 5px;
       border: 1px solid $primary-color;
       border-radius: 4px;
-      min-width: 150px;
     }
   }
 
   .checkboxItem {
     display: flex;
-    align-items: center;
+    justify-content: flex-start;    
     gap: 8px;
 
-    input[type="checkbox"] {
-      margin: 0;
-      width: 18px;
-      height: 18px;
+
+    .label {
+      .checkbox {
+        width: 24px;
+        height: 24px;
+        appearance: none;
+        border-radius: 50%;
+        position: relative;
+        display: inline-block;
+        border: 2px solid currentColor;
+        cursor: pointer;
+
+        &:before {
+          content: "";
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: transparent;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          transition: background-color 0.3s ease;
+        }
+
+        &:checked:before {
+          background-color: $secondary-color;
+        }
+      }
+
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
     }
   }
 }
 
+
 .containerEmpty {
   @include centerInitialState
+}
+
+
+.selectWrapper {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+}
+.select {
+  display: block;
+  width: 100%;
+  padding: 12px 40px 12px 20px; 
+  font-size: 16px; /* Custom font size */
+  font-family: 'Arial', sans-serif; /* Custom font family */
+  font-weight: 500;
+  border: 2px solid #ccc;
+  border-radius: 12px; /* More rounded corners */
+  background-color: #fff;
+  color: #333;
+  appearance: none;  /* Remove default arrow */
+  cursor: pointer;  /* Pointer cursor when hovering over the select */
+  transition: all 0.3s ease; /* Smooth transition for border and background */
+  
+  /* Focus and hover states */
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 8px rgba(91, 155, 213, 0.5);
+    outline: none;
+  }
+
+  &:hover {
+    border-color: $secondary-color;  /* Border color on hover */
+    background-color: #f9f9f9;  /* Slight background change on hover */
+  }
+}
+
+/* Custom Arrow */
+.selectWrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #333;
+  transform: translateY(-50%);
+  pointer-events: none;  /* Disable interaction with the arrow */
+}
+
+/* Styling the options */
+.select option {
+  padding: 12px;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+  
+  &:hover {
+    background-color: #f0f0f0; /* Hover background */
+    color: #333; /* Option text color */
+  }
+
+  &:active {
+    background-color: #ddd; /* Active background when clicked */
+  }
+}
+
+/* Option selected state */
+.select option:checked {
+  background-color: $primary-color;
+  color: white;
+}
+
+/* Modern dropdown animation */
+.selectWrapper select {
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.selectWrapper select:focus {
+  z-index: 20;
+}
+
+/* Optional: Add a shadow on hover to make the input field more prominent */
+.selectWrapper:hover .select {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

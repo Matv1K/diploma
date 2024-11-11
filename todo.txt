@@ -1,24 +1,26 @@
 //! TOP PRIORITY
 
-1. ADD HUSKY
 2. ADD CI/CD PIPELINE (ADD ESLINT TESTS AND CONFIGURE VERCEL)
 3. ADD DOCKER
-4. Add mobile version
-5. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
 6. MAKE PRIVAT ROUTES
-7. Fix stripe
-8. ADD FILTERING LOGIC
+
+
+1. If item is bought update bought field
+3. Let filters stack on top of each other
+4. Separate filtering logic for reusability
+5. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
+6. Immediately remove unliked item from favorites
+7. Add stripe backend
+8. If items are not found (when filtering) add initial message
 
 // BUGS
 
 1. Fix loaders
-2. Immediately remove unliked item from favorites
 
 //! LOW PRIORITY
 
 3. Retool admin dashboard
 4. Add redis
-5. Fix support modal (websockets)
 6. Add ... if username is big at dropdown
 7. Add sparkles when like
 8. Add forgot password

@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import OrderService from '../services/order/orderService';
 
+import Instrument from '../models/Instrument';
+
 interface AuthenticatedRequest extends Request {
   payload?: { id: string };
 }

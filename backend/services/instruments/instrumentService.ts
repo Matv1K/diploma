@@ -94,7 +94,7 @@ class InstrumentService {
         sortCondition = { price: -1 };
         break;
       case 'most_popular':
-        sortCondition = { popularity: -1 }; // Assuming you have a 'popularity' field
+        sortCondition = { bought: -1 };
         break;
       case 'by_rating':
         sortCondition = { rating: -1 }; // Assuming you have a 'rating' field
