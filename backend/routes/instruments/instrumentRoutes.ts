@@ -18,7 +18,5 @@ router.get('/brands/:brand', InstrumentController.getInstrumentsByBrand);
 router.get('/:id', InstrumentController.getInstrumentById);
 router.get('/search/query', InstrumentController.searchInstruments);
 router.get('/rating/:instrumentId', InstrumentController.getInstrumentRating);
-router.get('/filter/priceRange', InstrumentController.getInstrumentsByPriceRange);
-router.get('/filter/:filter', InstrumentController.getInstrumentsByFilter);
 
 export default router;

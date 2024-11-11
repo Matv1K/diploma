@@ -185,9 +185,15 @@ const Instrument: React.FC = () => {
 
     if (isAuthorized) {
       if (!commentText || rating === 0) {
-        alert('Please provide a comment and a rating.');
+        toast.error('Please provide a comment and a rating.');
         return;
       }
+
+      // 1. Send an API request to the backend in order to get all the users orders
+
+      // 2. Find if the current instrument was bought by the user at least once
+
+      // 3. If it was, allow users to leave a comment and a rating. If no show the toast error
 
       try {
         const newComment = await createComment({

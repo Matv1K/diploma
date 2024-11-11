@@ -12,9 +12,29 @@ export const createInstrument = async (instrument: InstrumentI) => {
   }
 };
 
-export const getInstruments = async (page: number, limit: number = 10) => {
+export const getInstruments = async (
+  page: number,
+  limit: number = 10,
+  filters: { isNewOnly?: boolean; priceRange?: string; brand?: string; filter?: string } = {},
+  type: 'shop' | 'sale' | 'sectionName' | 'subtypeName' = 'shop',
+  sectionName?: string,
+  subtypeName?: string,
+) => {
   try {
-    const response = await instance.get(`/instruments?page=${page}&limit=${limit}`);
+    const params = new URLSearchParams();
+
+    params.append('page', page.toString());
+    params.append('limit', limit.toString());
+    params.append('type', type);
+
+    if (sectionName) params.append('section', sectionName);
+    if (subtypeName) params.append('instrumentType', subtypeName);
+    if (filters.isNewOnly) params.append('isNew', 'true');
+    if (filters.priceRange) params.append('priceRange', filters.priceRange);
+    if (filters.brand) params.append('brand', filters.brand);
+    if (filters.filter) params.append('filter', filters.filter);
+
+    const response = await instance.get(`/instruments?${params.toString()}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching instruments');
@@ -71,34 +91,12 @@ export const getInstrumentsBySection = async (section: string, page: number = 1)
   }
 };
 
-export const getInstrumentsByPriceRange = async (min: number, max: number) => {
-  try {
-    const response = await instance.get('/instruments/filter/priceRange', {
-      params: { min, max },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching instruments by price range:', error);
-    throw error;
-  }
-};
-
 export const getInstrumentsByBrand = async (brand: string) => {
   try {
     const response = await instance.get(`/instruments/brands/${brand}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching instruments by brand:', error);
-    throw error;
-  }
-};
-
-export const getInstrumentsByFilter = async (filter: string) => {
-  try {
-    const response = await instance.get(`/instruments/filter/${filter}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching instruments by filter:', error);
     throw error;
   }
 };

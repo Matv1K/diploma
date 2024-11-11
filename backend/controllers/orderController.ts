@@ -17,6 +17,10 @@ class OrderController {
 
       const newOrder = await OrderService.createNewOrder(userId, items, totalPrice, address, phoneNumber);
 
+      items.forEach(async item => {
+        await Instrument.updateOne({ _id: item.instrumentId }, { $inc: { bought: item.amount } });
+      });
+
       res.status(201).json(newOrder);
     } catch (error) {
       console.error(error);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'next/navigation';
 
 import styles from './page.module.scss';
@@ -10,48 +10,39 @@ import { InstrumentCard, Loader } from '@/components';
 
 import { removeSeparator } from '@/utils';
 
-import { getInstrumentBySubtype } from '@/api/instruments/instrumentService';
+import useInstrumentsFilter from '@/hooks/useInstrumentsFilter';
 
-import { BRANDS, PRICE_RANGES } from '@/app/constants';
+import { BRANDS, PRICE_RANGES, FILTERS } from '@/app/constants';
 
 import { InstrumentCardI } from '@/types';
 
 const Subtype = () => {
-  const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
   const { subtype } = useParams();
-
   const convertedSubtype = Array.isArray(subtype) ? subtype[0] : subtype;
 
-  const fetchInstruments = async (currentPage: number) => {
-    try {
-      const { instruments: newInstruments, hasMore: moreData } = await getInstrumentBySubtype(convertedSubtype, currentPage);
+  const { instruments, hasMore, isLoading, filters, setFilters, fetchInstruments } =
+    useInstrumentsFilter({}, 'subtypeName', '', convertedSubtype);
 
-      if (newInstruments.length === 0) {
-        setHasMore(false);
-      }
-
-      setInstruments(prevInstruments => [...prevInstruments, ...newInstruments]);
-      setHasMore(moreData);
-      setPage(prevPage => prevPage + 1);
-    } catch (error) {
-      console.error(`Error fetching instruments: ${error}`);
-      setHasMore(false);
-    }
+  const handleNewOnlyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, isNewOnly: e.target.checked }));
   };
 
-  useEffect(() => {
-    if (convertedSubtype) {
-      fetchInstruments(1);
-    }
-  }, [convertedSubtype]);
+  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, priceRange: e.target.value }));
+  };
 
-  if (!instruments.length) {
+  const handleBrandNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, brand: e.target.value }));
+  };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, filter: e.target.value }));
+  };
+
+  if (isLoading && instruments.length === 0) {
     return (
       <main className={styles.containerEmpty}>
-        <h2>Currently, there are no items in this category</h2>
+        <Loader />
       </main>
     );
   }
@@ -59,65 +50,86 @@ const Subtype = () => {
   return (
     <main>
       <h2>{removeSeparator(convertedSubtype)[0].toUpperCase() + removeSeparator(convertedSubtype).substring(1)}</h2>
-
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
 
-          <select id='brand'>
-            <option value=''>All</option>
-            {BRANDS.map(brand => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select className={styles.select} value={filters.brand || ''} id='brand' onChange={handleBrandNameChange}>
+              <option value='All'>All</option>
+              {BRANDS.map(brand => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
 
-          <select id='price'>
-            {PRICE_RANGES.map(range => (
-              <option key={range.label} value={range.label}>
-                {range.label}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select
+              id='price' value={filters.priceRange || 'All'}
+              onChange={handlePriceRangeChange}
+              className={styles.select}
+            >
+              <option value='All'>All</option>
+              {PRICE_RANGES.map(range => (
+                <option key={range.label} value={range.label}>
+                  {range.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.filterItem}>
-          <label htmlFor='price'>Filter By:</label>
+          <label htmlFor='filterBy'>Filter By:</label>
 
-          <select id='price'>
-            {PRICE_RANGES.map(range => (
-              <option key={range.label} value={range.label}>
-                {range.label}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select className={styles.select} id='filterBy' value={filters.filter || ''} onChange={handleFilterChange}>
+              {FILTERS.map(filter => (
+                <option key={filter.label} value={filter.value}>
+                  {filter.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={`${styles.filterItem} ${styles.checkboxItem}`}>
           <label htmlFor='isNew'>New Only</label>
-          <input type='checkbox' id='isNew' />
+
+          <label className={styles.label}>
+            <input
+              className={styles.checkbox}
+              type='checkbox' id='isNew'
+              checked={filters.isNewOnly || false}
+              onChange={handleNewOnlyChange}
+            />
+          </label>
         </div>
       </div>
 
       <InfiniteScroll
         dataLength={instruments.length}
-        next={() => fetchInstruments(page)}
+        next={() => fetchInstruments()}
         hasMore={hasMore}
         className={styles.instruments}
-        loader={
-          <div>
-            <Loader />
-          </div>}
+        loader={<div><Loader /></div>}
       >
         {instruments.map(({ _id, ...props }: InstrumentCardI) => (
           <InstrumentCard id={_id} key={_id} withLikeIcon {...props} />
         ))}
       </InfiniteScroll>
+
+      {!instruments.length &&
+        <div className={styles.noInstruments}>
+          <h2>No instruments to display</h2>
+        </div>
+      }
     </main>
   );
 };

@@ -1,29 +1,44 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import styles from './page.module.scss';
 
-import { InstrumentCard } from '@/components';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { InstrumentCard, Loader } from '@/components';
 
-import { getInstrumentsOnSale } from '@/api/instruments/instrumentService';
+import useInstrumentsFilter from '@/hooks/useInstrumentsFilter';
 
-import { BRANDS, PRICE_RANGES } from '@/app/constants';
+import { BRANDS, PRICE_RANGES, FILTERS } from '@/app/constants';
 
 import { InstrumentCardI } from '@/types';
 
 const Sale: React.FC = () => {
-  const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
+  const { instruments, hasMore, isLoading, filters, setFilters, fetchInstruments } = useInstrumentsFilter({}, 'sale');
 
-  useEffect(() => {
-    const fetchInstruments = async () => {
-      const instruments = await getInstrumentsOnSale();
+  const handleNewOnlyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, isNewOnly: e.target.checked }));
+  };
 
-      setInstruments(instruments);
-    };
+  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, priceRange: e.target.value }));
+  };
 
-    fetchInstruments();
-  }, []);
+  const handleBrandNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, brand: e.target.value }));
+  };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilters(prevFilters => ({ ...prevFilters, filter: e.target.value }));
+  };
+
+  if (isLoading && instruments.length === 0) {
+    return (
+      <main className={styles.containerEmpty}>
+        <Loader />
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -33,51 +48,82 @@ const Sale: React.FC = () => {
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
 
-          <select id='brand'>
-            <option value=''>All</option>
-            {BRANDS.map(brand => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select className={styles.select} value={filters.brand || ''} id='brand' onChange={handleBrandNameChange}>
+              <option value='All'>All</option>
+              {BRANDS.map(brand => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
 
-          <select id='price'>
-            {PRICE_RANGES.map(range => (
-              <option key={range.label} value={range.label}>
-                {range.label}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select
+              id='price' value={filters.priceRange || 'All'}
+              onChange={handlePriceRangeChange}
+              className={styles.select}
+            >
+              <option value='All'>All</option>
+              {PRICE_RANGES.map(range => (
+                <option key={range.label} value={range.label}>
+                  {range.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.filterItem}>
-          <label htmlFor='price'>Filter By:</label>
+          <label htmlFor='filterBy'>Filter By:</label>
 
-          <select id='price'>
-            {PRICE_RANGES.map(range => (
-              <option key={range.label} value={range.label}>
-                {range.label}
-              </option>
-            ))}
-          </select>
+          <div className={styles.selectWrapper}>
+            <select className={styles.select} id='filterBy' value={filters.filter || ''} onChange={handleFilterChange}>
+              {FILTERS.map(filter => (
+                <option key={filter.label} value={filter.value}>
+                  {filter.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={`${styles.filterItem} ${styles.checkboxItem}`}>
           <label htmlFor='isNew'>New Only</label>
-          <input type='checkbox' id='isNew' />
+
+          <label className={styles.label}>
+            <input
+              className={styles.checkbox}
+              type='checkbox' id='isNew'
+              checked={filters.isNewOnly || false}
+              onChange={handleNewOnlyChange}
+            />
+          </label>
         </div>
       </div>
 
-      <div className={styles.instruments}>
+      <InfiniteScroll
+        className={styles.instruments}
+        dataLength={instruments.length}
+        next={() => fetchInstruments()}
+        hasMore={hasMore}
+        loader={<div><Loader /></div>}
+      >
         {instruments.map(({ _id, ...props }: InstrumentCardI) => (
-          <InstrumentCard key={_id} id={_id} {...props} withLikeIcon />
+          <InstrumentCard key={_id} id={_id} withLikeIcon {...props} />
         ))}
-      </div>
+      </InfiniteScroll>
+
+      {!instruments.length &&
+        <div className={styles.noInstruments}>
+          <h2>No instruments to display</h2>
+        </div>
+      }
     </main>
   );
 };

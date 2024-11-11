@@ -1,97 +1,34 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import styles from './page.module.scss';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { InstrumentCard, Button, Modal, Input, Loader } from '@/components';
+import { InstrumentCard, Loader } from '@/components';
 
-import { FiSend } from 'react-icons/fi';
-
-import {
-  getInstruments,
-  getNewInstruments,
-  getInstrumentsByPriceRange,
-  getInstrumentsByBrand,
-  getInstrumentsByFilter,
-} from '@/api/instruments/instrumentService';
+import useInstrumentsFilter from '@/hooks/useInstrumentsFilter';
 
 import { BRANDS, PRICE_RANGES, FILTERS } from '@/app/constants';
-
-import { InstrumentCardI, ButtonOptions, InputTypes } from '@/types';
+import { InstrumentCardI } from '@/types';
 
 const Shop: React.FC = () => {
-  const [instruments, setInstruments] = useState<InstrumentCardI[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isNewOnly, setIsNewOnly] = useState<boolean>(false);
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string>('All');
-  const [selectedBrand, setSelectedBrand] = useState<string>('');
-  const [selectedFilter, setSelectedFilter] = useState<string>('');
-
-  const fetchInstruments = async (reset = false) => {
-    try {
-      setIsLoading(true);
-      let newInstrumentsData: InstrumentCardI[] = [];
-
-      if (isNewOnly) {
-        const data = await getNewInstruments();
-        newInstrumentsData = data || [];
-        setHasMore(false);
-      } else if (selectedPriceRange !== 'All') {
-        const selectedRange = PRICE_RANGES.find(range => range.label === selectedPriceRange);
-        if (selectedRange) {
-          const { min, max } = selectedRange;
-          const data = await getInstrumentsByPriceRange(min, max);
-          newInstrumentsData = data || [];
-        }
-        setHasMore(false);
-      } else if (selectedBrand) {
-        const data = await getInstrumentsByBrand(selectedBrand);
-        newInstrumentsData = data || [];
-        setHasMore(false);
-      } else if (selectedFilter) {
-        const data = await getInstrumentsByFilter(selectedFilter);
-        newInstrumentsData = data || [];
-        setHasMore(false);
-      } else {
-        const { instruments: newInstruments, hasMore } = await getInstruments(reset ? 1 : page);
-        newInstrumentsData = newInstruments;
-        setHasMore(hasMore);
-      }
-
-      setInstruments(prevInstruments =>
-        reset ? newInstrumentsData : [...prevInstruments, ...newInstrumentsData]);
-      setPage(prevPage => (reset ? 2 : prevPage + 1));
-    } catch (error) {
-      console.error('Error fetching instruments:', error);
-      setHasMore(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchInstruments(true);
-  }, [isNewOnly, selectedPriceRange, selectedBrand, selectedFilter]);
+  const { instruments, hasMore, isLoading, filters, setFilters, fetchInstruments } = useInstrumentsFilter({}, 'shop');
 
   const handleNewOnlyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsNewOnly(e.target.checked);
+    setFilters(prevFilters => ({ ...prevFilters, isNewOnly: e.target.checked }));
   };
 
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedPriceRange(e.target.value);
+    setFilters(prevFilters => ({ ...prevFilters, priceRange: e.target.value }));
   };
 
   const handleBrandNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedBrand(e.target.value);
+    setFilters(prevFilters => ({ ...prevFilters, brand: e.target.value }));
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedFilter(e.target.value);
+    setFilters(prevFilters => ({ ...prevFilters, filter: e.target.value }));
   };
 
   if (isLoading && instruments.length === 0) {
@@ -109,9 +46,8 @@ const Shop: React.FC = () => {
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
-
           <div className={styles.selectWrapper}>
-            <select className={styles.select} id='brand' onChange={handleBrandNameChange}>
+            <select className={styles.select} value={filters.brand || ''} id='brand' onChange={handleBrandNameChange}>
               <option value='All'>All</option>
               {BRANDS.map(brand => (
                 <option key={brand} value={brand}>
@@ -124,9 +60,13 @@ const Shop: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
-
           <div className={styles.selectWrapper}>
-            <select id='price' value={selectedPriceRange} onChange={handlePriceRangeChange} className={styles.select}>
+            <select
+              id='price'
+              value={filters.priceRange || 'All'}
+              onChange={handlePriceRangeChange}
+              className={styles.select}
+            >
               <option value='All'>All</option>
               {PRICE_RANGES.map(range => (
                 <option key={range.label} value={range.label}>
@@ -139,25 +79,26 @@ const Shop: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='filterBy'>Filter By:</label>
-
           <div className={styles.selectWrapper}>
-            <select className={styles.select} id='filterBy' onChange={handleFilterChange}>
+            <select className={styles.select} id='filterBy' value={filters.filter || ''} onChange={handleFilterChange}>
               {FILTERS.map(filter => (
                 <option key={filter.label} value={filter.value}>
                   {filter.label}
                 </option>
               ))}
             </select>
-
           </div>
         </div>
 
         <div className={`${styles.filterItem} ${styles.checkboxItem}`}>
           <label htmlFor='isNew'>New Only</label>
-
           <label className={styles.label}>
             <input
-              className={styles.checkbox} type='checkbox' id='isNew' checked={isNewOnly} onChange={handleNewOnlyChange} />
+              className={styles.checkbox}
+              type='checkbox' id='isNew'
+              checked={filters.isNewOnly || false}
+              onChange={handleNewOnlyChange}
+            />
           </label>
         </div>
       </div>
@@ -165,11 +106,7 @@ const Shop: React.FC = () => {
       <InfiniteScroll
         className={styles.instruments}
         dataLength={instruments.length}
-        next={() => {
-          if (!isNewOnly && selectedPriceRange === 'All') {
-            fetchInstruments();
-          }
-        }}
+        next={() => fetchInstruments()}
         hasMore={hasMore}
         loader={<div><Loader /></div>}
       >
@@ -178,23 +115,11 @@ const Shop: React.FC = () => {
         ))}
       </InfiniteScroll>
 
-      {isModalOpened && (
-        <Modal setIsModalOpened={setIsModalOpened} buttonName='Send' heading='Support'>
-          <div>Ask your questions here.</div>
-
-          <div className={styles.modalData}>
-            <Input
-              className={styles.modalInput}
-              type={InputTypes._TEXT}
-              placeholder='Write your message'
-            />
-
-            <Button option={ButtonOptions._OUTILINE}>
-              <FiSend size={24} />
-            </Button>
-          </div>
-        </Modal>
-      )}
+      {!instruments.length &&
+        <div className={styles.noInstruments}>
+          <h2>No instruments to display</h2>
+        </div>
+      }
     </main>
   );
 };

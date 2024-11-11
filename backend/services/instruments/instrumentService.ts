@@ -13,10 +13,17 @@ class InstrumentService {
     return instruments;
   }
 
-  async getAllInstrumentsPaginated(page: number, limit: number) {
+  async getAllInstrumentsPaginated(page: number, limit: number, query: any) {
     const skip = (page - 1) * limit;
 
-    const instruments = await Instrument.find().skip(skip).limit(limit);
+    let sortCondition;
+
+    if (Object.prototype.hasOwnProperty.call(query, 'sort')) {
+      sortCondition = query.sort;
+      delete query.sort;
+    }
+
+    const instruments = await Instrument.find(query).skip(skip).limit(limit).sort(sortCondition);
 
     return instruments;
   }
@@ -81,30 +88,6 @@ class InstrumentService {
   async getInstrumentById(id: string) {
     const instrument = await Instrument.findById(id);
     return instrument;
-  }
-
-  async getInstrumentsByFilter(filter: string) {
-    let sortCondition;
-
-    switch (filter) {
-      case 'cheapest':
-        sortCondition = { price: 1 };
-        break;
-      case 'most_expensive':
-        sortCondition = { price: -1 };
-        break;
-      case 'most_popular':
-        sortCondition = { bought: -1 };
-        break;
-      case 'by_rating':
-        sortCondition = { rating: -1 }; // Assuming you have a 'rating' field
-        break;
-      default:
-        sortCondition = {};
-    }
-
-    const instruments = await Instrument.find().sort(sortCondition);
-    return instruments;
   }
 
   async searchInstruments(query: string) {
