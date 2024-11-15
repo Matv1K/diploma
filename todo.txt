@@ -1,44 +1,37 @@
 //! TOP PRIORITY
 
-2. ADD CI/CD PIPELINE (ADD ESLINT TESTS AND CONFIGURE VERCEL)
-3. ADD DOCKER
-6. MAKE PRIVAT ROUTES
-
+1. ADD CI/CD PIPELINE (ADD ESLINT TESTS AND CONFIGURE VERCEL)
+2. ADD DOCKER
+3. MAKE PRIVAT ROUTES
 
 
 1. Update item rating when the rating is left. Item rating should be stored on backend
 2. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
 3. Immediately remove unliked item from favorites
-4. Add stripe backend
-5. Add mobile version
-
-// BUGS
-
-1. Fix loaders
+4. Fix InfiniteScroll overlapping
+5. Add images to db
+6. Add mobile version
+7. Limit the item search names to 10
 
 //! LOW PRIORITY
 
-3. Retool admin dashboard
-4. Add redis
-6. Add ... if username is big at dropdown
-8. Add forgot password
-9. Add error boundary component
-10. Add accessibility
-11. ADD FAVICON
-13. Change LOGO (musify)
-14. Go to login page when trying to leave the comment
-16. When user created an order notify the user by sending an sms to his number
-17. Add apple pay
-
-20. Cors error in the console when signin in with google
-21. Google button vanishes when reloading the sign inpage
-
-22. Rename cloudinary to CloudinaryService
-23. Move controller files to controller folders and call them index.ts
-24. Call api files index.ts
-25. Move AuthenticatedRequest interface to separate file
-
-26. Add errors to checkout form
+1. Retool admin dashboard
+2. Add redis
+3. Add ... if username is big at dropdown
+4. Add forgot password
+5. Add error boundary component
+6. Add accessibility
+7. ADD FAVICON
+8. Change LOGO (musify)
+9. When user created an order notify the user by sending an sms to his number
+10. Add apple pay
+11. Cors error in the console when signin in with google
+12. Google button vanishes when reloading the sign inpage
+13. Rename cloudinary to CloudinaryService
+14. Move controller files to controller folders and call them index.ts
+15. Call api files index.ts
+16. Move AuthenticatedRequest interface to separate file
+17. Add errors to checkout form
 
 // INVESTIGATE
 

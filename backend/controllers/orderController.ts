@@ -1,32 +1,52 @@
 import { Request, Response } from 'express';
-
-import OrderService from '../services/order/orderService';
+import Stripe from 'stripe';
 
 import Instrument from '../models/Instrument';
+
+import OrderService from '../services/order/orderService';
 
 interface AuthenticatedRequest extends Request {
   payload?: { id: string };
 }
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: '2022-11-15' } as any);
+
 class OrderController {
   async createOrder(req: AuthenticatedRequest, res: Response) {
-    try {
-      const { items, totalPrice, address, phoneNumber } = req.body;
+    const { items, totalPrice, address, phoneNumber } = req.body;
+    const userId = req.payload?.id || '';
 
-      const userId = req.payload?.id || '';
+    try {
+      if (!items || !totalPrice || !address || !phoneNumber) {
+        return res.status(400).json({ message: 'Invalid request data' });
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: totalPrice * 100,
+        currency: 'usd',
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
 
       const newOrder = await OrderService.createNewOrder(userId, items, totalPrice, address, phoneNumber);
 
-      items.forEach(async item => {
-        await Instrument.updateOne({ _id: item.instrumentId }, { $inc: { bought: item.amount } });
-      });
+      const updatePromises = items.map(item =>
+        Instrument.updateOne({ _id: item.instrumentId }, { $inc: { bought: item.amount } }));
 
-      res.status(201).json(newOrder);
+      await Promise.all(updatePromises);
+
+      res.status(201).json({ newOrder, clientSecret: paymentIntent.client_secret });
+
     } catch (error) {
-      console.error(error);
-      res.status(500).json('Something went wrong');
+      if (error.type === 'StripeCardError') {
+        return res.status(400).json({ message: `Payment failed: ${error.message}` });
+      }
+
+      console.error('Error processing order:', error);
+      res.status(500).json({ message: 'Something went wrong' });
     }
-  };
+  }
 
   async getOrders(req: AuthenticatedRequest, res: Response) {
     try {
