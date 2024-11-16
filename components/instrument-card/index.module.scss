@@ -5,13 +5,14 @@
   border-radius: 8px;
   padding: 10px;
   background-color: $white-color;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   position: relative;
   cursor: pointer;
   transform-origin: center top;
 
   &:hover {
-    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
   }
 
   .imageContainer {

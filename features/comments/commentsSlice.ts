@@ -19,7 +19,7 @@ const commentsSlice = createSlice({
     },
 
     addComment: (state, action: PayloadAction<CommentI>) => {
-      state.comments.push(action.payload);
+      state.comments.unshift(action.payload);
     },
   },
 });

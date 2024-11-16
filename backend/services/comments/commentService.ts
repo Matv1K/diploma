@@ -22,11 +22,7 @@ class CommentService {
   }
 
   async getComments(instrumentId: string) {
-    const comments = await Comment.aggregate([
-      { $match: { instrumentId } },
-      { $sort: { createdAt: -1 } },
-    ]);
-
+    const comments = await Comment.aggregate([{ $match: { instrumentId } }, { $sort: { createdAt: -1 } }]);
     return comments;
   }
 }

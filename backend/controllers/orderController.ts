@@ -64,6 +64,27 @@ class OrderController {
       res.status(500).json('Something went wrong');
     }
   };
+
+  async verifyOrderedItem(req: Request, res: Response) {
+    try {
+      const { instrumentId } = req.body;
+      const userId = req.payload?.id;
+
+      if (!userId) {
+        return res.status(500).json('No user id');
+      }
+
+      const orders = await OrderService.fetchUserOrders(userId);
+
+      const hasInstrument = orders.some(order =>
+        order.items.some(item => item.instrumentId === instrumentId));
+
+      res.status(200).json(hasInstrument);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json('Something went wrong');
+    }
+  }
 }
 
 export default new OrderController();

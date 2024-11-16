@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useRouter } from 'next/navigation';
 
@@ -24,6 +24,7 @@ import { getInstrument } from '@/api/instruments/instrumentService';
 import { addCartItem } from '@/api/cart/cartService';
 import { addLikedItem, getLikedItem, deleteLikedItem } from '@/api/liked/likedService';
 import { createComment, getComments } from '@/api/comments/commentsService';
+import { verifyOrderedItem } from '@/api/orders/ordersService';
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
@@ -51,6 +52,8 @@ const Instrument: React.FC = () => {
     image: '',
     colors: [],
   });
+
+  const commentsRef = useRef<HTMLDivElement | null>(null); // Create a ref for the comments section
 
   const { user } = useSelector((state: RootState) => state.user);
   const comments = useSelector((state: RootState) => state.comments.comments);
@@ -84,6 +87,11 @@ const Instrument: React.FC = () => {
     fetchInstrument();
     fetchComments();
   }, [instrumentId, dispatch]);
+
+  const handleScrollToComments = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // Prevent the default anchor link behavior
+    commentsRef.current?.scrollIntoView({ behavior: 'smooth' }); // Scroll to the comments section
+  };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -189,11 +197,12 @@ const Instrument: React.FC = () => {
         return;
       }
 
-      // 1. Send an API request to the backend in order to get all the users orders
+      const hasInstrument = await verifyOrderedItem(instrumentId);
 
-      // 2. Find if the current instrument was bought by the user at least once
-
-      // 3. If it was, allow users to leave a comment and a rating. If no show the toast error
+      if (!hasInstrument) {
+        toast.error("You haven't bought this item yet");
+        return;
+      }
 
       try {
         const newComment = await createComment({
@@ -240,7 +249,11 @@ const Instrument: React.FC = () => {
         <div className={styles.instrumentData}>
           <div className={styles.instrumentInfo}>
             <div className={styles.instrumentMainInfo}>
-              <Link className={styles.infoReview} href='#'>
+              <Link
+                className={styles.infoReview}
+                href='#'
+                onClick={handleScrollToComments} // Add the scroll handler here
+              >
                 Write a review
               </Link>
 
@@ -311,7 +324,7 @@ const Instrument: React.FC = () => {
         </div>
       </div>
 
-      <section className={styles.commentsSection}>
+      <section ref={commentsRef} className={styles.commentsSection}>
         <h2>Comments</h2>
 
         <form className={styles.commentForm} onSubmit={handleCommentSubmit}>

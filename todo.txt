@@ -4,14 +4,10 @@
 2. ADD DOCKER
 3. MAKE PRIVAT ROUTES
 
-
-1. Update item rating when the rating is left. Item rating should be stored on backend
 2. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
 3. Immediately remove unliked item from favorites
-4. Fix InfiniteScroll overlapping
-5. Add images to db
-6. Add mobile version
-7. Limit the item search names to 10
+4. Add mobile version
+5. fix country input frontend
 
 //! LOW PRIORITY
 

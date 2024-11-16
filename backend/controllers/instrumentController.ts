@@ -46,16 +46,19 @@ class InstrumentController {
       if (priceRange && priceRange !== 'All') {
         if (priceRange.startsWith('Above')) {
           const minPrice = Number(priceRange.replace('Above $', '').trim());
+
           if (!isNaN(minPrice)) {
             query.price = { $gte: minPrice };
           }
         } else if (priceRange.startsWith('Under')) {
           const maxPrice = Number(priceRange.replace('Under $', '').trim());
+
           if (!isNaN(maxPrice)) {
             query.price = { $lte: maxPrice };
           }
         } else {
           const [minPrice, maxPrice] = priceRange.split('-').map(str => Number(str.trim().replace('$', '')));
+
           if (!isNaN(minPrice) && !isNaN(maxPrice)) {
             query.price = { $gte: minPrice, $lte: maxPrice };
           }

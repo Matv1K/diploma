@@ -88,8 +88,7 @@ const Header: React.FC = () => {
       setFilteredItems(result);
     } catch (error) {
       console.error(`Search failed: ${error}`);
-    }
-  };
+    }};
 
   const handleCloseSearchMenu = () => {
     setQuery('');

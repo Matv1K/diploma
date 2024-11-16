@@ -46,6 +46,7 @@ const Shop: React.FC = () => {
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>
           <label htmlFor='brand'>Brand:</label>
+
           <div className={styles.selectWrapper}>
             <select className={styles.select} value={filters.brand || ''} id='brand' onChange={handleBrandNameChange}>
               <option value='All'>All</option>
@@ -60,6 +61,7 @@ const Shop: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='price'>Price Range:</label>
+
           <div className={styles.selectWrapper}>
             <select
               id='price'
@@ -79,6 +81,7 @@ const Shop: React.FC = () => {
 
         <div className={styles.filterItem}>
           <label htmlFor='filterBy'>Filter By:</label>
+
           <div className={styles.selectWrapper}>
             <select className={styles.select} id='filterBy' value={filters.filter || ''} onChange={handleFilterChange}>
               {FILTERS.map(filter => (
@@ -92,6 +95,7 @@ const Shop: React.FC = () => {
 
         <div className={`${styles.filterItem} ${styles.checkboxItem}`}>
           <label htmlFor='isNew'>New Only</label>
+
           <label className={styles.label}>
             <input
               className={styles.checkbox}

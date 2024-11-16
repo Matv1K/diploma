@@ -69,6 +69,7 @@ const CheckoutForm: React.FC = () => {
         }
       } else {
         const sessionCartItems = sessionStorage.getItem('cartItems');
+
         if (sessionCartItems) {
           items = JSON.parse(sessionCartItems);
           totalPrice = items.reduce((total: number, item: CartItemUnionI) => total + item.price * item.amount, 0);
@@ -94,6 +95,7 @@ const CheckoutForm: React.FC = () => {
     }
 
     const { cartItemId, name, color, price, instrumentId, amount } = item;
+
     return { instrumentId, amount, name, color, price, cartItemId };
   });
 
@@ -136,7 +138,7 @@ const CheckoutForm: React.FC = () => {
       const paymentResult = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/checkout`,
+          return_url: `${window.location.origin}`,
         },
         clientSecret,
       });

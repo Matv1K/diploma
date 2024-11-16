@@ -8,6 +8,7 @@
   width: 100%;
   margin-top: 20px;
   flex: 70%;
+  padding: 5px 0 10px 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -56,7 +57,6 @@
     justify-content: flex-start;    
     gap: 8px;
 
-
     .label {
       .checkbox {
         width: 24px;
@@ -97,83 +97,77 @@
   position: relative;
   display: inline-block;
   width: 200px;
-}
-.select {
-  display: block;
-  width: 100%;
-  padding: 12px 40px 12px 20px; 
-  font-size: 16px; 
-  font-family: 'Arial', sans-serif;
-  font-weight: 500;
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  background-color: #fff;
-  color: #333;
-  appearance: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &:focus {
-    border-color: $primary-color;
-    box-shadow: 0 0 8px rgba(91, 155, 213, 0.5);
-    outline: none;
-  }
 
-  &:hover {
-    border-color: $secondary-color;
-    background-color: #f9f9f9;
-  }
-}
-
-.selectWrapper::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 6px solid #333;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.select option {
-  padding: 12px;
-  font-size: 16px;
-  font-family: 'Arial', sans-serif;
-  background-color: #fff;
-  color: #333;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  
-  &:hover {
-    background-color: #f0f0f0;
+  .select {
+    display: block;
+    width: 100%;
+    padding: 12px 40px 12px 20px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 500;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    background-color: #fff;
     color: #333;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 8px rgba(91, 155, 213, 0.5);
+      outline: none;
+    }
+
+    &:hover {
+      border-color: $secondary-color;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
   }
 
-  &:active {
-    background-color: #ddd;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #333;
+    transform: translateY(-50%);
+    pointer-events: none;
   }
-}
 
-.select option:checked {
-  background-color: $primary-color;
-  color: white;
-}
+  select {
+    transition: all 0.2s ease;
+    z-index: 10;
 
-.selectWrapper select {
-  transition: all 0.2s ease;
-  z-index: 10;
-}
+    &:focus {
+      z-index: 20;
+    }
 
-.selectWrapper select:focus {
-  z-index: 20;
-}
+    option {
+      padding: 12px;
+      font-size: 16px;
+      font-family: 'Arial', sans-serif;
+      background-color: #fff;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
 
-.selectWrapper:hover .select {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      &:hover {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+
+      &:checked {
+        background-color: $primary-color;
+        color: white;
+      }
+    }
+  }
 }
 
 .containerEmpty {

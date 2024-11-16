@@ -91,7 +91,7 @@ class InstrumentService {
   }
 
   async searchInstruments(query: string) {
-    const instruments = await Instrument.find({ name: { $regex: query, $options: 'i' } });
+    const instruments = await Instrument.find({ name: { $regex: query, $options: 'i' } }).limit(10);
     return instruments;
   }
 }

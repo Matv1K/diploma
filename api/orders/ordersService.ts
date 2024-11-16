@@ -32,3 +32,14 @@ export const getOrders = async () => {
     throw error;
   }
 };
+
+export const verifyOrderedItem = async instrumentId => {
+  try {
+    const response = await instance.post('/orders/ordered', { instrumentId });
+    return response.data;
+  } catch (error) {
+    console.error('Error verifying ordered item: ', error);
+    throw error;
+  }
+};
+
