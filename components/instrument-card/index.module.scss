@@ -55,6 +55,7 @@
 
   .instrumentName {
     text-transform: capitalize;
+    color: $text-color;
 
     .instrumentType {
       font-size: $font-size-small;

@@ -14,8 +14,7 @@ const Footer: React.FC = () => (
 
         <p className={styles.description}>
           We are a music store offering the best instruments from renowned
-          brands. Our mission is to provide musicians with high-quality
-          instruments at competitive prices.
+          brands.
         </p>
       </div>
 

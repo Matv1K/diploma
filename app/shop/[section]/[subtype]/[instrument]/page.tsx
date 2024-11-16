@@ -233,7 +233,7 @@ const Instrument: React.FC = () => {
 
   return (
     <main>
-      <h2>{removeSeparator(instrument?.name)}</h2>
+      <h2 className={styles.heading}>{removeSeparator(instrument?.name)}</h2>
 
       <div className={styles.instrumentPageContainer}>
         <div className={styles.instrumentImageContainer}>

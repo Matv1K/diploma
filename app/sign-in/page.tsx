@@ -83,7 +83,6 @@ const SignIn: React.FC = () => {
           </div>
 
           <span>
-            Don&apos;t have an account?
             <Link className={styles.signUpLink} href='/sign-up'>
               Sign up
             </Link>

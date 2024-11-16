@@ -144,7 +144,6 @@ const InstrumentCard: React.FC<InstrumentCardProps> = ({
 
         dispatch(addItemToCart(addedItem));
 
-        push('/');
         toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');

@@ -22,6 +22,10 @@
   @media screen and (max-width: 868px) {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  @media screen and (max-width: 630px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .filterBar {
@@ -33,6 +37,11 @@
 
   @media screen and (max-width: 868px) {
     margin-top: 10px;
+  }
+
+  @media screen and (max-width: 630px) {
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .filterItem {
@@ -97,6 +106,11 @@
   position: relative;
   display: inline-block;
   width: 200px;
+
+  
+  @media screen and (max-width: 868px) {
+    width: 150px;
+  }
 
   .select {
     display: block;

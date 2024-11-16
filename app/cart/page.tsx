@@ -96,6 +96,7 @@ const Cart: React.FC = () => {
   return (
     <main>
       <h2>Your Cart</h2>
+
       <div className={styles.cartLayout}>
         <div className={styles.table}>
           {displayedCartItems.map((item: CartItemUnionI) => {

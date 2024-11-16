@@ -64,10 +64,18 @@
 
       &:first-child {
         margin-right: 10px;
+
+        @media screen and (max-width: 868px) {
+          margin-right: 5px;
+        }
       }
 
       &:last-child {
         margin-left: 10px;
+
+        @media screen and (max-width: 868px) {
+          margin-left: 5px;
+        }
       }
     }
   }

@@ -1,12 +1,24 @@
 @import "../../../../variables.scss";
 @import "../../../../mixins.scss";
 
+.heading {
+  @media screen and (max-width: 868px) {
+    text-align: center;
+  }
+}
+
 .instrumentPageContainer {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   margin-top: 20px;
   gap: 20px;
+
+  @media screen and (max-width: 868px) {
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: center;
+  }
 
   .instrumentImageContainer {
     flex: 50%;
@@ -180,6 +192,10 @@
     flex-direction: column;
     margin-top: 20px;
     width: 50%;
+
+    @media screen and (max-width: 868px) {
+      width: 100%;
+    }
 
     .commentInput {
       width: 100%;

@@ -19,6 +19,8 @@ import { fetchCurrentUser } from '@/features/user/userSlice';
 
 import { searchInstruments } from '@/api/instruments/instrumentService';
 
+import useMediaQuery from '@/hooks/useMediaQuerry';
+
 import { ButtonOptions, InputTypes, InstrumentI } from '@/types';
 import { RootState, AppDispatch } from '@/app/store';
 
@@ -28,6 +30,10 @@ const Header: React.FC = () => {
   const [cartItemsCount, setCartItemsCount] = useState(0);
 
   const { user, loading } = useSelector((state: RootState ) => state.user);
+
+  const isMobile = useMediaQuery('(max-width: 450px)');
+
+  // console.log(matches);
 
   const pathname = usePathname();
   const dispatch: AppDispatch = useDispatch();
@@ -99,8 +105,8 @@ const Header: React.FC = () => {
   return (
     <>
       <header className={styles.header}>
-        <Link href='/' onClick={handleCloseCatalog}>
-          <Image className={styles.logo} src={Logo} alt='Musify' width={40} height={40} priority/>
+        <Link className={styles.logo} href='/' onClick={handleCloseCatalog}>
+          <Image src={Logo} alt='Musify' width={40} height={40} priority/>
         </Link>
 
         <ul className={styles.headerActionData}>
@@ -118,7 +124,7 @@ const Header: React.FC = () => {
           <div className={styles.searchContainer}>
             <Input
               className={styles.search}
-              placeholder='Find on Musify'
+              placeholder={isMobile ? 'Search' : 'Find on Musify'}
               type={InputTypes._TEXT}
               icon={<FiSearch size={24} />}
               onChange={handleSearch}
@@ -154,21 +160,21 @@ const Header: React.FC = () => {
           <div className={styles.icons}>
             <div className={styles.profileContainer}>
               <Link href='/profile' className={`${styles.icon} ${getActiveIcon('/profile')}`}>
-                <FiSettings size={24} />
+                <FiSettings size={isMobile ? 22 : 24} />
               </Link>
 
               <Dropdown className={styles.dropdown} />
             </div>
 
             <Link href='/liked' className={`${styles.icon} ${getActiveIcon('/liked')}`}>
-              <FiHeart size={24} />
+              <FiHeart size={isMobile ? 22 : 24} />
             </Link>
 
             <div className={styles.cartContainer}>
               <span className={styles.cartAmount}>{displayedCartItemsCount}</span>
 
               <Link href='/cart' className={`${styles.icon} ${getActiveIcon('/cart')}`}>
-                <FiShoppingCart size={24} />
+                <FiShoppingCart size={isMobile ? 22 : 24} />
               </Link>
             </div>
           </div>

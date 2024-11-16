@@ -27,6 +27,10 @@
       top: 72px;
       height: calc(100vh - 72px);
     }
+
+    @media screen and (max-width: 768px) {
+      width: 100vw;
+    }
   
     .sectionLinks {
       display: grid;
@@ -35,7 +39,7 @@
   
       .sectionLinkContainer {
         position: relative;
-  
+
         .sectionLink {
           color: $text-color;
           font-size: $font-size-medium;
@@ -46,6 +50,10 @@
           justify-content: space-between;
           align-items: center;
           cursor: pointer;
+
+          @media screen and (max-width: 768px) {
+            font-size: 16px;
+          }
   
           &:hover {
             background-color: darken($background-color, 5%);
@@ -54,6 +62,10 @@
           &:not(:last-child) {
             margin-bottom: 20px;
           }
+        }
+
+        .allSectionLink {
+          color: $secondary-color;
         }
   
         .subtypesMenu {
@@ -68,6 +80,11 @@
           z-index: 10000;
           display: flex;
           flex-direction: column;
+
+          @media screen and (max-width: 850px) {
+            top: 0;
+            left: 0;
+          }
   
           .subtypeLink {
             padding: 8px;
@@ -88,17 +105,32 @@
       }
     }
 
-    .linkSales {
-      padding: 10px;
+    .catalogInfo {
+      display: flex;
+      justify-content: space-between;
       border-radius: 8px;
       color: $secondary-color;
       font-weight: 500;
       margin-top: auto;
       transition: background-color 0.3s ease-out;
       font-size: $font-size-medium;
-  
-      &:hover {
-        background-color: darken($background-color, 5%);
+
+      .linkSales {
+        border-radius: 8px;
+        color: $secondary-color;
+        font-weight: 500;
+        margin-top: auto;
+        transition: background-color 0.3s ease-out;
+        font-size: $font-size-medium;
+        padding: 10px;
+
+        &:hover {
+          background-color: darken($background-color, 5%);
+        }
+      }
+
+      .logo {
+        margin-right: 10px;
       }
     }
   }

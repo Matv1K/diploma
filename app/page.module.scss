@@ -6,8 +6,9 @@
   justify-content: space-evenly;
   margin-bottom: 30px;
 
-  @media screen and (max-width: 868px) {
+  @media screen and (max-width: 900px) {
     margin-top: 20px;
+    flex-direction: column;
   }
 
   &:nth-child(2n) {
@@ -18,6 +19,10 @@
 
   .headingHome {
     font-size: 36px;
+
+    @media screen and (max-width: 900px) {
+      margin-bottom: 40px;
+    }
 
     @media screen and (max-width: 868px) {
       font-size: 28px;
@@ -31,8 +36,8 @@
   .homeImage {
     transition: transform 0.2s ease-in;
 
-    @media screen and (max-width: 868px) {
-      display: none;
+    @media screen and (max-width: 900px) {
+      margin-bottom: 40px;
     }
 
     &:hover {

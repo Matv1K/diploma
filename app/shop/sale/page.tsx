@@ -94,7 +94,7 @@ const Sale: React.FC = () => {
         </div>
 
         <div className={`${styles.filterItem} ${styles.checkboxItem}`}>
-          <label htmlFor='isNew'>New Only</label>
+          <label htmlFor='isNew'>New</label>
 
           <label className={styles.label}>
             <input
