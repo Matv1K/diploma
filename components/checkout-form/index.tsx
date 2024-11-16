@@ -189,7 +189,8 @@ const CheckoutForm: React.FC = () => {
 
       {isModalOpened && (
         <Modal heading='Checkout' setIsModalOpened={setIsModalOpened}>
-          <p className={styles.modalText}>Please confirm your details before proceeding:</p>
+          <p className={styles.modalText}>Please confirm your details before proceeding</p>
+
           <div className={styles.inputGroup}>
             <div>
               <Controller

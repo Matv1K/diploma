@@ -26,6 +26,11 @@
   .modalText {
     color: $text-color;
     font-size: 18px;
+    text-align: center;
+
+    @media screen and (max-width: 630px) {
+      margin-bottom: 50px;
+    }
   }
 
   .inputGroup {

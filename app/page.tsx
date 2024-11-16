@@ -13,8 +13,6 @@ import { Piano } from '@/public/images';
 
 import { getPopularIstruments, getNewInstruments } from '@/api/instruments/instrumentService';
 
-import { ALL_SECTIONS } from '@/app/constants';
-
 import { InputTypes, ButtonOptions, InstrumentI } from '@/types';
 
 const Home: React.FC = () => {
@@ -58,11 +56,6 @@ const Home: React.FC = () => {
               <span>Top quality brands on sale up to 70%</span>
             </div>
           </Link>
-        </div>
-
-        <div>
-          <h2>Most popular sections</h2>
-          <Carousel items={ALL_SECTIONS} />
         </div>
 
         <div>

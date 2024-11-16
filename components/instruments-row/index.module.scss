@@ -7,9 +7,14 @@
   justify-content: space-between;
   align-items: center;
   border-radius: 8px;
+  flex-wrap: wrap;
 
   @media screen and (max-width: 1200px) {
     padding: 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
   }
 
   &:not(:last-child) {
@@ -18,12 +23,16 @@
 
   .cell {
     padding: 0;
-    display: table-cell;
+    display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: $text-color;
-    width: 25%;
+
+    @media screen and (max-width: 480px) {
+      justify-content: flex-start;
+      text-align: left;
+    }
 
     .iconTrash {
       cursor: pointer;
@@ -38,6 +47,10 @@
       display: flex;
       align-items: center;
       gap: 20px;
+
+      @media screen and (max-width: 480px) {
+        gap: 10px;
+      }
 
       .link {
         color: $text-color;
@@ -56,6 +69,8 @@
 
       .image {
         border-radius: 8px;
+        width: 40px;
+        height: 40px;
       }
     }
 
@@ -68,6 +83,11 @@
         @media screen and (max-width: 868px) {
           margin-right: 5px;
         }
+
+        @media screen and (max-width: 500px) {
+          margin-right: 0;
+          margin-bottom: 5px;
+        }
       }
 
       &:last-child {
@@ -76,7 +96,19 @@
         @media screen and (max-width: 868px) {
           margin-left: 5px;
         }
+        
+        @media screen and (max-width: 500px) {
+          margin-left: 0;
+          margin-top: 5px;
+        }
       }
+    }
+  }
+
+  .cellAmount {
+    @media screen and (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
     }
   }
 }

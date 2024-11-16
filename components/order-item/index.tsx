@@ -39,7 +39,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ items, totalPrice, status }) => (
 
       <div className={styles.orderData}>
         <div className={styles.orderDataRowPrice}>
-          <div>Total Price:</div>
+          <div>Total:</div>
 
           <div className={styles.bold}>
             {totalPrice}$

@@ -17,19 +17,19 @@ interface CarouselProps {
 
 const responsive = {
   superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
+    breakpoint: { max: 4000, min: 1440 },
     items: 5,
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 1440, min: 1024 },
     items: 3,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1024, min: 600 },
     items: 2,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 600, min: 0 },
     items: 1,
   },
 };
@@ -47,8 +47,8 @@ const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => 
 
   return (
     <ReactCarousel
-      swipeable={false}
-      draggable={false}
+      swipeable
+      draggable
       responsive={responsive}
       infinite
       autoPlay

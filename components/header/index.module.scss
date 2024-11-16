@@ -146,6 +146,10 @@
     align-items: center;
     gap: 30px;
 
+    .signInButton {
+      font-size: 14px;
+    }
+
     @media screen and (max-width: 1200px) {
       gap: 20px;
     }

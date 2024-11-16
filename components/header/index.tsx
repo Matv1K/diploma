@@ -33,8 +33,6 @@ const Header: React.FC = () => {
 
   const isMobile = useMediaQuery('(max-width: 450px)');
 
-  // console.log(matches);
-
   const pathname = usePathname();
   const dispatch: AppDispatch = useDispatch();
 
@@ -183,7 +181,7 @@ const Header: React.FC = () => {
         {!user && !loading && (
           <div className={styles.icons}>
             <Link href='/sign-in'>
-              <Button option={ButtonOptions._OUTILINE}>Sign in</Button>
+              <Button className={styles.signInButton} option={ButtonOptions._OUTILINE}>Sign in</Button>
             </Link>
 
             <div className={styles.cartContainer}>

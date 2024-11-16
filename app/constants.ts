@@ -1,15 +1,3 @@
-export const ALL_SECTIONS = [
-  { name: 'Guitars' },
-  { name: 'Pianos' },
-  { name: 'Drums' },
-  { name: 'Cellos' },
-  { name: 'Harmonicas' },
-  { name: 'Wind Instruments' },
-  { name: 'Ukuleles' },
-  { name: 'Studio Equipment' },
-  { name: 'Headphones' },
-];
-
 export const POPULAR_BRANDS = [
   { name: 'Taylor', id: 1 },
   { name: 'Fender', id: 2 },

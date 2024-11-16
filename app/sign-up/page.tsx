@@ -124,7 +124,6 @@ const SignUp: React.FC = () => {
           </div>
 
           <span>
-            Already have an account?{' '}
             <Link className={styles.signInLink} href='/sign-in'>
               Sign in
             </Link>

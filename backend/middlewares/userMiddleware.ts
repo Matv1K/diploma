@@ -10,7 +10,6 @@ const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
   if (!token) {
     console.log('no token');
-
   }
 
   if (token) {
@@ -19,7 +18,6 @@ const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
   }
 
   next();
-
 };
 
 export default userMiddleware;

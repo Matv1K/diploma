@@ -20,6 +20,12 @@
     border-radius: 8px;
     background-color: $background-color;
 
+    @media screen and (max-width: 630px) {
+      height: 100vh;
+      width: 100vw;
+      border-radius: 0;
+    }
+
     .modalClose {
       cursor: pointer;
       position: absolute;

@@ -156,7 +156,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
           </div>
         </div>
 
-        <div className={styles.cell}>
+        <div className={`${styles.cell} ${styles.cellAmount}`}>
           <Button className={styles.operator} onClick={handleDecreaseCount}>-</Button>
           {localAmount}
           <Button className={styles.operator} onClick={handleIncreaseCount}>+</Button>
@@ -165,13 +165,14 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
         <div className={styles.cell}>{price}$</div>
 
         <div className={styles.cell}>
-          <FiTrash2 onClick={() => setIsModalOpened(true)} className={styles.iconTrash} size={24} />
+          <FiTrash2 onClick={() => setIsModalOpened(true)} className={styles.iconTrash} size={22} />
         </div>
       </div>
 
       {isModalOpened && (
         <Modal heading='Remove' setIsModalOpened={setIsModalOpened}>
           <p className={styles.modalText}>Are you sure you want to remove the item from the cart?</p>
+
           <div className={styles.modalButtons}>
             <Button className={styles.modalButton} onClick={handleRemoveItem}>
               Remove Item
