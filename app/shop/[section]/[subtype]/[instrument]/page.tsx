@@ -198,7 +198,9 @@ const Instrument: React.FC = () => {
         return;
       }
 
-      const hasInstrument = await verifyOrderedItem(instrumentId);
+      const convertedInstrumentId = Array.isArray(instrumentId) ? instrumentId[0] : instrumentId;
+
+      const hasInstrument = await verifyOrderedItem(convertedInstrumentId);
 
       if (!hasInstrument) {
         toast.error("You haven't bought this item yet");
