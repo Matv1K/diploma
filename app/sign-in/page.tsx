@@ -9,8 +9,12 @@ import { toast } from 'react-toastify';
 
 import styles from './page.module.scss';
 
+import dynamic from 'next/dynamic';
+
 import Link from 'next/link';
-import { Button, Input, GoogleSignInButton } from '@/components';
+import { Button, Input } from '@/components';
+
+const GoogleSignInButton = dynamic(() => import('../../components/google-button/index'), { ssr: false });
 
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 

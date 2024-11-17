@@ -159,14 +159,9 @@ const CheckoutForm: React.FC = () => {
 
       toast.success(TOAST_MESSAGES.CREATE_ORDER);
       push('/');
-    } catch (error: any) {
-      if (error.response) {
-        console.error('Stripe API error:', error.response.data);
-      } else {
-        console.error('Unexpected error:', error.message);
-      }
-
-      toast.error('There was an error creating your order.');
+    } catch (error) {
+      console.error(error);
+      toast.error('There was an error creating your order');
     } finally {
       setIsProcessing(false);
       setIsModalOpened(false);

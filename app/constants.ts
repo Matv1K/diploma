@@ -1,11 +1,3 @@
-export const POPULAR_BRANDS = [
-  { name: 'Taylor', id: 1 },
-  { name: 'Fender', id: 2 },
-  { name: 'Gibson', id: 5 },
-  { name: 'Cort', id: 3 },
-  { name: 'Flight', id: 4 },
-];
-
 export const BRANDS = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
 
 export const PRICE_RANGES = [

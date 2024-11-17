@@ -2,6 +2,14 @@ import Instrument from '../../models/Instrument';
 
 import { ApiError, InstrumentI } from '../../../types';
 
+interface InstrumentQuery {
+  sort?: string;
+  section?: string;
+  instrumentType?: string;
+  brandName?: string;
+  [key: string]: unknown;
+}
+
 class InstrumentService {
   async createInstrument(instrumentData: InstrumentI) {
     const newInstrument = new Instrument(instrumentData);
@@ -13,7 +21,7 @@ class InstrumentService {
     return instruments;
   }
 
-  async getAllInstrumentsPaginated(page: number, limit: number, query: any) {
+  async getAllInstrumentsPaginated(page: number, limit: number, query: InstrumentQuery) {
     const skip = (page - 1) * limit;
 
     let sortCondition;

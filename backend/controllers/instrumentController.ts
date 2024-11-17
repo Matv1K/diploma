@@ -8,6 +8,16 @@ import InstrumentService from '../services/instruments/instrumentService';
 
 import { ApiError } from '../../types';
 
+interface CloudinaryResource {
+  secure_url: string;
+  public_id: string;
+}
+
+interface CloudinaryImage {
+  url: string;
+  public_id: string;
+}
+
 class InstrumentController {
   async createInstrument(req: Request, res: Response) {
     try {
@@ -26,7 +36,7 @@ class InstrumentController {
       const { page = 1, limit = 10, isNew, priceRange, brand, filter, type, section, instrumentType } = req.query;
 
       const currentPage = Number(page);
-      const query: any = {};
+      const query: Record<string, unknown> = {};
 
       if (type === 'sale') {
         query.onSale = true;
@@ -44,19 +54,19 @@ class InstrumentController {
       if (brand && brand !== 'All') query.brandName = brand;
 
       if (priceRange && priceRange !== 'All') {
-        if (priceRange.startsWith('Above')) {
+        if (typeof priceRange === 'string' && priceRange.startsWith('Above')) {
           const minPrice = Number(priceRange.replace('Above $', '').trim());
 
           if (!isNaN(minPrice)) {
             query.price = { $gte: minPrice };
           }
-        } else if (priceRange.startsWith('Under')) {
+        } else if (typeof priceRange === 'string' && priceRange.startsWith('Under')) {
           const maxPrice = Number(priceRange.replace('Under $', '').trim());
 
           if (!isNaN(maxPrice)) {
             query.price = { $lte: maxPrice };
           }
-        } else {
+        } else if (typeof priceRange === 'string') {
           const [minPrice, maxPrice] = priceRange.split('-').map(str => Number(str.trim().replace('$', '')));
 
           if (!isNaN(minPrice) && !isNaN(maxPrice)) {
@@ -87,13 +97,13 @@ class InstrumentController {
       const instruments = await InstrumentService.getAllInstrumentsPaginated(currentPage, Number(limit), query);
 
       const { resources } = await cloudinary.api.resources({ type: 'upload' });
-      const cloudinaryImages = resources.map(resource => ({
+      const cloudinaryImages = resources.map((resource: CloudinaryResource) => ({
         url: resource.secure_url,
         public_id: resource.public_id,
       }));
 
       const instrumentsWithImages = instruments.map(instrument => {
-        const matchingImage = cloudinaryImages.find(image => image.url === instrument.image);
+        const matchingImage = cloudinaryImages.find((image: CloudinaryImage) => image.url === instrument.image);
         return {
           ...instrument.toObject(),
           image: matchingImage ? matchingImage.url : instrument.image,

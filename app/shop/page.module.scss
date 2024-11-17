@@ -58,6 +58,88 @@
       border: 1px solid $primary-color;
       border-radius: 4px;
     }
+
+    .selectWrapper {
+      position: relative;
+      display: inline-block;
+      width: 200px;
+    
+      
+      @media screen and (max-width: 868px) {
+        width: 150px;
+      }
+    
+      .select {
+        display: block;
+        width: 100%;
+        padding: 12px 40px 12px 20px;
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        font-weight: 500;
+        border: 2px solid #ccc;
+        border-radius: 12px;
+        background-color: #fff;
+        color: #333;
+        appearance: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    
+        &:focus {
+          border-color: $primary-color;
+          box-shadow: 0 0 8px rgba(91, 155, 213, 0.5);
+          outline: none;
+        }
+    
+        &:hover {
+          border-color: $secondary-color;
+          background-color: #f9f9f9;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+      }
+    
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #333;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+    
+      select {
+        transition: all 0.2s ease;
+        z-index: 10;
+    
+        &:focus {
+          z-index: 20;
+        }
+    
+        option {
+          padding: 12px;
+          font-size: 16px;
+          font-family: 'Arial', sans-serif;
+          background-color: #fff;
+          color: #333;
+          cursor: pointer;
+          transition: background-color 0.3s ease, color 0.3s ease;
+    
+          &:hover {
+            background-color: #f0f0f0;
+            color: #333;
+          }
+    
+          &:checked {
+            background-color: $primary-color;
+            color: white;
+          }
+        }
+      }
+    }
   }
 
   .checkboxItem {
@@ -97,88 +179,6 @@
 
       &:not(:last-child) {
         margin-right: 5px;
-      }
-    }
-  }
-}
-
-.selectWrapper {
-  position: relative;
-  display: inline-block;
-  width: 200px;
-
-  
-  @media screen and (max-width: 868px) {
-    width: 150px;
-  }
-
-  .select {
-    display: block;
-    width: 100%;
-    padding: 12px 40px 12px 20px;
-    font-size: 16px;
-    font-family: 'Arial', sans-serif;
-    font-weight: 500;
-    border: 2px solid #ccc;
-    border-radius: 12px;
-    background-color: #fff;
-    color: #333;
-    appearance: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:focus {
-      border-color: $primary-color;
-      box-shadow: 0 0 8px rgba(91, 155, 213, 0.5);
-      outline: none;
-    }
-
-    &:hover {
-      border-color: $secondary-color;
-      background-color: #f9f9f9;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #333;
-    transform: translateY(-50%);
-    pointer-events: none;
-  }
-
-  select {
-    transition: all 0.2s ease;
-    z-index: 10;
-
-    &:focus {
-      z-index: 20;
-    }
-
-    option {
-      padding: 12px;
-      font-size: 16px;
-      font-family: 'Arial', sans-serif;
-      background-color: #fff;
-      color: #333;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-
-      &:hover {
-        background-color: #f0f0f0;
-        color: #333;
-      }
-
-      &:checked {
-        background-color: $primary-color;
-        color: white;
       }
     }
   }

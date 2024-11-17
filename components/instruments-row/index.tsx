@@ -19,8 +19,8 @@ import { removeCartItem, increaseAmount, decreaseAmount } from '@/api/cart/cartS
 
 import { TOAST_MESSAGES } from '@/app/constants';
 
-import { RootState } from '@/app/store';
 import { CartItemWithLocalIdI } from '@/types';
+import { RootState } from '@/app/store';
 
 interface InstrumentRowProps {
   instrumentId: string;

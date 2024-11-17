@@ -5,16 +5,23 @@ import Instrument from '../models/Instrument';
 
 import OrderService from '../services/order/orderService';
 
+import { OrderItemI } from '../../types';
+
 interface AuthenticatedRequest extends Request {
   payload?: { id: string };
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: '2022-11-15' } as any);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: '2024-10-28.acacia' });
 
 class OrderController {
   async createOrder(req: AuthenticatedRequest, res: Response) {
-    const { items, totalPrice, address, phoneNumber } = req.body;
     const userId = req.payload?.id || '';
+    const { items, totalPrice, address, phoneNumber } = req.body as
+    { items: OrderItemI[],
+      totalPrice: number,
+      address: {country: string, city: string, address: string},
+      phoneNumber: string
+    };
 
     try {
       if (!items || !totalPrice || !address || !phoneNumber) {
@@ -31,7 +38,7 @@ class OrderController {
 
       const newOrder = await OrderService.createNewOrder(userId, items, totalPrice, address, phoneNumber);
 
-      const updatePromises = items.map(item =>
+      const updatePromises = items.map((item: OrderItemI) =>
         Instrument.updateOne({ _id: item.instrumentId }, { $inc: { bought: item.amount } }));
 
       await Promise.all(updatePromises);
@@ -39,10 +46,6 @@ class OrderController {
       res.status(201).json({ newOrder, clientSecret: paymentIntent.client_secret });
 
     } catch (error) {
-      if (error.type === 'StripeCardError') {
-        return res.status(400).json({ message: `Payment failed: ${error.message}` });
-      }
-
       console.error('Error processing order:', error);
       res.status(500).json({ message: 'Something went wrong' });
     }
@@ -65,7 +68,7 @@ class OrderController {
     }
   };
 
-  async verifyOrderedItem(req: Request, res: Response) {
+  async verifyOrderedItem(req: AuthenticatedRequest, res: Response) {
     try {
       const { instrumentId } = req.body;
       const userId = req.payload?.id;
@@ -76,8 +79,7 @@ class OrderController {
 
       const orders = await OrderService.fetchUserOrders(userId);
 
-      const hasInstrument = orders.some(order =>
-        order.items.some(item => item.instrumentId === instrumentId));
+      const hasInstrument = orders.some(order => order.items.some((item: OrderItemI) => item.instrumentId === instrumentId));
 
       res.status(200).json(hasInstrument);
     } catch (error) {

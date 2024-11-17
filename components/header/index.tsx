@@ -44,7 +44,7 @@ const Header: React.FC = () => {
   const getActiveIcon = ( href: string ) => (pathname === href ? styles.active : '');
 
   useEffect( () => {
-    if ( isAuthorized ) {
+    if (isAuthorized) {
       dispatch( fetchCurrentUser() );
       dispatch( fetchCartItems() );
     } else {

@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { toast } from 'react-toastify';
-
 import styles from './page.module.scss';
+
+import { toast } from 'react-toastify';
 
 import { Input, Button } from '@/components';
 

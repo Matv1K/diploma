@@ -3,7 +3,14 @@
 1. ADD CI/CD PIPELINE (ADD ESLINT TESTS AND CONFIGURE VERCEL)
 3. MAKE PRIVAT ROUTES
 4. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
-5. Immediately remove unliked item from favorites
+
+
+
+1. Immediately remove unliked item from favorites
+2. useScrollLock hook
+3. In scss files use variables for media queries
+4. Fix cors error
+5. when non-authorized users make orders the items are not removed from the cart and the toast success is not shown
 
 //! LOW PRIORITY
 
@@ -18,12 +25,10 @@
 9. When user created an order notify the user by sending an sms to his number
 10. Add apple pay
 11. Cors error in the console when signin in with google
-12. Google button vanishes when reloading the sign inpage
 13. Rename cloudinary to CloudinaryService
 14. Move controller files to controller folders and call them index.ts
 15. Call api files index.ts
 16. Move AuthenticatedRequest interface to separate file
-17. Add errors to checkout form
 
 // INVESTIGATE
 
@@ -49,3 +54,5 @@
 20. ORM what is that
 21. Cloudflare
 22. uuid4
+23. next/dynamic what is dynamic
+24. hydration errors

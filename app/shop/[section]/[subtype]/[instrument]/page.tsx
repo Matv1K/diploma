@@ -53,7 +53,7 @@ const Instrument: React.FC = () => {
     colors: [],
   });
 
-  const commentsRef = useRef<HTMLDivElement | null>(null); // Create a ref for the comments section
+  const commentsRef = useRef<HTMLDivElement | null>(null);
 
   const { user } = useSelector((state: RootState) => state.user);
   const comments = useSelector((state: RootState) => state.comments.comments);
@@ -89,8 +89,9 @@ const Instrument: React.FC = () => {
   }, [instrumentId, dispatch]);
 
   const handleScrollToComments = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault(); // Prevent the default anchor link behavior
-    commentsRef.current?.scrollIntoView({ behavior: 'smooth' }); // Scroll to the comments section
+    e.preventDefault();
+
+    commentsRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
