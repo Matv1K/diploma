@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
-import Stripe from 'stripe';
-
 dotenv.config();
 
 import instrumentRoutes from './routes/instruments/instrumentRoutes';
