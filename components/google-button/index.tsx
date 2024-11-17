@@ -9,12 +9,11 @@ import { toast } from 'react-toastify';
 import { googleSignIn } from '@/features/user/userSlice';
 
 import { AppDispatch } from '@/app/store';
-
 import { TOAST_MESSAGES } from '@/app/constants';
 
 interface GoogleSignInResponse {
-    credential: string;
-  }
+  credential: string;
+}
 
 const GoogleSignInButton: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -29,6 +28,7 @@ const GoogleSignInButton: React.FC = () => {
       toast.success(TOAST_MESSAGES.SIGN_IN_SUCCESS);
 
       sessionStorage.removeItem('cartItems');
+
       push('/');
     } catch (error) {
       console.error('Google Sign-In failed:', error);
@@ -38,15 +38,23 @@ const GoogleSignInButton: React.FC = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.google) {
-      window.google.accounts.id.initialize({
+      const google = window.google.accounts.id;
+
+      google.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         callback: handleCallbackResponse,
       });
 
-      window.google.accounts.id.renderButton(document.getElementById('googleSignInButton'), {
+      google.renderButton(document.getElementById('googleSignInButton'), {
         size: 'large',
         text: 'signin_with',
       });
+
+      return () => {
+        if (google) {
+          google.disableAutoSelect();
+        }
+      };
     }
   }, []);
 

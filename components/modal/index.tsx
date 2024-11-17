@@ -1,9 +1,14 @@
+'use client';
+
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import styles from './index.module.scss';
 
 import { FiX } from 'react-icons/fi';
+
+import useLockScroll from '@/hooks/useLockScroll';
+import useMediaQuery from '@/hooks/useMediaQuerry';
 
 import { closeModal } from '@/features/modal/modalSlice';
 
@@ -24,6 +29,8 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const dispatch = useDispatch();
 
+  const isMobile = useMediaQuery('(max-width: 630px)');
+
   const handleCloseModal = () => {
     dispatch(closeModal());
 
@@ -31,6 +38,8 @@ const Modal: React.FC<ModalProps> = ({
       setIsModalOpened(false);
     }
   };
+
+  useLockScroll(isMobile, '630px');
 
   return (
     <div className={styles.overlay}>

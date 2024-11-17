@@ -135,6 +135,9 @@ const CheckoutForm: React.FC = () => {
         return;
       }
 
+      sessionStorage.removeItem('cartItems');
+      toast.success(TOAST_MESSAGES.CREATE_ORDER);
+
       const paymentResult = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -149,15 +152,12 @@ const CheckoutForm: React.FC = () => {
         return;
       }
 
-      sessionStorage.removeItem('cartItems');
-
       if (user) {
         dispatch(resetCart());
       }
 
       window.dispatchEvent(new Event('cartUpdated'));
 
-      toast.success(TOAST_MESSAGES.CREATE_ORDER);
       push('/');
     } catch (error) {
       console.error(error);

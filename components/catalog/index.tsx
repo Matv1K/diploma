@@ -11,6 +11,8 @@ import Image from 'next/image';
 import { FiChevronRight } from 'react-icons/fi';
 import { Logo } from '@/public/icons';
 
+import useLockScroll from '@/hooks/useLockScroll';
+
 import { trimInstrumentName } from '@/utils';
 
 import { closeCatalog } from '@/features/catalog/catalogSlice';
@@ -19,10 +21,14 @@ import { CATALOG_LINKS } from '@/app/constants';
 
 const Catalog: React.FC = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+  const [isCatalogOpen, setCatalogOpen] = useState<boolean>(true);
 
   const dispatch = useDispatch();
 
-  const handleCloseCatalog = () => dispatch(closeCatalog());
+  const handleCloseCatalog = () => {
+    setCatalogOpen(false);
+    dispatch(closeCatalog());
+  };
 
   const handleMouseEnter = (section: string) => {
     setHoveredSection(section);
@@ -31,6 +37,8 @@ const Catalog: React.FC = () => {
   const handleMouseLeave = () => {
     setHoveredSection(null);
   };
+
+  useLockScroll(isCatalogOpen, '768px');
 
   return (
     <div className={styles.overlay} onClick={handleCloseCatalog}>
@@ -83,11 +91,12 @@ const Catalog: React.FC = () => {
           </Link>
 
           <Link className={styles.logo} href='/' onClick={handleCloseCatalog}>
-            <Image src={Logo} alt='Musify' width={40} height={40} priority/>
+            <Image src={Logo} alt='Musify' width={40} height={40} priority />
           </Link>
         </div>
       </div>
     </div>
   );
 };
+
 export default Catalog;

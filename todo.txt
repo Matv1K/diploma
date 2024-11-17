@@ -7,10 +7,8 @@
 
 
 1. Immediately remove unliked item from favorites
-2. useScrollLock hook
 3. In scss files use variables for media queries
-4. Fix cors error
-5. when non-authorized users make orders the items are not removed from the cart and the toast success is not shown
+6. Add loader to checkout form
 
 //! LOW PRIORITY
 

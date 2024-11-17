@@ -15,6 +15,8 @@ declare global {
             options: { client_id: string | undefined; callback: (response: GoogleSignInResponse) => void
         }) => void;
           renderButton: (element: HTMLElement | null, options: { size: string; text: string }) => void;
+          disableAutoSelect: () => void;
+          revoke: (credential: string, callback: (response: any) => void) => void;
         };
       };
     };
