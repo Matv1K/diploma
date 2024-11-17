@@ -33,7 +33,7 @@ export const getOrders = async () => {
   }
 };
 
-export const verifyOrderedItem = async instrumentId => {
+export const verifyOrderedItem = async (instrumentId: string) => {
   try {
     const response = await instance.post('/orders/ordered', { instrumentId });
     return response.data;
