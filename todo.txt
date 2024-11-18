@@ -4,11 +4,8 @@
 3. MAKE PRIVAT ROUTES
 4. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
 
-
-
-1. Immediately remove unliked item from favorites
-3. In scss files use variables for media queries
-6. Add loader to checkout form
+1. Change images
+2. Change logo
 
 //! LOW PRIORITY
 

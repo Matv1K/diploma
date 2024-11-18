@@ -17,7 +17,11 @@ const server = express();
 // MIDDLEWARES
 
 server.use(express.json());
-server.use(cors());
+server.use(cors({
+  origin: [''],
+  methods: ['POST', 'GET', 'DELETE', 'PUT', 'PATCH'],
+  credentials: true,
+}));
 
 // DB CONNECTION
 
