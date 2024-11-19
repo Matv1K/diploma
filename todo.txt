@@ -4,8 +4,9 @@
 3. MAKE PRIVAT ROUTES
 4. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
 
-1. Change images
 2. Change logo
+3. Fix loading from the top of the page on different pages
+4. Change password icons
 
 //! LOW PRIORITY
 

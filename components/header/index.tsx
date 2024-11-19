@@ -130,7 +130,7 @@ const Header: React.FC = () => {
 
             {query && (
               <div className={styles.searchList}>
-                {filteredItems.length ? (
+                {filteredItems.length > 0 ? (
                   filteredItems.map(({ name, section, instrumentType, _id }) => (
                     <div key={_id} className={styles.searchListItem}>
                       <Link
@@ -141,7 +141,7 @@ const Header: React.FC = () => {
                         {name}
                       </Link>
                     </div>
-                  ) )
+                  ))
                 ) : (
                   <div className={styles.searchListItem}>No items found</div>
                 )}
