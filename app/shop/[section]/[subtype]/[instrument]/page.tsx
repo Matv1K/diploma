@@ -121,6 +121,11 @@ const Instrument: React.FC = () => {
       } else {
         const cartItems = JSON.parse(sessionStorage.getItem('cartItems') || '[]');
 
+        if (!newItem.color) {
+          toast.error('You have to choose a color');
+          return;
+        }
+
         if(cartItems.some((cartItem: CartItemWithLocalIdI) =>
           cartItem.instrumentId === newItem.instrumentId && cartItem.color === newItem.color) === true) {
           toast.error('Item is already in the cart');

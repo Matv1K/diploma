@@ -6,6 +6,7 @@
 
 1. Change images
 2. Change logo
+3. Add images to carousel items
 
 //! LOW PRIORITY
 

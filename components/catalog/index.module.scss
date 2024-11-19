@@ -83,7 +83,10 @@
 
           @media screen and (max-width: 850px) {
             top: 0;
-            left: 0;
+          }
+
+          @media screen and (max-width: 768px) {
+            width: 32vw;
           }
   
           .subtypeLink {
