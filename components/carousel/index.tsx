@@ -37,6 +37,8 @@ const responsive = {
 const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => {
   const { push } = useRouter();
 
+  console.log(items);
+
   const handleItemNavigation = ( section: string, name: string, instrumentType: string) => {
     if (isInstrumentsCarousel) {
       push(`/shop/${section}/${instrumentType}/${name}`);
