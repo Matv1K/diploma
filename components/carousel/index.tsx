@@ -7,6 +7,7 @@ import 'react-multi-carousel/lib/styles.css';
 import styles from './index.module.scss';
 
 import ReactCarousel from 'react-multi-carousel';
+import { Loader } from '../../components';
 
 import { InstrumentI } from '@/types';
 
@@ -37,8 +38,6 @@ const responsive = {
 const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => {
   const { push } = useRouter();
 
-  console.log(items);
-
   const handleItemNavigation = ( section: string, name: string, instrumentType: string) => {
     if (isInstrumentsCarousel) {
       push(`/shop/${section}/${instrumentType}/${name}`);
@@ -46,6 +45,14 @@ const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => 
       push(`/shop/${name.toLocaleLowerCase()}`);
     }
   };
+
+  if (!items || !items.length) {
+    return (
+      <div>
+        <Loader />;
+      </div>
+    );
+  }
 
   return (
     <ReactCarousel
@@ -66,13 +73,14 @@ const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => 
         const isInstrument = (item as InstrumentI)._id !== undefined;
 
         if (isInstrument) {
-          const { _id, name, section, instrumentType } = item as InstrumentI;
+          const { _id, name, section, instrumentType, image } = item as InstrumentI;
 
           return (
             <div
               onClick={() => handleItemNavigation(section, _id, instrumentType)}
               key={_id}
               className={styles.carouselItem}
+              style={{ backgroundImage: `url(${image})` }}
             >
               <h3>{name}</h3>
             </div>
