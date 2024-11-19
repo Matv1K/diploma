@@ -6,7 +6,6 @@
 
 2. Change logo
 3. Fix loading from the top of the page on different pages
-4. Change password icons
 
 //! LOW PRIORITY
 

@@ -100,7 +100,7 @@ const SignUp: React.FC = () => {
         <div className={styles.inputContainer}>
           <Input
             className={styles.input}
-            type={isPasswordShown ? InputTypes._PASSWORD : InputTypes._TEXT}
+            type={isPasswordShown ? InputTypes._TEXT : InputTypes._PASSWORD}
             placeholder='Enter your password'
             autoComplete='off'
             {...register('password', {
@@ -112,7 +112,7 @@ const SignUp: React.FC = () => {
               },
             })}
             icon={isPasswordShown ?
-              <FiEye size={24} onClick={handlePasswordShown}/> : <FiEyeOff size={24} onClick={handlePasswordShown} />}
+              <FiEyeOff size={24} onClick={handlePasswordShown}/> : <FiEye size={24} onClick={handlePasswordShown} />}
           />
 
           {errors.password && <p className={styles.error}>{errors.password.message}</p>}
