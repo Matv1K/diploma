@@ -71,7 +71,7 @@ export const CATALOG_LINKS = [
   },
   {
     id: 4,
-    link: 'Keyboards',
+    link: 'Pianos',
     subtypes: [
       { name: 'Pianos', slug: 'pianos' },
       { name: 'Synthesizers', slug: 'synthesizers' },

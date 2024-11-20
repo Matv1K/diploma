@@ -4,8 +4,10 @@
 3. MAKE PRIVAT ROUTES
 4. CHANGE LIKED ITEMS. PASS ONLY INSTRUMENT ID AND GET ALL THE NECESSARY INFO ON BACKEND (NOT PASS IT FROM FRONTEND)
 
-2. Change logo
-3. Fix loading from the top of the page on different pages
+1. Change logo
+2. Fix loading from the top of the page on different pages
+3. Order is created even if the card is not provided
+
 
 //! LOW PRIORITY
 

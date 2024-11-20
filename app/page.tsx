@@ -63,22 +63,14 @@ const Home: React.FC = () => {
           <Carousel items={popularInstruments} isInstrumentsCarousel />
         </div>
 
-        <div className={styles.homeBlock}>
-          <Image
-            className={styles.homeImage}
-            src={Piano}
-            alt='piano'
-            width={200}
-            height={180}
-            priority
-          />
+        <div>
+          <h2>Best Studio Equipment</h2>
 
-          <h2 className={styles.headingHome}>
-            Check out our{' '}
-            <Link href='/events' className={styles.eventsLink}>
-              events
-            </Link>
-          </h2>
+          <Link className={styles.linkSale} href='/shop/studio-equipment'>
+            <div className={`${styles.sectionSale} ${styles.sectionEquipment}`}>
+              <span>On Musify you can find best studio equipment</span>
+            </div>
+          </Link>
         </div>
 
         <div>

@@ -95,6 +95,14 @@
         color: rgb(249, 249, 249);
       }
     }
+
+    .sectionEquipment {
+      background-color: $primary-color;
+
+      &:hover {
+        background-color: darken($color: $primary-color, $amount: 5%);
+      }
+    }
   }
 
   .sectionBrands {

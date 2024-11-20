@@ -38,7 +38,7 @@
     margin-top: 10px;
   }
 
-  @media screen and (max-width: 630px) {
+  @media screen and (max-width: 700px) {
     flex-wrap: wrap;
     gap: 10px;
   }
@@ -62,11 +62,10 @@
     .selectWrapper {
       position: relative;
       display: inline-block;
-      width: 200px;
+      width: 210px;
     
-      
       @media screen and (max-width: 868px) {
-        width: 150px;
+        width: 180px;
       }
     
       .select {
@@ -83,6 +82,10 @@
         appearance: none;
         cursor: pointer;
         transition: all 0.3s ease;
+
+        @media screen and (max-width: 868px) {
+          font-size: 13px;
+        }
     
         &:focus {
           border-color: $primary-color;
