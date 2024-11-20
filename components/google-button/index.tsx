@@ -40,6 +40,8 @@ const GoogleSignInButton: React.FC = () => {
     if (typeof window !== 'undefined' && window.google) {
       const google = window.google.accounts.id;
 
+      console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
+
       google.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         callback: handleCallbackResponse,
