@@ -18,7 +18,7 @@ const Section: React.FC = () => {
   const { section: instrumentsSection } = useParams();
   const convertedSection = Array.isArray(instrumentsSection) ? instrumentsSection[0] : instrumentsSection;
 
-  const convertedSectenCapitalized = convertedSection[0].toUpperCase() + convertedSection.slice(1);
+  const convertedSectionCapitalized = convertedSection[0].toUpperCase() + convertedSection.slice(1);
 
   const { instruments, hasMore, isLoading, filters, setFilters, fetchInstruments } =
     useInstrumentsFilter({},'sectionName', convertedSection);
@@ -39,7 +39,7 @@ const Section: React.FC = () => {
     setFilters(prevFilters => ({ ...prevFilters, filter: e.target.value }));
   };
 
-  if (isLoading) {
+  if (isLoading && instruments.length === 0) {
     return (
       <main className={styles.containerEmpty}>
         <Loader />
@@ -49,7 +49,7 @@ const Section: React.FC = () => {
 
   return (
     <main>
-      <h2 className={styles.headingSection}>{removeSeparator(convertedSectenCapitalized)}</h2>
+      <h2 className={styles.headingSection}>{removeSeparator(convertedSectionCapitalized)}</h2>
 
       <div className={styles.filterBar}>
         <div className={styles.filterItem}>

@@ -48,7 +48,7 @@ const Carousel: React.FC<CarouselProps> = ({ items, isInstrumentsCarousel }) => 
 
   if (!items || !items.length) {
     return (
-      <div>
+      <div className={styles.loaderContainer}>
         <Loader />;
       </div>
     );

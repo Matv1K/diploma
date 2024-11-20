@@ -68,7 +68,7 @@ const Home: React.FC = () => {
 
           <Link className={styles.linkSale} href='/shop/studio-equipment'>
             <div className={`${styles.sectionSale} ${styles.sectionEquipment}`}>
-              <span>On Musify you can find best studio equipment</span>
+              <span>On Musify you can find best studio equipment and much more!</span>
             </div>
           </Link>
         </div>
