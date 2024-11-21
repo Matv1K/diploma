@@ -11,7 +11,7 @@ export const NORMALIZED_BRANDS = [
   { name: 'guitars', brands: ['Ibanez', 'Rockdale', 'Fender', 'Roland', 'Flight', 'Baton', 'Cort'] },
   { name: 'wind-instruments', brands: ['Conductor', 'John Packer'] },
   { name: 'drums', brands: ['Foix', 'Behringer', 'Soundking', 'Gretsch'] },
-  { name: 'pianos', brands: ['Casio', 'Medeli'] },
+  { name: 'pianos', brands: ['Casio', 'Medeli', 'AKAI'] },
   { name: 'studio-equipment', brands: ['Alctron', 'AKG', 'Beyerdynamic'] },
   { name: 'bowed', brands: ['Mirra', 'Brahner', 'Cervini'] },
 ];

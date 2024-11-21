@@ -3,11 +3,9 @@
 .row {
   border: 1px solid $primary-color;
   padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-radius: 8px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 
   @media screen and (max-width: 1200px) {
     padding: 10px;

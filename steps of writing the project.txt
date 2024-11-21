@@ -73,3 +73,132 @@ add config stripe.ts file
 create an account on stripe website and create an api publishable key there
 
 
+
+
+
+//PLAN
+
+
+Thesis Plan: Design and Implementation of an E-Commerce Platform Illustrated by a Musical Instrument Store
+1. Introduction
+1.1 Background
+Brief overview of e-commerce and its role in modern businesses.
+The significance of choosing a musical instrument store for this project.
+1.2 Objectives
+Outline the main goals of the thesis.
+Why these specific technologies were chosen for the implementation.
+1.3 Problem Statement
+Challenges faced by e-commerce platforms.
+How the implemented solution addresses these challenges.
+2. Literature Review
+2.1 Overview of E-commerce Platforms
+Comparison of traditional vs. modern e-commerce platforms.
+Key features of successful e-commerce websites.
+2.2 Technology Stack Overview
+Analysis of modern frontend and backend technologies for e-commerce.
+Comparison of alternatives: e.g., why Next.js over other frameworks.
+2.3 Related Work
+Examples of similar projects and research on e-commerce.
+3. Technology Analysis and Selection
+3.1 Frontend: Next.js, TypeScript, SCSS
+Advantages of Next.js for server-side rendering and SEO.
+Benefits of TypeScript for maintainable and scalable code.
+Role of SCSS modules for component-specific styling.
+3.2 Backend: Express.js and MongoDB
+How Express.js enables fast and efficient server-side logic.
+MongoDB as a NoSQL database: its flexibility for e-commerce.
+3.3 State Management: Redux
+Why Redux is essential for managing global state in complex e-commerce apps.
+3.4 Payment Gateway: Stripe
+Security and ease of integration for handling online payments.
+3.5 Authentication: Google API and Custom Login
+Combining Google API with traditional registration for flexibility.
+3.6 Deployment: Vercel
+Benefits of CI/CD with Vercel for seamless updates.
+3.7 Testing Frameworks
+Importance of writing unit, integration, and end-to-end tests (to be implemented).
+4. System Design
+4.1 Architecture Overview
+Explanation of decoupled frontend and backend.
+Deployment pipeline.
+4.2 Frontend Architecture
+Description of the folder structure:
+api: API interaction layer.
+app: Routing and layout.
+components: Reusable UI components.
+features: Redux slices for state management.
+config: Configuration for Axios and other utilities.
+hooks: Custom React hooks.
+utils: Helper functions.
+public: Static assets (images, icons, etc.).
+types: TypeScript interfaces.
+4.3 Backend Architecture
+Description of the folder structure:
+controllers: Business logic for handling requests.
+middlewares: Authentication, logging, and error handling.
+models: Mongoose schemas for MongoDB.
+routes: API endpoint definitions.
+services: Business logic, database queries, etc.
+validators: Input validation using Joi.
+utils: Utility functions for repetitive tasks.
+server.ts: Main entry point for the Express server.
+4.4 Database Schema Design
+Explanation of database collections and relationships:
+Instruments: Name, description, price, sale details, comments, etc.
+Users: Name, email, password, favorites, cart.
+Orders: Order details, status, payment information.
+4.5 API Design
+RESTful API endpoints for:
+Instrument CRUD operations.
+User authentication and profile management.
+Orders and checkout.
+5. Implementation
+5.1 Frontend Development
+Using Next.js for page-based routing and dynamic rendering.
+Implementing SCSS modules for styling.
+Integrating Stripe for secure payments.
+Developing core features:
+Search, filtering, and pagination.
+Shopping cart and like functionality.
+Comments and reviews for instruments.
+5.2 Backend Development
+Setting up authentication with JWT and Google API.
+Writing controllers, routes, and services for various features.
+Handling input validation with Joi.
+5.3 Deployment Workflow
+Steps to connect GitHub repositories with Vercel for automatic updates.
+6. Testing and Quality Assurance
+6.1 Testing Strategy
+Types of tests planned:
+Unit tests: Testing individual components and functions.
+Integration tests: Testing API endpoints.
+End-to-end tests: Testing user flows.
+6.2 Tools and Frameworks
+Jest, React Testing Library for frontend.
+Supertest, Mocha/Chai for backend.
+6.3 Results
+Overview of test results (to be completed after implementation).
+7. Evaluation
+7.1 Performance Metrics
+Page load time, server response time, etc.
+7.2 User Experience
+Feedback from initial users or testers.
+7.3 Advantages and Limitations
+Strengths of the chosen technologies.
+Limitations or areas for improvement.
+8. Conclusion and Future Work
+8.1 Summary
+Recap of the project goals and outcomes.
+8.2 Future Enhancements
+Ideas for scaling the platform:
+Adding more payment gateways.
+Advanced analytics for admins.
+Mobile app integration.
+8.3 Personal Learning
+Reflection on skills gained during the project.
+Appendices
+Frontend and backend code snippets.
+Examples of test cases.
+Screenshots of the deployed application.
+Bibliography
+References to documentation, books, and tutorials used.
