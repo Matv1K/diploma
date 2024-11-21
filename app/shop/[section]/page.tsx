@@ -12,13 +12,15 @@ import { removeSeparator } from '@/utils';
 
 import useInstrumentsFilter from '@/hooks/useInstrumentsFilter';
 
-import { BRANDS, PRICE_RANGES, FILTERS } from '@/app/constants';
+import { PRICE_RANGES, FILTERS, NORMALIZED_BRANDS } from '@/app/constants';
 
 const Section: React.FC = () => {
   const { section: instrumentsSection } = useParams();
   const convertedSection = Array.isArray(instrumentsSection) ? instrumentsSection[0] : instrumentsSection;
 
   const convertedSectionCapitalized = convertedSection[0].toUpperCase() + convertedSection.slice(1);
+
+  const sectionBrands = NORMALIZED_BRANDS.find(item => item.name === convertedSection)?.brands || [];
 
   const { instruments, hasMore, isLoading, filters, setFilters, fetchInstruments } =
     useInstrumentsFilter({},'sectionName', convertedSection);
@@ -58,7 +60,7 @@ const Section: React.FC = () => {
           <div className={styles.selectWrapper}>
             <select className={styles.select} value={filters.brand || ''} id='brand' onChange={handleBrandNameChange}>
               <option value='All'>All</option>
-              {BRANDS.map(brand => (
+              {sectionBrands.map(brand => (
                 <option key={brand} value={brand}>
                   {brand}
                 </option>

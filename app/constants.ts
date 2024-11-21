@@ -1,4 +1,20 @@
-export const BRANDS = ['Yamaha', 'Gibson', 'Fender', 'Roland'];
+export const BRANDS = [
+  'Yamaha', 'Gibson',
+  'Fender', 'Roland',
+  'Ibanez', 'Conductor',
+  'Rockdale', 'John Packer',
+  'Mirra', 'Flight', 'Brahner',
+  'Casio', 'Foix', 'Behringer', 'AKG', 'Gretsch', 'Soundking',
+];
+
+export const NORMALIZED_BRANDS = [
+  { name: 'guitars', brands: ['Ibanez', 'Rockdale', 'Fender', 'Roland', 'Flight', 'Baton', 'Cort'] },
+  { name: 'wind-instruments', brands: ['Conductor', 'John Packer'] },
+  { name: 'drums', brands: ['Foix', 'Behringer', 'Soundking', 'Gretsch'] },
+  { name: 'pianos', brands: ['Casio', 'Medeli'] },
+  { name: 'studio-equipment', brands: ['Alctron', 'AKG', 'Beyerdynamic'] },
+  { name: 'bowed', brands: ['Mirra', 'Brahner', 'Cervini'] },
+];
 
 export const PRICE_RANGES = [
   { label: 'Under $1000', min: 0, max: 1000 },
@@ -92,7 +108,6 @@ export const CATALOG_LINKS = [
     link: 'Bowed',
     subtypes: [
       { name: 'Cellos', slug: 'cellos' },
-      { name: 'Double Basses', slug: 'double-basses' },
       { name: 'Violins', slug: 'violins' },
     ],
   },

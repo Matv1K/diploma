@@ -26,6 +26,11 @@
   .dropdownLinks {
     margin-bottom: 20px;
 
+    .active {
+      background-color: darken($background-color, 5%);
+      color: $black-color;
+    }
+
     .dropdownLink {
       display: block;
       padding: 8px;

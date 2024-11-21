@@ -151,7 +151,7 @@ const InstrumentRow: React.FC<InstrumentRowProps> = ({
             <Image alt='' width={50} height={50} src={image} className={styles.image} />
 
             <Link href={`/shop/${section}/${instrumentType}/${instrumentId}`} className={styles.link}>
-              {name} / <span className={styles.color}>{color}</span>
+              <span>{name}/</span><span className={styles.color}>{color}</span>
             </Link>
           </div>
         </div>

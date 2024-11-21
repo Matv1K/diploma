@@ -2,7 +2,7 @@
 
 import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 import styles from './index.module.scss';
 
@@ -28,6 +28,10 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
   const dispatch: AppDispatch = useDispatch();
   const { push } = useRouter();
 
+  const pathName = usePathname();
+
+  const getActiveIcon = (href: string) => pathName === href ? styles.active : '';
+
   const handleLogOut = async () => {
     try {
       dispatch(logOutUser());
@@ -52,11 +56,11 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
       </div>
 
       <div className={styles.dropdownLinks}>
-        <Link href='/profile' className={styles.dropdownLink}>
+        <Link href='/profile' className={`${styles.dropdownLink} ${getActiveIcon('/profile')}`}>
           My profile
         </Link>
 
-        <Link href='/profile/orders' className={styles.dropdownLink}>
+        <Link href='/profile/orders' className={`${styles.dropdownLink} ${getActiveIcon('/profile/orders')}`}>
           Order history
         </Link>
       </div>

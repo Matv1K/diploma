@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { useStripe, PaymentElement, useElements } from '@stripe/react-stripe-js';
 import { useForm, Controller } from 'react-hook-form';
@@ -19,8 +18,6 @@ import { resetCart } from '@/features/instruments/instrumentsSlice';
 import { getCartItems } from '@/api/cart/cartService';
 import { createOrder } from '@/api/orders/ordersService';
 
-import { TOAST_MESSAGES } from '@/app/constants';
-
 import { ButtonTypes, InputTypes, CartItemUnionI } from '@/types';
 import { RootState } from '@/app/store';
 
@@ -34,8 +31,6 @@ const CheckoutForm: React.FC = () => {
   const elements = useElements();
 
   const dispatch = useDispatch();
-
-  const { push } = useRouter();
 
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -121,8 +116,6 @@ const CheckoutForm: React.FC = () => {
         },
       };
 
-      const { clientSecret } = await createOrder(orderData);
-
       if (!stripe || !elements) {
         throw new Error('Stripe or elements is not initialized properly.');
       }
@@ -136,12 +129,13 @@ const CheckoutForm: React.FC = () => {
       }
 
       sessionStorage.removeItem('cartItems');
-      toast.success(TOAST_MESSAGES.CREATE_ORDER);
+
+      const { clientSecret } = await createOrder(orderData);
 
       const paymentResult = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}`,
+          return_url: `${window.location.origin}/order-success`,
         },
         clientSecret,
       });
@@ -157,8 +151,6 @@ const CheckoutForm: React.FC = () => {
       }
 
       window.dispatchEvent(new Event('cartUpdated'));
-
-      push('/');
     } catch (error) {
       console.error(error);
       toast.error('There was an error creating your order');
