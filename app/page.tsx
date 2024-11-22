@@ -49,7 +49,7 @@ const Home: React.FC = () => {
 
       <div className={styles.homeSections}>
         <div>
-          <h2>Sales!</h2>
+          <h2>Sales</h2>
 
           <Link className={styles.linkSale} href='/shop/sale'>
             <div className={styles.sectionSale}>
