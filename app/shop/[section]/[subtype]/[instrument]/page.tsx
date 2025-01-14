@@ -260,7 +260,7 @@ const Instrument: React.FC = () => {
               <Link
                 className={styles.infoReview}
                 href='#'
-                onClick={handleScrollToComments} // Add the scroll handler here
+                onClick={handleScrollToComments}
               >
                 Write a review
               </Link>
