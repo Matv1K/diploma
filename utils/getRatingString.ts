@@ -1,7 +1,8 @@
 const getRatingString = (rating: number) => {
+  const validRating = Math.min(Math.floor(rating), 5);
   let fullStars = '';
 
-  for (let i = 0; i < rating; i++) {
+  for (let i = 0; i < validRating; i++) {
     fullStars += '★';
   }
 
